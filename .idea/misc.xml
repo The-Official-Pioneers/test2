@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.22708333333333333" />
+        <entry key="app/src/main/res/drawable/my_rect.xml" value="0.37447916666666664" />
+        <entry key="app/src/main/res/drawable/shape.xml" value="0.37447916666666664" />
+        <entry key="app/src/main/res/drawable/shape_circle.xml" value="0.215625" />
+        <entry key="app/src/main/res/layout/activity_editor.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_editor2.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/blank_fragment.xml" value="0.21693840579710144" />
+        <entry key="app/src/main/res/layout/dialog_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_editor_percorsi.xml" value="0.2767210144927536" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_lista_nodi.xml" value="0.2767210144927536" />
+        <entry key="app/src/main/res/layout/fragment_option.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/layout_lista_nodi.xml" value="0.23052536231884058" />
+        <entry key="app/src/main/res/layout/layout_mappa.xml" value="0.19947916666666668" />
+        <entry key="app/src/main/res/layout/lista_nodi.xml" value="0.17426545086119555" />
+        <entry key="app/src/main/res/layout/sample_node.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/menu/menu_editor.xml" value="0.2657407407407407" />
+        <entry key="app/src/main/res/menu/menu_main.xml" value="0.2657407407407407" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

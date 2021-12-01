@@ -1,0 +1,15 @@
+
+P
+java:S1161,":Add the "@Override" annotation above this method signature(¼²Á÷
+K
+java:S1854D"5Remove this useless assignment to local variable "c".(¦™‰ò
+<
+java:S1481D"&Remove this unused "c" local variable.(¦™‰ò
+J
+java:S1905]"/Remove this unnecessary cast to "CharSequence".(ÉÿÁŒþÿÿÿÿ
+^
+java:S1192M"HDefine a constant instead of duplicating this literal "MUSEO 2" 5 times.(êñ¦¼
+]
+java:S1192H"HDefine a constant instead of duplicating this literal "MUSEO 1" 5 times.(ÍÛÞ%
+C
+java:S1604/"(Make this anonymous inner class a lambda(ìäÔéùÿÿÿÿ
