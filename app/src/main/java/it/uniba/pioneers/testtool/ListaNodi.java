@@ -59,17 +59,7 @@ public class ListaNodi extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
-        Button b = getView().findViewById(R.id.button5);
 
-        LinearLayout l = getView().findViewById(R.id.listaPalline);
-
-
-
-        b.setOnClickListener(view1 -> {
-            Toast.makeText(getContext(), "Ciao mondooo", Toast.LENGTH_LONG).show();
-            l.addView(new Node(l.getContext()));
-
-        });
     }
 
 

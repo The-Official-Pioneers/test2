@@ -28,10 +28,13 @@ import it.uniba.pioneers.testtool.R;
 public class ListaNodi extends ScrollView {
     LinearLayout linearLayout;
     ScrollView scrollView;
+    Button buttonAdd;
+
     //MutableValueGraph<Node, Integer> nodeMutableValueGraph = ValueGraphBuilder.directed().build();
 
 
     ArrayList<Node> nodeArrayList = new ArrayList<>();
+
     class MyDragListener implements OnDragListener {
 
         @Override
@@ -78,10 +81,18 @@ public class ListaNodi extends ScrollView {
 
         this.scrollView = (ScrollView) this.getChildAt(0);
         this.linearLayout = (LinearLayout) this.scrollView.getChildAt(0);
+        this.buttonAdd = (Button) this.linearLayout.getChildAt(0);
+
         for(int i = 0; i < 10; ++i){
             Node tmp = new Node(this.getContext());
             this.addNode(tmp);
         }
+
+        this.buttonAdd.setOnClickListener(view1 -> {
+            Toast.makeText(getContext(), "Ciao mondooo", Toast.LENGTH_LONG).show();
+            this.linearLayout.addView(new Node(this.linearLayout.getContext()));
+
+        });
 
 
         Toast.makeText(this.getContext(), this.linearLayout.toString(), Toast.LENGTH_LONG).show();

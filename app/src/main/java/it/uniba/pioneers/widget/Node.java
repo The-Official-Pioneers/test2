@@ -80,9 +80,6 @@ public class Node extends ConstraintLayout {
         layoutInflater.inflate(R.layout.sample_node, this);
         n = this;
 
-
-
-
         if(this.circle){
 
             GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this.getRootView().getContext(), R.drawable.shape_circle).mutate();
