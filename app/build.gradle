@@ -28,6 +28,20 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res',
+                    'src/main/res/layouts/activity',
+                    'src/main/res/layouts/fragment',
+                    'src/main/res/layouts/widget',
+                    'src/main/res/layouts/widget/node',
+                    'src/main/res/layouts/widget/list_node',
+                    'src/main/res/layouts/widget/graph_editor'
+            ]
+        }
+    }
 }
 
 dependencies {
@@ -48,3 +62,4 @@ dependencies {
     implementation("com.google.guava:guava:31.0.1-jre")
 
 }
+

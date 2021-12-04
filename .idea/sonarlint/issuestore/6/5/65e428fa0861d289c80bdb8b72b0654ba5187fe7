@@ -2,14 +2,26 @@
 P
 java:S1161,":Add the "@Override" annotation above this method signature(¼²Á÷
 K
-java:S1854D"5Remove this useless assignment to local variable "c".(¦™‰ò
+java:S1854>"5Remove this useless assignment to local variable "c".(¦™‰ò
 <
-java:S1481D"&Remove this unused "c" local variable.(¦™‰ò
+java:S1481>"&Remove this unused "c" local variable.(¦™‰ò
 J
-java:S1905]"/Remove this unnecessary cast to "CharSequence".(ÉÿÁŒþÿÿÿÿ
+java:S1905W"/Remove this unnecessary cast to "CharSequence".(ÉÿÁŒþÿÿÿÿ
+k
+java:S1128"IRemove this unused import 'androidx.navigation.fragment.NavHostFragment'.(ÐÖØ–ýÿÿÿÿ8¾”žº×/
+c
+java:S1128"ARemove this unused import 'com.google.common.graph.ElementOrder'.(øÍßÑúÿÿÿÿ8¾”žº×/
+c
+java:S1128"ARemove this unused import 'com.google.common.graph.EndpointPair'.(Ø›­¬üÿÿÿÿ8¿”žº×/
+c
+java:S1128"ARemove this unused import 'com.google.common.graph.GraphBuilder'.(×‡ñ‡øÿÿÿÿ8¿”žº×/
+c
+java:S1128"ARemove this unused import 'com.google.common.graph.MutableGraph'.(°ë÷šúÿÿÿÿ8¿”žº×/
+L
+java:S1128"*Remove this unused import 'java.util.Set'.(ö²„¤þÿÿÿÿ8¿”žº×/
 ^
-java:S1192M"HDefine a constant instead of duplicating this literal "MUSEO 2" 5 times.(êñ¦¼
+java:S1192G"HDefine a constant instead of duplicating this literal "MUSEO 2" 5 times.(êñ¦¼
 ]
-java:S1192H"HDefine a constant instead of duplicating this literal "MUSEO 1" 5 times.(ÍÛÞ%
+java:S1192B"HDefine a constant instead of duplicating this literal "MUSEO 1" 5 times.(ÍÛÞ%
 C
 java:S1604/"(Make this anonymous inner class a lambda(ìäÔéùÿÿÿÿ

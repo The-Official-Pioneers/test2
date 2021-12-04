@@ -20,6 +20,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import it.uniba.pioneers.testtool.R;
@@ -83,19 +86,29 @@ public class ListaNodi extends ScrollView {
         this.linearLayout = (LinearLayout) this.scrollView.getChildAt(0);
         this.buttonAdd = (Button) this.linearLayout.getChildAt(0);
 
-        for(int i = 0; i < 10; ++i){
-            Node tmp = new Node(this.getContext());
-            this.addNode(tmp);
+
+        try {
+            JSONObject object = new JSONObject();
+
+            object.put("descrizione", "dasdasdasdasdsaddassd");
+            object.put("anno", "2111");
+
+            for(int i = 0; i < 10; ++i){
+                Node tmp = new Node(this.getContext(), this.linearLayout, object);
+                this.addNode(tmp);
+            }
+
+            this.buttonAdd.setOnClickListener(view1 -> {
+                Toast.makeText(getContext(), "Ciao mondooo", Toast.LENGTH_LONG).show();
+                this.linearLayout.addView(new Node(this.linearLayout.getContext(), this.linearLayout, object));
+
+            });
+            Toast.makeText(this.getContext(), this.linearLayout.toString(), Toast.LENGTH_LONG).show();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        this.buttonAdd.setOnClickListener(view1 -> {
-            Toast.makeText(getContext(), "Ciao mondooo", Toast.LENGTH_LONG).show();
-            this.linearLayout.addView(new Node(this.linearLayout.getContext()));
-
-        });
-
-
-        Toast.makeText(this.getContext(), this.linearLayout.toString(), Toast.LENGTH_LONG).show();
     }
 
     public void addNode(Node node){

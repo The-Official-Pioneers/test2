@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +23,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import it.uniba.pioneers.testtool.R;
 
-public class Node extends ConstraintLayout {
+public class Node extends ConstraintLayout{
 
-    boolean circle = false;
     Node n;
+    boolean circle = false;
+    LinearLayout linearLayout;
+
+    JSONObject data;
+
+
+    final String ARG_DESCRIZIONE = "descrizione";
+    final String ARG_ANNO = "anno";
+
+    public Node clone(Context context) {
+        return new Node(context, this.linearLayout, this.data);
+    }
 
     private final class MyTouchListener implements OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -75,10 +90,15 @@ public class Node extends ConstraintLayout {
     }
 
 
-    public void init(Context context){
+
+    public void init(Context context) throws JSONException {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         layoutInflater.inflate(R.layout.sample_node, this);
         n = this;
+
+        data = new JSONObject();
+        data.put(ARG_DESCRIZIONE, "Ciao mi chiamo antonionoonno");
+        data.put(ARG_ANNO, "1500");
 
         if(this.circle){
 
@@ -106,22 +126,62 @@ public class Node extends ConstraintLayout {
 
     public Node(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        try {
+            init(context);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public Node(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context);
+        try {
+            init(context);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public Node(@NonNull Context context) {
         super(context);
-        init(context);
+        try {
+            init(context);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public Node(@NonNull Context context, boolean circle) {
         super(context);
         this.circle = circle;
-        init(context);
+        try {
+            init(context);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Node(@NonNull Context context, LinearLayout ln,  JSONObject data) {
+        super(context);
+        try {
+            this.linearLayout = ln;
+            this.circle = true;
+            init(context);
+
+            this.data.put(ARG_DESCRIZIONE, data.getString("descrizione"));
+            this.data.put(ARG_ANNO, data.getString("anno"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Node(@NonNull Context context, LinearLayout ln) {
+        super(context);
+        try {
+            this.linearLayout = ln;
+            init(context);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

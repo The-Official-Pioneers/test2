@@ -2,11 +2,16 @@ package it.uniba.pioneers.testtool;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import it.uniba.pioneers.widget.ListaNodi;
 
 public class EditorPercorsi extends Fragment {
 
@@ -54,6 +59,26 @@ public class EditorPercorsi extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+
         return inflater.inflate(R.layout.fragment_editor_percorsi, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button b = this.getView().findViewById(R.id.button2);
+
+        b.setOnClickListener(view1 -> {
+            ListaNodi ln = this.getView().findViewById(R.id.listaNodi);
+
+            if(ln.getVisibility() == View.GONE)
+                ln.setVisibility(View.VISIBLE);
+            else
+                ln.setVisibility(View.GONE);
+
+        });
     }
 }

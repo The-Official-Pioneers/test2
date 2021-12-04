@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/layout/layout_mappa.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/lista_nodi.xml" value="0.17426545086119555" />
         <entry key="app/src/main/res/layout/sample_node.xml" value="0.33" />
+        <entry key="app/src/main/res/layouts/activity/layout/fragment_second.xml" value="0.196875" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/menu/menu_editor.xml" value="0.2657407407407407" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.2657407407407407" />

@@ -5,6 +5,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -40,7 +41,6 @@ public class Mappa extends ConstraintLayout {
                     break;
                 case DragEvent.ACTION_DROP:
                     if(!tmp.circle){
-
                         GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(tmp.getRootView().getContext(), R.drawable.shape_circle).mutate();
                         tmp.findViewById(R.id.vistaProva).setBackground(drawable);
                         Toast.makeText(tmp.getRootView().getContext(), String.valueOf(event.getX()), Toast.LENGTH_LONG).show();
@@ -55,12 +55,18 @@ public class Mappa extends ConstraintLayout {
                     }
 
                     this.nodeMutableValueGraph.addNode(tmp);
+                    Node intput = (Node)event.getLocalState();
+                    intput.linearLayout.removeView(intput);
 
-                    Node node = new Node(this.getContext(), true);
-                    this.addView(node);
+                    Node exp = intput.clone(this.getContext());
 
-                    node.setX(event.getX());
-                    node.setY(event.getY());
+                    this.addView(exp);
+
+                    exp.setX(event.getX());
+                    exp.setY(event.getY());
+
+
+
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                 default:
