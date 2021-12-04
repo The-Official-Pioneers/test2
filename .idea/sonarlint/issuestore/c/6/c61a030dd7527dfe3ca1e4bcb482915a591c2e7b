@@ -1,0 +1,14 @@
+
+B
+java:S1948"'Make "grafo" transient or serializable.(Ï×¼Šøÿÿÿÿ
+Q
+java:S1128"4Remove this unused import 'android.content.Context'.(©Ê‰è8ÇÀÏ²×/
+Q
+java:S1128"5Remove this unused import 'java.io.FileOutputStream'.(˜«ªg8ÉÀÏ²×/
+R
+java:S1128	"0Remove this unused import 'java.io.IOException'.(ªº»Úýÿÿÿÿ8ÉÀÏ²×/
+Y
+java:S1128
+"7Remove this unused import 'java.io.ObjectOutputStream'.(é»Óºûÿÿÿÿ8ÉÀÏ²×/
+/
+java:S1700"Rename field "grafo"(Ï×¼Šøÿÿÿÿ

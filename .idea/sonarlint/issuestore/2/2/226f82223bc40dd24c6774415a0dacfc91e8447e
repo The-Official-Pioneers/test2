@@ -1,0 +1,9 @@
+
+w
+java:S1450"\Remove the "homeViewModel" field and declare it as a local variable in the relevant methods.(¿ž­¶üÿÿÿÿ
+U
+java:S1161":Add the "@Override" annotation above this method signature(î•Éðûÿÿÿÿ
+S
+java:S1068"1Remove this unused "homeViewModel" private field.(¿ž­¶üÿÿÿÿ8³¹Ü¶×/
+~
+java:S1488"\Immediately return this expression instead of assigning it to the temporary variable "root".(ö±Žîúÿÿÿÿ8µ¹Ü¶×/
