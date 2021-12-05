@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.22708333333333333" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/activity_home.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/fragment_login.xml" value="0.275" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/fragment_welcome.xml" value="0.19114583333333332" />
         <entry key="app/src/main/res/drawable/my_rect.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/shape.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/shape_circle.xml" value="0.215625" />

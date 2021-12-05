@@ -9,12 +9,8 @@ p
 @app/src/main/java/it/uniba/pioneers/testtool/OptionFragment.java,a/f/af30907d5053283041ddd11ccdcaa554c891d187
 q
 Aapp/src/main/java/it/uniba/pioneers/testtool/EditorActivity2.java,3/8/38d6afef701554cdd4fe85484acd1b40937f9686
-n
->app/src/main/java/it/uniba/pioneers/testtool/MainActivity.java,5/9/59fcb937f2aaa1914088c2a4d2cf5280c5d0dd3e
 g
 7app/src/main/java/it/uniba/pioneers/testtool/Grafo.java,c/6/c61a030dd7527dfe3ca1e4bcb482915a591c2e7b
-P
- app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 v
 Fapp/src/main/java/it/uniba/pioneers/testtool/ui/home/HomeFragment.java,2/2/226f82223bc40dd24c6774415a0dacfc91e8447e
 k
@@ -23,14 +19,6 @@ A
 gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
 X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
-@
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
-o
-?app/src/main/java/it/uniba/pioneers/testtool/FirstFragment.java,6/5/65e428fa0861d289c80bdb8b72b0654ba5187fe7
-p
-@app/src/main/java/it/uniba/pioneers/testtool/EditorActivity.java,f/a/fa6b29bbe010f05fb94d53df397f022133f243d2
 p
 @app/src/main/java/it/uniba/pioneers/testtool/EditorPercorsi.java,c/7/c7bf0ffb91233d7d24230c59d32e23bc1c379aa9
 e
