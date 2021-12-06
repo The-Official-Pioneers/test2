@@ -4,10 +4,12 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,12 +25,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.google.common.graph.MutableGraph;
+import com.google.common.graph.MutableValueGraph;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.widget.grafo.DrawView;
+import it.uniba.pioneers.widget.grafo.Line;
 
 public class Node extends ConstraintLayout{
+
+    static public final int VISITA = 0;
+    static public final int MUSEO = 1;
+    static public final int AREA = 2;
+    static public final int OPERA = 3;
+
+    public NodeType tipo;
 
     Node n;
     boolean circle = false;
@@ -36,9 +52,12 @@ public class Node extends ConstraintLayout{
 
     JSONObject data;
 
+    ArrayList<Line> successorLine = new ArrayList<>();
 
     final String ARG_DESCRIZIONE = "descrizione";
     final String ARG_ANNO = "anno";
+
+    MutableGraph<Node> graph = null;
 
     public Node clone(Context context) {
         return new Node(context, this.linearLayout, this.data);
@@ -55,7 +74,7 @@ public class Node extends ConstraintLayout{
                 n.circle = false;
 
                 view.startDragAndDrop(data, shadowBuilder, view, 0);
-                view.setVisibility(GONE);
+                //view.setVisibility(GONE);
                 return true;
             } else {
 
@@ -89,19 +108,8 @@ public class Node extends ConstraintLayout{
         }
     }
 
-
-
-    public void init(Context context) throws JSONException {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        layoutInflater.inflate(R.layout.sample_node, this);
-        n = this;
-
-        data = new JSONObject();
-        data.put(ARG_DESCRIZIONE, "Ciao mi chiamo antonionoonno");
-        data.put(ARG_ANNO, "1500");
-
-        if(this.circle){
-
+    public void setCircle(boolean flag){
+        if(flag){
             GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this.getRootView().getContext(), R.drawable.shape_circle).mutate();
             this.findViewById(R.id.vistaProva).setBackground(drawable);
             Toast.makeText(this.getRootView().getContext(), "ciaoooo", Toast.LENGTH_LONG).show();
@@ -114,6 +122,20 @@ public class Node extends ConstraintLayout{
 
             this.circle = false;
         }
+    }
+
+
+
+    public void init(Context context) throws JSONException {
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        layoutInflater.inflate(R.layout.sample_node, this);
+        n = this;
+
+        data = new JSONObject();
+        data.put(ARG_DESCRIZIONE, "Ciao mi chiamo antonionoonno");
+        data.put(ARG_ANNO, "1500");
+
+        setCircle(this.circle);
         // Defines the one method for the interface, which is called when the View is long-clicked
         this.setOnTouchListener(new MyTouchListener());
 
@@ -124,8 +146,18 @@ public class Node extends ConstraintLayout{
 
     }
 
-    public Node(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public Node(Context context, NodeType nodeType) {
+        super(context);
+        try {
+            init(context);
+            this.tipo = nodeType;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Node(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
         try {
             init(context);
         } catch (JSONException e) {
@@ -150,6 +182,23 @@ public class Node extends ConstraintLayout{
             e.printStackTrace();
         }
     }
+
+    public void addSuccessor(Node nodeEnd){
+        this.graph.addNode(nodeEnd);
+        this.graph.putEdge(this, nodeEnd);
+    }
+
+    public Node(@NonNull Context context, MutableGraph<Node> graph, NodeType tipo) {
+        super(context);
+        try {
+            this.tipo = tipo;
+            this.graph = graph;
+            init(context);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public Node(@NonNull Context context, boolean circle) {
         super(context);

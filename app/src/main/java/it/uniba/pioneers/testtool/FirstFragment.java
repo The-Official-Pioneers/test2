@@ -27,8 +27,8 @@ import it.uniba.pioneers.data.CuratoreMuseale;
 import it.uniba.pioneers.testtool.databinding.FragmentFirstBinding;
 
 public class FirstFragment extends Fragment {
-
     private FragmentFirstBinding binding;
+
 
     @Override
     public View onCreateView(

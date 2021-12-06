@@ -1,6 +1,7 @@
 package it.uniba.pioneers.testtool;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
@@ -18,18 +19,15 @@ public class EditorActivity extends AppCompatActivity {
     private ActivityEditor2Binding binding;
 
     FirstFragment f = new FirstFragment();
-    SecondFragment s = new SecondFragment();
+    GrafoFragment s = new GrafoFragment();
     EditorPercorsi e = new EditorPercorsi();
 
     Integer state = 0;
 
     FragmentManager supportFragmentManager;
     FragmentContainerView containerView;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityEditor2Binding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_editor);
+
+    private void init(){
 
         Button avanti = findViewById(R.id.changeFragment2);
         Button indietro = findViewById(R.id.changeFragment);
@@ -92,5 +90,21 @@ public class EditorActivity extends AppCompatActivity {
 
 
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityEditor2Binding.inflate(getLayoutInflater());
+        setContentView(R.layout.activity_editor);
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        init();
     }
 }

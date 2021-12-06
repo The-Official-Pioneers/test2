@@ -1,15 +1,15 @@
 
 q
 java:S1450"VRemove the "binding" field and declare it as a local variable in the relevant methods.(ĞğºÛşÿÿÿÿ
-7	java:S131-""Add a default case to this switch.(ş™ÅŞ
-7	java:S131F""Add a default case to this switch.(ş™ÅŞ
+7	java:S131*""Add a default case to this switch.(ş™ÅŞ
+7	java:S131C""Add a default case to this switch.(ş™ÅŞ
 F
 java:S1068"+Remove this unused "binding" private field.(ĞğºÛşÿÿÿÿ
 {
 java:S1319"eThe type of "opere" should be an interface such as "List" rather than the implementation "ArrayList".(á˜“
 a
-java:S1301-"KReplace this "switch" statement by "if" statements to increase readability.(ş™ÅŞ
+java:S1301*"KReplace this "switch" statement by "if" statements to increase readability.(ş™ÅŞ
 a
-java:S1301F"KReplace this "switch" statement by "if" statements to increase readability.(ş™ÅŞ
+java:S1301C"KReplace this "switch" statement by "if" statements to increase readability.(ş™ÅŞ
 g
 java:S1104"QMake opere a static final constant or non-public and provide accessors if needed.(á˜“
