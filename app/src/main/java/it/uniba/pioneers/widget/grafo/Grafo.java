@@ -8,6 +8,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -99,38 +100,63 @@ public class Grafo extends ConstraintLayout {
             private void drawLine(Node nodeVisita){
                 AtomicInteger contatoreZone = new AtomicInteger(1);
                 drawView.resetDrawView(self, 0);
-                graph.successors(nodeVisita)
-                        .forEach(nodeZona -> {
-                            nodeZona.setX(contatoreZone.get() * calcX(graph.successors(nodeVisita).size()));
-                            nodeZona.setY(r2);
 
-                            drawView.linesZona.add(new Line(
-                                    (nodeVisita.getX() + fromDpToPx(24)),
-                                     nodeVisita.getY() + fromDpToPx(47),
-                                    (nodeZona.getX() + fromDpToPx(24)),
-                                    nodeZona.getY())
-                            );
-                            AtomicInteger contatoreAree = new AtomicInteger(1);
-                            nodeZona.setOnClickListener(view -> {
-                                nodeZona.setCircle(true);
+                for(Object nodeZona : graph.successors(nodeVisita).toArray()){
+                    Node nodeZonaReal = (Node)nodeZona;
+
+                    nodeZonaReal.setX(contatoreZone.get() * calcX(graph.successors(nodeVisita).size()));
+                    nodeZonaReal.setY(r2);
+
+                    drawView.linesZona.add(new Line(
+                            (nodeVisita.getX() + fromDpToPx(24)),
+                            nodeVisita.getY() + fromDpToPx(47),
+                            (nodeZonaReal.getX() + fromDpToPx(24)),
+                            nodeZonaReal.getY())
+                    );
+
+                    nodeZonaReal.setOnClickListener(view -> {
+                        if(nodeZonaReal.clicked){
+
+                            graph.successors(nodeZonaReal).forEach(figloNodoZona -> {
+                                figloNodoZona.setVisibility(INVISIBLE);
+
+                                graph.successors(figloNodoZona).forEach(figlioNodoArea ->{
+                                    figlioNodoArea.setVisibility(INVISIBLE);
+                                });
+                            });
+                            nodeZonaReal.setClicked(false);
+                            nodeZonaReal.setCircle(false);
+
+                        }else{
+
+                            if(nodeZonaReal.inizializated){
+                                graph.successors(nodeZonaReal).forEach(figloNodoZona -> {
+                                    figloNodoZona.setVisibility(VISIBLE);
+
+                                    graph.successors(figloNodoZona).forEach(figlioNodoArea ->{
+                                        figlioNodoArea.setVisibility(VISIBLE);
+                                    });
+                                });
+                            }else{
+                                AtomicInteger contatoreAree = new AtomicInteger(1);
+                                nodeZonaReal.setCircle(true);
                                 //resetDrawView();
-                                graph.successors(nodeZona).forEach(nodeArea -> {
-                                    nodeArea.setX(contatoreAree.get() *calcX(graph.successors(nodeZona).size()));
+                                graph.successors(nodeZonaReal).forEach(nodeArea -> {
+                                    nodeArea.setX(contatoreAree.get() *calcX(graph.successors(nodeZonaReal).size()));
                                     nodeArea.setY(r3);
 
                                     drawView.linesArea.add(new Line(
-                                            (nodeZona.getX() + fromDpToPx(24)),
-                                            nodeZona.getY() + fromDpToPx(47),
+                                            (nodeZonaReal.getX() + fromDpToPx(24)),
+                                            nodeZonaReal.getY() + fromDpToPx(47),
                                             (nodeArea.getX() + fromDpToPx(24)),
                                             nodeArea.getY())
                                     );
 
                                     resetDrawView();
 
-                                    AtomicInteger contatoreOpere = new AtomicInteger(1);
                                     nodeArea.setOnClickListener(view1 -> {
+                                        AtomicInteger contatoreOpere = new AtomicInteger(1);
                                         nodeArea.setCircle(true);
-                                        //resetDrawView();
                                         graph.successors(nodeArea).forEach(nodeOpera -> {
                                             nodeOpera.setX(contatoreOpere.get() *calcX(graph.successors(nodeArea).size()));
                                             nodeOpera.setY(r4);
@@ -157,12 +183,22 @@ public class Grafo extends ConstraintLayout {
                                     nodeArea.setInizializated(true);
                                     contatoreAree.incrementAndGet();
                                 });
-                            });
 
-                            addView(nodeZona);
-                            nodeZona.setInizializated(true);
-                            contatoreZone.incrementAndGet();
-                        });
+                                nodeZonaReal.setInizializated(true);
+
+                            }
+
+                            nodeZonaReal.setClicked(true);
+
+                        }
+                    });
+
+                    contatoreZone.incrementAndGet();
+                    if(!nodeZonaReal.inizializated){
+                        addView(nodeZonaReal);
+                    }
+                }
+
             }
 
             public void run(){

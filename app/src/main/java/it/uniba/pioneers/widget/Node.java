@@ -152,6 +152,10 @@ public class Node extends ConstraintLayout{
         this.inizializated = flag;
     }
 
+    public void setClicked(boolean flag){
+        this.clicked = flag;
+    }
+
     public Node(Context context, NodeType nodeType) {
         super(context);
         try {
