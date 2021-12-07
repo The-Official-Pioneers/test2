@@ -59,6 +59,9 @@ public class Node extends ConstraintLayout{
 
     MutableGraph<Node> graph = null;
 
+    public boolean clicked = false;
+    public boolean inizializated = false;
+
     public Node clone(Context context) {
         return new Node(context, this.linearLayout, this.data);
     }
@@ -143,6 +146,10 @@ public class Node extends ConstraintLayout{
 
         TextView tmp = new TextView(context.getApplicationContext());
 
+    }
+
+    public void setInizializated(boolean flag){
+        this.inizializated = flag;
     }
 
     public Node(Context context, NodeType nodeType) {

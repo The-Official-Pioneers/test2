@@ -92,11 +92,8 @@ public class Grafo extends ConstraintLayout {
             }
 
             private void resetDrawView(){
-
                 if(drawView != null)
-                    self.removeView(drawView);
-
-                self.addView(drawView);
+                    drawView.invalidate();
             }
 
             private void drawLine(Node nodeVisita){
@@ -130,8 +127,6 @@ public class Grafo extends ConstraintLayout {
 
                                     resetDrawView();
 
-                                    
-
                                     AtomicInteger contatoreOpere = new AtomicInteger(1);
                                     nodeArea.setOnClickListener(view1 -> {
                                         nodeArea.setCircle(true);
@@ -154,14 +149,18 @@ public class Grafo extends ConstraintLayout {
                                                 nodeOpera.setCircle(true);
                                             });
                                             addView(nodeOpera);
+                                            nodeOpera.setInizializated(true);
                                             contatoreOpere.incrementAndGet();
                                         });
                                     });
                                     addView(nodeArea);
+                                    nodeArea.setInizializated(true);
                                     contatoreAree.incrementAndGet();
                                 });
                             });
+
                             addView(nodeZona);
+                            nodeZona.setInizializated(true);
                             contatoreZone.incrementAndGet();
                         });
             }
