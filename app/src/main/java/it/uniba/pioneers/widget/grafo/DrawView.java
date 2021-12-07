@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import java.util.ArrayList;
 
-public class DrawView extends View {
+public class DrawView extends View{
     Paint paint = new Paint();
     ArrayList<Line> lines = new ArrayList<Line>();
     public DrawView(Context context) {

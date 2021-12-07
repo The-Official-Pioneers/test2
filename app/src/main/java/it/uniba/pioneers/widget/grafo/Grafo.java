@@ -30,7 +30,12 @@ public class Grafo extends ConstraintLayout {
     Display display = null;
     Point size = new Point();
 
-    DrawView drawView = null;
+    public DrawView drawView = null;
+
+    Node actualVisita = null;
+    Node actualZona = null;
+    Node actualArea = null;
+    Node actualOpera = null;
 
     private float fromDpToPx(int dip){
         Resources r = getResources();
@@ -58,6 +63,13 @@ public class Grafo extends ConstraintLayout {
         layoutInflater.inflate(R.layout.widget_grafo, this);
 
         initDrawAttribute(context);
+        initGrafo(context);
+
+
+    }
+
+    public void initGrafo(Context context){
+
 
         Grafo tmp = this;
         this.post(new Runnable(){
@@ -81,20 +93,72 @@ public class Grafo extends ConstraintLayout {
                     return n > 1 ? ((float) size.x/n) - fromDpToPx(24) : ((float) size.x/powOfTwo(1)) - fromDpToPx(24);
             }
 
-            private void drawLine(Node parent, float row, float parentY){
+            private void resetDrawView(){
+                tmp.removeView(drawView);
+                drawView = new DrawView(context);
+                tmp.addView(drawView);
+
+            }
+
+            private void drawLine(Node parent){
                 AtomicInteger k = new AtomicInteger(1);
                 graph.successors(parent)
                         .forEach(node -> {
                             node.setX(k.get() *calcX(graph.successors(parent).size()));
-                            node.setY(row);
+                            node.setY(r2);
                             drawView.lines.add(new Line(
                                     (parent.getX() + fromDpToPx(24)),
-                                     parentY + fromDpToPx(47),
+                                     parent.getY() + fromDpToPx(47),
                                     (node.getX() + fromDpToPx(24)),
                                     node.getY())
                             );
-                            addView(node);
+                            AtomicInteger k1 = new AtomicInteger(1);
+                            node.setOnClickListener(view -> {
+                                node.setCircle(true);
 
+                                resetDrawView();
+                                graph.successors(node).forEach(node1 -> {
+                                    node1.setX(k1.get() *calcX(graph.successors(node).size()));
+                                    node1.setY(r3);
+                                    drawView.lines.add(new Line(
+                                            (node.getX() + fromDpToPx(24)),
+                                            node.getY() + fromDpToPx(47),
+                                            (node1.getX() + fromDpToPx(24)),
+                                            node1.getY())
+                                    );
+                                    resetDrawView();
+
+                                    AtomicInteger k2 = new AtomicInteger(1);
+                                    node1.setOnClickListener(view1 -> {
+                                        node1.setCircle(true);
+
+                                        graph.successors(node1).forEach(node2 -> {
+                                            node2.setX(k2.get() *calcX(graph.successors(node1).size()));
+                                            node2.setY(r4);
+
+
+                                            drawView.lines.add(new Line(
+                                                    (node1.getX() + fromDpToPx(24)),
+                                                    node1.getY() + fromDpToPx(47),
+                                                    (node2.getX() + fromDpToPx(24)),
+                                                    node2.getY())
+                                            );
+                                            node2.setOnClickListener(view2 -> {
+                                                node2.setCircle(true);
+
+                                                graph.successors(node2).forEach(node3 -> {
+
+                                                });
+                                            });
+                                            addView(node2);
+                                            k2.incrementAndGet();
+                                        });
+                                    });
+                                    addView(node1);
+                                    k1.incrementAndGet();
+                                });
+                            });
+                            addView(node);
                             k.incrementAndGet();
                         });
             }
@@ -128,13 +192,18 @@ public class Grafo extends ConstraintLayout {
                 Node stanza4 = new Node(context, graph, NodeType.AREA);
                 Node stanza5 = new Node(context, graph, NodeType.AREA);
                 Node stanza6 = new Node(context, graph, NodeType.AREA);
+                Node stanza7 = new Node(context, graph, NodeType.AREA);
+                Node stanza8 = new Node(context, graph, NodeType.AREA);
 
 
-                museo.addSuccessor(stanza1);
-                museo.addSuccessor(stanza2);
-                museo.addSuccessor(stanza3);
+                museo2.addSuccessor(stanza1);
+                museo2.addSuccessor(stanza2);
+                museo2.addSuccessor(stanza3);
                 museo.addSuccessor(stanza4);
                 museo.addSuccessor(stanza5);
+                museo.addSuccessor(stanza6);
+                museo.addSuccessor(stanza7);
+                museo.addSuccessor(stanza8);
 
                 ///////////////////////////
                 Node opera1 = new Node(context, graph, NodeType.OPERA);
@@ -153,16 +222,21 @@ public class Grafo extends ConstraintLayout {
                 stanza1.addSuccessor(opera6);
 
                 ///////////////////////////
-                drawLine(visita, r2, 0);
+                drawLine(visita);
                 visita.setCircle(true);
+                actualVisita = visita;
 
-                drawLine(museo, r3, museo.getY());
+                /*drawLine(museo, r3, museo.getY());
                 museo.setCircle(true);
+                actualZona = museo;
 
                 drawLine(stanza1, r4, stanza1.getY());
                 stanza1.setCircle(true);
+                actualArea = stanza1;*/
 
-                tmp.addView(drawView);
+                actualOpera = (Node) graph.successors(stanza1).toArray()[0];
+
+
 
             }
         });
@@ -174,7 +248,15 @@ public class Grafo extends ConstraintLayout {
 
         Grafo tmp = this;
         this.post(new Runnable(){
+            public void setXY(Node node, float row){
+                node.setX(((float) size.x/2) - fromDpToPx(24));
+                node.setY(row);
+            }
+
             public void run(){
+                tmp.addView(drawView);
+
+
                 int height = tmp.getHeight();
                 int weight = tmp.getWidth();
 
@@ -187,18 +269,13 @@ public class Grafo extends ConstraintLayout {
 
                 Node visita = new Node(context);
                 tmp.addView(visita);
-                visita.setX(((float) size.x/2) - fromDpToPx(24));
-                visita.setY(r1);
+                setXY(visita, r1);
 
 
                 Node museo1 = new Node(context);
                 tmp.addView(museo1);
                 graph.addNode(museo1);
-
-                museo1.setX(((float) size.x/2) - fromDpToPx(24));
-                museo1.setY(r2);
-
-                tmp.addView(drawView);
+                setXY(museo1, r2);
                 drawView.lines.add(new Line(visita.getX() + fromDpToPx(24), 0 + fromDpToPx(47), museo1.getX() + fromDpToPx(24), museo1.getY()));
 
 

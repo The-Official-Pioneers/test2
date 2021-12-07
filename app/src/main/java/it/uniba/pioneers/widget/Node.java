@@ -137,10 +137,9 @@ public class Node extends ConstraintLayout{
 
         setCircle(this.circle);
         // Defines the one method for the interface, which is called when the View is long-clicked
-        this.setOnTouchListener(new MyTouchListener());
+        //this.setOnTouchListener(new MyTouchListener());
 
-        this.setOnDragListener(new MyDragListener());
-
+        //this.setOnDragListener(new MyDragListener());
 
         TextView tmp = new TextView(context.getApplicationContext());
 
