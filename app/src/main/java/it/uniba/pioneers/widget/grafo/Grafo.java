@@ -67,7 +67,6 @@ public class Grafo extends ConstraintLayout {
         initDrawAttribute(context);
         initGrafo(context);
 
-
     }
 
     public void initGrafo(Context context){
