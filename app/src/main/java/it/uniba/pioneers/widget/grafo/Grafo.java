@@ -137,7 +137,38 @@ public class Grafo extends ConstraintLayout {
 
             //NODE AREA
             private void nodeAreaSetOnClickListener(Node nodeArea){
+                int size = graph.successors(nodeArea).size();
+
                 nodeArea.setOnClickListener(view1 -> {
+
+                    //GESTIRE
+                    /*if(size > 0){
+                        graph.predecessors(nodeArea).forEach(nodeZona -> {
+                            graph.successors(nodeZona).forEach(nodeDaNascondere -> {
+                                if (nodeDaNascondere.clicked && !nodeDaNascondere.equals(nodeArea)) {
+                                    nodeDaNascondere.setClicked(false);
+                                    nodeDaNascondere.setCircle(false);
+
+                                    graph.successors(nodeDaNascondere).forEach(figlioDaNascondere -> {
+                                        figlioDaNascondere.setClicked(false);
+
+                                        figlioDaNascondere.setVisibility(INVISIBLE);
+                                    });
+                                }
+                            });
+                        });
+
+                        if(nodeZonaReal.clicked){
+                            nodeZonaOnClickIfNotInizialized(nodeZonaReal);
+                        }else{
+                            nodeZonaOnClickIfNotClicked(nodeZonaReal);
+                        }
+
+                    }else{
+                        Snackbar.make(self, "Non esistono Aree associate", BaseTransientBottomBar.LENGTH_LONG).show();
+                    }*/
+
+
                     AtomicInteger contatoreOpere = new AtomicInteger(1);
                     nodeArea.setCircle(true);
                     graph.successors(nodeArea).forEach(nodeOpera -> {
@@ -178,7 +209,6 @@ public class Grafo extends ConstraintLayout {
                                 }
                             });
                         });
-
 
                         if(nodeZonaReal.clicked){
                             nodeZonaOnClickIfNotInizialized(nodeZonaReal);
@@ -308,9 +338,9 @@ public class Grafo extends ConstraintLayout {
 
                 stanza1.addSuccessor(opera1);
                 stanza1.addSuccessor(opera2);
-                stanza1.addSuccessor(opera3);
-                stanza1.addSuccessor(opera4);
-                stanza1.addSuccessor(opera5);
+                stanza2.addSuccessor(opera3);
+                stanza2.addSuccessor(opera4);
+                stanza2.addSuccessor(opera5);
                 stanza1.addSuccessor(opera6);
 
                 ///////////////////////////
