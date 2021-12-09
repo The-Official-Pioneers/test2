@@ -138,12 +138,13 @@ public class Grafo extends ConstraintLayout {
                 nodeArea.setOnClickListener(view1 -> {
 
                     if (size > 0) {
+                        self.drawView.resetDrawView(self, 2);
+
                         graph.predecessors(nodeArea).forEach(zona -> {
                             graph.successors(zona).forEach(area -> {
                                 if (area.clicked && !area.equals(nodeArea)) {
                                     area.setClicked(false);
                                     area.setCircle(false);
-
                                     graph.successors(area).forEach(opera -> {
                                         opera.setClicked(false);
                                         opera.setVisibility(INVISIBLE);
@@ -154,6 +155,11 @@ public class Grafo extends ConstraintLayout {
 
                         if (nodeArea.clicked) {
                             self.drawView.resetDrawView(self, 2);
+                            graph.predecessors(nodeArea).forEach(zona -> {
+                                graph.successors(zona).forEach(area ->{
+                                    drawView.linesOpera.add(buildLine(zona, area));
+                                });
+                            });
 
                             graph.successors(nodeArea).forEach(figloNodoArea -> {
                                 figloNodoArea.setVisibility(INVISIBLE);
@@ -161,16 +167,20 @@ public class Grafo extends ConstraintLayout {
                             nodeArea.setClicked(false);
                             nodeArea.setCircle(false);
                         } else {
-                            self.drawView.resetDrawView(self, 2);
+                            self.drawView.resetDrawView(self, 1);
+
+                            graph.predecessors(nodeArea).forEach(zona -> {
+                                graph.successors(zona).forEach(area ->{
+                                    drawView.linesOpera.add(buildLine(zona, area));
+                                });
+                            });
 
                             if(nodeArea.inizializated){
                                 for(Node figloNodoArea : graph.successors(nodeArea)){
                                     figloNodoArea.setVisibility(VISIBLE);
 
                                     drawView.linesOpera.add(buildLine(nodeArea, figloNodoArea));
-                                    refreshDrawView();
                                 }
-                                nodeArea.setCircle(true);
                             }else{
                                 AtomicInteger contatoreOpere = new AtomicInteger(1);
                                 nodeArea.setCircle(true);
@@ -179,11 +189,11 @@ public class Grafo extends ConstraintLayout {
                                     nodeOpera.setY(r4);
 
                                     drawView.linesOpera.add(buildLine(nodeArea, nodeOpera));
-                                    refreshDrawView();
 
                                     nodeOpera.setOnClickListener(view2 -> {
                                         nodeOpera.setCircle(true);
                                     });
+
                                     addView(nodeOpera);
                                     nodeOpera.setInizializated(true);
                                     contatoreOpere.incrementAndGet();
@@ -192,7 +202,8 @@ public class Grafo extends ConstraintLayout {
                                 nodeArea.setInizializated(true);
 
                             }
-
+                            refreshDrawView();
+                            nodeArea.setCircle(true);
                             nodeArea.setClicked(true);
                         }
                     } else {
@@ -258,7 +269,6 @@ public class Grafo extends ConstraintLayout {
                         nodeArea.setY(r3);
 
                         drawView.linesArea.add(buildLine(nodeZonaReal, nodeArea));
-
                         refreshDrawView();
 
                         nodeAreaSetOnClickListener(nodeArea);
