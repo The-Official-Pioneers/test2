@@ -110,8 +110,7 @@ public class Grafo extends ConstraintLayout {
                 AtomicInteger contatoreZone = new AtomicInteger(1);
                 drawView.resetDrawView(self, 0);
 
-                for(Object nodeZona : graph.successors(nodeVisita).toArray()){
-                    Node nodeZonaReal = (Node)nodeZona;
+                for(Node nodeZonaReal : graph.successors(nodeVisita)){
 
                     int size = graph.successors(nodeZonaReal).size();
 
@@ -147,7 +146,6 @@ public class Grafo extends ConstraintLayout {
 
                                     graph.successors(nodeDaNascondere).forEach(figlioDaNascondere -> {
                                         figlioDaNascondere.setClicked(false);
-
                                         figlioDaNascondere.setVisibility(INVISIBLE);
                                     });
                                 }
@@ -168,6 +166,9 @@ public class Grafo extends ConstraintLayout {
 
                                 for(Node figloNodoArea : graph.successors(nodeArea)){
                                     figloNodoArea.setVisibility(VISIBLE);
+
+                                    drawView.linesOpera.add(buildLine(nodeArea, figloNodoArea));
+                                    refreshDrawView();
                                 }
                                 nodeArea.setCircle(true);
                             }else{
@@ -207,17 +208,22 @@ public class Grafo extends ConstraintLayout {
 
                     if(size > 0){
                         graph.predecessors(nodeZonaReal).forEach(nodeVisita -> {
-                            graph.successors(nodeVisita).forEach(nodeDaNascondere -> {
-                                if (nodeDaNascondere.clicked && !nodeDaNascondere.equals(nodeZonaReal)) {
-                                    nodeDaNascondere.setClicked(false);
-                                    nodeDaNascondere.setCircle(false);
+                            graph.successors(nodeVisita).forEach(zona -> {
+                                if(zona.inizializated){
+                                    zona.setClicked(false);
+                                    zona.setCircle(false);
 
-                                    graph.successors(nodeDaNascondere).forEach(figlioDaNascondere -> {
-                                        figlioDaNascondere.setClicked(false);
+                                    graph.successors(zona).forEach(area -> {
+                                        area.setClicked(false);
+                                        area.setVisibility(INVISIBLE);
 
-                                        figlioDaNascondere.setVisibility(INVISIBLE);
+                                        graph.successors(area).forEach(opera -> {
+                                            opera.setClicked(false);
+                                            opera.setVisibility(INVISIBLE);
+                                        });
                                     });
                                 }
+
                             });
                         });
 
@@ -254,7 +260,6 @@ public class Grafo extends ConstraintLayout {
                         nodeAreaSetOnClickListener(nodeArea);
 
                         addView(nodeArea);
-                        //nodeArea.setInizializated(true);
                         contatoreAree.incrementAndGet();
                     });
 
@@ -265,12 +270,12 @@ public class Grafo extends ConstraintLayout {
             }
 
             private void nodeZonaOnClickIfNotInizialized(Node nodeZonaReal) {
-                self.drawView.resetDrawView(self, 1);
+                self.drawView.resetDrawView(self, 1); //RESET DELLE LINEE
 
-                graph.successors(nodeZonaReal).forEach(figloNodoZona -> {
-                    figloNodoZona.setVisibility(INVISIBLE);
+                graph.successors(nodeZonaReal).forEach(area -> {
+                    area.setVisibility(INVISIBLE);
 
-                    graph.successors(figloNodoZona).forEach(figlioNodoArea ->{
+                    graph.successors(area).forEach(figlioNodoArea ->{
                         figlioNodoArea.setVisibility(INVISIBLE);
                     });
                 });
@@ -285,8 +290,10 @@ public class Grafo extends ConstraintLayout {
                     drawView.linesArea.add(buildLine(nodeZonaReal, figloNodoZona));
 
                     graph.successors(figloNodoZona).forEach(figlioNodoArea ->{
-                        figlioNodoArea.setVisibility(VISIBLE);
-                        drawView.linesArea.add(buildLine(figloNodoZona, figlioNodoArea));
+                        if(figlioNodoArea.clicked){
+                            figlioNodoArea.setVisibility(VISIBLE);
+                            drawView.linesArea.add(buildLine(figloNodoZona, figlioNodoArea));
+                        }
                     });
                 });
 
