@@ -162,6 +162,20 @@ public class Grafo extends ConstraintLayout {
             //NODE ZONA
             private void nodeZonaSetOnClickListener(Node nodeZonaReal, int size) {
                 nodeZonaReal.setOnClickListener(view -> {
+
+                    /*graph.predecessors(nodeZonaReal).forEach(nodeVisita -> {
+                        graph.successors(nodeVisita).forEach(nodeDaNascondere -> {
+                            if (nodeDaNascondere.clicked) {
+                                nodeDaNascondere.setClicked(false);
+                                graph.successors(nodeDaNascondere).forEach(figlioDaNascondere -> {
+                                    figlioDaNascondere.setClicked(false);
+
+                                    figlioDaNascondere.setVisibility(INVISIBLE);
+                                });
+                            }
+                        });
+                    });*/
+
                     if(size > 0){
                         if(nodeZonaReal.clicked){
                             nodeZonaOnClickIfNotInizialized(nodeZonaReal);
@@ -207,6 +221,9 @@ public class Grafo extends ConstraintLayout {
 
             private void nodeZonaOnClickIfNotInizialized(Node nodeZonaReal) {
                 self.drawView.resetDrawView(self, 1);
+
+
+
                 graph.successors(nodeZonaReal).forEach(figloNodoZona -> {
                     figloNodoZona.setVisibility(INVISIBLE);
 
