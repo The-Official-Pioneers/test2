@@ -86,10 +86,7 @@ public class Grafo extends ConstraintLayout {
             }
 
             private float calcX(int n){
-                if(n % 2 == 0)
-                    return n > 1 ? ((float) size.x/(n - 1)) - fromDpToPx(24) : ((float) size.x/powOfTwo(1)) - fromDpToPx(24);
-                else
-                    return n > 1 ? ((float) size.x/n) - fromDpToPx(24) : ((float) size.x/powOfTwo(1)) - fromDpToPx(24);
+                return n > 1 ? ((float) size.x/(n)) - fromDpToPx(24) : ((float) size.x/powOfTwo(1)) - fromDpToPx(24);
             }
 
             private void refreshDrawView(){
@@ -158,7 +155,7 @@ public class Grafo extends ConstraintLayout {
                         });
 
                         if (nodeArea.clicked) {
-                            self.drawView.resetDrawView(self, 1);
+                            self.drawView.resetDrawView(self, 2);
 
                             graph.successors(nodeArea).forEach(figloNodoArea -> {
                                 figloNodoArea.setVisibility(INVISIBLE);
@@ -167,13 +164,12 @@ public class Grafo extends ConstraintLayout {
                             nodeArea.setCircle(false);
                         } else {
                             if(nodeArea.inizializated){
-                                self.drawView.resetDrawView(self, 1);
+                                self.drawView.resetDrawView(self, 2);
 
-                                graph.successors(nodeArea).forEach(figloNodoArea -> {
-                                    figloNodoArea.setVisibility(INVISIBLE);
-                                });
-                                nodeArea.setClicked(false);
-                                nodeArea.setCircle(false);
+                                for(Node figloNodoArea : graph.successors(nodeArea)){
+                                    figloNodoArea.setVisibility(VISIBLE);
+                                }
+                                nodeArea.setCircle(true);
                             }else{
                                 AtomicInteger contatoreOpere = new AtomicInteger(1);
                                 nodeArea.setCircle(true);
@@ -191,7 +187,12 @@ public class Grafo extends ConstraintLayout {
                                     nodeOpera.setInizializated(true);
                                     contatoreOpere.incrementAndGet();
                                 });
+
+                                nodeArea.setInizializated(true);
+
                             }
+
+                            nodeArea.setClicked(true);
                         }
                     } else {
                         Snackbar.make(self, "Non esistono Opere associate", BaseTransientBottomBar.LENGTH_LONG).show();
@@ -253,7 +254,7 @@ public class Grafo extends ConstraintLayout {
                         nodeAreaSetOnClickListener(nodeArea);
 
                         addView(nodeArea);
-                        nodeArea.setInizializated(true);
+                        //nodeArea.setInizializated(true);
                         contatoreAree.incrementAndGet();
                     });
 
@@ -286,7 +287,6 @@ public class Grafo extends ConstraintLayout {
                     graph.successors(figloNodoZona).forEach(figlioNodoArea ->{
                         figlioNodoArea.setVisibility(VISIBLE);
                         drawView.linesArea.add(buildLine(figloNodoZona, figlioNodoArea));
-
                     });
                 });
 
@@ -344,12 +344,14 @@ public class Grafo extends ConstraintLayout {
                 Node opera6 = new Node(context, graph, NodeType.OPERA);
 
 
-                stanza1.addSuccessor(opera1);
-                stanza1.addSuccessor(opera2);
-                stanza2.addSuccessor(opera3);
-                stanza2.addSuccessor(opera4);
-                stanza2.addSuccessor(opera5);
+                stanza2.addSuccessor(opera1);
+                stanza2.addSuccessor(opera2);
+                stanza1.addSuccessor(opera3);
+                stanza1.addSuccessor(opera4);
+                stanza1.addSuccessor(opera5);
                 stanza1.addSuccessor(opera6);
+
+
 
                 ///////////////////////////
                 nodeVisitaInitListeners(visita);
