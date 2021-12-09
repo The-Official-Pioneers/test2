@@ -138,15 +138,15 @@ public class Grafo extends ConstraintLayout {
                 nodeArea.setOnClickListener(view1 -> {
 
                     if (size > 0) {
-                        graph.predecessors(nodeArea).forEach(nodeZona -> {
-                            graph.successors(nodeZona).forEach(nodeDaNascondere -> {
-                                if (nodeDaNascondere.clicked && !nodeDaNascondere.equals(nodeArea)) {
-                                    nodeDaNascondere.setClicked(false);
-                                    nodeDaNascondere.setCircle(false);
+                        graph.predecessors(nodeArea).forEach(zona -> {
+                            graph.successors(zona).forEach(area -> {
+                                if (area.clicked && !area.equals(nodeArea)) {
+                                    area.setClicked(false);
+                                    area.setCircle(false);
 
-                                    graph.successors(nodeDaNascondere).forEach(figlioDaNascondere -> {
-                                        figlioDaNascondere.setClicked(false);
-                                        figlioDaNascondere.setVisibility(INVISIBLE);
+                                    graph.successors(area).forEach(opera -> {
+                                        opera.setClicked(false);
+                                        opera.setVisibility(INVISIBLE);
                                     });
                                 }
                             });
@@ -161,9 +161,9 @@ public class Grafo extends ConstraintLayout {
                             nodeArea.setClicked(false);
                             nodeArea.setCircle(false);
                         } else {
-                            if(nodeArea.inizializated){
-                                self.drawView.resetDrawView(self, 2);
+                            self.drawView.resetDrawView(self, 2);
 
+                            if(nodeArea.inizializated){
                                 for(Node figloNodoArea : graph.successors(nodeArea)){
                                     figloNodoArea.setVisibility(VISIBLE);
 
