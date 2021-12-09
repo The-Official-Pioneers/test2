@@ -214,11 +214,15 @@ public class Grafo extends ConstraintLayout {
                                     zona.setCircle(false);
 
                                     graph.successors(zona).forEach(area -> {
-                                        area.setClicked(false);
+                                        if(!area.clicked){
+                                            area.setClicked(false);
+                                        }
                                         area.setVisibility(INVISIBLE);
 
                                         graph.successors(area).forEach(opera -> {
-                                            opera.setClicked(false);
+                                            if(!area.clicked){
+                                                opera.setClicked(false);
+                                            }
                                             opera.setVisibility(INVISIBLE);
                                         });
                                     });
@@ -284,17 +288,16 @@ public class Grafo extends ConstraintLayout {
             }
 
             private void nodeZonaOnClickIfInizialized(Node nodeZonaReal) {
-                graph.successors(nodeZonaReal).forEach(figloNodoZona -> {
-                    figloNodoZona.setVisibility(VISIBLE);
+                graph.successors(nodeZonaReal).forEach(area -> {
+                    area.setVisibility(VISIBLE);
 
-                    drawView.linesArea.add(buildLine(nodeZonaReal, figloNodoZona));
-
-                    graph.successors(figloNodoZona).forEach(figlioNodoArea ->{
-                        if(figlioNodoArea.clicked){
-                            figlioNodoArea.setVisibility(VISIBLE);
-                            drawView.linesArea.add(buildLine(figloNodoZona, figlioNodoArea));
-                        }
-                    });
+                    drawView.linesArea.add(buildLine(nodeZonaReal, area));
+                    if(area.clicked){
+                        graph.successors(area).forEach(opera ->{
+                                opera.setVisibility(VISIBLE);
+                                drawView.linesArea.add(buildLine(area, opera));
+                        });
+                    }
                 });
 
                 refreshDrawView();
