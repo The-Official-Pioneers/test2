@@ -136,13 +136,12 @@ public class Grafo extends ConstraintLayout {
 
 
             //NODE AREA
-            private void nodeAreaSetOnClickListener(Node nodeArea){
+            private void nodeAreaSetOnClickListener(Node nodeArea) {
                 int size = graph.successors(nodeArea).size();
 
                 nodeArea.setOnClickListener(view1 -> {
 
-                    //GESTIRE
-                    /*if(size > 0){
+                    if (size > 0) {
                         graph.predecessors(nodeArea).forEach(nodeZona -> {
                             graph.successors(nodeZona).forEach(nodeDaNascondere -> {
                                 if (nodeDaNascondere.clicked && !nodeDaNascondere.equals(nodeArea)) {
@@ -158,35 +157,46 @@ public class Grafo extends ConstraintLayout {
                             });
                         });
 
-                        if(nodeZonaReal.clicked){
-                            nodeZonaOnClickIfNotInizialized(nodeZonaReal);
-                        }else{
-                            nodeZonaOnClickIfNotClicked(nodeZonaReal);
+                        if (nodeArea.clicked) {
+                            self.drawView.resetDrawView(self, 1);
+
+                            graph.successors(nodeArea).forEach(figloNodoArea -> {
+                                figloNodoArea.setVisibility(INVISIBLE);
+                            });
+                            nodeArea.setClicked(false);
+                            nodeArea.setCircle(false);
+                        } else {
+                            if(nodeArea.inizializated){
+                                self.drawView.resetDrawView(self, 1);
+
+                                graph.successors(nodeArea).forEach(figloNodoArea -> {
+                                    figloNodoArea.setVisibility(INVISIBLE);
+                                });
+                                nodeArea.setClicked(false);
+                                nodeArea.setCircle(false);
+                            }else{
+                                AtomicInteger contatoreOpere = new AtomicInteger(1);
+                                nodeArea.setCircle(true);
+                                graph.successors(nodeArea).forEach(nodeOpera -> {
+                                    nodeOpera.setX(contatoreOpere.get() * calcX(graph.successors(nodeArea).size()));
+                                    nodeOpera.setY(r4);
+
+                                    drawView.linesOpera.add(buildLine(nodeArea, nodeOpera));
+                                    refreshDrawView();
+
+                                    nodeOpera.setOnClickListener(view2 -> {
+                                        nodeOpera.setCircle(true);
+                                    });
+                                    addView(nodeOpera);
+                                    nodeOpera.setInizializated(true);
+                                    contatoreOpere.incrementAndGet();
+                                });
+                            }
                         }
-
-                    }else{
-                        Snackbar.make(self, "Non esistono Aree associate", BaseTransientBottomBar.LENGTH_LONG).show();
-                    }*/
-
-
-                    AtomicInteger contatoreOpere = new AtomicInteger(1);
-                    nodeArea.setCircle(true);
-                    graph.successors(nodeArea).forEach(nodeOpera -> {
-                        nodeOpera.setX(contatoreOpere.get() *calcX(graph.successors(nodeArea).size()));
-                        nodeOpera.setY(r4);
-
-                        drawView.linesOpera.add(buildLine(nodeArea, nodeOpera));
-                        refreshDrawView();
-
-                        nodeOpera.setOnClickListener(view2 -> {
-                            nodeOpera.setCircle(true);
-                        });
-                        addView(nodeOpera);
-                        nodeOpera.setInizializated(true);
-                        contatoreOpere.incrementAndGet();
-                    });
+                    } else {
+                        Snackbar.make(self, "Non esistono Opere associate", BaseTransientBottomBar.LENGTH_LONG).show();
+                    }
                 });
-
             }
 
 
@@ -255,8 +265,6 @@ public class Grafo extends ConstraintLayout {
 
             private void nodeZonaOnClickIfNotInizialized(Node nodeZonaReal) {
                 self.drawView.resetDrawView(self, 1);
-
-
 
                 graph.successors(nodeZonaReal).forEach(figloNodoZona -> {
                     figloNodoZona.setVisibility(INVISIBLE);
