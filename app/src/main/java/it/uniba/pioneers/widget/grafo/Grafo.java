@@ -163,25 +163,29 @@ public class Grafo extends ConstraintLayout {
             private void nodeZonaSetOnClickListener(Node nodeZonaReal, int size) {
                 nodeZonaReal.setOnClickListener(view -> {
 
-                    /*graph.predecessors(nodeZonaReal).forEach(nodeVisita -> {
-                        graph.successors(nodeVisita).forEach(nodeDaNascondere -> {
-                            if (nodeDaNascondere.clicked) {
-                                nodeDaNascondere.setClicked(false);
-                                graph.successors(nodeDaNascondere).forEach(figlioDaNascondere -> {
-                                    figlioDaNascondere.setClicked(false);
-
-                                    figlioDaNascondere.setVisibility(INVISIBLE);
-                                });
-                            }
-                        });
-                    });*/
-
                     if(size > 0){
+                        graph.predecessors(nodeZonaReal).forEach(nodeVisita -> {
+                            graph.successors(nodeVisita).forEach(nodeDaNascondere -> {
+                                if (nodeDaNascondere.clicked && !nodeDaNascondere.equals(nodeZonaReal)) {
+                                    nodeDaNascondere.setClicked(false);
+                                    nodeDaNascondere.setCircle(false);
+
+                                    graph.successors(nodeDaNascondere).forEach(figlioDaNascondere -> {
+                                        figlioDaNascondere.setClicked(false);
+
+                                        figlioDaNascondere.setVisibility(INVISIBLE);
+                                    });
+                                }
+                            });
+                        });
+
+
                         if(nodeZonaReal.clicked){
                             nodeZonaOnClickIfNotInizialized(nodeZonaReal);
                         }else{
                             nodeZonaOnClickIfNotClicked(nodeZonaReal);
                         }
+
                     }else{
                         Snackbar.make(self, "Non esistono Aree associate", BaseTransientBottomBar.LENGTH_LONG).show();
                     }
