@@ -291,6 +291,8 @@ public class Grafo extends ConstraintLayout {
 
                     graph.successors(area).forEach(figlioNodoArea ->{
                         figlioNodoArea.setVisibility(INVISIBLE);
+                        figlioNodoArea.setClicked(false);
+                        figlioNodoArea.setCircle(false);
                     });
                 });
                 nodeZonaReal.setClicked(false);
