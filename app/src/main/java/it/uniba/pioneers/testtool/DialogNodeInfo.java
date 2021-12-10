@@ -1,5 +1,9 @@
 package it.uniba.pioneers.testtool;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -12,7 +16,10 @@ import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +46,27 @@ public class DialogNodeInfo extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.fragment_dialog_node_info, null));
+
         return builder.create();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        AlertDialog dialog = (AlertDialog) getDialog();
+
+        final View decorView = getDialog()
+                .getWindow()
+                .getDecorView();
+
+
+        ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(decorView,
+                PropertyValuesHolder.ofFloat("scaleX", 0.0f, 1.0f),
+                PropertyValuesHolder.ofFloat("scaleY", 0.0f, 1.0f),
+                PropertyValuesHolder.ofFloat("alpha", 0.0f, 1.0f));
+        scaleDown.setDuration(500);
+        scaleDown.start();
+
+    }
 }

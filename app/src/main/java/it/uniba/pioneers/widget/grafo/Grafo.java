@@ -1,6 +1,8 @@
 package it.uniba.pioneers.widget.grafo;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.util.AttributeSet;
@@ -9,6 +11,7 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +24,7 @@ import com.google.common.graph.MutableGraph;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import it.uniba.pioneers.testtool.EditorActivity;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.widget.Node;
 import it.uniba.pioneers.widget.NodeType;
@@ -67,6 +71,17 @@ public class Grafo extends ConstraintLayout {
         initDrawAttribute(context);
         initGrafo(context);
 
+    }
+
+    private Activity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity)context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
     }
 
     public void initGrafo(Context context){
@@ -190,8 +205,13 @@ public class Grafo extends ConstraintLayout {
 
                                     drawView.linesOpera.add(buildLine(nodeArea, nodeOpera));
 
-                                    nodeOpera.setOnClickListener(view2 -> {
-                                        nodeOpera.setCircle(true);
+                                    nodeOpera.setOnLongClickListener(view2 -> {
+                                        EditorActivity ea = ((EditorActivity)getActivity());
+
+                                        ea.d.show(ea.getSupportFragmentManager(), "MyDialogFragment");
+
+                                        return true;
+
                                     });
 
                                     addView(nodeOpera);
