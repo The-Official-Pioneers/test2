@@ -153,7 +153,6 @@ public class Grafo extends ConstraintLayout {
                 nodeArea.setOnClickListener(view1 -> {
 
                     if (size > 0) {
-                        self.drawView.resetDrawView(self, 2);
 
                         graph.predecessors(nodeArea).forEach(zona -> {
                             graph.successors(zona).forEach(area -> {
@@ -169,7 +168,7 @@ public class Grafo extends ConstraintLayout {
                         });
 
                         if (nodeArea.clicked) {
-                            self.drawView.resetDrawView(self, 2);
+                            self.drawView.resetDrawView(self, 1);
                             graph.predecessors(nodeArea).forEach(zona -> {
                                 graph.successors(zona).forEach(area ->{
                                     drawView.linesOpera.add(buildLine(zona, area));
@@ -307,16 +306,19 @@ public class Grafo extends ConstraintLayout {
                 self.drawView.resetDrawView(self, 1); //RESET DELLE LINEE
 
                 graph.successors(nodeZonaReal).forEach(area -> {
-                    area.setVisibility(INVISIBLE);
 
-                    graph.successors(area).forEach(figlioNodoArea ->{
-                        figlioNodoArea.setVisibility(INVISIBLE);
-                        figlioNodoArea.setClicked(false);
-                        figlioNodoArea.setCircle(false);
+                    graph.successors(area).forEach(opere ->{
+                        opere.setClicked(false);
+                        opere.setCircle(false);
+                        opere.setVisibility(INVISIBLE);
                     });
+                    area.setClicked(false);
+                    area.setCircle(false);
+                    area.setVisibility(INVISIBLE);
                 });
                 nodeZonaReal.setClicked(false);
                 nodeZonaReal.setCircle(false);
+
             }
 
             private void nodeZonaOnClickIfInizialized(Node nodeZonaReal) {
