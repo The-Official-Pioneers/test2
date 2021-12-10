@@ -1,4 +1,4 @@
-package it.uniba.pioneers.data;
+package it.uniba.pioneers.data.users;
 
 import android.net.Uri;
 
@@ -7,14 +7,22 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
+import java.util.Locale;
 
+public class Guida {
 
-public class CuratoreMuseale {
     public static String dtStart = "2010-10-15T09:27:37Z";
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -32,20 +40,16 @@ public class CuratoreMuseale {
         this.cognome = cognome;
     }
 
+    public void setDataNascita(String dataNascita) throws ParseException {
+        this.dataNascita = Guida.format.parse(dataNascita);
+    }
+
     public Date getDataNascita() {
         return dataNascita;
     }
 
-    public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = CuratoreMuseale.format.parse(dataNascita);
-    }
-
     public void setDataNascita(Date dataNascita) {
         this.dataNascita = dataNascita;
-    }
-
-    public void setDataNascita(int dataNascita) {
-        this.dataNascita = new Date(dataNascita);
     }
 
     public String getEmail() {
@@ -72,20 +76,12 @@ public class CuratoreMuseale {
         this.propic = propic;
     }
 
-    public int getZona() {
-        return zona;
+    public String getSpecializzazione() {
+        return specializzazione;
     }
 
-    public void setZona(int zona) {
-        this.zona = zona;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setSpecializzazione(String specializzazione) {
+        this.specializzazione = specializzazione;
     }
 
     private int id;
@@ -95,24 +91,34 @@ public class CuratoreMuseale {
     private String email;
     private String password;
     private Uri propic;
-    private int zona;
+    private String specializzazione;
 
     //ONLINE STATE
     private boolean online;
 
-    public CuratoreMuseale(){
+    //Method that checks if the user is online
+    public boolean isOnline() {
+        return online;
+    }
+
+    //Method that sets the online status to true or false depending on the user's actual connection
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
+    public Guida(){
         this.setId(0);
         this.setNome("");
         this.setCognome("");
         this.setEmail("");
         this.setPassword("");
         this.setPropic(null);
-        this.setZona(0);
+        this.setSpecializzazione("");
 
         this.setOnline(false);
     }
 
-    public CuratoreMuseale(JSONObject data) throws JSONException, ParseException {
+    public Guida(JSONObject data) throws JSONException, ParseException {
         this.setId(data.getInt("id"));
         this.setNome(data.getString("nome"));
         this.setCognome(data.getString("cognome"));
@@ -120,9 +126,10 @@ public class CuratoreMuseale {
         this.setEmail(data.getString("email"));
         this.setPassword(data.getString("password"));
         this.setPropic(Uri.parse(data.getString("propic")));
-        this.setZona(data.getInt("zona"));
+        this.setSpecializzazione(data.getString("specializzazione"));
     }
 
+    //CREATE JSON OBJECT
     public JSONObject toJSON() throws JSONException {
         JSONObject tmp = new JSONObject();
 
@@ -133,16 +140,12 @@ public class CuratoreMuseale {
         tmp.put("email", this.email);
         tmp.put("password", this.password);
         tmp.put("propic", this.propic);
-        tmp.put("zona", this.zona);
+        tmp.put("specializzazione", this.specializzazione);
 
         return tmp;
     }
 
-    public boolean isOnline() {
-        return online;
-    }
 
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
+
+
 }

@@ -8,12 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
-import com.google.common.graph.ElementOrder;
-import com.google.common.graph.EndpointPair;
-import com.google.common.graph.GraphBuilder;
-import com.google.common.graph.MutableGraph;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 
@@ -21,9 +16,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.util.Set;
 
-import it.uniba.pioneers.data.CuratoreMuseale;
+import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.testtool.databinding.FragmentFirstBinding;
 
 public class FirstFragment extends Fragment {
