@@ -22,6 +22,8 @@ public class EditorActivity extends AppCompatActivity {
     GrafoFragment s = new GrafoFragment();
     EditorPercorsi e = new EditorPercorsi();
 
+    DialogNodeInfo d = new DialogNodeInfo();
+
     Integer state = 0;
 
     FragmentManager supportFragmentManager;
@@ -31,6 +33,8 @@ public class EditorActivity extends AppCompatActivity {
 
         Button avanti = findViewById(R.id.changeFragment2);
         Button indietro = findViewById(R.id.changeFragment);
+
+        Button test = findViewById(R.id.tst_info);
 
         containerView = findViewById(R.id.fragmentContainerView3);
         supportFragmentManager = getSupportFragmentManager();
@@ -89,6 +93,14 @@ public class EditorActivity extends AppCompatActivity {
             }
 
 
+        });
+
+        test.setOnClickListener(view3 ->{
+            supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in, R.anim.slade_out, R.anim.fade_in, R.anim.slade_out)
+                    .replace(containerView.getId(), d)
+                    .commit();
+            state = 1;
         });
     }
 

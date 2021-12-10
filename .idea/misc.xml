@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/blank_fragment.xml" value="0.21693840579710144" />
         <entry key="app/src/main/res/layout/dialog_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_dialog_node_info.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/fragment_editor_percorsi.xml" value="0.2767210144927536" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_grafo.xml" value="0.19947916666666668" />
@@ -26,6 +27,7 @@
         <entry key="app/src/main/res/layout/layout_mappa.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/lista_nodi.xml" value="0.17426545086119555" />
         <entry key="app/src/main/res/layout/sample_node.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/widget_dialog_node.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/widget_display_grafo.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/widget_grafo.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layouts/activity/layout/fragment_second.xml" value="0.196875" />
