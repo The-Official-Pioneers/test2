@@ -1,6 +1,4 @@
 
-m
-=app/src/main/java/it/uniba/pioneers/data/CuratoreMuseale.java,d/1/d10387a312492c5674d02501770ea534df528eb3
 €
 Papp/src/androidTest/java/it/uniba/pioneers/testtool/ExampleInstrumentedTest.java,c/0/c0fd81b524489ad3abc9161ee5df2b368378bd0e
 p

@@ -224,8 +224,8 @@ public class Grafo extends ConstraintLayout {
                                     zona.setClicked(false);
                                     zona.setCircle(false);
 
-                                    graph.successors(zona).forEach(area -> {
-                                        if(!area.clicked){
+                                        graph.successors(zona).forEach(area -> {
+                                            if(!area.clicked){
                                             area.setClicked(false);
                                         }
                                         area.setVisibility(INVISIBLE);
