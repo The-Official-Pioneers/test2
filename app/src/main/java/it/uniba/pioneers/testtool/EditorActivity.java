@@ -95,12 +95,9 @@ public class EditorActivity extends AppCompatActivity {
 
         });
 
+
         test.setOnClickListener(view3 ->{
-            supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.fade_in, R.anim.slade_out, R.anim.fade_in, R.anim.slade_out)
-                    .replace(containerView.getId(), d)
-                    .commit();
-            state = 1;
+            d.show(this.getSupportFragmentManager(), "MyDialogFragment");
         });
     }
 
