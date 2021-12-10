@@ -1,8 +1,10 @@
 package it.uniba.pioneers.widget;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -33,6 +35,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import it.uniba.pioneers.testtool.EditorActivity;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.widget.grafo.DrawView;
 import it.uniba.pioneers.widget.grafo.Line;
@@ -243,4 +246,5 @@ public class Node extends ConstraintLayout{
             e.printStackTrace();
         }
     }
+
 }

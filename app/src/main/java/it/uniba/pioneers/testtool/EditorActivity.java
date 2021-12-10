@@ -22,7 +22,7 @@ public class EditorActivity extends AppCompatActivity {
     GrafoFragment s = new GrafoFragment();
     EditorPercorsi e = new EditorPercorsi();
 
-    DialogNodeInfo d = new DialogNodeInfo();
+    public DialogNodeInfo d = new DialogNodeInfo();
 
     Integer state = 0;
 
@@ -96,8 +96,9 @@ public class EditorActivity extends AppCompatActivity {
         });
 
 
-        test.setOnClickListener(view3 ->{
+        test.setOnLongClickListener(view3 ->{
             d.show(this.getSupportFragmentManager(), "MyDialogFragment");
+            return false;
         });
     }
 
