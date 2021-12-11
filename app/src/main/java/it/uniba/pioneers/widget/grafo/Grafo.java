@@ -253,6 +253,8 @@ public class Grafo extends ConstraintLayout {
                                             if(!opera.clicked){
                                                 opera.setClicked(false);
                                             }
+                                            if(opera.inizializated)
+                                                opera.setVisibility(INVISIBLE);
 
                                         });
                                     });
@@ -320,7 +322,6 @@ public class Grafo extends ConstraintLayout {
                 });
                 nodeZonaReal.setClicked(false);
                 nodeZonaReal.setCircle(false);
-                refreshDrawView();
             }
 
             private void nodeZonaOnClickIfInizialized(Node nodeZonaReal) {
