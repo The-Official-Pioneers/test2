@@ -250,12 +250,14 @@ public class Grafo extends ConstraintLayout {
                                         area.setVisibility(INVISIBLE);
 
                                         graph.successors(area).forEach(opera -> {
-                                            if(!area.clicked){
+                                            if(!opera.clicked){
                                                 opera.setClicked(false);
                                             }
-                                            opera.setVisibility(INVISIBLE);
+
                                         });
                                     });
+                                }else{
+
                                 }
 
                             });
@@ -318,7 +320,7 @@ public class Grafo extends ConstraintLayout {
                 });
                 nodeZonaReal.setClicked(false);
                 nodeZonaReal.setCircle(false);
-
+                refreshDrawView();
             }
 
             private void nodeZonaOnClickIfInizialized(Node nodeZonaReal) {
