@@ -1,12 +1,14 @@
 package it.uniba.pioneers.testtool.home;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.home.ui.login.LoginFragment;
 
@@ -27,9 +29,11 @@ public class HomeActivity extends AppCompatActivity {
                 .add(R.id.fragmentContainerView4, f).addToBackStack(null)
                 .commit();
         /*** FINE TRANSAZIONE ***/
+
+
     }
 
-    public void onClickDummy(View view) {
+    public void onClickButton(View view) {
         Toast.makeText(this, "Ha funzionato", Toast.LENGTH_SHORT).show();
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -48,5 +52,11 @@ public class HomeActivity extends AppCompatActivity {
                 .replace(R.id.fragmentContainerView4, f).addToBackStack(null)
                 .commit();
         /*** FINE TRANSAZIONE ***/
+    }
+
+    public void goMainActivity(View view) {
+        Toast.makeText(this, "aweo", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
