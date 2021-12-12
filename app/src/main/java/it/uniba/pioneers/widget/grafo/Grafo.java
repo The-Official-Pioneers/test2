@@ -175,8 +175,8 @@ public class Grafo extends ConstraintLayout {
                                 });
                             });
 
-                            graph.successors(nodeArea).forEach(figloNodoArea -> {
-                                figloNodoArea.setVisibility(INVISIBLE);
+                            graph.successors(nodeArea).forEach(opera -> {
+                                opera.setVisibility(INVISIBLE);
                             });
                             nodeArea.setClicked(false);
                             nodeArea.setCircle(false);
@@ -190,10 +190,10 @@ public class Grafo extends ConstraintLayout {
                             });
 
                             if(nodeArea.inizializated){
-                                for(Node figloNodoArea : graph.successors(nodeArea)){
-                                    figloNodoArea.setVisibility(VISIBLE);
+                                for(Node Opera : graph.successors(nodeArea)){
+                                    Opera.setVisibility(VISIBLE);
 
-                                    drawView.linesOpera.add(buildLine(nodeArea, figloNodoArea));
+                                    drawView.linesOpera.add(buildLine(nodeArea, Opera));
                                 }
                             }else{
                                 AtomicInteger contatoreOpere = new AtomicInteger(1);
@@ -237,31 +237,21 @@ public class Grafo extends ConstraintLayout {
                 nodeZonaReal.setOnClickListener(view -> {
 
                     if(size > 0){
+
                         graph.predecessors(nodeZonaReal).forEach(nodeVisita -> {
                             graph.successors(nodeVisita).forEach(zona -> {
-                                if(zona.inizializated){
+                                if(zona.inizializated && !zona.equals(nodeZonaReal)){   // il problema potrebbe essere qui, eh infatti
                                     zona.setClicked(false);
                                     zona.setCircle(false);
 
                                         graph.successors(zona).forEach(area -> {
-                                            if(!area.clicked){
-                                            area.setClicked(false);
-                                        }
-                                        area.setVisibility(INVISIBLE);
-
+                                            area.setVisibility(INVISIBLE);
                                         graph.successors(area).forEach(opera -> {
-                                            if(!opera.clicked){
-                                                opera.setClicked(false);
-                                            }
                                             if(opera.inizializated)
                                                 opera.setVisibility(INVISIBLE);
-
                                         });
                                     });
-                                }else{
-
                                 }
-
                             });
                         });
 
@@ -310,15 +300,19 @@ public class Grafo extends ConstraintLayout {
                 self.drawView.resetDrawView(self, 1); //RESET DELLE LINEE
 
                 graph.successors(nodeZonaReal).forEach(area -> {
-
                     graph.successors(area).forEach(opere ->{
-                        opere.setClicked(false);
-                        opere.setCircle(false);
+                        if(!area.clicked) {
+                            opere.setClicked(false);
+                            opere.setCircle(false);
+                        }
                         opere.setVisibility(INVISIBLE);
                     });
-                    area.setClicked(false);
-                    area.setCircle(false);
+                    if(!area.clicked) {
+                        area.setClicked(false);
+                        area.setCircle(false);
+                    }
                     area.setVisibility(INVISIBLE);
+
                 });
                 nodeZonaReal.setClicked(false);
                 nodeZonaReal.setCircle(false);
