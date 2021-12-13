@@ -141,7 +141,7 @@ public class Zona {
         this.online = online;
     }
 
-    public void setData(Context context){
+    public void readDataDb(Context context){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
             String url = Server.getUrl() + "/zona/read/";
@@ -168,6 +168,147 @@ public class Zona {
                                     Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void createDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/zona/create/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("tipo", getTipo());
+                data.put("denominazione", getDenominazione());
+                data.put("descrizione", getDescrizione());
+                data.put("latitudine", getLatitudine());
+                data.put("longitudine", getLongitudine());
+                data.put("luogo", getLuogo());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Zona self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    self.setDataFromJSON(response.getJSONObject("data"));
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void updateDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/curatore-museale/update/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("id", getId());
+                data.put("tipo", getTipo());
+                data.put("denominazione", getDenominazione());
+                data.put("descrizione", getDescrizione());
+                data.put("latitudine", getLatitudine());
+                data.put("longitudine", getLongitudine());
+                data.put("luogo", getLuogo());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Zona self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    self.setDataFromJSON(response.getJSONObject("data"));
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void deleteDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/curatore-museale/delete/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("id", getId());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Zona self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
