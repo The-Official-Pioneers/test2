@@ -19,12 +19,8 @@ A
 gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
 X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 o
 ?app/src/main/java/it/uniba/pioneers/testtool/FirstFragment.java,6/5/65e428fa0861d289c80bdb8b72b0654ba5187fe7
-p
-@app/src/main/java/it/uniba/pioneers/testtool/EditorActivity.java,f/a/fa6b29bbe010f05fb94d53df397f022133f243d2
 e
 5app/src/main/java/it/uniba/pioneers/widget/Mappa.java,0/f/0f1dec7ec3f21f24f4a403537b0098b9a7f9dd25
 i

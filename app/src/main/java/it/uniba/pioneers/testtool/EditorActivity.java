@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
+import it.uniba.pioneers.data.Area;
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
 import it.uniba.pioneers.widget.Node;
@@ -98,17 +99,14 @@ public class EditorActivity extends AppCompatActivity {
 
 
         test.setOnClickListener(view3 ->{
-            Zona z = new Zona();
 
-            z.setId(14);
-            z.setTipo("museo");
-            z.setDenominazione("Bravo");
-            z.setDescrizione("Rino");
-            z.setLongitudine(31212);
-            z.setLatitudine(2312);
-            z.setLuogo("Roma");
+            Area a = new Area();
+            a.setId(3);
+            a.setZona(10);
+            a.setNome("San Pasquale");
 
-            z.updateDataDb(view3.getRootView().getContext());
+
+            a.updateDataDb(view3.getRootView().getContext());
 
         });
     }
