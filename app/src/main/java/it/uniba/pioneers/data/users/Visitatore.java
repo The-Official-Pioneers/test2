@@ -21,9 +21,7 @@ import java.util.Locale;
 
 import it.uniba.pioneers.data.Server;
 
-public class Guida {
-
-    public static String dtStart = "2010-10-15T09:27:37Z";
+public class Visitatore {
     public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
 
     public int getId() {
@@ -86,13 +84,6 @@ public class Guida {
         this.propic = propic;
     }
 
-    public String getSpecializzazione() {
-        return specializzazione;
-    }
-
-    public void setSpecializzazione(String specializzazione) {
-        this.specializzazione = specializzazione;
-    }
 
     private int id;
     private String nome;
@@ -101,7 +92,6 @@ public class Guida {
     private String email;
     private String password;
     private Uri propic;
-    private String specializzazione;
 
     //ONLINE STATE
     private boolean online;
@@ -116,19 +106,18 @@ public class Guida {
         this.online = online;
     }
 
-    public Guida(){
+    public Visitatore(){
         this.setId(0);
         this.setNome("");
         this.setCognome("");
         this.setEmail("");
         this.setPassword("");
         this.setPropic(null);
-        this.setSpecializzazione("");
 
         this.setOnline(true);
     }
 
-    public Guida(JSONObject data) throws JSONException, ParseException {
+    public Visitatore(JSONObject data) throws JSONException, ParseException {
         this.setId(data.getInt("id"));
         this.setNome(data.getString("nome"));
         this.setCognome(data.getString("cognome"));
@@ -136,7 +125,6 @@ public class Guida {
         this.setEmail(data.getString("email"));
         this.setPassword(data.getString("password"));
         this.setPropic(Uri.parse(data.getString("propic")));
-        this.setSpecializzazione(data.getString("specializzazione"));
     }
 
     //CREATE JSON OBJECT
@@ -150,7 +138,6 @@ public class Guida {
         tmp.put("email", this.email);
         tmp.put("password", this.password);
         tmp.put("propic", this.propic);
-        tmp.put("specializzazione", this.specializzazione);
 
         return tmp;
     }
@@ -163,22 +150,21 @@ public class Guida {
         this.setEmail(data.getString("email"));
         this.setPassword(data.getString("password"));
         this.setPropic(Uri.parse(data.getString("propic")));
-        this.setSpecializzazione(data.getString("specializzazione"));
     }
 
     public void setData(Context context){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
-            String url = Server.getUrl() + "/guida/read/";
+            String url = Server.getUrl() + "/visitatore/read/";
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", 1001);
+                data.put("id", 2);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            Guida self = this;
+            Visitatore self = this;
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                     new Response.Listener<JSONObject>() {

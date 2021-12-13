@@ -84,8 +84,6 @@ public class FirstFragment extends Fragment {
                     Toast.makeText(view.getContext(), e.toString(), Toast.LENGTH_LONG).show();
 
                 }
-
-
             }
         });
 
