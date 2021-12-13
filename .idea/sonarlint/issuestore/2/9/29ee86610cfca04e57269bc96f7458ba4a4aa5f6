@@ -1,30 +1,19 @@
 
-{	java:S1169"ZRename this field "ARG_DESCRIZIONE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ÚÑ‰üÿÿÿÿ8Õ÷½¾×/
-o	java:S116:"SRename this field "ARG_ANNO" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ººà8ë¾¾×/
-<
-java:S11709"!Make this final field static too.(”ÚÑ‰üÿÿÿÿ
-7
-java:S1170:"!Make this final field static too.(“ººà
-b
-java:S1124*"EReorder the modifiers to comply with the Java Language Specification.(äò‹’8â¹ØùØ/
-b
-java:S1124+"EReorder the modifiers to comply with the Java Language Specification.(„Î®8ã¹ØùØ/
-b
-java:S1124,"EReorder the modifiers to comply with the Java Language Specification.(‘¾à½8ä¹ØùØ/
-g
-java:S1124-"EReorder the modifiers to comply with the Java Language Specification.(–µòÓûÿÿÿÿ8å¹ØùØ/
-S
-java:S1117E"8Rename "data" which hides the field declared at line 53.(‰”ÉÛıÿÿÿÿ
-X	java:S125M"<This block of commented-out lines of code should be removed.(¡Ö³ç8ó¹ØùØ/
-U
-java:S1854\":Remove this useless assignment to local variable "action".(§¶¥Ïúÿÿÿÿ
-F
-java:S1481\"+Remove this unused "action" local variable.(§¶¥Ïúÿÿÿÿ
-v
-java:S3923]"[Remove this conditional structure or edit its code blocks so that they're not all the same.(ãÁğ™øÿÿÿÿ
-S
-java:S1854"7Remove this useless assignment to local variable "tmp".(¬§öšûÿÿÿÿ
-D
-java:S1481"(Remove this unused "tmp" local variable.(¬§öšûÿÿÿÿ
-R
-java:S1144·"/Remove this unused private "fromDpToPx" method.(·Š†”ùÿÿÿÿ8´ºØùØ/
+{	java:S116("ZRename this field "ARG_DESCRIZIONE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ÚÑ‰üÿÿÿÿ8²É¶şÚ/
+o	java:S116)"SRename this field "ARG_ANNO" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ººà8´É¶şÚ/
+C
+java:S1170("!Make this final field static too.(”ÚÑ‰üÿÿÿÿ8ÈÉ¶şÚ/
+>
+java:S1170)"!Make this final field static too.(“ººà8ÈÉ¶şÚ/
+Z
+java:S11172"8Rename "data" which hides the field declared at line 37.(‰”ÉÛıÿÿÿÿ8íÉ¶şÚ/
+\
+java:S1854I":Remove this useless assignment to local variable "action".(§¶¥Ïúÿÿÿÿ8úÉ¶şÚ/
+M
+java:S1481I"+Remove this unused "action" local variable.(§¶¥Ïúÿÿÿÿ8Ê¶şÚ/
+}
+java:S3923J"[Remove this conditional structure or edit its code blocks so that they're not all the same.(ãÁğ™øÿÿÿÿ8”Ê¶şÚ/
+Y
+java:S1854{"7Remove this useless assignment to local variable "tmp".(¬§öšûÿÿÿÿ8—Ê¶şÚ/
+J
+java:S1481{"(Remove this unused "tmp" local variable.(¬§öšûÿÿÿÿ8ÉÊ¶şÚ/
