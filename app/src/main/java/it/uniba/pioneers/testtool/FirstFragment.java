@@ -47,7 +47,7 @@ public class FirstFragment extends Fragment {
                     tmp.put("id", 1);
                     tmp.put("nome", "Gino");
                     tmp.put("cognome", "Pino");
-                    tmp.put("data_nascita", CuratoreMuseale.dtStart);
+                    //tmp.put("data_nascita", CuratoreMuseale.dtStart);
                     tmp.put("email", "dadasdasd@asdasdd.com");
                     tmp.put("password", "dsadadasdasdsdfsdfdsffd");
                     tmp.put("propic", "/bin/usr");
@@ -84,8 +84,6 @@ public class FirstFragment extends Fragment {
                     Toast.makeText(view.getContext(), e.toString(), Toast.LENGTH_LONG).show();
 
                 }
-
-
             }
         });
 

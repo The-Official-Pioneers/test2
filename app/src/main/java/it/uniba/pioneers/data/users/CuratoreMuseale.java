@@ -171,7 +171,8 @@ public class CuratoreMuseale {
         this.online = online;
     }
 
-    public void setData(Context context){
+    //DB METHOD
+    public void readDataDb(Context context){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
             String url = Server.getUrl() + "/curatore-museale/read/";
@@ -198,6 +199,149 @@ public class CuratoreMuseale {
                                     Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void createDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/curatore-museale/create/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("nome", getNome());
+                data.put("cognome", getCognome());
+                data.put("data_nascita", getDataNascita());
+                data.put("email", getEmail());
+                data.put("password", getPassword());
+                data.put("propic", getPropic().toString());
+                data.put("zona", getZona());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            CuratoreMuseale self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    self.setDataFromJSON(response.getJSONObject("data"));
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void updateDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/curatore-museale/update/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("id", getId());
+                data.put("nome", getNome());
+                data.put("cognome", getCognome());
+                //data.put("data_nascita", getDataNascita());
+                data.put("email", getEmail());
+                data.put("password", getPassword());
+                data.put("propic", getPropic());
+                data.put("zona", getZona());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            CuratoreMuseale self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    self.setDataFromJSON(response.getJSONObject("data"));
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void deleteDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/curatore-museale/delete/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("id", getId());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            CuratoreMuseale self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
