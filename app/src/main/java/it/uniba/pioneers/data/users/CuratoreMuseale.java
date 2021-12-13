@@ -1,19 +1,33 @@
 package it.uniba.pioneers.data.users;
 
+import android.content.Context;
 import android.net.Uri;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import it.uniba.pioneers.data.Server;
+
 
 public class CuratoreMuseale {
     public static String dtStart = "2010-10-15T09:27:37Z";
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'", Locale.getDefault());
 
 
     public String getNome() {
@@ -109,7 +123,7 @@ public class CuratoreMuseale {
         this.setPropic(null);
         this.setZona(0);
 
-        this.setOnline(false);
+        this.setOnline(true);
     }
 
     public CuratoreMuseale(JSONObject data) throws JSONException, ParseException {
@@ -117,6 +131,19 @@ public class CuratoreMuseale {
         this.setNome(data.getString("nome"));
         this.setCognome(data.getString("cognome"));
         this.setDataNascita(data.getString("data_nascita"));
+        this.setEmail(data.getString("email"));
+        this.setPassword(data.getString("password"));
+        this.setPropic(Uri.parse(data.getString("propic")));
+        this.setZona(data.getInt("zona"));
+
+        this.setOnline(true);
+    }
+
+    public void setDataFromJSON(JSONObject data) throws JSONException, ParseException {
+        this.setId(data.getInt("id"));
+        this.setNome(data.getString("nome"));
+        this.setCognome(data.getString("cognome"));
+        //this.setDataNascita(data.getString("data_nascita"));
         this.setEmail(data.getString("email"));
         this.setPassword(data.getString("password"));
         this.setPropic(Uri.parse(data.getString("propic")));
@@ -144,5 +171,50 @@ public class CuratoreMuseale {
 
     public void setOnline(boolean online) {
         this.online = online;
+    }
+
+    public void setData(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/curatore-museale/read/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("id", 1);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            CuratoreMuseale self = this;
+
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    self.setDataFromJSON(response.getJSONObject("data"));
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
     }
 }

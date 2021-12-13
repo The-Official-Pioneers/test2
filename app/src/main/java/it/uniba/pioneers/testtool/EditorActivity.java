@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
 import it.uniba.pioneers.widget.Node;
 
@@ -96,9 +97,10 @@ public class EditorActivity extends AppCompatActivity {
         });
 
 
-        test.setOnLongClickListener(view3 ->{
-            d.show(this.getSupportFragmentManager(), "MyDialogFragment");
-            return false;
+        test.setOnClickListener(view3 ->{
+            CuratoreMuseale c = new CuratoreMuseale();
+
+            c.setData(view3.getRootView().getContext());
         });
     }
 
