@@ -1,5 +1,15 @@
 package it.uniba.pioneers.data;
 
+import android.content.Context;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,7 +18,7 @@ import java.text.ParseException;
 public class Zona {
 
     private int id;
-    private String zona;
+    private String tipo;
     private String denominazione;
     private String  descrizione;
     private double latitudine;
@@ -23,12 +33,12 @@ public class Zona {
         this.id = id;
     }
 
-    public String getZona() {
-        return zona;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setZona(String zona) {
-        this.zona = zona;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getDenominazione() {
@@ -76,20 +86,20 @@ public class Zona {
 
     public Zona() {
         this.setId(0);
-        this.setZona("");
+        this.setTipo("");
         this.setDenominazione("");
         this.setDescrizione("");
         this.setLatitudine(0.0);
         this.setLongitudine(0.0);
         this.setLuogo("");
 
-        this.setOnline(false);
+        this.setOnline(true);
     }
 
     //con questa funzione andiamo a prendere degli elementi e gli andiamo a trasformare in oggetti JSON
     public Zona(JSONObject data) throws JSONException, ParseException {
         this.setId(data.getInt("id"));
-        this.setZona(data.getString("zona"));
+        this.setTipo(data.getString("tipo"));
         this.setDenominazione(data.getString("denominazione"));
         this.setDescrizione(data.getString("descrizione"));
         this.setLatitudine(data.getDouble("latitudine"));
@@ -97,13 +107,21 @@ public class Zona {
         this.setLuogo(data.getString("luogo"));
 
     }
-
+    public void setDataFromJSON(JSONObject data) throws JSONException, ParseException {
+        this.setId(data.getInt("id"));
+        this.setTipo(data.getString("tipo"));
+        this.setDenominazione(data.getString("denominazione"));
+        this.setDescrizione(data.getString("descrizione"));
+        this.setLatitudine(data.getDouble("latitudine"));
+        this.setLongitudine(data.getDouble("longitudine"));
+        this.setLuogo(data.getString("luogo"));
+    }
 
     public JSONObject toJSON() throws JSONException{
         JSONObject tmp = new JSONObject();
 
         tmp.put("id", this.id);
-        tmp.put("zona", this.zona);
+        tmp.put("tipo", this.tipo);
         tmp.put("denominazione", this.denominazione);
         tmp.put("descrizione", this.descrizione);
         tmp.put("latitudine", this.latitudine);
@@ -121,5 +139,48 @@ public class Zona {
     //imposta true o false in base allo stato dell'utente
     public void setOnline(boolean online){
         this.online = online;
+    }
+
+    public void setData(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/zona/read/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("id", 10   );
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Zona self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    self.setDataFromJSON(response.getJSONObject("data"));
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
     }
 }

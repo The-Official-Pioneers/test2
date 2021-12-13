@@ -1,17 +1,17 @@
 package it.uniba.pioneers.testtool;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-
 import java.util.ArrayList;
 
-import it.uniba.pioneers.data.users.CuratoreMuseale;
+import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
 import it.uniba.pioneers.widget.Node;
 
@@ -98,7 +98,7 @@ public class EditorActivity extends AppCompatActivity {
 
 
         test.setOnClickListener(view3 ->{
-            CuratoreMuseale c = new CuratoreMuseale();
+            Zona c = new Zona();
 
             c.setData(view3.getRootView().getContext());
         });
