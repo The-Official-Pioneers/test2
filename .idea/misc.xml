@@ -15,9 +15,17 @@
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/drawable/shape_circle.xml" value="0.3769230769230769" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/activity_home.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/dialog_layout.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/fragment_login.xml" value="0.275" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/fragment_welcome.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/nav_header.xml" value="0.25625" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/widget_grafo.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layouts/widget/graph_editor/drawable/ic_baseline_settings_24.xml" value="0.3630769230769231" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/menu/bottom_nav_menu.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/menu/home_menu.xml" value="0.33" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/menu/menu_editor.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/menu/menu_main.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/my_rect.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/shape.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/shape_circle.xml" value="0.215625" />

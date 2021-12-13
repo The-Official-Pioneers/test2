@@ -1,19 +1,19 @@
 
-{	java:S116("ZRename this field "ARG_DESCRIZIONE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ÚÑ‰üÿÿÿÿ8Õ÷½¾×/
-o	java:S116)"SRename this field "ARG_ANNO" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ººà8ë¾¾×/
-<
-java:S1170("!Make this final field static too.(”ÚÑ‰üÿÿÿÿ
-7
-java:S1170)"!Make this final field static too.(“ººà
-S
-java:S11172"8Rename "data" which hides the field declared at line 37.(‰”ÉÛıÿÿÿÿ
-U
-java:S1854I":Remove this useless assignment to local variable "action".(§¶¥Ïúÿÿÿÿ
-F
-java:S1481I"+Remove this unused "action" local variable.(§¶¥Ïúÿÿÿÿ
-v
-java:S3923J"[Remove this conditional structure or edit its code blocks so that they're not all the same.(ãÁğ™øÿÿÿÿ
-R
-java:S1854{"7Remove this useless assignment to local variable "tmp".(¬§öšûÿÿÿÿ
+{	java:S116("ZRename this field "ARG_DESCRIZIONE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ÚÑ‰üÿÿÿÿ8²É¶şÚ/
+o	java:S116)"SRename this field "ARG_ANNO" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ººà8´É¶şÚ/
 C
-java:S1481{"(Remove this unused "tmp" local variable.(¬§öšûÿÿÿÿ
+java:S1170("!Make this final field static too.(”ÚÑ‰üÿÿÿÿ8ÈÉ¶şÚ/
+>
+java:S1170)"!Make this final field static too.(“ººà8ÈÉ¶şÚ/
+Z
+java:S11172"8Rename "data" which hides the field declared at line 37.(‰”ÉÛıÿÿÿÿ8íÉ¶şÚ/
+\
+java:S1854I":Remove this useless assignment to local variable "action".(§¶¥Ïúÿÿÿÿ8úÉ¶şÚ/
+M
+java:S1481I"+Remove this unused "action" local variable.(§¶¥Ïúÿÿÿÿ8Ê¶şÚ/
+}
+java:S3923J"[Remove this conditional structure or edit its code blocks so that they're not all the same.(ãÁğ™øÿÿÿÿ8”Ê¶şÚ/
+Y
+java:S1854{"7Remove this useless assignment to local variable "tmp".(¬§öšûÿÿÿÿ8—Ê¶şÚ/
+J
+java:S1481{"(Remove this unused "tmp" local variable.(¬§öšûÿÿÿÿ8ÉÊ¶şÚ/
