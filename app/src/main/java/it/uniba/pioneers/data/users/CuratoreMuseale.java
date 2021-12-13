@@ -26,9 +26,7 @@ import it.uniba.pioneers.data.Server;
 
 
 public class CuratoreMuseale {
-    public static String dtStart = "2010-10-15T09:27:37Z";
     public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'", Locale.getDefault());
-
 
     public String getNome() {
         return nome;
@@ -187,7 +185,6 @@ public class CuratoreMuseale {
 
             CuratoreMuseale self = this;
 
-
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -211,7 +208,6 @@ public class CuratoreMuseale {
                     System.out.println(error.toString());
                 }
             });
-
             queue.add(jsonObjectRequest);
         }else{
             //TODO SQLITE3
