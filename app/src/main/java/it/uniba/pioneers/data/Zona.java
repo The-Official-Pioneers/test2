@@ -236,7 +236,7 @@ public class Zona {
     public void updateDataDb(Context context){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
-            String url = Server.getUrl() + "/curatore-museale/update/";
+            String url = Server.getUrl() + "/zona/update/";
 
             JSONObject data = new JSONObject();
             try {
@@ -286,7 +286,7 @@ public class Zona {
     public void deleteDataDb(Context context){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
-            String url = Server.getUrl() + "/curatore-museale/delete/";
+            String url = Server.getUrl() + "/zona/delete/";
 
             JSONObject data = new JSONObject();
             try {

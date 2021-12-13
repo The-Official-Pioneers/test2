@@ -1,21 +1,17 @@
 package it.uniba.pioneers.testtool;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-
 import java.util.ArrayList;
-import java.util.Date;
 
-import it.uniba.pioneers.data.users.CuratoreMuseale;
-import it.uniba.pioneers.data.users.Guida;
-import it.uniba.pioneers.data.users.Visitatore;
+import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
 import it.uniba.pioneers.widget.Node;
 
@@ -102,18 +98,18 @@ public class EditorActivity extends AppCompatActivity {
 
 
         test.setOnClickListener(view3 ->{
-            CuratoreMuseale c = new CuratoreMuseale();
-            c.setId(17);
+            Zona z = new Zona();
 
-            c.setNome("Track");
-            c.setCognome("Bombo");
-            c.setDataNascita(1292838124);
-            c.setEmail("ciccio@bombo.com");
-            c.setPassword("fdsfdsfdsdffd");
-            c.setPropic(Uri.parse("/bin/home"));
-            c.setZona(10);
+            z.setId(14);
+            z.setTipo("museo");
+            z.setDenominazione("Bravo");
+            z.setDescrizione("Rino");
+            z.setLongitudine(31212);
+            z.setLatitudine(2312);
+            z.setLuogo("Roma");
 
-            c.updateDataDb(view3.getRootView().getContext());
+            z.updateDataDb(view3.getRootView().getContext());
+
         });
     }
 
