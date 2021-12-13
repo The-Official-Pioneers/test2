@@ -153,15 +153,15 @@ public class Grafo extends ConstraintLayout {
                 nodeArea.setOnClickListener(view1 -> {
 
                     if (size > 0) {
-
                         graph.predecessors(nodeArea).forEach(zona -> {
                             graph.successors(zona).forEach(area -> {
-                                if (area.clicked && !area.equals(nodeArea)) {
+                                if (area.inizializated && !area.equals(nodeArea)) {
                                     area.setClicked(false);
                                     area.setCircle(false);
+
                                     graph.successors(area).forEach(opera -> {
-                                        opera.setClicked(false);
-                                        opera.setVisibility(INVISIBLE);
+                                        if(opera.inizializated)
+                                            opera.setVisibility(INVISIBLE);
                                     });
                                 }
                             });
