@@ -113,52 +113,52 @@ public class CuratoreMuseale {
     private boolean online;
 
     public CuratoreMuseale(){
-        this.setId(0);
-        this.setNome("");
-        this.setCognome("");
-        this.setEmail("");
-        this.setPassword("");
-        this.setPropic(null);
-        this.setZona(0);
+        setId(0);
+        setNome("");
+        setCognome("");
+        setEmail("");
+        setPassword("");
+        setPropic(null);
+        setZona(0);
 
-        this.setOnline(true);
+        setOnline(true);
     }
 
     public CuratoreMuseale(JSONObject data) throws JSONException, ParseException {
-        this.setId(data.getInt("id"));
-        this.setNome(data.getString("nome"));
-        this.setCognome(data.getString("cognome"));
-        this.setDataNascita(data.getString("data_nascita"));
-        this.setEmail(data.getString("email"));
-        this.setPassword(data.getString("password"));
-        this.setPropic(Uri.parse(data.getString("propic")));
-        this.setZona(data.getInt("zona"));
+        setId(data.getInt("id"));
+        setNome(data.getString("nome"));
+        setCognome(data.getString("cognome"));
+        setDataNascita(data.getString("data_nascita"));
+        setEmail(data.getString("email"));
+        setPassword(data.getString("password"));
+        setPropic(Uri.parse(data.getString("propic")));
+        setZona(data.getInt("zona"));
 
-        this.setOnline(true);
+        setOnline(true);
     }
 
     public void setDataFromJSON(JSONObject data) throws JSONException, ParseException {
-        this.setId(data.getInt("id"));
-        this.setNome(data.getString("nome"));
-        this.setCognome(data.getString("cognome"));
+        setId(data.getInt("id"));
+        setNome(data.getString("nome"));
+        setCognome(data.getString("cognome"));
         //this.setDataNascita(data.getString("data_nascita"));
-        this.setEmail(data.getString("email"));
-        this.setPassword(data.getString("password"));
-        this.setPropic(Uri.parse(data.getString("propic")));
-        this.setZona(data.getInt("zona"));
+        setEmail(data.getString("email"));
+        setPassword(data.getString("password"));
+        setPropic(Uri.parse(data.getString("propic")));
+        setZona(data.getInt("zona"));
     }
 
     public JSONObject toJSON() throws JSONException {
         JSONObject tmp = new JSONObject();
 
-        tmp.put("id", this.id);
-        tmp.put("nome", this.nome);
-        tmp.put("cognome", this.cognome);
-        tmp.put("data_nascita", this.dataNascita);
-        tmp.put("email", this.email);
-        tmp.put("password", this.password);
-        tmp.put("propic", this.propic);
-        tmp.put("zona", this.zona);
+        tmp.put("id", getId());
+        tmp.put("nome", getNome());
+        tmp.put("cognome", getCognome());
+        tmp.put("data_nascita", getDataNascita());
+        tmp.put("email", getEmail());
+        tmp.put("password", getPassword());
+        tmp.put("propic", getPropic());
+        tmp.put("zona", getZona());
 
         return tmp;
     }
@@ -179,7 +179,7 @@ public class CuratoreMuseale {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", 1);
+                data.put("id", getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -166,14 +166,15 @@ public class Guida {
         this.setSpecializzazione(data.getString("specializzazione"));
     }
 
-    public void setData(Context context){
+    //DB METHOD
+    public void readDataDb(Context context){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
             String url = Server.getUrl() + "/guida/read/";
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", 1001);
+                data.put("id", getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -188,11 +189,154 @@ public class Guida {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
-                                    Toast.makeText(context, self.email, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void createDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/guida/create/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("nome", getNome());
+                data.put("cognome", getCognome());
+                data.put("data_nascita", getDataNascita());
+                data.put("email", getEmail());
+                data.put("password", getPassword());
+                data.put("propic", getPropic().toString());
+                data.put("specializzazione", getSpecializzazione());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Guida self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    self.setDataFromJSON(response.getJSONObject("data"));
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void updateDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/guida/update/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("id", getId());
+                data.put("nome", getNome());
+                data.put("cognome", getCognome());
+                //data.put("data_nascita", getDataNascita());
+                data.put("email", getEmail());
+                data.put("password", getPassword());
+                data.put("propic", getPropic());
+                data.put("specializzazione", getSpecializzazione());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Guida self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    self.setDataFromJSON(response.getJSONObject("data"));
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void deleteDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/guida/delete/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("id", getId());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Guida self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }

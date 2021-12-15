@@ -152,14 +152,14 @@ public class Visitatore {
         this.setPropic(Uri.parse(data.getString("propic")));
     }
 
-    public void setData(Context context){
+    public void readDataDb(Context context){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
             String url = Server.getUrl() + "/visitatore/read/";
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", 2);
+                data.put("id", getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -174,7 +174,7 @@ public class Visitatore {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
-                                    Toast.makeText(context, self.email, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
@@ -194,4 +194,142 @@ public class Visitatore {
             //TODO SQLITE3
         }
     }
-}
+
+    public void createDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/visitatore/create/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("nome", getNome());
+                data.put("cognome", getCognome());
+                data.put("data_nascita", getDataNascita());
+                data.put("email", getEmail());
+                data.put("password", getPassword());
+                data.put("propic", getPropic().toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Visitatore self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    self.setDataFromJSON(response.getJSONObject("data"));
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void updateDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/visitatore/update/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("id", getId());
+                data.put("nome", getNome());
+                data.put("cognome", getCognome());
+                //data.put("data_nascita", getDataNascita());
+                data.put("email", getEmail());
+                data.put("password", getPassword());
+                data.put("propic", getPropic());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Visitatore self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    self.setDataFromJSON(response.getJSONObject("data"));
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }
+
+    public void deleteDataDb(Context context){
+        if(isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/visitatore/delete/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put("id", getId());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Visitatore self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Boolean status =  response.getBoolean("status");
+                                if(status){
+                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }else{
+            //TODO SQLITE3
+        }
+    }}

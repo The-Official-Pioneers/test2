@@ -177,6 +177,7 @@ public class Grafo extends ConstraintLayout {
 
                             graph.successors(nodeArea).forEach(opera -> {
                                 opera.setVisibility(INVISIBLE);
+                                opera.setCircle(true);
                             });
                             nodeArea.setClicked(false);
                             nodeArea.setCircle(false);
@@ -192,6 +193,7 @@ public class Grafo extends ConstraintLayout {
                             if(nodeArea.inizializated){
                                 for(Node Opera : graph.successors(nodeArea)){
                                     Opera.setVisibility(VISIBLE);
+                                    Opera.setCircle(true);
 
                                     drawView.linesOpera.add(buildLine(nodeArea, Opera));
                                 }
@@ -215,6 +217,8 @@ public class Grafo extends ConstraintLayout {
 
                                     addView(nodeOpera);
                                     nodeOpera.setInizializated(true);
+                                    nodeOpera.setCircle(true);
+
                                     contatoreOpere.incrementAndGet();
                                 });
 
