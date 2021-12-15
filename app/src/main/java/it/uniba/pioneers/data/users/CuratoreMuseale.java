@@ -2,6 +2,7 @@ package it.uniba.pioneers.data.users;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
@@ -20,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import it.uniba.pioneers.data.serer.Server;
+import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
 
@@ -84,30 +85,30 @@ public class CuratoreMuseale {
         this.propic = propic;
     }
 
-    public int getZona() {
+    public long getZona() {
         return zona;
     }
 
-    public void setZona(int zona) {
+    public void setZona(long zona) {
         this.zona = zona;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    private int id;
+    private long id;
     private String nome;
     private String cognome;
     private Date dataNascita;
     private String email;
     private String password;
     private String propic;
-    private int zona;
+    private long zona;
 
     //ONLINE STATE
     private boolean online;
@@ -211,7 +212,96 @@ public class CuratoreMuseale {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+            String[] projection = {
+                    DbContract.CuratoreMusealeEntry.COLUMN_ID,
+                    DbContract.CuratoreMusealeEntry.COLUMN_NOME,
+                    DbContract.CuratoreMusealeEntry.COLUMN_COGNOME,
+                    DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA,
+                    DbContract.CuratoreMusealeEntry.COLUMN_EMAIL,
+                    DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD,
+                    DbContract.CuratoreMusealeEntry.COLUMN_PROPIC,
+                    DbContract.CuratoreMusealeEntry.COLUMN_ZONA
+            };
+
+            String selection = DbContract.CuratoreMusealeEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            String sortOrder =
+                    DbContract.CuratoreMusealeEntry.COLUMN_ID + " DESC";
+
+            Cursor cursor = db.query(
+                    DbContract.CuratoreMusealeEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    selection,              // The columns for the WHERE clause
+                    selectionArgs,          // The values for the WHERE clause
+                    null,                   // don't group the rows
+                    null,                   // don't filter by row groups
+                    sortOrder               // The sort order
+            );
+
+            cursor.moveToNext();
+
+            long id = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                        DbContract.CuratoreMusealeEntry.COLUMN_ID
+                    )
+            );
+            setId(id);
+
+            String nome = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.CuratoreMusealeEntry.COLUMN_NOME
+                    )
+            );
+            setNome(nome);
+
+            String cognome = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.CuratoreMusealeEntry.COLUMN_COGNOME
+                    )
+            );
+            setCognome(cognome);
+
+            long data_nascita = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA
+                    )
+            );
+            setDataNascita(new Date(data_nascita));
+
+            String email = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.CuratoreMusealeEntry.COLUMN_EMAIL
+                    )
+            );
+            setEmail(email);
+
+            String password = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD
+                    )
+            );
+            setPassword(password);
+
+            String propic = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.CuratoreMusealeEntry.COLUMN_PROPIC
+                    )
+            );
+            setPropic(propic);
+
+            long zona = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.CuratoreMusealeEntry.COLUMN_ZONA
+                    )
+            );
+            setZona(zona);
+
+            cursor.close();
         }
     }
 
@@ -327,7 +417,28 @@ public class CuratoreMuseale {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+
+            values.put(DbContract.CuratoreMusealeEntry.COLUMN_ID, getId());
+            values.put(DbContract.CuratoreMusealeEntry.COLUMN_NOME, getNome());
+            values.put(DbContract.CuratoreMusealeEntry.COLUMN_COGNOME, getCognome());
+            values.put(DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA, getDataNascita().getTime());
+            values.put(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL, getEmail());
+            values.put(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD, getPassword());
+            values.put(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC, getPropic());
+            values.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
+
+            String selection = DbContract.CuratoreMusealeEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            int count = db.update(
+                    DbContract.CuratoreMusealeEntry.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs);
         }
     }
 
@@ -338,7 +449,7 @@ public class CuratoreMuseale {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", getId());
+                data.put(DbContract.CuratoreMusealeEntry.COLUMN_ID, getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -369,7 +480,13 @@ public class CuratoreMuseale {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            String selection = DbContract.CuratoreMusealeEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            int deletedRows = db.delete(DbContract.CuratoreMusealeEntry.TABLE_NAME, selection, selectionArgs);
         }
     }
 }

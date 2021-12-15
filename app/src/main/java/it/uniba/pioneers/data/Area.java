@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
-import it.uniba.pioneers.data.serer.Server;
+import it.uniba.pioneers.data.server.Server;
 
 public class Area {
 
