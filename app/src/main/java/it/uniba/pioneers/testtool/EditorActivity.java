@@ -13,10 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
-import it.uniba.pioneers.data.Opera;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
@@ -39,6 +39,12 @@ public class EditorActivity extends AppCompatActivity {
 
     FragmentManager supportFragmentManager;
     FragmentContainerView containerView;
+
+
+    public void initDbPerm(){
+
+    }
+
 
     private void init(){
 
@@ -106,10 +112,17 @@ public class EditorActivity extends AppCompatActivity {
 
         });
 
-        test.setOnClickListener(view3 -> {
-            Opera opera = new Opera();
-            opera.setId(9);
-            opera.deleteDataDb(view3.getRootView().getContext());
+        test.setOnClickListener(view3 ->{
+            CuratoreMuseale c = new CuratoreMuseale();
+
+            c.setNome("Gino");
+            c.setCognome("Pino");
+            c.setEmail("gino@pino.com");
+            c.setPassword("afadafsdfdsf");
+            c.setPropic("/bin/src");
+            c.setDataNascita(new Date(1639602615794L));
+            c.setZona(10);
+            c.createDataDb(view3.getRootView().getContext());
         });
 
     }
