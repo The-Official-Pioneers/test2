@@ -1,5 +1,7 @@
 package it.uniba.pioneers.sqlite;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 public final class DbContract {
@@ -11,14 +13,14 @@ public final class DbContract {
         public static final String COLUMN_NOME = "nome";
         public static final String COLUMN_ZONA = "zona";
 
-        private static final String SQL_CREATE_ENTRIES =
+        public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + AreaEntry.TABLE_NAME + " (" +
                         AreaEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         AreaEntry.COLUMN_NOME + " TEXT," +
                         AreaEntry.COLUMN_ZONA + " INTEGER,"+
                         "FOREIGN KEY("+AreaEntry.COLUMN_ZONA+") REFERENCES "+ZonaEntry.TABLE_NAME+"("+ZonaEntry.COLUMN_ID+"))";
 
-        private static final String SQL_DELETE_ENTRIES =
+        public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + AreaEntry.TABLE_NAME;
     }
 
@@ -33,7 +35,7 @@ public final class DbContract {
         public static final String COLUMN_PASSWORD = "password";
         public static final String COLUMN_PROPIC = "propic";
 
-        private static final String SQL_CREATE_ENTRIES =
+        public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + CuratoreMusealeEntry.TABLE_NAME + " (" +
                         CuratoreMusealeEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         CuratoreMusealeEntry.COLUMN_NOME + " TEXT," +
@@ -44,7 +46,7 @@ public final class DbContract {
                         CuratoreMusealeEntry.COLUMN_PASSWORD + " TEXT," +
                         CuratoreMusealeEntry.COLUMN_PROPIC + " TEXT)";
 
-        private static final String SQL_DELETE_ENTRIES =
+        public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + CuratoreMusealeEntry.TABLE_NAME;
     }
 
@@ -60,7 +62,7 @@ public final class DbContract {
         public static final String COLUMN_PROPIC = "propic";
 
 
-        private static final String SQL_CREATE_ENTRIES =
+        public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + GuidaEntry.TABLE_NAME + " (" +
                         GuidaEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         GuidaEntry.COLUMN_NOME + " TEXT," +
@@ -71,7 +73,7 @@ public final class DbContract {
                         GuidaEntry.COLUMN_SPECIALIZZAZIONE + " TEXT," +
                         GuidaEntry.COLUMN_PROPIC + " TEXT)";
 
-        private static final String SQL_DELETE_ENTRIES =
+        public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + GuidaEntry.TABLE_NAME;
     }
 
@@ -85,7 +87,7 @@ public final class DbContract {
         public static final String COLUMN_PASSWORD = "password";
         public static final String COLUMN_PROPIC = "propic";
 
-        private static final String SQL_CREATE_ENTRIES =
+        public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + VisitatoreEntry.TABLE_NAME + " (" +
                         VisitatoreEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         VisitatoreEntry.COLUMN_NOME + " TEXT," +
@@ -95,7 +97,7 @@ public final class DbContract {
                         VisitatoreEntry.COLUMN_PASSWORD + " TEXT," +
                         VisitatoreEntry.COLUMN_PROPIC + " TEXT)";
 
-        private static final String SQL_DELETE_ENTRIES =
+        public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + VisitatoreEntry.TABLE_NAME;
     }
 
@@ -112,7 +114,7 @@ public final class DbContract {
         public static final String COLUMN_PROFONDITA = "profondita";
         public static final String COLUMN_AREA = "area";
 
-        private static final String SQL_CREATE_ENTRIES =
+        public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + OperaEntry.TABLE_NAME + " (" +
                         OperaEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         OperaEntry.COLUMN_TITOLO + " TEXT," +
@@ -125,7 +127,7 @@ public final class DbContract {
                         OperaEntry.COLUMN_AREA + " INTEGER,"+
                         "FOREIGN KEY("+OperaEntry.COLUMN_AREA+") REFERENCES "+AreaEntry.TABLE_NAME+"("+AreaEntry.COLUMN_ID+"))";
 
-        private static final String SQL_DELETE_ENTRIES =
+        public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + OperaEntry.TABLE_NAME;
     }
 
@@ -139,7 +141,7 @@ public final class DbContract {
         public static final String COLUMN_GUIDA = "guida";
         public static final String COLUMN_DATA = "data";
 
-        private static final String SQL_CREATE_ENTRIES =
+        public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + VisitaEntry.TABLE_NAME + " (" +
                         VisitaEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         VisitaEntry.COLUMN_CREATORE_VISITATORE + " INTEGER," +
@@ -152,7 +154,7 @@ public final class DbContract {
                         "FOREIGN KEY("+VisitaEntry.COLUMN_CREATORE_CURATORE+") REFERENCES "+CuratoreMusealeEntry.TABLE_NAME+"("+CuratoreMusealeEntry.COLUMN_ID+"),"+
                         "FOREIGN KEY("+VisitaEntry.COLUMN_GUIDA+") REFERENCES "+GuidaEntry.TABLE_NAME+"("+GuidaEntry.COLUMN_ID+"))";
 
-        private static final String SQL_DELETE_ENTRIES =
+        public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + VisitaEntry.TABLE_NAME;
     }
 
@@ -166,7 +168,7 @@ public final class DbContract {
         public static final String COLUMN_LONGITUDINE = "longitudine";
         public static final String COLUMN_LUOGO = "luogo";
 
-        private static final String SQL_CREATE_ENTRIES =
+        public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + ZonaEntry.TABLE_NAME + " (" +
                         ZonaEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         ZonaEntry.COLUMN_TIPO + " INTEGER," +
@@ -176,7 +178,7 @@ public final class DbContract {
                         ZonaEntry.COLUMN_LONGITUDINE + " REAL," +
                         ZonaEntry.COLUMN_LUOGO + " TEXT)";
 
-        private static final String SQL_DELETE_ENTRIES =
+        public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + ZonaEntry.TABLE_NAME;
     }
 
@@ -188,7 +190,7 @@ public final class DbContract {
         public static final String COLUMN_OPERA = "opera";
         public static final String COLUMN_ORDINE = "ordine";
 
-        private static final String SQL_CREATE_ENTRIES =
+        public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + VisitaOperaEntry.TABLE_NAME + " (" +
                         VisitaOperaEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         VisitaOperaEntry.COLUMN_VISITA + " INTEGER," +
@@ -198,7 +200,7 @@ public final class DbContract {
                         "FOREIGN KEY("+VisitaOperaEntry.COLUMN_OPERA+") REFERENCES "+OperaEntry.TABLE_NAME+"("+OperaEntry.COLUMN_ID+"))";
 
 
-        private static final String SQL_DELETE_ENTRIES =
+        public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + VisitaOperaEntry.TABLE_NAME;
     }
 

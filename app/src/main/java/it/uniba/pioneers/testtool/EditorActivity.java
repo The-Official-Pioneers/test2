@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,8 @@ import java.util.Date;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
+import it.uniba.pioneers.sqlite.DbContract;
+import it.uniba.pioneers.sqlite.DbHelper;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
 import it.uniba.pioneers.widget.Node;
 
@@ -107,6 +111,7 @@ public class EditorActivity extends AppCompatActivity {
 
             c.deleteDataDb(view3.getRootView().getContext());
         });
+
     }
 
     @Override
@@ -123,5 +128,17 @@ public class EditorActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         init();
+
+        DbHelper dbHelper = new DbHelper(this);
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(DbContract.AreaEntry.COLUMN_NOME, "GINO");
+        values.put(DbContract.AreaEntry.COLUMN_ZONA, 1);
+
+        long newRowId = db.insert(DbContract.AreaEntry.TABLE_NAME, null, values);
+
+
     }
 }
