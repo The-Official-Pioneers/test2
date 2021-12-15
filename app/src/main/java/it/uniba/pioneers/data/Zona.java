@@ -15,6 +15,8 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
+import it.uniba.pioneers.data.serer.Server;
+
 public class Zona {
 
     private int id;

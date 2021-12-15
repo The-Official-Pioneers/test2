@@ -1,7 +1,5 @@
 package it.uniba.pioneers.sqlite;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 public final class DbContract {
@@ -61,7 +59,6 @@ public final class DbContract {
         public static final String COLUMN_SPECIALIZZAZIONE = "specializzazione";
         public static final String COLUMN_PROPIC = "propic";
 
-
         public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + GuidaEntry.TABLE_NAME + " (" +
                         GuidaEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
@@ -100,7 +97,6 @@ public final class DbContract {
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + VisitatoreEntry.TABLE_NAME;
     }
-
 
     public static class OperaEntry implements BaseColumns{
         public static final String TABLE_NAME = "opera";
@@ -182,7 +178,6 @@ public final class DbContract {
                 "DROP TABLE IF EXISTS " + ZonaEntry.TABLE_NAME;
     }
 
-
     public static class VisitaOperaEntry implements BaseColumns{
         public static final String TABLE_NAME = "visita_opera";
         public static final String COLUMN_ID = "id";
@@ -203,5 +198,4 @@ public final class DbContract {
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + VisitaOperaEntry.TABLE_NAME;
     }
-
 }

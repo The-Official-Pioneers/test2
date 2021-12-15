@@ -1,4 +1,4 @@
-package it.uniba.pioneers.data;
+package it.uniba.pioneers.data.serer;
 
 public class Server {
     static public final String PROTOCOL = "http";
