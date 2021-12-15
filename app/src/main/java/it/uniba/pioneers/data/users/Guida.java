@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import it.uniba.pioneers.data.serer.Server;
+import it.uniba.pioneers.data.server.Server;
 
 public class Guida {
 
