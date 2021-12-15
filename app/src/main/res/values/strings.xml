@@ -16,5 +16,4 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button">Button</string>
-    <string name="fragment_dialog_node_info">TEST</string>
 </resources>
