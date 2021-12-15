@@ -15,7 +15,8 @@ public final class DbContract {
                 "CREATE TABLE " + AreaEntry.TABLE_NAME + " (" +
                         AreaEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         AreaEntry.COLUMN_NOME + " TEXT," +
-                        AreaEntry.COLUMN_ZONA + " INTEGER)";
+                        AreaEntry.COLUMN_ZONA + " INTEGER,"+
+                        "FOREIGN KEY("+AreaEntry.COLUMN_ZONA+") REFERENCES "+ZonaEntry.TABLE_NAME+"("+ZonaEntry.COLUMN_ID+"))";
 
         private static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + AreaEntry.TABLE_NAME;
@@ -121,7 +122,8 @@ public final class DbContract {
                         OperaEntry.COLUMN_ALTEZZA + " INTEGER," +
                         OperaEntry.COLUMN_LARGHEZZA + " INTEGER," +
                         OperaEntry.COLUMN_PROFONDITA + " INTEGER," +
-                        OperaEntry.COLUMN_AREA + " INTEGER)";
+                        OperaEntry.COLUMN_AREA + " INTEGER,"+
+                        "FOREIGN KEY("+OperaEntry.COLUMN_AREA+") REFERENCES "+AreaEntry.TABLE_NAME+"("+AreaEntry.COLUMN_ID+"))";
 
         private static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + OperaEntry.TABLE_NAME;
@@ -145,7 +147,10 @@ public final class DbContract {
                         VisitaEntry.COLUMN_TIPO_CREATORE + " INTEGER," +
                         VisitaEntry.COLUMN_GUIDA + " INTEGER," +
                         VisitaEntry.COLUMN_DATA + " INTEGER," +
-                        VisitaEntry.COLUMN_ORARIO + " INTEGER)";
+                        VisitaEntry.COLUMN_ORARIO + " INTEGER,"+
+                        "FOREIGN KEY("+VisitaEntry.COLUMN_CREATORE_VISITATORE+") REFERENCES "+VisitatoreEntry.TABLE_NAME+"("+VisitatoreEntry.COLUMN_ID+"),"+
+                        "FOREIGN KEY("+VisitaEntry.COLUMN_CREATORE_CURATORE+") REFERENCES "+CuratoreMusealeEntry.TABLE_NAME+"("+CuratoreMusealeEntry.COLUMN_ID+"),"+
+                        "FOREIGN KEY("+VisitaEntry.COLUMN_GUIDA+") REFERENCES "+GuidaEntry.TABLE_NAME+"("+GuidaEntry.COLUMN_ID+"))";
 
         private static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + VisitaEntry.TABLE_NAME;
@@ -188,7 +193,10 @@ public final class DbContract {
                         VisitaOperaEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         VisitaOperaEntry.COLUMN_VISITA + " INTEGER," +
                         VisitaOperaEntry.COLUMN_OPERA + " INTEGER," +
-                        VisitaOperaEntry.COLUMN_ORDINE + " INTEGER)";
+                        VisitaOperaEntry.COLUMN_ORDINE + " INTEGER,"+
+                        "FOREIGN KEY("+VisitaOperaEntry.COLUMN_VISITA+") REFERENCES "+VisitaEntry.TABLE_NAME+"("+VisitaEntry.COLUMN_ID+"),"+
+                        "FOREIGN KEY("+VisitaOperaEntry.COLUMN_OPERA+") REFERENCES "+OperaEntry.TABLE_NAME+"("+OperaEntry.COLUMN_ID+"))";
+
 
         private static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + VisitaOperaEntry.TABLE_NAME;
