@@ -114,15 +114,6 @@ public class EditorActivity extends AppCompatActivity {
 
         test.setOnClickListener(view3 ->{
             CuratoreMuseale c = new CuratoreMuseale();
-
-            c.setNome("Gino");
-            c.setCognome("Pino");
-            c.setEmail("gino@pino.com");
-            c.setPassword("afadafsdfdsf");
-            c.setPropic("/bin/src");
-            c.setDataNascita(new Date(1639602615794L));
-            c.setZona(10);
-            c.createDataDb(view3.getRootView().getContext());
         });
 
     }

@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
+import it.uniba.pioneers.data.serer.Server;
+
 public class Opera {
 
     public int getId() {

@@ -1,8 +1,10 @@
 package it.uniba.pioneers.testtool;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
+import it.uniba.pioneers.testtool.home.ListHomeFragment;
+import it.uniba.pioneers.testtool.home.WelcomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +39,17 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
+
+        /*** INIZIO TRANSAZIONE ***/
+
+        ListHomeFragment f = new ListHomeFragment();
+
+        androidx.fragment.app.FragmentManager supportFragmentManager;
+        supportFragmentManager = getSupportFragmentManager();
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container_list, f).addToBackStack(null)
+                .commit();
+        /*** FINE TRANSAZIONE ***/
 
        /* setSupportActionBar(binding.toolbar);
 
@@ -89,5 +104,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void goEditorActivity(View view){
+        Intent intent = new Intent(this, EditorActivity.class);
+        startActivity(intent);
     }
 }
