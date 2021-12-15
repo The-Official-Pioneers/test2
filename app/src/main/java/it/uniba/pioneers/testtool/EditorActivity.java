@@ -7,19 +7,14 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
 import it.uniba.pioneers.data.users.CuratoreMuseale;
-import it.uniba.pioneers.data.users.Guida;
-import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
