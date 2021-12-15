@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
-import it.uniba.pioneers.data.serer.Server;
+import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
 
