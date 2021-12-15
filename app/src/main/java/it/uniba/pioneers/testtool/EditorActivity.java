@@ -11,10 +11,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 
+import it.uniba.pioneers.data.Opera;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
@@ -104,12 +106,10 @@ public class EditorActivity extends AppCompatActivity {
 
         });
 
-
-        test.setOnClickListener(view3 ->{
-            Visitatore c = new Visitatore();
-            c.setId(9);
-
-            c.deleteDataDb(view3.getRootView().getContext());
+        test.setOnClickListener(view3 -> {
+            Opera opera = new Opera();
+            opera.setId(9);
+            opera.deleteDataDb(view3.getRootView().getContext());
         });
 
     }
