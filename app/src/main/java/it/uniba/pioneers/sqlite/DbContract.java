@@ -131,21 +131,19 @@ public final class DbContract {
         public static final String TABLE_NAME = "visita";
         public static final String COLUMN_ID = "id";
         public static final String COLUMN_CREATORE_VISITATORE = "curatore_visitatore";
-        public static final String COLUMN_CREATORE_CURATORE = "curatore_curatore";
-        public static final String COLUMN_TIPO_CREATORE = "tipo_creatore";
-        public static final String COLUMN_ORARIO = "orario";
         public static final String COLUMN_GUIDA = "guida";
+        public static final String COLUMN_CREATORE_CURATORE = "curatore_curatore";
         public static final String COLUMN_DATA = "data";
+        public static final String COLUMN_TIPO_CREATORE = "tipo_creatore";
 
         public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + VisitaEntry.TABLE_NAME + " (" +
                         VisitaEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         VisitaEntry.COLUMN_CREATORE_VISITATORE + " INTEGER," +
-                        VisitaEntry.COLUMN_CREATORE_CURATORE + " INTEGER," +
-                        VisitaEntry.COLUMN_TIPO_CREATORE + " INTEGER," +
                         VisitaEntry.COLUMN_GUIDA + " INTEGER," +
+                        VisitaEntry.COLUMN_CREATORE_CURATORE + " INTEGER," +
                         VisitaEntry.COLUMN_DATA + " INTEGER," +
-                        VisitaEntry.COLUMN_ORARIO + " INTEGER,"+
+                        VisitaEntry.COLUMN_TIPO_CREATORE + " INTEGER," +
                         "FOREIGN KEY("+VisitaEntry.COLUMN_CREATORE_VISITATORE+") REFERENCES "+VisitatoreEntry.TABLE_NAME+"("+VisitatoreEntry.COLUMN_ID+"),"+
                         "FOREIGN KEY("+VisitaEntry.COLUMN_CREATORE_CURATORE+") REFERENCES "+CuratoreMusealeEntry.TABLE_NAME+"("+CuratoreMusealeEntry.COLUMN_ID+"),"+
                         "FOREIGN KEY("+VisitaEntry.COLUMN_GUIDA+") REFERENCES "+GuidaEntry.TABLE_NAME+"("+GuidaEntry.COLUMN_ID+"))";
