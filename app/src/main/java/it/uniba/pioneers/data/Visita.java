@@ -331,7 +331,7 @@ public class Visita {
             values.put(DbContract.VisitaEntry.COLUMN_DATA, getData());
             values.put(DbContract.VisitaEntry.COLUMN_TIPO_CREATORE, getTipo_creatore());
 
-            long newRowId = db.insert(DbContract.VisitaEntry.TABLE_NAME, null, values);
+            long newRowId = db.insert(DbContract.ZonaEntry.TABLE_NAME, null, values);
         }
     }
 
