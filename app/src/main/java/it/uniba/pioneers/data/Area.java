@@ -2,6 +2,7 @@ package it.uniba.pioneers.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
@@ -144,7 +145,60 @@ public class Area {
             queue.add(jsonObjectRequest);
 
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+            String[] projection = {
+                    DbContract.AreaEntry.COLUMN_ID,
+                    DbContract.AreaEntry.COLUMN_ZONA,
+                    DbContract.AreaEntry.COLUMN_NOME
+            };
+
+            String selection = DbContract.AreaEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId())};
+
+            String sortOrder =
+                    DbContract.AreaEntry.COLUMN_ID + "DESC";
+
+            Cursor cursor = db.query(
+                    DbContract.AreaEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    selection,              // The columns for the WHERE clause
+                    selectionArgs,          // The values for the WHERE clause
+                    null,                   // don't group the rows
+                    null,                   // don't filter by row groups
+                    sortOrder
+
+            );
+
+            cursor.moveToNext();
+
+            long id = cursor.getLong(
+
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.AreaEntry.COLUMN_ID
+                    )
+            );
+            setId((int) id);
+
+            long zona = cursor.getLong(
+
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.AreaEntry.COLUMN_ZONA
+                    )
+            );
+            setId((int) zona);
+
+            String nome = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.AreaEntry.COLUMN_NOME
+                    )
+
+            );
+            setNome(nome);
+
+            cursor.close();
         }
     }
 
@@ -245,8 +299,26 @@ public class Area {
                 }
             });
             queue.add(jsonObjectRequest);
+
         }else{
-            //TODO SQLITE3
+
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+
+            values.put(DbContract.AreaEntry.COLUMN_ID, getId());
+            values.put(DbContract.AreaEntry.COLUMN_ZONA, getZona());
+            values.put(DbContract.AreaEntry.COLUMN_NOME, getNome());
+
+            String selection = DbContract.AreaEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            int count = db.update(
+                    DbContract.AreaEntry.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs);
         }
     }
 
@@ -288,7 +360,13 @@ public class Area {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            String selection = DbContract.AreaEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            int deletedRows = db.delete(DbContract.AreaEntry.TABLE_NAME, selection, selectionArgs);
         }
     }
 
