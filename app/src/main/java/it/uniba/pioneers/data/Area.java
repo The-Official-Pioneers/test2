@@ -1,6 +1,8 @@
 package it.uniba.pioneers.data;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -16,6 +18,8 @@ import org.json.JSONObject;
 import java.text.ParseException;
 
 import it.uniba.pioneers.data.server.Server;
+import it.uniba.pioneers.sqlite.DbContract;
+import it.uniba.pioneers.sqlite.DbHelper;
 
 public class Area {
 
@@ -51,18 +55,20 @@ public class Area {
     private boolean online;
 
     public Area() {
-        this.setId(0);
-        this.setZona(0);
-        this.setNome("");
+        setId(0);
+        setZona(0);
+        setNome("");
 
-        this.setOnline(true);
+        setOnline(true);
     }
 
     public Area(JSONObject data) throws JSONException, ParseException {
 
-        this.setId(data.getInt("id"));
-        this.setZona(data.getInt("zona"));
-        this.setNome(data.getString("nome"));
+        setId(data.getInt(DbContract.AreaEntry.COLUMN_ID));
+        setZona(data.getInt(DbContract.AreaEntry.COLUMN_ZONA));
+        setNome(data.getString(DbContract.AreaEntry.COLUMN_NOME));
+
+        setOnline(true);
 
 
     }
@@ -71,9 +77,9 @@ public class Area {
 
         JSONObject tmp = new JSONObject();
 
-        tmp.put("id", this.id);
-        tmp.put("zona", this.zona);
-        tmp.put("nome", this.nome);
+        tmp.put(DbContract.AreaEntry.COLUMN_ID, getId());
+        tmp.put(DbContract.AreaEntry.COLUMN_ZONA, getZona());
+        tmp.put(DbContract.AreaEntry.COLUMN_NOME, getNome());
 
         return tmp;
     }
@@ -90,9 +96,11 @@ public class Area {
     }
 
     public void setDataFromJSON(JSONObject data) throws JSONException, ParseException{
-        this.setId(data.getInt("id"));
-        this.setZona(data.getInt("zona"));
-        this.setNome(data.getString("nome"));
+
+        setId(data.getInt(DbContract.AreaEntry.COLUMN_ID));
+        setZona(data.getInt(DbContract.AreaEntry.COLUMN_ZONA));
+        setNome(data.getString(DbContract.AreaEntry.COLUMN_NOME));
+
     }
 
     public void readDataDb(Context context){
@@ -147,9 +155,10 @@ public class Area {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", getId());
-                data.put("zona", getZona());
-                data.put("nome", getNome());
+                data.put(DbContract.AreaEntry.COLUMN_ID, getId());
+                data.put(DbContract.AreaEntry.COLUMN_ZONA, getZona());
+                data.put(DbContract.AreaEntry.COLUMN_NOME, getNome());
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -181,7 +190,17 @@ public class Area {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DbContract.AreaEntry.COLUMN_ID, getId());
+            values.put(DbContract.AreaEntry.COLUMN_ZONA, getZona());
+            values.put(DbContract.AreaEntry.COLUMN_NOME, getNome());
+
+
+            long newRowId = db.insert(DbContract.AreaEntry.TABLE_NAME, null, values);
+
         }
     }
 
@@ -192,9 +211,9 @@ public class Area {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", getId());
-                data.put("zona", getZona());
-                data.put("nome", getNome());
+                data.put(DbContract.AreaEntry.COLUMN_ID, getId());
+                data.put(DbContract.AreaEntry.COLUMN_ZONA, getZona());
+                data.put(DbContract.AreaEntry.COLUMN_NOME, getNome());
 
             } catch (JSONException e) {
                 e.printStackTrace();
