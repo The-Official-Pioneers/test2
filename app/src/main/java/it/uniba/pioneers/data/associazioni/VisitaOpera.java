@@ -163,7 +163,7 @@ public class VisitaOpera {
             };
 
             String selection = DbContract.VisitaOperaEntry.COLUMN_ID + " = ?";
-            String[] selectionArgs = { String .valueOf(getId()) };
+            String[] selectionArgs = { String.valueOf(getId()) };
 
             String sortOrder =
                     DbContract.VisitaOperaEntry.COLUMN_ID + "DESC";
@@ -220,7 +220,6 @@ public class VisitaOpera {
 
             JSONObject data = new JSONObject();
             try {
-                data.put(DbContract.VisitaOperaEntry.COLUMN_ID, getId());
                 data.put(DbContract.VisitaOperaEntry.COLUMN_VISITA, getVisita());
                 data.put(DbContract.VisitaOperaEntry.COLUMN_OPERA, getOpera());
                 data.put(DbContract.VisitaOperaEntry.COLUMN_ORDINE, getOrdine());
@@ -261,7 +260,6 @@ public class VisitaOpera {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
 
             ContentValues values = new ContentValues();
-            values.put(DbContract.VisitaOperaEntry.COLUMN_ID, getId());
             values.put(DbContract.VisitaOperaEntry.COLUMN_VISITA, getVisita());
             values.put(DbContract.VisitaOperaEntry.COLUMN_OPERA, getOpera());
             values.put(DbContract.VisitaOperaEntry.COLUMN_ORDINE, getOrdine());

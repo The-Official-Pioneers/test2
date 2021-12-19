@@ -287,7 +287,6 @@ public class Zona {
 
             JSONObject data = new JSONObject();
             try {
-                data.put(DbContract.ZonaEntry.COLUMN_ID, getId());
                 data.put(DbContract.ZonaEntry.COLUMN_TIPO,getTipo());
                 data.put(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE, getDenominazione());
                 data.put(DbContract.ZonaEntry.COLUMN_DESCRIZIONE, getDescrizione());
@@ -331,7 +330,6 @@ public class Zona {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
 
             ContentValues values = new ContentValues();
-            values.put(DbContract.ZonaEntry.COLUMN_ID, getId());
             values.put(DbContract.ZonaEntry.COLUMN_TIPO,getTipo());
             values.put(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE, getDenominazione());
             values.put(DbContract.ZonaEntry.COLUMN_DESCRIZIONE, getDescrizione());
