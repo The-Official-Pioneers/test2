@@ -1,4 +1,4 @@
-package it.uniba.pioneers.data;
+package it.uniba.pioneers.data.associazioni;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -22,15 +22,13 @@ import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
 
-public class Zona {
+
+public class VisitaOpera {
 
     private int id;
-    private String tipo;
-    private String denominazione;
-    private String  descrizione;
-    private double latitudine;
-    private double longitudine;
-    private String luogo;
+    private int visita;
+    private int opera;
+    private int ordine;
 
     public int getId() {
         return id;
@@ -40,103 +38,65 @@ public class Zona {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public int getVisita() {
+        return visita;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setVisita(int visita) {
+        this.visita = visita;
     }
 
-    public String getDenominazione() {
-        return denominazione;
+    public int getOpera() {
+        return opera;
     }
 
-    public void setDenominazione(String denominazione) {
-        this.denominazione = denominazione;
+    public void setOpera(int opera) {
+        this.opera = opera;
     }
 
-    public String getDescrizione() {
-        return descrizione;
+    public int getOrdine() {
+        return ordine;
     }
 
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
-
-    public double getLatitudine() {
-        return latitudine;
-    }
-
-    public void setLatitudine(double latitudine) {
-        this.latitudine = latitudine;
-    }
-
-    public double getLongitudine() {
-        return longitudine;
-    }
-
-    public void setLongitudine(double longitudine) {
-        this.longitudine = longitudine;
-    }
-
-    public String getLuogo() {
-        return luogo;
-    }
-
-    public void setLuogo(String luogo) {
-        this.luogo = luogo;
+    public void setOrdine(int ordine) {
+        this.ordine = ordine;
     }
 
     //online state
     private boolean online;
 
-    public Zona() {
+    public VisitaOpera() {
         setId(0);
-        setTipo("");
-        setDenominazione("");
-        setDescrizione("");
-        setLatitudine(0.0);
-        setLongitudine(0.0);
-        setLuogo("");
+        setVisita(0);
+        setOpera(0);
+        setOrdine(0);
 
         setOnline(true);
     }
 
     //con questa funzione andiamo a prendere degli elementi e gli andiamo a trasformare in oggetti JSON
-    public Zona(JSONObject data) throws JSONException, ParseException {
-        setId(data.getInt(DbContract.ZonaEntry.COLUMN_ID));
-        setTipo(data.getString(DbContract.ZonaEntry.COLUMN_TIPO));
-        setDenominazione(data.getString(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE));
-        setDescrizione(data.getString(DbContract.ZonaEntry.COLUMN_DESCRIZIONE));
-        setLatitudine(data.getDouble(DbContract.ZonaEntry.COLUMN_LATITUDINE));
-        setLongitudine(data.getDouble(DbContract.ZonaEntry.COLUMN_LONGITUDINE));
-        setLuogo(data.getString(DbContract.ZonaEntry.COLUMN_LUOGO));
+    public VisitaOpera(JSONObject data) throws JSONException, ParseException {
+        setId(data.getInt(DbContract.VisitaOperaEntry.COLUMN_ID));
+        setVisita(data.getInt(DbContract.VisitaOperaEntry.COLUMN_VISITA));
+        setOpera(data.getInt(DbContract.VisitaOperaEntry.COLUMN_OPERA));
+        setOrdine(data.getInt(DbContract.VisitaOperaEntry.COLUMN_ORDINE));
 
         setOnline(true);
-
     }
     public void setDataFromJSON(JSONObject data) throws JSONException, ParseException {
-
-        setId(data.getInt(DbContract.ZonaEntry.COLUMN_ID));
-        setTipo(data.getString(DbContract.ZonaEntry.COLUMN_TIPO));
-        setDenominazione(data.getString(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE));
-        setDescrizione(data.getString(DbContract.ZonaEntry.COLUMN_DESCRIZIONE));
-        setLatitudine(data.getDouble(DbContract.ZonaEntry.COLUMN_LATITUDINE));
-        setLongitudine(data.getDouble(DbContract.ZonaEntry.COLUMN_LONGITUDINE));
-        setLuogo(data.getString(DbContract.ZonaEntry.COLUMN_LUOGO));
+        setId(data.getInt(DbContract.VisitaOperaEntry.COLUMN_ID));
+        setVisita(data.getInt(DbContract.VisitaOperaEntry.COLUMN_VISITA));
+        setOpera(data.getInt(DbContract.VisitaOperaEntry.COLUMN_OPERA));
+        setOrdine(data.getInt(DbContract.VisitaOperaEntry.COLUMN_ORDINE));
     }
 
     public JSONObject toJSON() throws JSONException{
         JSONObject tmp = new JSONObject();
 
-        tmp.put(DbContract.ZonaEntry.COLUMN_ID, getId());
-        tmp.put(DbContract.ZonaEntry.COLUMN_TIPO,getTipo());
-        tmp.put(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE, getDenominazione());
-        tmp.put(DbContract.ZonaEntry.COLUMN_DESCRIZIONE, getDescrizione());
-        tmp.put(DbContract.ZonaEntry.COLUMN_LATITUDINE, getLatitudine());
-        tmp.put(DbContract.ZonaEntry.COLUMN_LONGITUDINE, getLongitudine());
-        tmp.put(DbContract.ZonaEntry.COLUMN_LUOGO, getLuogo());
+        tmp.put(DbContract.VisitaOperaEntry.COLUMN_ID, getId());
+        tmp.put(DbContract.VisitaOperaEntry.COLUMN_VISITA, getVisita());
+        tmp.put(DbContract.VisitaOperaEntry.COLUMN_OPERA, getOpera());
+        tmp.put(DbContract.VisitaOperaEntry.COLUMN_ORDINE, getOrdine());
 
         return tmp;
     }
@@ -155,16 +115,16 @@ public class Zona {
     public void readDataDb(Context context){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
-            String url = Server.getUrl() + "/zona/read/";
+            String url = Server.getUrl() + "/visita_opera/read/";
 
             JSONObject data = new JSONObject();
             try {
-                data.put(DbContract.ZonaEntry.COLUMN_ID, getId());
+                data.put(DbContract.VisitaOperaEntry.COLUMN_ID, getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            Zona self = this;
+            it.uniba.pioneers.data.associazioni.VisitaOpera self = this;
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                     new Response.Listener<JSONObject>() {
@@ -196,24 +156,20 @@ public class Zona {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
 
             String[] projection = {
-                    DbContract.ZonaEntry.COLUMN_ID,
-                    DbContract.ZonaEntry.COLUMN_TIPO,
-                    DbContract.ZonaEntry.COLUMN_DENOMINAZIONE,
-                    DbContract.ZonaEntry.COLUMN_DESCRIZIONE,
-                    DbContract.ZonaEntry.COLUMN_LATITUDINE,
-                    DbContract.ZonaEntry.COLUMN_LONGITUDINE,
-                    DbContract.ZonaEntry.COLUMN_LUOGO
-
+                    DbContract.VisitaOperaEntry.COLUMN_ID,
+                    DbContract.VisitaOperaEntry.COLUMN_VISITA,
+                    DbContract.VisitaOperaEntry.COLUMN_OPERA,
+                    DbContract.VisitaOperaEntry.COLUMN_ORDINE
             };
 
-            String selection = DbContract.ZonaEntry.COLUMN_ID + " = ?";
-            String[] selectionArgs = { String .valueOf(getId()) };
+            String selection = DbContract.VisitaOperaEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
 
             String sortOrder =
-                    DbContract.ZonaEntry.COLUMN_ID + "DESC";
+                    DbContract.VisitaOperaEntry.COLUMN_ID + "DESC";
 
             Cursor cursor = db.query(
-                    DbContract.ZonaEntry.TABLE_NAME,   // The table to query
+                    DbContract.VisitaOperaEntry.TABLE_NAME,   // The table to query
                     projection,             // The array of columns to return (pass null to get all)
                     selection,              // The columns for the WHERE clause
                     selectionArgs,          // The values for the WHERE clause
@@ -226,56 +182,33 @@ public class Zona {
 
             long id = cursor.getLong(
                     cursor.getColumnIndexOrThrow(
-                          DbContract.ZonaEntry.COLUMN_ID
+                            DbContract.VisitaOperaEntry.COLUMN_ID
                     )
             );
             setId((int) id);
 
-            String tipo = cursor.getString(
-                cursor.getColumnIndexOrThrow(
-                        DbContract.ZonaEntry.COLUMN_TIPO
-                )
-            ) ;
-            setTipo(tipo);
-
-            String denominazione = cursor.getString(
+            int visita = cursor.getInt(
                     cursor.getColumnIndexOrThrow(
-                            DbContract.ZonaEntry.COLUMN_DENOMINAZIONE
+                            DbContract.VisitaOperaEntry.COLUMN_VISITA
                     )
             ) ;
-            setDenominazione(denominazione);
+            setVisita(visita);
 
-            String descrizione = cursor.getString(
+            int opera = cursor.getInt(
                     cursor.getColumnIndexOrThrow(
-                            DbContract.ZonaEntry.COLUMN_DESCRIZIONE
+                            DbContract.VisitaOperaEntry.COLUMN_OPERA
                     )
             ) ;
-            setDescrizione(descrizione);
+            setOpera(opera);
 
-            double latitudine  = cursor.getDouble(
+            int ordine = cursor.getInt(
                     cursor.getColumnIndexOrThrow(
-                            DbContract.ZonaEntry.COLUMN_LATITUDINE
-                    )
-            );
-            setLatitudine(latitudine);
-
-            double longitudine  = cursor.getDouble(
-                    cursor.getColumnIndexOrThrow(
-                            DbContract.ZonaEntry.COLUMN_LONGITUDINE
-                    )
-            );
-            setLongitudine(longitudine);
-
-            String luogo = cursor.getString(
-                    cursor.getColumnIndexOrThrow(
-                            DbContract.ZonaEntry.COLUMN_LUOGO
+                            DbContract.VisitaOperaEntry.COLUMN_ORDINE
                     )
             ) ;
-            setLuogo(luogo);
+            setOrdine(ordine);
 
             cursor.close();
-
-
         }
     }
 
@@ -283,22 +216,19 @@ public class Zona {
 
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
-            String url = Server.getUrl() + "/zona/create/";
+            String url = Server.getUrl() + "/visita_opera/create/";
 
             JSONObject data = new JSONObject();
             try {
-                data.put(DbContract.ZonaEntry.COLUMN_TIPO,getTipo());
-                data.put(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE, getDenominazione());
-                data.put(DbContract.ZonaEntry.COLUMN_DESCRIZIONE, getDescrizione());
-                data.put(DbContract.ZonaEntry.COLUMN_LATITUDINE, getLatitudine());
-                data.put(DbContract.ZonaEntry.COLUMN_LONGITUDINE, getLongitudine());
-                data.put(DbContract.ZonaEntry.COLUMN_LUOGO, getLuogo());
+                data.put(DbContract.VisitaOperaEntry.COLUMN_VISITA, getVisita());
+                data.put(DbContract.VisitaOperaEntry.COLUMN_OPERA, getOpera());
+                data.put(DbContract.VisitaOperaEntry.COLUMN_ORDINE, getOrdine());
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            Zona self = this;
+            it.uniba.pioneers.data.associazioni.VisitaOpera self = this;
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                     new Response.Listener<JSONObject>() {
@@ -330,15 +260,11 @@ public class Zona {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
 
             ContentValues values = new ContentValues();
-            values.put(DbContract.ZonaEntry.COLUMN_TIPO,getTipo());
-            values.put(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE, getDenominazione());
-            values.put(DbContract.ZonaEntry.COLUMN_DESCRIZIONE, getDescrizione());
-            values.put(DbContract.ZonaEntry.COLUMN_LATITUDINE, getLatitudine());
-            values.put(DbContract.ZonaEntry.COLUMN_LONGITUDINE, getLongitudine());
-            values.put(DbContract.ZonaEntry.COLUMN_LUOGO, getLuogo());
+            values.put(DbContract.VisitaOperaEntry.COLUMN_VISITA, getVisita());
+            values.put(DbContract.VisitaOperaEntry.COLUMN_OPERA, getOpera());
+            values.put(DbContract.VisitaOperaEntry.COLUMN_ORDINE, getOrdine());
 
-            long newRowId = db.insert(DbContract.ZonaEntry.TABLE_NAME, null, values);
-
+            long newRowId = db.insert(DbContract.VisitaOperaEntry.TABLE_NAME, null, values);
         }
 
     }
@@ -346,23 +272,20 @@ public class Zona {
     public void updateDataDb(Context context){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
-            String url = Server.getUrl() + "/zona/update/";
+            String url = Server.getUrl() + "/visita_opera/update/";
 
             JSONObject data = new JSONObject();
             try {
-                data.put(DbContract.ZonaEntry.COLUMN_ID, getId());
-                data.put(DbContract.ZonaEntry.COLUMN_TIPO,getTipo());
-                data.put(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE, getDenominazione());
-                data.put(DbContract.ZonaEntry.COLUMN_DESCRIZIONE, getDescrizione());
-                data.put(DbContract.ZonaEntry.COLUMN_LATITUDINE, getLatitudine());
-                data.put(DbContract.ZonaEntry.COLUMN_LONGITUDINE, getLongitudine());
-                data.put(DbContract.ZonaEntry.COLUMN_LUOGO, getLuogo());
+                data.put(DbContract.VisitaOperaEntry.COLUMN_ID, getId());
+                data.put(DbContract.VisitaOperaEntry.COLUMN_VISITA, getVisita());
+                data.put(DbContract.VisitaOperaEntry.COLUMN_OPERA, getOpera());
+                data.put(DbContract.VisitaOperaEntry.COLUMN_ORDINE, getOrdine());
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            Zona self = this;
+            it.uniba.pioneers.data.associazioni.VisitaOpera self = this;
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                     new Response.Listener<JSONObject>() {
@@ -394,19 +317,16 @@ public class Zona {
 
             ContentValues values = new ContentValues();
 
-            values.put(DbContract.ZonaEntry.COLUMN_ID, getId());
-            values.put(DbContract.ZonaEntry.COLUMN_TIPO,getTipo());
-            values.put(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE, getDenominazione());
-            values.put(DbContract.ZonaEntry.COLUMN_DESCRIZIONE, getDescrizione());
-            values.put(DbContract.ZonaEntry.COLUMN_LATITUDINE, getLatitudine());
-            values.put(DbContract.ZonaEntry.COLUMN_LONGITUDINE, getLongitudine());
-            values.put(DbContract.ZonaEntry.COLUMN_LUOGO, getLuogo());
+            values.put(DbContract.VisitaOperaEntry.COLUMN_ID, getId());
+            values.put(DbContract.VisitaOperaEntry.COLUMN_VISITA, getVisita());
+            values.put(DbContract.VisitaOperaEntry.COLUMN_OPERA, getOpera());
+            values.put(DbContract.VisitaOperaEntry.COLUMN_ORDINE, getOrdine());
 
-            String selection = DbContract.ZonaEntry.COLUMN_ID + " = ?";
+            String selection = DbContract.VisitaOperaEntry.COLUMN_ID + " = ?";
             String[] selectionArgs = { String.valueOf(getId())};
 
             int count = db.update(
-                    DbContract.ZonaEntry.TABLE_NAME,
+                    DbContract.VisitaOperaEntry.TABLE_NAME,
                     values,
                     selection,
                     selectionArgs);
@@ -417,7 +337,7 @@ public class Zona {
     public void deleteDataDb(Context context){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
-            String url = Server.getUrl() + "/zona/delete/";
+            String url = Server.getUrl() + "/visita_opera/delete/";
 
             JSONObject data = new JSONObject();
             try {
@@ -426,7 +346,7 @@ public class Zona {
                 e.printStackTrace();
             }
 
-            Zona self = this;
+            it.uniba.pioneers.data.associazioni.VisitaOpera self = this;
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                     new Response.Listener<JSONObject>() {
@@ -455,10 +375,10 @@ public class Zona {
             DbHelper dbHelper = new DbHelper(context);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-            String selection = DbContract.ZonaEntry.COLUMN_ID + " = ?";
+            String selection = DbContract.VisitaOperaEntry.COLUMN_ID + " = ?";
             String[] selectionArgs = { String.valueOf(getId()) };
 
-            int deletedRows = db.delete(DbContract.ZonaEntry.TABLE_NAME, selection, selectionArgs);
+            int deletedRows = db.delete(DbContract.VisitaOperaEntry.TABLE_NAME, selection, selectionArgs);
         }
     }
 }
