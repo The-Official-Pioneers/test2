@@ -14,6 +14,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Date;
 
+import it.uniba.pioneers.data.Opera;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
@@ -108,7 +109,7 @@ public class EditorActivity extends AppCompatActivity {
         });
 
         test.setOnClickListener(view3 ->{
-            CuratoreMuseale c = new CuratoreMuseale();
+            Opera c = new Opera();
         });
 
     }

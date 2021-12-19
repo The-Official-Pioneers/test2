@@ -1,6 +1,9 @@
 package it.uniba.pioneers.data;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -16,7 +19,9 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
-import it.uniba.pioneers.data.serer.Server;
+import it.uniba.pioneers.data.server.Server;
+import it.uniba.pioneers.sqlite.DbContract;
+import it.uniba.pioneers.sqlite.DbHelper;
 
 public class Opera {
 
@@ -44,11 +49,11 @@ public class Opera {
         this.descrizione = descrizione;
     }
 
-    public Uri getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(Uri foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 
@@ -95,7 +100,7 @@ public class Opera {
     private int id;
     private String titolo;
     private String descrizione;
-    private Uri foto;
+    private String foto;
     private String qr;
     private int altezza;
     private int larghezza;
@@ -130,7 +135,7 @@ public class Opera {
         this.setId(data.getInt("id"));
         this.setTitolo(data.getString("titolo"));
         this.setDescrizione(data.getString("descrizione"));
-        this.setFoto(Uri.parse(data.getString("foto")));
+        this.setFoto(data.getString("foto"));
         this.setQr(data.getString("qr"));
         this.setAltezza(data.getInt("altezza"));
         this.setLarghezza(data.getInt("larghezza"));
@@ -158,7 +163,7 @@ public class Opera {
         this.setId(data.getInt("id"));
         this.setTitolo(data.getString("titolo"));
         this.setDescrizione(data.getString("descrizione"));
-        this.setFoto(Uri.parse(data.getString("foto")));
+        this.setFoto(data.getString("foto"));
         this.setQr(data.getString("qr"));
         this.setAltezza(data.getInt("altezza"));
         this.setLarghezza(data.getInt("larghezza"));
@@ -208,6 +213,107 @@ public class Opera {
 
         }else{
             //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+            String[] projection = {
+                    DbContract.OperaEntry.COLUMN_ID,
+                    DbContract.OperaEntry.COLUMN_TITOLO,
+                    DbContract.OperaEntry.COLUMN_DESCRIZIONE,
+                    DbContract.OperaEntry.COLUMN_FOTO,
+                    DbContract.OperaEntry.COLUMN_QR,
+                    DbContract.OperaEntry.COLUMN_ALTEZZA,
+                    DbContract.OperaEntry.COLUMN_LARGHEZZA,
+                    DbContract.OperaEntry.COLUMN_PROFONDITA,
+                    DbContract.OperaEntry.COLUMN_AREA
+            };
+
+            String selection = DbContract.OperaEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId())};
+            String sortOrder = DbContract.OperaEntry.COLUMN_ID + "DESC";
+
+            Cursor cursor = db.query(
+                    DbContract.OperaEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    selection,              // The columns for the WHERE clause
+                    selectionArgs,          // The values for the WHERE clause
+                    null,                   // don't group the rows
+                    null,                   // don't filter by row groups
+                    sortOrder
+            );
+
+            cursor.moveToNext(); //FACCIO NEXT PERCHE MI ASPETTO SOLO UNA TUPLA
+
+            long id = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.OperaEntry.COLUMN_ID
+                    )
+            );
+            setId((int) id);
+
+            String titolo = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.OperaEntry.COLUMN_TITOLO
+                    )
+            );
+            setTitolo(titolo);
+
+            String descrizione = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.OperaEntry.COLUMN_DESCRIZIONE
+                    )
+
+            );
+            setDescrizione(descrizione);
+
+            String foto = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.OperaEntry.COLUMN_FOTO
+                    )
+
+            );
+            setFoto(foto);
+
+            String qr = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.OperaEntry.COLUMN_QR
+                    )
+
+            );
+            setQr(qr);
+
+            long altezza = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.OperaEntry.COLUMN_ALTEZZA
+                    )
+
+            );
+            setAltezza((int) altezza);
+
+            long larghezza = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.OperaEntry.COLUMN_LARGHEZZA
+                    )
+
+            );
+            setLarghezza((int) larghezza);
+
+            long profondita = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.OperaEntry.COLUMN_PROFONDITA
+                    )
+
+            );
+            setProfondita((int) profondita);
+
+            long area = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.OperaEntry.COLUMN_AREA
+                    )
+
+            );
+            setArea((int) area);
+            cursor.close();
         }
     }
 
@@ -258,7 +364,32 @@ public class Opera {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+
+            values.put(DbContract.OperaEntry.COLUMN_TITOLO, getTitolo());
+            values.put(DbContract.OperaEntry.COLUMN_DESCRIZIONE, getDescrizione());
+            values.put(DbContract.OperaEntry.COLUMN_FOTO, getFoto());
+            values.put(DbContract.OperaEntry.COLUMN_QR, getQr());
+            values.put(DbContract.OperaEntry.COLUMN_ALTEZZA, getAltezza());
+            values.put(DbContract.OperaEntry.COLUMN_LARGHEZZA, getLarghezza());
+            values.put(DbContract.OperaEntry.COLUMN_PROFONDITA, getProfondita());
+            values.put(DbContract.OperaEntry.COLUMN_AREA, getArea());
+
+            long newRowId = db.insert(
+                    DbContract.OperaEntry.TABLE_NAME,
+                    null,
+                    values
+            );
+
+            if(newRowId != 0){
+                Toast.makeText(context, String.valueOf(newRowId), Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
@@ -311,6 +442,30 @@ public class Opera {
             queue.add(jsonObjectRequest);
         }else{
             //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+
+            values.put(DbContract.OperaEntry.COLUMN_ID, getId());
+            values.put(DbContract.OperaEntry.COLUMN_TITOLO, getTitolo());
+            values.put(DbContract.OperaEntry.COLUMN_DESCRIZIONE, getDescrizione());
+            values.put(DbContract.OperaEntry.COLUMN_FOTO, getFoto());
+            values.put(DbContract.OperaEntry.COLUMN_QR, getQr());
+            values.put(DbContract.OperaEntry.COLUMN_ALTEZZA, getAltezza());
+            values.put(DbContract.OperaEntry.COLUMN_LARGHEZZA, getLarghezza());
+            values.put(DbContract.OperaEntry.COLUMN_PROFONDITA, getProfondita());
+            values.put(DbContract.OperaEntry.COLUMN_AREA, getArea());
+
+            String selection = DbContract.OperaEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            int count = db.update(
+                    DbContract.OperaEntry.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs
+            );
         }
     }
 
@@ -353,6 +508,17 @@ public class Opera {
             queue.add(jsonObjectRequest);
         }else{
             //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            String selection = DbContract.OperaEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            int deletedRows = db.delete(
+                    DbContract.OperaEntry.TABLE_NAME,
+                    selection,
+                    selectionArgs
+            );
         }
     }
 }

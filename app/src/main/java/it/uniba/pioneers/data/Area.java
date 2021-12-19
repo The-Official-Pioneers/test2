@@ -252,7 +252,6 @@ public class Area {
             values.put(DbContract.AreaEntry.COLUMN_ZONA, getZona());
             values.put(DbContract.AreaEntry.COLUMN_NOME, getNome());
 
-
             long newRowId = db.insert(DbContract.AreaEntry.TABLE_NAME, null, values);
 
         }
