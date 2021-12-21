@@ -320,7 +320,6 @@ public class CuratoreMuseale {
                 data.put(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD, getPassword());
                 data.put(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC, getPropic().toString());
                 data.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

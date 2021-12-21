@@ -2,6 +2,7 @@ package it.uniba.pioneers.testtool;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +18,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
-import it.uniba.pioneers.testtool.home.ListHomeFragment;
-import it.uniba.pioneers.testtool.home.WelcomeFragment;
+import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
         /*** INIZIO TRANSAZIONE ***/
-
-        ListHomeFragment f = new ListHomeFragment();
+        //// if per tipo di utente e fragment da committare
+        FragmentHomeGuida f = new FragmentHomeGuida();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
@@ -95,5 +95,11 @@ public class MainActivity extends AppCompatActivity {
     public void goEditorActivity(View view){
         Intent intent = new Intent(this, EditorActivity.class);
         startActivity(intent);
+    }
+
+    public void scannerQr(View view) {
+        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        startActivityForResult(camera_intent, 1);
     }
 }

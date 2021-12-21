@@ -4,6 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.22708333333333333" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_home_curatore.xml" value="0.27449617790132036" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_home_curatore_list.xml" value="0.2828125" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_home_guida.xml" value="0.3625" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_list_home.xml" value="0.2828125" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layouts/widget/graph_editor/drawable/ic_baseline_qr_code_scanner_24.xml" value="0.2989583333333333" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/activity_home.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/layout/fragment_login.xml" value="0.275" />
@@ -23,7 +28,7 @@
         <entry key="app/src/main/res/layout/fragment_grafo.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/fragment_lista_nodi.xml" value="0.2767210144927536" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.3273092369477912" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/fragment_option.xml" value="0.33" />
         <entry key="app/src/main/res/layout/layout_lista_nodi.xml" value="0.23052536231884058" />
         <entry key="app/src/main/res/layout/layout_mappa.xml" value="0.19947916666666668" />
