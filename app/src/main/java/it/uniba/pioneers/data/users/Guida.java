@@ -1,6 +1,9 @@
 package it.uniba.pioneers.data.users;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -20,17 +23,19 @@ import java.util.Date;
 import java.util.Locale;
 
 import it.uniba.pioneers.data.server.Server;
+import it.uniba.pioneers.sqlite.DbContract;
+import it.uniba.pioneers.sqlite.DbHelper;
 
 public class Guida {
 
     public static String dtStart = "2010-10-15T09:27:37Z";
     public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -52,6 +57,10 @@ public class Guida {
 
     public void setDataNascita(String dataNascita) throws ParseException {
         this.dataNascita = Guida.format.parse(dataNascita);
+    }
+
+    public void setDataNascita(long dataNascita) {
+        this.dataNascita = new Date(dataNascita);
     }
 
     public Date getDataNascita() {
@@ -78,11 +87,11 @@ public class Guida {
         this.password = password;
     }
 
-    public Uri getPropic() {
+    public String getPropic() {
         return propic;
     }
 
-    public void setPropic(Uri propic) {
+    public void setPropic(String propic) {
         this.propic = propic;
     }
 
@@ -94,13 +103,13 @@ public class Guida {
         this.specializzazione = specializzazione;
     }
 
-    private int id;
+    private long id;
     private String nome;
     private String cognome;
     private Date dataNascita;
     private String email;
     private String password;
-    private Uri propic;
+    private String propic;
     private String specializzazione;
 
     //ONLINE STATE
@@ -117,53 +126,53 @@ public class Guida {
     }
 
     public Guida(){
-        this.setId(0);
-        this.setNome("");
-        this.setCognome("");
-        this.setEmail("");
-        this.setPassword("");
-        this.setPropic(null);
-        this.setSpecializzazione("");
+        setId(0);
+        setNome("");
+        setCognome("");
+        setEmail("");
+        setPassword("");
+        setPropic(null);
+        setSpecializzazione("");
 
-        this.setOnline(true);
+        setOnline(false);
     }
 
     public Guida(JSONObject data) throws JSONException, ParseException {
-        this.setId(data.getInt("id"));
-        this.setNome(data.getString("nome"));
-        this.setCognome(data.getString("cognome"));
-        //this.setDataNascita(data.getString("data_nascita"));
-        this.setEmail(data.getString("email"));
-        this.setPassword(data.getString("password"));
-        this.setPropic(Uri.parse(data.getString("propic")));
-        this.setSpecializzazione(data.getString("specializzazione"));
+        setId(data.getInt(DbContract.GuidaEntry.COLUMN_ID));
+        setNome(data.getString(DbContract.GuidaEntry.COLUMN_NOME));
+        setCognome(data.getString(DbContract.GuidaEntry.COLUMN_COGNOME));
+        setDataNascita(data.getString(DbContract.GuidaEntry.COLUMN_DATA_NASCITA));
+        setEmail(data.getString(DbContract.GuidaEntry.COLUMN_EMAIL));
+        setPassword(data.getString(DbContract.GuidaEntry.COLUMN_PASSWORD));
+        setPropic(data.getString(DbContract.GuidaEntry.COLUMN_PROPIC));
+        setSpecializzazione(data.getString(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE));
     }
 
     //CREATE JSON OBJECT
     public JSONObject toJSON() throws JSONException {
         JSONObject tmp = new JSONObject();
 
-        tmp.put("id", this.id);
-        tmp.put("nome", this.nome);
-        tmp.put("cognome", this.cognome);
-        tmp.put("data_nascita", this.dataNascita);
-        tmp.put("email", this.email);
-        tmp.put("password", this.password);
-        tmp.put("propic", this.propic);
-        tmp.put("specializzazione", this.specializzazione);
+        tmp.put(DbContract.GuidaEntry.COLUMN_ID, this.id);
+        tmp.put(DbContract.GuidaEntry.COLUMN_NOME, this.nome);
+        tmp.put(DbContract.GuidaEntry.COLUMN_COGNOME, this.cognome);
+        tmp.put(DbContract.GuidaEntry.COLUMN_DATA_NASCITA, this.dataNascita);
+        tmp.put(DbContract.GuidaEntry.COLUMN_EMAIL, this.email);
+        tmp.put(DbContract.GuidaEntry.COLUMN_PASSWORD, this.password);
+        tmp.put(DbContract.GuidaEntry.COLUMN_PROPIC, this.propic);
+        tmp.put(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE, this.specializzazione);
 
         return tmp;
     }
 
     public void setDataFromJSON(JSONObject data) throws JSONException, ParseException {
-        this.setId(data.getInt("id"));
-        this.setNome(data.getString("nome"));
-        this.setCognome(data.getString("cognome"));
-        //this.setDataNascita(data.getString("data_nascita"));
-        this.setEmail(data.getString("email"));
-        this.setPassword(data.getString("password"));
-        this.setPropic(Uri.parse(data.getString("propic")));
-        this.setSpecializzazione(data.getString("specializzazione"));
+        setId(data.getInt(DbContract.GuidaEntry.COLUMN_ID));
+        setNome(data.getString(DbContract.GuidaEntry.COLUMN_NOME));
+        setCognome(data.getString(DbContract.GuidaEntry.COLUMN_COGNOME));
+        setDataNascita(data.getString(DbContract.GuidaEntry.COLUMN_DATA_NASCITA));
+        setEmail(data.getString(DbContract.GuidaEntry.COLUMN_EMAIL));
+        setPassword(data.getString(DbContract.GuidaEntry.COLUMN_PASSWORD));
+        setPropic(data.getString(DbContract.GuidaEntry.COLUMN_PROPIC));
+        setSpecializzazione(data.getString(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE));
     }
 
     //DB METHOD
@@ -174,7 +183,7 @@ public class Guida {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", getId());
+                data.put(DbContract.GuidaEntry.COLUMN_ID, getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -206,7 +215,97 @@ public class Guida {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+            String[] projection = {
+                    DbContract.GuidaEntry.COLUMN_ID,
+                    DbContract.GuidaEntry.COLUMN_NOME,
+                    DbContract.GuidaEntry.COLUMN_COGNOME,
+                    DbContract.GuidaEntry.COLUMN_DATA_NASCITA,
+                    DbContract.GuidaEntry.COLUMN_EMAIL,
+                    DbContract.GuidaEntry.COLUMN_PASSWORD,
+                    DbContract.GuidaEntry.COLUMN_PROPIC,
+                    DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE
+            };
+
+            String selection = DbContract.GuidaEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            String sortOrder =
+                    DbContract.GuidaEntry.COLUMN_ID + " DESC";
+
+            Cursor cursor = db.query(
+                    DbContract.GuidaEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    selection,              // The columns for the WHERE clause
+                    selectionArgs,          // The values for the WHERE clause
+                    null,                   // don't group the rows
+                    null,                   // don't filter by row groups
+                    sortOrder               // The sort order
+            );
+
+            cursor.moveToNext();
+
+            long id = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.GuidaEntry.COLUMN_ID
+                    )
+            );
+
+            String nome = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.GuidaEntry.COLUMN_NOME
+                    )
+            );
+
+            String cognome = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.GuidaEntry.COLUMN_COGNOME
+                    )
+            );
+
+            long data_nascita = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.GuidaEntry.COLUMN_DATA_NASCITA
+                    )
+            );
+
+            String email = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.GuidaEntry.COLUMN_EMAIL
+                    )
+            );
+
+            String password = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.GuidaEntry.COLUMN_PASSWORD
+                    )
+            );
+
+            String propic = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.GuidaEntry.COLUMN_PROPIC
+                    )
+            );
+
+            String specializzazione = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE
+                    )
+            );
+
+            setId(id);
+            setNome(nome);
+            setCognome(cognome);
+            setDataNascita(new Date(data_nascita));
+            setEmail(email);
+            setPassword(password);
+            setPropic(propic);
+            setSpecializzazione(specializzazione);
+
+            cursor.close();
         }
     }
 
@@ -217,13 +316,13 @@ public class Guida {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("nome", getNome());
-                data.put("cognome", getCognome());
-                data.put("data_nascita", getDataNascita());
-                data.put("email", getEmail());
-                data.put("password", getPassword());
-                data.put("propic", getPropic().toString());
-                data.put("specializzazione", getSpecializzazione());
+                data.put(DbContract.GuidaEntry.COLUMN_NOME, getNome());
+                data.put(DbContract.GuidaEntry.COLUMN_COGNOME, getCognome());
+                data.put(DbContract.GuidaEntry.COLUMN_DATA_NASCITA, getDataNascita());
+                data.put(DbContract.GuidaEntry.COLUMN_EMAIL, getEmail());
+                data.put(DbContract.GuidaEntry.COLUMN_PASSWORD, getPassword());
+                data.put(DbContract.GuidaEntry.COLUMN_PROPIC, getPropic());
+                data.put(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE, getSpecializzazione());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -256,7 +355,22 @@ public class Guida {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DbContract.GuidaEntry.COLUMN_NOME, getNome());
+            values.put(DbContract.GuidaEntry.COLUMN_COGNOME, getCognome());
+            values.put(DbContract.GuidaEntry.COLUMN_DATA_NASCITA, getDataNascita().getTime());
+            values.put(DbContract.GuidaEntry.COLUMN_EMAIL, getEmail());
+            values.put(DbContract.GuidaEntry.COLUMN_PASSWORD, getPassword());
+            values.put(DbContract.GuidaEntry.COLUMN_PROPIC, getPropic());
+            values.put(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE, getSpecializzazione());
+
+
+            long newRowId = db.insert(DbContract.GuidaEntry.TABLE_NAME, null, values);
+            setId(newRowId);
         }
     }
 
@@ -267,14 +381,14 @@ public class Guida {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", getId());
-                data.put("nome", getNome());
-                data.put("cognome", getCognome());
-                //data.put("data_nascita", getDataNascita());
-                data.put("email", getEmail());
-                data.put("password", getPassword());
-                data.put("propic", getPropic());
-                data.put("specializzazione", getSpecializzazione());
+                data.put(DbContract.GuidaEntry.COLUMN_ID, getId());
+                data.put(DbContract.GuidaEntry.COLUMN_NOME, getNome());
+                data.put(DbContract.GuidaEntry.COLUMN_COGNOME, getCognome());
+                data.put(DbContract.GuidaEntry.COLUMN_DATA_NASCITA, getDataNascita());
+                data.put(DbContract.GuidaEntry.COLUMN_EMAIL, getEmail());
+                data.put(DbContract.GuidaEntry.COLUMN_PASSWORD, getPassword());
+                data.put(DbContract.GuidaEntry.COLUMN_PROPIC, getPropic());
+                data.put(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE, getSpecializzazione());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -307,7 +421,28 @@ public class Guida {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+
+            values.put(DbContract.GuidaEntry.COLUMN_ID, getId());
+            values.put(DbContract.GuidaEntry.COLUMN_NOME, getNome());
+            values.put(DbContract.GuidaEntry.COLUMN_COGNOME, getCognome());
+            values.put(DbContract.GuidaEntry.COLUMN_DATA_NASCITA, getDataNascita().getTime());
+            values.put(DbContract.GuidaEntry.COLUMN_EMAIL, getEmail());
+            values.put(DbContract.GuidaEntry.COLUMN_PASSWORD, getPassword());
+            values.put(DbContract.GuidaEntry.COLUMN_PROPIC, getPropic());
+            values.put(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE, getSpecializzazione());
+
+            String selection = DbContract.GuidaEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            int count = db.update(
+                    DbContract.GuidaEntry.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs);
         }
     }
 
@@ -318,7 +453,7 @@ public class Guida {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", getId());
+                data.put(DbContract.GuidaEntry.COLUMN_ID, getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -349,7 +484,13 @@ public class Guida {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            String selection = DbContract.GuidaEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            int deletedRows = db.delete(DbContract.GuidaEntry.TABLE_NAME, selection, selectionArgs);
         }
     }
 }

@@ -1,0 +1,25 @@
+
+œ
+java:S1186'"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Õù†ùüÿÿÿÿ
+q
+java:S1450"VRemove the "binding" field and declare it as a local variable in the relevant methods.(ÐðºÛþÿÿÿÿ
+7	java:S131;""Add a default case to this switch.(þ™ÅÞ
+7	java:S131T""Add a default case to this switch.(þ™ÅÞ
+S
+java:S1854”"<Remove this useless assignment to local variable "newRowId".(õÎªè
+D
+java:S1481”"-Remove this unused "newRowId" local variable.(õÎªè
+F
+java:S1068"+Remove this unused "binding" private field.(ÐðºÛþÿÿÿÿ
+{
+java:S1319"eThe type of "opere" should be an interface such as "List" rather than the implementation "ArrayList".(á˜“
+a
+java:S1301;"KReplace this "switch" statement by "if" statements to increase readability.(þ™ÅÞ
+a
+java:S1301T"KReplace this "switch" statement by "if" statements to increase readability.(þ™ÅÞ
+g
+java:S1104"QMake opere a static final constant or non-public and provide accessors if needed.(á˜“
+b
+java:S1104"MMake d a static final constant or non-public and provide accessors if needed.(ËÏ…Z
+]
+java:S2095Œ"FUse try-with-resources or close this "DbHelper" in a "finally" clause.(‹œà–

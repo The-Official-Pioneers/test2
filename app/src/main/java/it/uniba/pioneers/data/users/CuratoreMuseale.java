@@ -180,7 +180,7 @@ public class CuratoreMuseale {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", getId());
+                data.put(DbContract.CuratoreMusealeEntry.COLUMN_ID, getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -250,55 +250,56 @@ public class CuratoreMuseale {
                         DbContract.CuratoreMusealeEntry.COLUMN_ID
                     )
             );
-            setId(id);
 
             String nome = cursor.getString(
                     cursor.getColumnIndexOrThrow(
                             DbContract.CuratoreMusealeEntry.COLUMN_NOME
                     )
             );
-            setNome(nome);
 
             String cognome = cursor.getString(
                     cursor.getColumnIndexOrThrow(
                             DbContract.CuratoreMusealeEntry.COLUMN_COGNOME
                     )
             );
-            setCognome(cognome);
 
             long data_nascita = cursor.getLong(
                     cursor.getColumnIndexOrThrow(
                             DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA
                     )
             );
-            setDataNascita(new Date(data_nascita));
 
             String email = cursor.getString(
                     cursor.getColumnIndexOrThrow(
                             DbContract.CuratoreMusealeEntry.COLUMN_EMAIL
                     )
             );
-            setEmail(email);
 
             String password = cursor.getString(
                     cursor.getColumnIndexOrThrow(
                             DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD
                     )
             );
-            setPassword(password);
 
             String propic = cursor.getString(
                     cursor.getColumnIndexOrThrow(
                             DbContract.CuratoreMusealeEntry.COLUMN_PROPIC
                     )
             );
-            setPropic(propic);
 
             long zona = cursor.getLong(
                     cursor.getColumnIndexOrThrow(
                             DbContract.CuratoreMusealeEntry.COLUMN_ZONA
                     )
             );
+
+            setId(id);
+            setNome(nome);
+            setCognome(cognome);
+            setDataNascita(new Date(data_nascita));
+            setEmail(email);
+            setPassword(password);
+            setPropic(propic);
             setZona(zona);
 
             cursor.close();
@@ -364,9 +365,9 @@ public class CuratoreMuseale {
             values.put(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC, getPropic().toString());
             values.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
 
-
             long newRowId = db.insert(DbContract.CuratoreMusealeEntry.TABLE_NAME, null, values);
 
+            setId(newRowId);
         }
     }
 
@@ -380,12 +381,11 @@ public class CuratoreMuseale {
                 data.put(DbContract.CuratoreMusealeEntry.COLUMN_ID, getId());
                 data.put(DbContract.CuratoreMusealeEntry.COLUMN_NOME, getNome());
                 data.put(DbContract.CuratoreMusealeEntry.COLUMN_COGNOME, getCognome());
-                //data.put(DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA, getDataNascita());
+                data.put(DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA, getDataNascita());
                 data.put(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL, getEmail());
                 data.put(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD, getPassword());
                 data.put(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC, getPropic());
                 data.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

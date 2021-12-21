@@ -1,7 +1,9 @@
 package it.uniba.pioneers.data.users;
 
+import android.content.ContentValues;
 import android.content.Context;
-import android.net.Uri;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,15 +22,17 @@ import java.util.Date;
 import java.util.Locale;
 
 import it.uniba.pioneers.data.server.Server;
+import it.uniba.pioneers.sqlite.DbContract;
+import it.uniba.pioneers.sqlite.DbHelper;
 
 public class Visitatore {
     public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -76,22 +80,22 @@ public class Visitatore {
         this.password = password;
     }
 
-    public Uri getPropic() {
+    public String getPropic() {
         return propic;
     }
 
-    public void setPropic(Uri propic) {
+    public void setPropic(String propic) {
         this.propic = propic;
     }
 
 
-    private int id;
+    private long id;
     private String nome;
     private String cognome;
     private Date dataNascita;
     private String email;
     private String password;
-    private Uri propic;
+    private String propic;
 
     //ONLINE STATE
     private boolean online;
@@ -118,38 +122,38 @@ public class Visitatore {
     }
 
     public Visitatore(JSONObject data) throws JSONException, ParseException {
-        this.setId(data.getInt("id"));
-        this.setNome(data.getString("nome"));
-        this.setCognome(data.getString("cognome"));
-        //this.setDataNascita(data.getString("data_nascita"));
-        this.setEmail(data.getString("email"));
-        this.setPassword(data.getString("password"));
-        this.setPropic(Uri.parse(data.getString("propic")));
+        this.setId(data.getInt(DbContract.VisitatoreEntry.COLUMN_ID));
+        this.setNome(data.getString(DbContract.VisitatoreEntry.COLUMN_NOME));
+        this.setCognome(data.getString(DbContract.VisitatoreEntry.COLUMN_COGNOME));
+        //this.setDataNascita(data.getString(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA));
+        this.setEmail(data.getString(DbContract.VisitatoreEntry.COLUMN_EMAIL));
+        this.setPassword(data.getString(DbContract.VisitatoreEntry.COLUMN_PASSWORD));
+        this.setPropic(data.getString(DbContract.VisitatoreEntry.COLUMN_PROPIC));
     }
 
     //CREATE JSON OBJECT
     public JSONObject toJSON() throws JSONException {
         JSONObject tmp = new JSONObject();
 
-        tmp.put("id", this.id);
-        tmp.put("nome", this.nome);
-        tmp.put("cognome", this.cognome);
-        tmp.put("data_nascita", this.dataNascita);
-        tmp.put("email", this.email);
-        tmp.put("password", this.password);
-        tmp.put("propic", this.propic);
+        tmp.put(DbContract.VisitatoreEntry.COLUMN_ID, this.id);
+        tmp.put(DbContract.VisitatoreEntry.COLUMN_NOME, this.nome);
+        tmp.put(DbContract.VisitatoreEntry.COLUMN_COGNOME, this.cognome);
+        tmp.put(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA, this.dataNascita);
+        tmp.put(DbContract.VisitatoreEntry.COLUMN_EMAIL, this.email);
+        tmp.put(DbContract.VisitatoreEntry.COLUMN_PASSWORD, this.password);
+        tmp.put(DbContract.VisitatoreEntry.COLUMN_PROPIC, this.propic);
 
         return tmp;
     }
 
     public void setDataFromJSON(JSONObject data) throws JSONException, ParseException {
-        this.setId(data.getInt("id"));
-        this.setNome(data.getString("nome"));
-        this.setCognome(data.getString("cognome"));
-        //this.setDataNascita(data.getString("data_nascita"));
-        this.setEmail(data.getString("email"));
-        this.setPassword(data.getString("password"));
-        this.setPropic(Uri.parse(data.getString("propic")));
+        this.setId(data.getInt(DbContract.VisitatoreEntry.COLUMN_ID));
+        this.setNome(data.getString(DbContract.VisitatoreEntry.COLUMN_NOME));
+        this.setCognome(data.getString(DbContract.VisitatoreEntry.COLUMN_COGNOME));
+        //this.setDataNascita(data.getString(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA));
+        this.setEmail(data.getString(DbContract.VisitatoreEntry.COLUMN_EMAIL));
+        this.setPassword(data.getString(DbContract.VisitatoreEntry.COLUMN_PASSWORD));
+        this.setPropic(data.getString(DbContract.VisitatoreEntry.COLUMN_PROPIC));
     }
 
     public void readDataDb(Context context){
@@ -159,7 +163,7 @@ public class Visitatore {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", getId());
+                data.put(DbContract.VisitatoreEntry.COLUMN_ID, getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -191,7 +195,89 @@ public class Visitatore {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+            String[] projection = {
+                    DbContract.VisitatoreEntry.COLUMN_ID,
+                    DbContract.VisitatoreEntry.COLUMN_NOME,
+                    DbContract.VisitatoreEntry.COLUMN_COGNOME,
+                    DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA,
+                    DbContract.VisitatoreEntry.COLUMN_EMAIL,
+                    DbContract.VisitatoreEntry.COLUMN_PASSWORD,
+                    DbContract.VisitatoreEntry.COLUMN_PROPIC,
+            };
+
+            String selection = DbContract.VisitatoreEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            String sortOrder =
+                    DbContract.VisitatoreEntry.COLUMN_ID + " DESC";
+
+            Cursor cursor = db.query(
+                    DbContract.VisitatoreEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    selection,              // The columns for the WHERE clause
+                    selectionArgs,          // The values for the WHERE clause
+                    null,                   // don't group the rows
+                    null,                   // don't filter by row groups
+                    sortOrder               // The sort order
+            );
+
+            cursor.moveToNext();
+
+            long id = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.VisitatoreEntry.COLUMN_ID
+                    )
+            );
+
+            String nome = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.VisitatoreEntry.COLUMN_NOME
+                    )
+            );
+
+            String cognome = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.VisitatoreEntry.COLUMN_COGNOME
+                    )
+            );
+
+            long data_nascita = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA
+                    )
+            );
+
+            String email = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.VisitatoreEntry.COLUMN_EMAIL
+                    )
+            );
+
+            String password = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.VisitatoreEntry.COLUMN_PASSWORD
+                    )
+            );
+
+            String propic = cursor.getString(
+                    cursor.getColumnIndexOrThrow(
+                            DbContract.VisitatoreEntry.COLUMN_PROPIC
+                    )
+            );
+
+            setId(id);
+            setNome(nome);
+            setCognome(cognome);
+            setDataNascita(new Date(data_nascita));
+            setEmail(email);
+            setPassword(password);
+            setPropic(propic);
+
+            cursor.close();
         }
     }
 
@@ -202,12 +288,12 @@ public class Visitatore {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("nome", getNome());
-                data.put("cognome", getCognome());
-                data.put("data_nascita", getDataNascita());
-                data.put("email", getEmail());
-                data.put("password", getPassword());
-                data.put("propic", getPropic().toString());
+                data.put(DbContract.VisitatoreEntry.COLUMN_NOME, getNome());
+                data.put(DbContract.VisitatoreEntry.COLUMN_COGNOME, getCognome());
+                data.put(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA, getDataNascita());
+                data.put(DbContract.VisitatoreEntry.COLUMN_EMAIL, getEmail());
+                data.put(DbContract.VisitatoreEntry.COLUMN_PASSWORD, getPassword());
+                data.put(DbContract.VisitatoreEntry.COLUMN_PROPIC, getPropic().toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -239,7 +325,19 @@ public class Visitatore {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DbContract.VisitatoreEntry.COLUMN_NOME, getNome());
+            values.put(DbContract.VisitatoreEntry.COLUMN_COGNOME, getCognome());
+            values.put(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA, getDataNascita().getTime());
+            values.put(DbContract.VisitatoreEntry.COLUMN_EMAIL, getEmail());
+            values.put(DbContract.VisitatoreEntry.COLUMN_PASSWORD, getPassword());
+            values.put(DbContract.VisitatoreEntry.COLUMN_PROPIC, getPropic());
+
+            long newRowId = db.insert(DbContract.VisitatoreEntry.TABLE_NAME, null, values);
+            setId(newRowId);
         }
     }
 
@@ -251,12 +349,12 @@ public class Visitatore {
             JSONObject data = new JSONObject();
             try {
                 data.put("id", getId());
-                data.put("nome", getNome());
-                data.put("cognome", getCognome());
-                //data.put("data_nascita", getDataNascita());
-                data.put("email", getEmail());
-                data.put("password", getPassword());
-                data.put("propic", getPropic());
+                data.put(DbContract.VisitatoreEntry.COLUMN_NOME, getNome());
+                data.put(DbContract.VisitatoreEntry.COLUMN_COGNOME, getCognome());
+                data.put(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA, getDataNascita());
+                data.put(DbContract.VisitatoreEntry.COLUMN_EMAIL, getEmail());
+                data.put(DbContract.VisitatoreEntry.COLUMN_PASSWORD, getPassword());
+                data.put(DbContract.VisitatoreEntry.COLUMN_PROPIC, getPropic());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -288,9 +386,30 @@ public class Visitatore {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+
+            values.put(DbContract.VisitatoreEntry.COLUMN_ID, getId());
+            values.put(DbContract.VisitatoreEntry.COLUMN_NOME, getNome());
+            values.put(DbContract.VisitatoreEntry.COLUMN_COGNOME, getCognome());
+            values.put(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA, getDataNascita().getTime());
+            values.put(DbContract.VisitatoreEntry.COLUMN_EMAIL, getEmail());
+            values.put(DbContract.VisitatoreEntry.COLUMN_PASSWORD, getPassword());
+            values.put(DbContract.VisitatoreEntry.COLUMN_PROPIC, getPropic());
+
+            String selection = DbContract.VisitatoreEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            int count = db.update(
+                    DbContract.VisitatoreEntry.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs);
         }
     }
+
 
     public void deleteDataDb(Context context){
         if(isOnline()){
@@ -299,7 +418,7 @@ public class Visitatore {
 
             JSONObject data = new JSONObject();
             try {
-                data.put("id", getId());
+                data.put(DbContract.VisitatoreEntry.COLUMN_ID, getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -330,6 +449,13 @@ public class Visitatore {
             });
             queue.add(jsonObjectRequest);
         }else{
-            //TODO SQLITE3
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            String selection = DbContract.VisitatoreEntry.COLUMN_ID + " = ?";
+            String[] selectionArgs = { String.valueOf(getId()) };
+
+            long deletedRows = db.delete(DbContract.VisitatoreEntry.TABLE_NAME, selection, selectionArgs);
         }
-    }}
+    }
+}

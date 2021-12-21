@@ -1,19 +1,38 @@
 
-{	java:S116("ZRename this field "ARG_DESCRIZIONE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ÚÑ‰üÿÿÿÿ8²É¶şÚ/
-o	java:S116)"SRename this field "ARG_ANNO" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ººà8´É¶şÚ/
+{	java:S116<"ZRename this field "ARG_DESCRIZIONE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ÚÑ‰üÿÿÿÿ8²É¶şÚ/
+o	java:S116="SRename this field "ARG_ANNO" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ººà8´É¶şÚ/
 C
-java:S1170("!Make this final field static too.(”ÚÑ‰üÿÿÿÿ8ÈÉ¶şÚ/
+java:S1170<"!Make this final field static too.(”ÚÑ‰üÿÿÿÿ8ÈÉ¶şÚ/
 >
-java:S1170)"!Make this final field static too.(“ººà8ÈÉ¶şÚ/
+java:S1170="!Make this final field static too.(“ººà8ÈÉ¶şÚ/
+b
+java:S1124-"EReorder the modifiers to comply with the Java Language Specification.(äò‹’8Ñ‚Ü/
+b
+java:S1124."EReorder the modifiers to comply with the Java Language Specification.(„Î®8Ñ‚Ü/
+b
+java:S1124/"EReorder the modifiers to comply with the Java Language Specification.(‘¾à½8Ò‚Ü/
+g
+java:S11240"EReorder the modifiers to comply with the Java Language Specification.(–µòÓûÿÿÿÿ8Ó‚Ü/
+U
+java:S3985H"3Remove this unused private "MyTouchListener" class.(¹ß™›ùÿÿÿÿ8è‚Ü/
 Z
-java:S11172"8Rename "data" which hides the field declared at line 37.(‰”ÉÛıÿÿÿÿ8íÉ¶şÚ/
+java:S1117K"8Rename "data" which hides the field declared at line 56.(‰”ÉÛıÿÿÿÿ8íÉ¶şÚ/
+X	java:S125S"<This block of commented-out lines of code should be removed.(¡Ö³ç8ñ‚Ü/
 \
-java:S1854I":Remove this useless assignment to local variable "action".(§¶¥Ïúÿÿÿÿ8úÉ¶şÚ/
+java:S1854b":Remove this useless assignment to local variable "action".(§¶¥Ïúÿÿÿÿ8úÉ¶şÚ/
 M
-java:S1481I"+Remove this unused "action" local variable.(§¶¥Ïúÿÿÿÿ8Ê¶şÚ/
+java:S1481b"+Remove this unused "action" local variable.(§¶¥Ïúÿÿÿÿ8Ê¶şÚ/
 }
-java:S3923J"[Remove this conditional structure or edit its code blocks so that they're not all the same.(ãÁğ™øÿÿÿÿ8”Ê¶şÚ/
-Y
-java:S1854{"7Remove this useless assignment to local variable "tmp".(¬§öšûÿÿÿÿ8—Ê¶şÚ/
-J
-java:S1481{"(Remove this unused "tmp" local variable.(¬§öšûÿÿÿÿ8ÉÊ¶şÚ/
+java:S3923c"[Remove this conditional structure or edit its code blocks so that they're not all the same.(ãÁğ™øÿÿÿÿ8”Ê¶şÚ/
+Z
+java:S1854–"7Remove this useless assignment to local variable "tmp".(¬§öšûÿÿÿÿ8—Ê¶şÚ/
+Y	java:S125’"<This block of commented-out lines of code should be removed.(Æôåœ8“‚‚Ü/
+Y	java:S125”"<This block of commented-out lines of code should be removed.(«ÀªŞ8”‚‚Ü/
+K
+java:S1481–"(Remove this unused "tmp" local variable.(¬§öšûÿÿÿÿ8ÉÊ¶şÚ/
+m
+java:S11042"PMake tipo a static final constant or non-public and provide accessors if needed.(ş¿¾÷8Ã‚‚Ü/
+p
+java:S1104A"SMake clicked a static final constant or non-public and provide accessors if needed.(ó§ÅÅ8Ä‚‚Ü/
+{
+java:S1104B"YMake inizializated a static final constant or non-public and provide accessors if needed.(Äêê¹üÿÿÿÿ8Å‚‚Ü/

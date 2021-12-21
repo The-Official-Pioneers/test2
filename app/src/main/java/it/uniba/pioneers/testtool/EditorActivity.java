@@ -10,12 +10,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import it.uniba.pioneers.data.Opera;
+import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
+import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
@@ -37,13 +39,8 @@ public class EditorActivity extends AppCompatActivity {
     FragmentContainerView containerView;
 
 
-    public void initDbPerm(){
-
-    }
-
 
     private void init(){
-
         Button avanti = findViewById(R.id.changeFragment2);
         Button indietro = findViewById(R.id.changeFragment);
 
@@ -77,8 +74,6 @@ public class EditorActivity extends AppCompatActivity {
                     avanti.setVisibility(View.VISIBLE);
                     break;
             }
-
-
         });
 
         avanti.setOnClickListener(view2 -> {
@@ -104,12 +99,21 @@ public class EditorActivity extends AppCompatActivity {
                     break;
 
             }
-
-
         });
 
         test.setOnClickListener(view3 ->{
-            Opera c = new Opera();
+            Guida g = new Guida();
+            g.setId(1);
+            g.setNome("Rino");
+            g.setCognome("Pino");
+            g.setDataNascita(1639937888767L);
+            g.setEmail("pino@rino.cock");
+            g.setPassword("dadasdsadasdsasadsad");
+            g.setPassword("museo");
+            g.setOnline(false);
+
+            g.readDataDb(view3.getRootView().getContext());
+            Toast.makeText(this, g.getEmail(), Toast.LENGTH_LONG).show();
         });
 
     }
@@ -121,7 +125,6 @@ public class EditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editor);
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
     }
 
     @Override
