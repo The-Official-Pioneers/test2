@@ -43,27 +43,13 @@ public class MainActivity extends AppCompatActivity {
         /*** INIZIO TRANSAZIONE ***/
 
         ListHomeFragment f = new ListHomeFragment();
-
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container_list, f).addToBackStack(null)
                 .commit();
+
         /*** FINE TRANSAZIONE ***/
-
-       /* setSupportActionBar(binding.toolbar);
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-*/
-        /*binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
     }
 
     //se clicco il bottone back e sta aperto il drawer

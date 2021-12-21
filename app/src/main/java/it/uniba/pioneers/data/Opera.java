@@ -212,7 +212,6 @@ public class Opera {
             queue.add(jsonObjectRequest);
 
         }else{
-            //TODO SQLITE3
             DbHelper dbHelper = new DbHelper(context);
             SQLiteDatabase db = dbHelper.getReadableDatabase();
 
