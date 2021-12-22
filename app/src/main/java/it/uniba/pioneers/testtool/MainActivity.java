@@ -1,15 +1,21 @@
 package it.uniba.pioneers.testtool;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -17,11 +23,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
+import it.uniba.pioneers.testtool.home.CaptureAct;
 import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
 
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AppCompatActivity {
+    public static int MY_PERMISSIONS_REQUEST_CAMERA=100;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
@@ -46,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container_list, f).addToBackStack(null)
+                .add(R.id.fragment_container_list, f)
                 .commit();
 
         /*** FINE TRANSAZIONE ***/
@@ -98,8 +109,73 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scannerQr(View view) {
-        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        scanCode();
+    }
+    private void scanCode(){
+        int permessoCamera = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA);
+        if(permessoCamera == PackageManager.PERMISSION_GRANTED){
+            IntentIntegrator integrator = new IntentIntegrator(this);
+            integrator.setCaptureActivity(CaptureAct.class);
+            integrator.setOrientationLocked(false);
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+            integrator.setPrompt("Scanning code...");
+            integrator.initiateScan();
+        }
+        else if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)){
+                new AlertDialog.Builder(this)
+                        .setTitle("Permessi Camera")
+                        .setMessage("Consentire all'app l'accesso alla camera per scansionare i QR delle opere, negando l'accesso non ci si potrà interagire")
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+        }
+        else{
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+        }
+    }
 
-        startActivityForResult(camera_intent, 1);
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 100: {
+                // Se la richiesta è stata cancellata, l'array result è vuoto
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    scanCode();
+                } else {
+                    new AlertDialog.Builder(this)
+                            .setTitle("Allerta permesso")
+                            .setMessage("Il permesso di accesso alla camere è fondamentale per poter interagire con le opere")
+                            .setPositiveButton(android.R.string.ok, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+            }
+                return;
+            }
+        }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null){
+            if(result.getContents() != null){
+                Toast.makeText(this,  result.getContents(), Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(this, "No results", Toast.LENGTH_LONG).show();
+            }
+        }
+        else{
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

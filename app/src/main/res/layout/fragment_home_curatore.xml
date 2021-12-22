@@ -68,6 +68,7 @@
                 android:layout_height="150dp"
                 android:layout_marginTop="25dp"
                 android:contentDescription="Interagisci"
+                android:onClick="scannerQr"
                 android:src="@drawable/ic_baseline_qr_code_scanner_24" />
 
             <TextView
