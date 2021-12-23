@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="it.uniba.pioneers.testtool" >
+    package="it.uniba.pioneers.testtool">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="false" />
-    <uses-feature android:name="android.hardware.camera.autofocus"
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
     <application
@@ -17,7 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestTool"
         android:usesCleartextTraffic="true">
-
         <activity
             android:name=".home.HomeActivity"
             android:exported="true"
@@ -28,37 +31,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".EditorActivity2"
             android:exported="true"
-            android:label="@string/title_activity_editor2">
-        </activity>
+            android:label="@string/title_activity_editor2"></activity>
         <activity
             android:name=".EditorActivity"
-            android:exported="true">
-
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.TestTool.NoActionBar" >
-
-
-        </activity>
-
+            android:theme="@style/Theme.TestTool.NoActionBar"></activity>
         <activity
             android:name=".home.CaptureAct"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
-
+        <activity
+            android:name=".InfoOpera"
+            android:exported="true"></activity>
     </application>
-
-
 
 </manifest>

@@ -26,6 +26,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import it.uniba.pioneers.data.Opera;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
 import it.uniba.pioneers.testtool.home.CaptureAct;
 import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
@@ -36,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
-
+    public DialogNodeInfo dialogOperaInfo = new DialogNodeInfo();
+    public FragmentHomeGuida f;
+    public static Opera opera = new Opera();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         /*** INIZIO TRANSAZIONE ***/
         //// if per tipo di utente e fragment da committare
-        FragmentHomeGuida f = new FragmentHomeGuida();
+        f = new FragmentHomeGuida();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
@@ -109,7 +112,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scannerQr(View view) {
-        scanCode();
+
+       scanCode();
+
     }
     private void scanCode(){
         int permessoCamera = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA);
@@ -156,11 +161,9 @@ public class MainActivity extends AppCompatActivity {
                             .show();
                 }
             }
-                return;
-            }
+            return;
         }
-
-
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -168,7 +171,18 @@ public class MainActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null){
             if(result.getContents() != null){
-                Toast.makeText(this,  result.getContents(), Toast.LENGTH_LONG).show();
+                opera.setId(Integer.parseInt(result.getContents()));
+                opera.readDataDb(MainActivity.this);
+                if(opera.getTitolo().equals("")){
+                    Toast.makeText(MainActivity.this, "Nessun opera trovata, prova a rieseguire la scansione" ,Toast.LENGTH_LONG).show();
+                }else{
+                    Intent informazioniOpera = new Intent(this, InfoOpera.class);
+
+                    startActivity(informazioniOpera);
+
+
+                    //infoOpera.show(this.getSupportFragmentManager(), "informazione oprera");
+                }
             }
             else {
                 Toast.makeText(this, "No results", Toast.LENGTH_LONG).show();

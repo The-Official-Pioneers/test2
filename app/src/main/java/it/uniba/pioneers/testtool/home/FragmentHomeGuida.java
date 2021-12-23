@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 
 /**
@@ -14,7 +16,7 @@ import it.uniba.pioneers.testtool.R;
  * Use the {@link FragmentHomeGuida#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentHomeGuida extends Fragment {
+public class FragmentHomeGuida extends Fragment  {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,6 +56,10 @@ public class FragmentHomeGuida extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    public void elabora(){
+        Toast.makeText(getContext(), MainActivity.opera.getTitolo() ,Toast.LENGTH_LONG).show();
     }
 
     @Override

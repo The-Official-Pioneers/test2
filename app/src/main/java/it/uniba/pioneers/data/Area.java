@@ -112,7 +112,7 @@ public class Area {
 
             JSONObject data = new JSONObject();
             try{
-                data.put("id", 10);
+                data.put("id", getId());
             }catch(JSONException e){
                 e.printStackTrace();
             }

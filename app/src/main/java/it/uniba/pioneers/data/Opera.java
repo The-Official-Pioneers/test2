@@ -2,9 +2,7 @@ package it.uniba.pioneers.data;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,6 +22,16 @@ import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
 
 public class Opera {
+
+    private int id;
+    private String titolo;
+    private String descrizione;
+    private String foto;
+    private String qr;
+    private int altezza;
+    private int larghezza;
+    private int profondita;
+    private int area;
 
     public int getId() {
         return id;
@@ -97,15 +105,7 @@ public class Opera {
         this.area = area;
     }
 
-    private int id;
-    private String titolo;
-    private String descrizione;
-    private String foto;
-    private String qr;
-    private int altezza;
-    private int larghezza;
-    private int profondita;
-    private int area;
+
 
     //ONLINE STATE (dovrebbero essere tolti perchè l'online serve solo all'utente)
     private boolean online;
@@ -194,7 +194,7 @@ public class Opera {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
@@ -211,7 +211,7 @@ public class Opera {
             });
             queue.add(jsonObjectRequest);
 
-        }else{
+        }/*else{
             DbHelper dbHelper = new DbHelper(context);
             SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -313,7 +313,7 @@ public class Opera {
             );
             setArea((int) area);
             cursor.close();
-        }
+        }*/   // SQLite
     }
 
     public void createDataDb(Context context){
