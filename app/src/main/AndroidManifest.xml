@@ -34,24 +34,24 @@
         <activity
             android:name=".EditorActivity2"
             android:exported="true"
-            android:label="@string/title_activity_editor2"></activity>
+            android:label="@string/title_activity_editor2"/>
         <activity
             android:name=".EditorActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.TestTool.NoActionBar"></activity>
+            android:theme="@style/Theme.TestTool.NoActionBar"/>
         <activity
             android:name=".home.CaptureAct"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden"/>
 
         <activity
             android:name=".InfoOpera"
-            android:exported="true"></activity>
+            android:exported="false"/>
     </application>
 
 </manifest>

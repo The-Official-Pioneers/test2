@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     public DialogNodeInfo dialogOperaInfo = new DialogNodeInfo();
     public FragmentHomeGuida f;
-    public static Opera opera = new Opera();
+    public static Opera opera;
+    public int tipoUtente=1;
+    private boolean first=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +142,19 @@ public class MainActivity extends AppCompatActivity {
                         .show();
         }
         else{
+            if(first){
+                first = false;
+                new AlertDialog.Builder(this)
+                        .setTitle("Permessi Camera")
+                        .setMessage("Consentire all'app l'accesso alla camera per scansionare i QR delle opere, negando l'accesso non ci si potrà interagire")
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
         }
     }
@@ -152,44 +168,50 @@ public class MainActivity extends AppCompatActivity {
                 // Se la richiesta è stata cancellata, l'array result è vuoto
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     scanCode();
-                } else {
-                    new AlertDialog.Builder(this)
-                            .setTitle("Allerta permesso")
-                            .setMessage("Il permesso di accesso alla camere è fondamentale per poter interagire con le opere")
-                            .setPositiveButton(android.R.string.ok, null)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
                 }
             }
             return;
+        }
+    }
+    private class Inserisci extends Thread{
+        private final int id;
+        public Inserisci(int id){
+            this.id = id;
+        }
+        public void run(){
+            opera = new Opera();
+            opera.setId(this.id);
+            opera.readDataDb(MainActivity.this);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null){
-            if(result.getContents() != null){
-                opera.setId(Integer.parseInt(result.getContents()));
-                opera.readDataDb(MainActivity.this);
-                if(opera.getTitolo().equals("")){
-                    Toast.makeText(MainActivity.this, "Nessun opera trovata, prova a rieseguire la scansione" ,Toast.LENGTH_LONG).show();
-                }else{
-                    Intent informazioniOpera = new Intent(this, InfoOpera.class);
+        try{
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if(result != null  ){
+                if(result.getContents() != null) {
+                    Inserisci i = new Inserisci(Integer.parseInt(result.getContents()));
+                    i.setPriority(4);
+                    i.start();
+                    SystemClock.sleep(1000);
 
+
+                    Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
+                    informazioniOpera.putExtra("tipoUtente", tipoUtente);  // curatore = 1, visitatore = 2, guida = 3
                     startActivity(informazioniOpera);
-
-
-                    //infoOpera.show(this.getSupportFragmentManager(), "informazione oprera");
+                }
+                else {
+                    Toast.makeText(this, "Nessun risultato", Toast.LENGTH_LONG).show();
                 }
             }
-            else {
-                Toast.makeText(this, "No results", Toast.LENGTH_LONG).show();
+            else{
+                super.onActivityResult(requestCode, resultCode, data);
             }
+        }catch(Exception e){
+
         }
-        else{
-            super.onActivityResult(requestCode, resultCode, data);
-        }
+
     }
 }

@@ -29,8 +29,18 @@
             android:layout_height="30dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="Titolo"
+            android:text="Titolo: "
             android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/txt_edit_titolo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:text="Titolo" />
 
         <TextView
             android:id="@+id/txt_descrizione"
@@ -38,8 +48,18 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="Descrizione"
+            android:text="Descrizione: "
             android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_edit_descrizione"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:text="Descrizione" />
 
         <TextView
             android:id="@+id/txt_altezza"
@@ -47,8 +67,45 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="Altezza"
+            android:text="Altezza: "
             android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/txt_edit_altezza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:text="Altezza" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_annulla"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="5dp"
+                android:onClick="annullaModifiche"
+                android:text="Annulla"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btn_modifica"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="5dp"
+                android:onClick="salvaModifiche"
+                android:text="Salva"
+                android:visibility="visible" />
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
