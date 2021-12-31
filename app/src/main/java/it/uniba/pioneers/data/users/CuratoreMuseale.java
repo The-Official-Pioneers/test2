@@ -1,5 +1,7 @@
 package it.uniba.pioneers.data.users;
 
+import static java.lang.Thread.sleep;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -27,7 +29,8 @@ import it.uniba.pioneers.sqlite.DbHelper;
 
 
 public class CuratoreMuseale {
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'", Locale.getDefault());
+
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     public String getNome() {
         return nome;
@@ -101,6 +104,14 @@ public class CuratoreMuseale {
         this.id = id;
     }
 
+    public void setStatusComputation(boolean status) {
+        this.statusComputation = status;
+    }
+
+    public boolean getStatusComputation() {
+        return this.statusComputation;
+    }
+
     private long id;
     private String nome;
     private String cognome;
@@ -109,6 +120,7 @@ public class CuratoreMuseale {
     private String password;
     private String propic;
     private long zona;
+    boolean statusComputation = false;
 
     //ONLINE STATE
     private boolean online;
@@ -134,7 +146,6 @@ public class CuratoreMuseale {
         setPassword(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD));
         setPropic(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC));
         setZona(data.getInt(DbContract.CuratoreMusealeEntry.COLUMN_ZONA));
-
         setOnline(true);
     }
 
@@ -307,52 +318,61 @@ public class CuratoreMuseale {
     }
 
     public void createDataDb(Context context){
+
         if(isOnline()){
-            RequestQueue queue = Volley.newRequestQueue(context);
-            String url = Server.getUrl() + "/curatore-museale/create/";
+            try{
+                RequestQueue queue = Volley.newRequestQueue(context);
+                String url = Server.getUrl() + "/curatore-museale/create/";
 
-            JSONObject data = new JSONObject();
-            try {
-                data.put(DbContract.CuratoreMusealeEntry.COLUMN_NOME, getNome());
-                data.put(DbContract.CuratoreMusealeEntry.COLUMN_COGNOME, getCognome());
-                data.put(DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA, getDataNascita());
-                data.put(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL, getEmail());
-                data.put(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD, getPassword());
-                data.put(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC, getPropic().toString());
-                data.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            CuratoreMuseale self = this;
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                Boolean status =  response.getBoolean("status");
-                                if(status){
-                                    self.setDataFromJSON(response.getJSONObject("data"));
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException | ParseException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                JSONObject data = new JSONObject();
+                try {
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_NOME, getNome());
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_COGNOME, getCognome());
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA, getDataNascita());
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL, getEmail());
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD, getPassword());
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC, getPropic().toString());
+                    if(getZona() == 0){
+                        //IL CURATORE SI STA REGISTRANDO, AGGIUNGERA' LA ZONA IN SEGUITO
+                        data.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, null);
+                    }else{
+                        data.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            });
-            queue.add(jsonObjectRequest);
-        }else{
 
+                CuratoreMuseale self = this;
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    Boolean status =  response.getBoolean("status");
+                                    self.setStatusComputation(status);
+                                    if(status){
+                                        Toast.makeText(context, "validi: " + self.getStatusComputation() + "", Toast.LENGTH_SHORT).show();
+                                        self.setDataFromJSON(response.getJSONObject("data"));
+                                    }else{
+                                        Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException | ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                        System.out.println(error.toString());
+                    }
+                });
+                queue.add(jsonObjectRequest);
+
+            }catch(Exception e){}
+        }else{
+            Toast.makeText(context, "Entred", Toast.LENGTH_SHORT).show();
             DbHelper dbHelper = new DbHelper(context);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -366,7 +386,6 @@ public class CuratoreMuseale {
             values.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
 
             long newRowId = db.insert(DbContract.CuratoreMusealeEntry.TABLE_NAME, null, values);
-
             setId(newRowId);
         }
     }

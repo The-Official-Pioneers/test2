@@ -11,7 +11,7 @@ java:S1874H"+Remove this use of "yes"; it is deprecated.(É›“•
 V	java:S125L"<This block of commented-out lines of code should be removed.(¤íæÜûÿÿÿÿ
 E
 java:S1874X"*Remove this use of "no"; it is deprecated.(ïÝ†Šúÿÿÿÿ
-K
-java:S1068&")Remove this unused "opere" private field.(¤¹²¯ùÿÿÿÿ8Æ·· ×/
+D
+java:S1068&")Remove this unused "opere" private field.(¤¹²¯ùÿÿÿÿ
 >
 java:S1604H"(Make this anonymous inner class a lambda(É›“•
