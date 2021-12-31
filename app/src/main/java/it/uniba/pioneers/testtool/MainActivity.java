@@ -1,14 +1,21 @@
 package it.uniba.pioneers.testtool;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -16,16 +23,23 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import it.uniba.pioneers.data.Opera;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
-import it.uniba.pioneers.testtool.home.ListHomeFragment;
-import it.uniba.pioneers.testtool.home.WelcomeFragment;
+import it.uniba.pioneers.testtool.home.CaptureAct;
+import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
+
 
 public class MainActivity extends AppCompatActivity {
-
+    public static int MY_PERMISSIONS_REQUEST_CAMERA=100;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
-
+    public DialogNodeInfo dialogOperaInfo = new DialogNodeInfo();
+    public FragmentHomeGuida f;
+    public static Opera opera = new Opera();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
         /*** INIZIO TRANSAZIONE ***/
-
-        ListHomeFragment f = new ListHomeFragment();
+        //// if per tipo di utente e fragment da committare
+        f = new FragmentHomeGuida();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container_list, f).addToBackStack(null)
+                .add(R.id.fragment_container_list, f)
                 .commit();
 
         /*** FINE TRANSAZIONE ***/
@@ -95,5 +109,87 @@ public class MainActivity extends AppCompatActivity {
     public void goEditorActivity(View view){
         Intent intent = new Intent(this, EditorActivity.class);
         startActivity(intent);
+    }
+
+    public void scannerQr(View view) {
+
+       scanCode();
+
+    }
+    private void scanCode(){
+        int permessoCamera = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA);
+        if(permessoCamera == PackageManager.PERMISSION_GRANTED){
+            IntentIntegrator integrator = new IntentIntegrator(this);
+            integrator.setCaptureActivity(CaptureAct.class);
+            integrator.setOrientationLocked(false);
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+            integrator.setPrompt("Scanning code...");
+            integrator.initiateScan();
+        }
+        else if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)){
+                new AlertDialog.Builder(this)
+                        .setTitle("Permessi Camera")
+                        .setMessage("Consentire all'app l'accesso alla camera per scansionare i QR delle opere, negando l'accesso non ci si potrà interagire")
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+        }
+        else{
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 100: {
+                // Se la richiesta è stata cancellata, l'array result è vuoto
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    scanCode();
+                } else {
+                    new AlertDialog.Builder(this)
+                            .setTitle("Allerta permesso")
+                            .setMessage("Il permesso di accesso alla camere è fondamentale per poter interagire con le opere")
+                            .setPositiveButton(android.R.string.ok, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+            }
+            return;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null){
+            if(result.getContents() != null){
+                opera.setId(Integer.parseInt(result.getContents()));
+                opera.readDataDb(MainActivity.this);
+                if(opera.getTitolo().equals("")){
+                    Toast.makeText(MainActivity.this, "Nessun opera trovata, prova a rieseguire la scansione" ,Toast.LENGTH_LONG).show();
+                }else{
+                    Intent informazioniOpera = new Intent(this, InfoOpera.class);
+
+                    startActivity(informazioniOpera);
+
+
+                    //infoOpera.show(this.getSupportFragmentManager(), "informazione oprera");
+                }
+            }
+            else {
+                Toast.makeText(this, "No results", Toast.LENGTH_LONG).show();
+            }
+        }
+        else{
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.FragmentHomeGuida">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/btn_tue_visite"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Le tue Visite"
+            android:textColor="#212121" />
+
+        <Button
+            android:id="@+id/btn_visite_effettuate"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:text="Visite Effettuate"
+            android:textColor="#212121" />
+
+        <androidx.cardview.widget.CardView
+        android:id="@+id/qr_card_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp">
+
+            <ImageButton
+                android:id="@+id/btn_interagisci"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="25dp"
+                android:contentDescription="Interagisci"
+                android:onClick="scannerQr"
+                android:src="@drawable/ic_baseline_qr_code_scanner_24" />
+
+        <TextView
+            android:id="@+id/text_interagisci"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="interagisci con l'opera"
+            android:gravity="center_horizontal"
+            android:text="Interagisci con l'opera"
+            android:textColor="#212121"
+            android:textSize="14sp" />
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
+
+</FrameLayout>

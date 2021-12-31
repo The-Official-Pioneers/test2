@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="it.uniba.pioneers.testtool">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -17,18 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestTool"
         android:usesCleartextTraffic="true">
-        <receiver
-            android:name="it.uniba.pioneers.widget.WidgetCuratoreRegister"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_curatore_register_info" />
-        </receiver>
-
         <activity
             android:name=".home.HomeActivity"
             android:exported="true"
@@ -51,6 +43,15 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.TestTool.NoActionBar"></activity>
+        <activity
+            android:name=".home.CaptureAct"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+
+        <activity
+            android:name=".InfoOpera"
+            android:exported="true"></activity>
     </application>
 
 </manifest>
