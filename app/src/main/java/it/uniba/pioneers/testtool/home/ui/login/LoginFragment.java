@@ -1,5 +1,6 @@
 package it.uniba.pioneers.testtool.home.ui.login;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +24,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.databinding.FragmentLoginBinding;
+import it.uniba.pioneers.testtool.home.WelcomeFragment;
+import it.uniba.pioneers.testtool.home.ui.RegisterFragment;
 
 public class LoginFragment extends Fragment {
 
@@ -123,15 +126,6 @@ public class LoginFragment extends Fragment {
                         passwordEditText.getText().toString());
             }
         });
-
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        });
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
@@ -156,4 +150,5 @@ public class LoginFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }

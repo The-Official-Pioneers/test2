@@ -21,6 +21,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestTool"
         android:usesCleartextTraffic="true">
+
+        <receiver
+            android:name="it.uniba.pioneers.widget.WidgetCuratoreRegister"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_curatore_register_info" />
+        </receiver>
+
         <activity
             android:name=".home.HomeActivity"
             android:exported="true"
