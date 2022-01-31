@@ -5,7 +5,7 @@
     android:id="@+id/txt_input_cerca"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.FragmentHomeCuratore">
+    tools:context=".home.FragmentHomeVisitatore">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -28,22 +28,22 @@
 
 
         <Button
-            android:id="@+id/btn_gestisci_museo"
+            android:id="@+id/btn_tuoi_percorsi"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="35dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:text="Gestisci Museo"
+            android:text="i tuoi percorsi"
             android:textColor="#212121" />
 
         <Button
-            android:id="@+id/btn_tuoi_percorsi"
+            android:id="@+id/btn_esplora_percorsi"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="5dp"
-            android:text="I tuoi percorsi"
+            android:text="esplora percorsi"
             android:textColor="#212121" />
 
         <Button
@@ -60,9 +60,7 @@
             android:layout_height="wrap_content"
 
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="5dp"
-            >
+            android:layout_marginTop="25dp">
 
             <ImageButton
                 android:id="@+id/btn_interagisci"

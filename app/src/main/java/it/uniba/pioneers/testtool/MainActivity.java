@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
     public DialogNodeInfo dialogOperaInfo = new DialogNodeInfo();
-    public FragmentHomeCuratore f;
+    public FragmentHomeCuratore frag;
     public static Opera opera;
     public int tipoUtente=1;
     @Override
@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
         /*** INIZIO TRANSAZIONE ***/
         //// if per tipo di utente e fragment da committare
-        f = new FragmentHomeCuratore();
+        frag = new FragmentHomeCuratore();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container_list, f)
+                .add(R.id.fragment_container_list, frag)
                 .commit();
 
         /*** FINE TRANSAZIONE ***/
@@ -201,6 +201,5 @@ public class MainActivity extends AppCompatActivity {
         }catch(Exception e){
 
         }
-
     }
 }
