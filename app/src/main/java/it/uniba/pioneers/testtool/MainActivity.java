@@ -1,7 +1,6 @@
 package it.uniba.pioneers.testtool;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,9 +9,9 @@ import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -30,7 +29,7 @@ import com.google.zxing.integration.android.IntentResult;
 import it.uniba.pioneers.data.Opera;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
 import it.uniba.pioneers.testtool.home.CaptureAct;
-import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
+import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,10 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
     public DialogNodeInfo dialogOperaInfo = new DialogNodeInfo();
-    public FragmentHomeGuida f;
+    public FragmentHomeCuratore f;
     public static Opera opera;
     public int tipoUtente=1;
-    private boolean first=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         /*** INIZIO TRANSAZIONE ***/
         //// if per tipo di utente e fragment da committare
-        f = new FragmentHomeGuida();
+        f = new FragmentHomeCuratore();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
@@ -115,13 +113,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scannerQr(View view) {
-
        scanCode();
-
     }
     private void scanCode(){
-        int permessoCamera = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA);
-        if(permessoCamera == PackageManager.PERMISSION_GRANTED){
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Permessi Camera")
+                        .setMessage("Consentire all'app l'accesso alla camera per scansionare i QR delle opere, negando l'accesso non ci si potrà interagire")
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+            }
+        }else{
             IntentIntegrator integrator = new IntentIntegrator(this);
             integrator.setCaptureActivity(CaptureAct.class);
             integrator.setOrientationLocked(false);
@@ -129,36 +139,7 @@ public class MainActivity extends AppCompatActivity {
             integrator.setPrompt("Scanning code...");
             integrator.initiateScan();
         }
-        else if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)){
-                new AlertDialog.Builder(this)
-                        .setTitle("Permessi Camera")
-                        .setMessage("Consentire all'app l'accesso alla camera per scansionare i QR delle opere, negando l'accesso non ci si potrà interagire")
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-        }
-        else{
-            if(first){
-                first = false;
-                new AlertDialog.Builder(this)
-                        .setTitle("Permessi Camera")
-                        .setMessage("Consentire all'app l'accesso alla camera per scansionare i QR delle opere, negando l'accesso non ci si potrà interagire")
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-            }
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
-        }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -167,7 +148,12 @@ public class MainActivity extends AppCompatActivity {
             case 100: {
                 // Se la richiesta è stata cancellata, l'array result è vuoto
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    scanCode();
+                    IntentIntegrator integrator = new IntentIntegrator(this);
+                    integrator.setCaptureActivity(CaptureAct.class);
+                    integrator.setOrientationLocked(false);
+                    integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+                    integrator.setPrompt("Scanning code...");
+                    integrator.initiateScan();
                 }
             }
             return;
@@ -203,7 +189,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(informazioniOpera);
                 }
                 else {
-                    Toast.makeText(this, "Nessun risultato", Toast.LENGTH_LONG).show();
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setMessage("Nessun risultato")
+                            .setPositiveButton(android.R.string.yes,null)
+                            .show();
                 }
             }
             else{

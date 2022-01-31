@@ -64,7 +64,8 @@
 
         <activity
             android:name=".InfoOpera"
-            android:exported="false"/>
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
