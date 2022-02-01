@@ -85,8 +85,7 @@ public class MainActivity extends AppCompatActivity {
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container_list, frag)
-                .addToBackStack(null)
+                .replace(R.id.fragment_container_list, frag)
                 .commit();
 
         /*** FINE TRANSAZIONE ***/
@@ -209,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.fragment_container_list, fls)
                                 .addToBackStack(null)
                                 .commit();
-
                     } else {
                         Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                     }
