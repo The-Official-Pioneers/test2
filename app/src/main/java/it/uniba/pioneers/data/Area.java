@@ -104,6 +104,28 @@ public class Area {
 
     }
 
+    public static void areeZona(Context context, int idZona,  Response.Listener<JSONObject> responseListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/area/areeZona/";
+
+        JSONObject data = new JSONObject();
+        try{
+            data.put("id", idZona);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                responseListener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                System.out.println(error.toString());
+            }
+        });
+        queue.add(jsonObjectRequest);
+    }
+
     public void readDataDb(Context context){
 
         if(isOnline()){
@@ -122,7 +144,7 @@ public class Area {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                     new Response.Listener<JSONObject>() {
                         @Override
-                        public void onResponse(JSONObject response) {
+                        public void onResponse(JSONObject response) {   // response.getJsonArray("data") ---> foreach... ogni elemento=JSONObject
                             try {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
