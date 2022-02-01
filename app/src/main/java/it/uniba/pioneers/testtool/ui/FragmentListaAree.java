@@ -64,12 +64,15 @@ public class FragmentListaAree extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_aree, container, false);
 
+
+
+        
+
         String[] lista = {      // da generalizzare con for
                 MainActivity.areeZona.get(0).getNome(),
                 MainActivity.areeZona.get(1).getNome(),
                 MainActivity.areeZona.get(2).getNome(),
         };
-
 
         ListView lv = (ListView) view.findViewById(R.id.listView);
         ArrayAdapter<String> lvAdapter = new ArrayAdapter<String>(
@@ -82,7 +85,4 @@ public class FragmentListaAree extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
-
-
-
 }
