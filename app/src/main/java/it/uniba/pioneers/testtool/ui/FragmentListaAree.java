@@ -68,21 +68,6 @@ public class FragmentListaAree extends Fragment {
                 MainActivity.areeZona.get(0).getNome(),
                 MainActivity.areeZona.get(1).getNome(),
                 MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
         };
 
 
