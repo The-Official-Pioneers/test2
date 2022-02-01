@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool;
+package it.uniba.pioneers.testtool.editor;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -13,23 +13,23 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-import it.uniba.pioneers.data.Visita;
-import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
+import it.uniba.pioneers.testtool.DialogNodeInfo;
+import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
-import it.uniba.pioneers.widget.Node;
+import it.uniba.pioneers.testtool.editor.grafo.node.ListNode;
+import it.uniba.pioneers.testtool.editor.grafo.GrafoFragment;
 
 public class EditorActivity extends AppCompatActivity {
-    public ArrayList<Node> opere;
+    public ArrayList<ListNode> opere;
     private ActivityEditor2Binding binding;
 
-    FirstFragment f = new FirstFragment();
+    GrafoFragment f = new GrafoFragment();
     GrafoFragment s = new GrafoFragment();
-    EditorPercorsi e = new EditorPercorsi();
+    GrafoFragment e = new GrafoFragment();
 
     public DialogNodeInfo d = new DialogNodeInfo();
 

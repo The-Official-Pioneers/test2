@@ -1,4 +1,4 @@
-package it.uniba.pioneers.widget.grafo;
+package it.uniba.pioneers.testtool.editor.options;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,8 +9,11 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo;
+import it.uniba.pioneers.testtool.editor.grafo.node.GraphNode;
+import it.uniba.pioneers.widget.NodeType;
 
-public class OptionsGrafo extends LinearLayout {
+public class OptionsEditor extends LinearLayout {
 
     Button listaOpere = null;
     Button salvaPercorso = null;
@@ -19,7 +22,8 @@ public class OptionsGrafo extends LinearLayout {
 
     public void initButtonsListener(){
         listaOpere.setOnClickListener(view -> {
-
+            DisplayGrafo tmp = ((DisplayGrafo) getRootView().findViewById(R.id.displayGrafo));
+            //tmp.graph.addSuccessorToNode(tmp.graph.visitaIniziale, new GraphNode(tmp.getContext(), tmp.graph, NodeType.AREA));
         });
 
         salvaPercorso.setOnClickListener(view -> {
@@ -44,24 +48,26 @@ public class OptionsGrafo extends LinearLayout {
         condividiPercorso = this.findViewById(R.id.condividiPercorso);
         eliminaPercorso = this.findViewById(R.id.eliminaPercorso);
 
+        initButtonsListener();
+
     }
 
-    public OptionsGrafo(Context context) {
+    public OptionsEditor(Context context) {
         super(context);
         init(context);
     }
 
-    public OptionsGrafo(Context context, @Nullable AttributeSet attrs) {
+    public OptionsEditor(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public OptionsGrafo(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public OptionsEditor(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
-    public OptionsGrafo(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public OptionsEditor(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
     }

@@ -1,4 +1,4 @@
-package it.uniba.pioneers.widget;
+package it.uniba.pioneers.testtool.editor.listaNodi;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
@@ -7,7 +7,6 @@ import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -15,10 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import com.google.common.graph.MutableValueGraph;
-import com.google.common.graph.ValueGraphBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,17 +21,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.grafo.node.ListNode;
+import it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo;
 
 @SuppressWarnings("ALL")
 public class ListaNodi extends ScrollView {
-    LinearLayout linearLayout;
+    public LinearLayout linearLayout;
     ScrollView scrollView;
     Button buttonAdd;
 
-    //MutableValueGraph<Node, Integer> nodeMutableValueGraph = ValueGraphBuilder.directed().build();
+    public ArrayList<ListNode> listNodeArrayList = new ArrayList<>();
 
-
-    ArrayList<Node> nodeArrayList = new ArrayList<>();
+    DisplayGrafo displayGrafo = null;
 
     class MyDragListener implements OnDragListener {
 
@@ -44,7 +40,7 @@ public class ListaNodi extends ScrollView {
         public boolean onDrag(View v, DragEvent event) {
             int action = event.getAction();
 
-            Node tmp = (Node)event.getLocalState();
+            ListNode tmp = (ListNode)event.getLocalState();
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
                     // do nothing
@@ -88,19 +84,19 @@ public class ListaNodi extends ScrollView {
 
 
         try {
+            displayGrafo = getRootView().findViewById(R.id.displayGrafo);
+
             JSONObject object = new JSONObject();
 
             object.put("descrizione", "dasdasdasdasdsaddassd");
             object.put("anno", "2111");
 
             for(int i = 0; i < 10; ++i){
-                Node tmp = new Node(this.getContext(), this.linearLayout, object);
-                this.addNode(tmp);
+                this.addNode(new ListNode(this.linearLayout.getContext(), this.linearLayout, object));
             }
 
             this.buttonAdd.setOnClickListener(view1 -> {
-                Toast.makeText(getContext(), "Ciao mondooo", Toast.LENGTH_LONG).show();
-                this.linearLayout.addView(new Node(this.linearLayout.getContext(), this.linearLayout, object));
+                this.linearLayout.addView(new ListNode(this.linearLayout.getContext(), this.linearLayout, object));
 
             });
             Toast.makeText(this.getContext(), this.linearLayout.toString(), Toast.LENGTH_LONG).show();
@@ -111,17 +107,17 @@ public class ListaNodi extends ScrollView {
 
     }
 
-    public void addNode(Node node){
-        this.linearLayout.addView(node);
-        nodeArrayList.add(node);
+    public void addNode(ListNode listNode){
+        this.linearLayout.addView(listNode);
+        listNodeArrayList.add(listNode);
     }
 
     public void removeNode(int id){
-        for(int i = 0; i < this.nodeArrayList.size(); ++i){
-            Node tmp = this.nodeArrayList.get(i);
+        for(int i = 0; i < this.listNodeArrayList.size(); ++i){
+            ListNode tmp = this.listNodeArrayList.get(i);
             if(tmp.getId() == id){
                 tmp.setVisibility(GONE);
-                this.nodeArrayList.remove(i);
+                this.listNodeArrayList.remove(i);
                 break;
             }
         }

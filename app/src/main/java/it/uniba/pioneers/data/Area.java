@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.ResponseCache;
 import java.text.ParseException;
 
 import it.uniba.pioneers.data.server.Server;
@@ -202,7 +203,7 @@ public class Area {
         }
     }
 
-    public void createDataDb(Context context){
+    public void createDataDb(Context context, Response.Listener<JSONObject> response){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
             String url = Server.getUrl() + "/area/create/";

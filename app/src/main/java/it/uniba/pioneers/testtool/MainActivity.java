@@ -28,6 +28,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import it.uniba.pioneers.data.Opera;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
+import it.uniba.pioneers.testtool.editor.EditorActivity;
 import it.uniba.pioneers.testtool.home.CaptureAct;
 import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
 

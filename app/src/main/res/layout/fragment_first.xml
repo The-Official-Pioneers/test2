@@ -34,7 +34,7 @@
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="70dp" />
 
-    <it.uniba.pioneers.widget.Node
+    <it.uniba.pioneers.testtool.editor.grafo.node.ListNode
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="76dp"
@@ -48,5 +48,5 @@
         app:layout_constraintTop_toBottomOf="@+id/button_first"
         app:layout_constraintVertical_bias="0.0">
 
-    </it.uniba.pioneers.widget.Node>
+    </it.uniba.pioneers.testtool.editor.grafo.node.ListNode>
 </androidx.constraintlayout.widget.ConstraintLayout>

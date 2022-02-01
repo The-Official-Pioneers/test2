@@ -1,6 +1,4 @@
-package it.uniba.pioneers.widget.grafo;
-
-import it.uniba.pioneers.widget.Node;
+package it.uniba.pioneers.testtool.editor.grafo.draw;
 
 public class Line {
 

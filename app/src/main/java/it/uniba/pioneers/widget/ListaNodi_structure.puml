@@ -1,0 +1,333 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": ""
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false // root listNode is included
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi"
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_111433007 { 
+   	label=uniba
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_87266728 { 
+   	label=pioneers
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   DisplayGrafo1934568056[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DisplayGrafo</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   graph: Grafo [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ init(context: Context)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+EditorActivity488073277[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)EditorActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   binding: ActivityEditor2Binding [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   containerView: FragmentContainerView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   d: DialogNodeInfo [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   e: EditorPercorsi [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   f: GrafoFragment [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   opere: ArrayList&lt;Node&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   s: GrafoFragment [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   state: Integer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   supportFragmentManager: FragmentManager [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- init()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: Bundle)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onStart()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Grafo1934568056[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Grafo</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   actualArea: Node [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   actualOpera: Node [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   actualVisita: Node [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   actualZona: Node [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   context: Context [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   display: Display [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   drawView: DrawView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   graph: MutableGraph&lt;Node&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   listaNodi: ListaNodi [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   rr: MyRunnableRefresh [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   size: Point [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   visitaIniziale: Node [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   wm: WindowManager [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addStartNode(listNode: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addSuccessorToNode(parentDataNode: Node, childDataNode: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" >- fromDpToPx(dip: int): float</TD></TR>
+<TR><TD ALIGN="LEFT" >+ init(context: Context)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initDrawAttribute(context: Context)</TD></TR>
+<TR><TD ALIGN="LEFT" >- powOfTwo(n: int): float</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+GrafoFragment488073277[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)GrafoFragment</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   displayGrafo: DisplayGrafo [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   grafoManipulateLayout: LinearLayout [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   layoutEditorGrafo: LinearLayout [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   listaNodi: ListaNodi [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mParam1: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mParam2: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   optionsGrafo: OptionsGrafo [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ newInstance(param1: String, param2: String): GrafoFragment</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onCreate(savedInstanceState: Bundle)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onViewCreated(view: View, savedInstanceState: Bundle)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Line1934568056[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Line</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   startX: float [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   startY: float [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   stopX: float [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   stopY: float [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ListaNodi214280681[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ListaNodi</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   buttonAdd: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   linearLayout: LinearLayout [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   nodeArrayList: ArrayList&lt;Node&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   scrollView: ScrollView [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addNode(listNode: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ init()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeNode(id: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MyRunnable1156140057[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MyRunnable</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   context: Context [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   height: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   r1: float [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   r2: float [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   r3: float [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   r4: float [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   self: Grafo [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   weight: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># buildLine(start: Node, stop: Node): Line</TD></TR>
+<TR><TD ALIGN="LEFT" ># calcX(n: int): float</TD></TR>
+<TR><TD ALIGN="LEFT" ># initRow()</TD></TR>
+<TR><TD ALIGN="LEFT" ># nodeAreaSetOnClickListener(dataNodeArea: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" ># nodeVisitaInitListeners(dataNodeVisita: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" ># nodeZonaOnClickIfInizialized(dataNodeZonaReal: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" ># nodeZonaOnClickIfNotClicked(dataNodeZonaReal: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" ># nodeZonaOnClickIfNotInizialized(dataNodeZonaReal: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" ># nodeZonaSetOnClickListener(dataNodeZonaReal: Node, size: int)</TD></TR>
+<TR><TD ALIGN="LEFT" ># refreshDrawView()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MyRunnableRefresh1156140057[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MyRunnableRefresh</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   visita: Node [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MyRunnableRefresh21156140057[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MyRunnableRefresh2</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   visita: Node [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Node214280681[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Node</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   ARG_ANNO: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   ARG_DESCRIZIONE: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   circle: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   clicked: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   data: JSONObject [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   graph: MutableGraph&lt;Node&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   inizializated: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   linearLayout: LinearLayout [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   n: Node [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   successorLine: ArrayList&lt;Line&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   tipo: NodeType [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addSuccessor(dataNodeEnd: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ clone(context: Context): Node</TD></TR>
+<TR><TD ALIGN="LEFT" >+ init(context: Context)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+DisplayGrafo1934568056 -> Grafo1934568056[label="graph
+[0..1]"];
+EditorActivity488073277 -> GrafoFragment488073277[label="f
+[0..1]"];
+EditorActivity488073277 -> GrafoFragment488073277[label="s
+[0..1]"];
+Grafo1934568056 -> ListaNodi214280681[label="listaNodi
+[0..1]"];
+Grafo1934568056 -> MyRunnableRefresh1156140057[label="rr
+[0..1]"];
+GrafoFragment488073277 -> DisplayGrafo1934568056[label="displayGrafo
+[0..1]"];
+GrafoFragment488073277 -> ListaNodi214280681[label="listaNodi
+[0..1]"];
+ListaNodi214280681 -> Node214280681[label="nodeArrayList
+[0..*]"];
+MyRunnable1156140057 -> Grafo1934568056[label="self
+[0..1]"];
+MyRunnable1156140057 -> MyRunnableRefresh1156140057[arrowhead=none, arrowtail=empty, dir=both];
+MyRunnable1156140057 -> MyRunnableRefresh21156140057[arrowhead=none, arrowtail=empty, dir=both];
+Node214280681 -> Line1934568056[label="successorLine
+[0..*]"];
+    
+}
+@enduml

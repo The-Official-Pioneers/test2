@@ -1,18 +1,18 @@
-package it.uniba.pioneers.widget.grafo;
+package it.uniba.pioneers.testtool.editor.grafo.draw;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 import java.util.ArrayList;
 
+import it.uniba.pioneers.testtool.editor.grafo.Grafo;
+
 public class DrawView extends View{
-    Paint paint = new Paint();
-    ArrayList<Line> linesZona = new ArrayList<Line>();
-    ArrayList<Line> linesArea = new ArrayList<Line>();
-    ArrayList<Line> linesOpera = new ArrayList<Line>();
+    public Paint paint = new Paint();
+    public ArrayList<Line> linesZona = new ArrayList<Line>();
+    public ArrayList<Line> linesArea = new ArrayList<Line>();
+    public ArrayList<Line> linesOpera = new ArrayList<Line>();
 
     public DrawView(Context context) {
         super(context);

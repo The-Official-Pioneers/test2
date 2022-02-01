@@ -14,6 +14,20 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
+        <it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo
+            android:id="@+id/displayGrafo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo>
+
+        <it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi
+            android:id="@+id/listaNodiManipulate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+        </it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi>
     </LinearLayout>
 
     <it.uniba.pioneers.testtool.editor.options.OptionsEditor
