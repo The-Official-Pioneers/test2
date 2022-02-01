@@ -1,18 +1,18 @@
 package it.uniba.pioneers.testtool;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -24,15 +24,24 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.android.volley.Response;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+
+import it.uniba.pioneers.data.Area;
 import it.uniba.pioneers.data.Opera;
-import it.uniba.pioneers.data.users.CuratoreMuseale;
+import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
 import it.uniba.pioneers.testtool.home.CaptureAct;
 import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
-import it.uniba.pioneers.testtool.home.ui.curatore.IlTuoMuseoFragment;
+import it.uniba.pioneers.testtool.ui.FragmentListaAree;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,11 +50,12 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
     public DialogNodeInfo dialogOperaInfo = new DialogNodeInfo();
-    public FragmentHomeCuratore f;
-    public IlTuoMuseoFragment tm;
-    public static Opera opera = new Opera();
-    public static CuratoreMuseale c = new CuratoreMuseale();
-
+    public FragmentHomeCuratore frag;
+    public static Opera opera;
+    public static Zona zona;
+    public static ArrayList<Area> areeZona;
+    public int tipoUtente=1;
+    public int idUtente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,16 +70,14 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
-        c.setId(6);
-        c.readDataDb(MainActivity.this);
-
         /*** INIZIO TRANSAZIONE ***/
         //// if per tipo di utente e fragment da committare
-        f = new FragmentHomeCuratore();
+        frag = new FragmentHomeCuratore();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container_list, f)
+                .add(R.id.fragment_container_list, frag)
+                .addToBackStack(null)
                 .commit();
 
         /*** FINE TRANSAZIONE ***/
@@ -121,21 +129,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scannerQr(View view) {
-
        scanCode();
-
     }
     private void scanCode(){
-        int permessoCamera = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA);
-        if(permessoCamera == PackageManager.PERMISSION_GRANTED){
-            IntentIntegrator integrator = new IntentIntegrator(this);
-            integrator.setCaptureActivity(CaptureAct.class);
-            integrator.setOrientationLocked(false);
-            integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
-            integrator.setPrompt("Scanning code...");
-            integrator.initiateScan();
-        }
-        else if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)){
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)) {
                 new AlertDialog.Builder(this)
                         .setTitle("Permessi Camera")
                         .setMessage("Consentire all'app l'accesso alla camera per scansionare i QR delle opere, negando l'accesso non ci si potrà interagire")
@@ -146,12 +144,18 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-        }
-        else{
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+            }
+        }else{
+            IntentIntegrator integrator = new IntentIntegrator(this);
+            integrator.setCaptureActivity(CaptureAct.class);
+            integrator.setOrientationLocked(false);
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+            integrator.setPrompt("Scanning code...");
+            integrator.initiateScan();
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -160,64 +164,94 @@ public class MainActivity extends AppCompatActivity {
             case 100: {
                 // Se la richiesta è stata cancellata, l'array result è vuoto
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    scanCode();
-                } else {
-                    new AlertDialog.Builder(this)
-                            .setTitle("Allerta permesso")
-                            .setMessage("Il permesso di accesso alla camere è fondamentale per poter interagire con le opere")
-                            .setPositiveButton(android.R.string.ok, null)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
+                    IntentIntegrator integrator = new IntentIntegrator(this);
+                    integrator.setCaptureActivity(CaptureAct.class);
+                    integrator.setOrientationLocked(false);
+                    integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+                    integrator.setPrompt("Scanning code...");
+                    integrator.initiateScan();
                 }
             }
             return;
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null){
-            if(result.getContents() != null){
-                opera.setId(Integer.parseInt(result.getContents()));
-                opera.readDataDb(MainActivity.this);
-                if(opera.getTitolo().equals("")){
-                    Toast.makeText(MainActivity.this, "Nessun opera trovata, prova a rieseguire la scansione" ,Toast.LENGTH_LONG).show();
-                }else{
-                    Intent informazioniOpera = new Intent(this, InfoOpera.class);
+    public void gestisciMuseo(View view) {
+        Area.areeZona(this, 10 ,new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Boolean status = response.getBoolean("status");
+                    areeZona = new ArrayList<Area>();
 
-                    startActivity(informazioniOpera);
+                    if (status) {
+                        //JSONObject resultData = response.getJSONObject("data");
+                        JSONArray resultAree = response.getJSONArray("data");
 
+                        for(int i =0; i< resultAree.length(); i++) {
+                            Area tmp = new Area();
+                            tmp.setDataFromJSON(resultAree.getJSONObject(i));
+                            areeZona.add(tmp);
+                        }
+                        FragmentListaAree fls = new FragmentListaAree();
+                        androidx.fragment.app.FragmentManager supportFragmentManager;
+                        supportFragmentManager = getSupportFragmentManager();
+                        supportFragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container_list, fls)
+                                .addToBackStack(null)
+                                .commit();
 
-                    //infoOpera.show(this.getSupportFragmentManager(), "informazione oprera");
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException | ParseException e) {
+                    e.printStackTrace();
                 }
             }
-            else {
-                Toast.makeText(this, "No results", Toast.LENGTH_LONG).show();
-            }
+        });
+    }
+
+    private class Inserisci extends Thread{
+        private final int id;
+        public Inserisci(int id){
+            this.id = id;
         }
-        else{
-            super.onActivityResult(requestCode, resultCode, data);
+        public void run(){
+            opera = new Opera();
+            opera.setId(this.id);
+            opera.readDataDb(MainActivity.this);
         }
     }
 
-    public void GestisciMuseo (View v){
-        Button btnIlTuoMuseo = (Button) v.findViewById(R.id.btn_gestisci_museo);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try{
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if(result != null  ){
+                if(result.getContents() != null) {
+                    Inserisci i = new Inserisci(Integer.parseInt(result.getContents()));
+                    i.setPriority(4);
+                    i.start();
+                    SystemClock.sleep(1000);
 
-        btnIlTuoMuseo.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                tm = new IlTuoMuseoFragment();
-                androidx.fragment.app.FragmentManager supportFragmentManager;
-                supportFragmentManager = getSupportFragmentManager();
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_list, tm)
-                        .commit();
 
+                    Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
+                    informazioniOpera.putExtra("tipoUtente", tipoUtente);  // curatore = 1, visitatore = 2, guida = 3
+                    startActivity(informazioniOpera);
+                }
+                else {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setMessage("Nessun risultato")
+                            .setPositiveButton(android.R.string.yes,null)
+                            .show();
+                }
             }
-        });
+            else{
+                super.onActivityResult(requestCode, resultCode, data);
+            }
+        }catch(Exception e){
 
-
+        }
     }
 }

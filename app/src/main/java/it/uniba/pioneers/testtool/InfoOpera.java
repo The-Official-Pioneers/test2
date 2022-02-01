@@ -57,7 +57,7 @@ public class InfoOpera extends AppCompatActivity {
                 editableTitolo.setText(MainActivity.opera.getTitolo());
                 editableDescrizione.setText(MainActivity.opera.getDescrizione());
             }
-            else{
+            else{   // se utente non è curatore, non può modificare nulla
                 editableTitolo = (EditText) findViewById(R.id.txt_edit_titolo);
                 editableDescrizione = (EditText) findViewById(R.id.txt_edit_descrizione);
                 editableTitolo.setVisibility(View.GONE);
@@ -110,7 +110,7 @@ public class InfoOpera extends AppCompatActivity {
         }
     }
     @Override
-    public void onBackPressed(){
+    public void onBackPressed(){     // controllo uscita senza salvare da tasto indietro
         if(tipoUtente==1) {
             boolean c = String.valueOf(editableTitolo.getText()).equals(MainActivity.opera.getTitolo());
             boolean c2 = String.valueOf(editableDescrizione.getText()).equals(MainActivity.opera.getDescrizione());
@@ -141,7 +141,7 @@ public class InfoOpera extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {         // controllo uscita senza salvare da barra
         if(tipoUtente==1) {
             boolean c = String.valueOf(editableTitolo.getText()).equals(MainActivity.opera.getTitolo());
             boolean c2 = String.valueOf(editableDescrizione.getText()).equals(MainActivity.opera.getDescrizione());

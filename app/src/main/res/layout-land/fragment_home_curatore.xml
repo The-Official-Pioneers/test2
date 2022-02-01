@@ -34,6 +34,7 @@
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
+            android:onClick="gestisciMuseo"
             android:text="Gestisci Museo"
             android:textColor="#212121" />
 

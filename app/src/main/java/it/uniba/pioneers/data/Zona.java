@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
@@ -31,6 +32,7 @@ public class Zona {
     private double latitudine;
     private double longitudine;
     private String luogo;
+    private ArrayList<Integer> areeZona;
 
     public int getId() {
         return id;
@@ -88,6 +90,10 @@ public class Zona {
         this.luogo = luogo;
     }
 
+    public void setAreeZona(ArrayList<Integer> areeZona) { this.areeZona = areeZona; }
+
+    public ArrayList<Integer> getAreeZona() { return areeZona; }
+
     //online state
     private boolean online;
 
@@ -99,6 +105,7 @@ public class Zona {
         setLatitudine(0.0);
         setLongitudine(0.0);
         setLuogo("");
+        setAreeZona(null);
 
         setOnline(true);
     }
@@ -117,7 +124,6 @@ public class Zona {
 
     }
     public void setDataFromJSON(JSONObject data) throws JSONException, ParseException {
-
         setId(data.getInt(DbContract.ZonaEntry.COLUMN_ID));
         setTipo(data.getString(DbContract.ZonaEntry.COLUMN_TIPO));
         setDenominazione(data.getString(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE));
@@ -203,7 +209,6 @@ public class Zona {
                     DbContract.ZonaEntry.COLUMN_LATITUDINE,
                     DbContract.ZonaEntry.COLUMN_LONGITUDINE,
                     DbContract.ZonaEntry.COLUMN_LUOGO
-
             };
 
             String selection = DbContract.ZonaEntry.COLUMN_ID + " = ?";
@@ -275,7 +280,29 @@ public class Zona {
 
             cursor.close();
 
+            /*
+            String[] projection2 = {DbContract.AreaEntry.COLUMN_ID};
+            String selection2 = DbContract.AreaEntry.COLUMN_ZONA + " = ?";
+            String[] selectionArgs2 = { String.valueOf(getId()) };
+            String sortOrder2 = DbContract.AreaEntry.COLUMN_ID + "DESC";
 
+             Cursor cursor2 = db.query(
+                    DbContract.AreaEntry.TABLE_NAME,   // The table to query
+                    projection2,             // The array of columns to return (pass null to get all)
+                    selection2,              // The columns for the WHERE clause
+                    selectionArgs2,          // The values for the WHERE clause
+                    null,                   // don't group the rows
+                    null,                   // don't filter by row groups
+                    sortOrder2               // The sort order
+            );
+
+            cursor2.moveToFirst();
+            for(int i=0;i<cursor2.getColumnCount();i++){
+                this.areeZona.add(cursor2.getInt(cursor2.getColumnIndexOrThrow(DbContract.AreaEntry.COLUMN_ID)));
+                cursor2.moveToNext();
+            }
+            cursor2.close();
+            */
         }
     }
 
