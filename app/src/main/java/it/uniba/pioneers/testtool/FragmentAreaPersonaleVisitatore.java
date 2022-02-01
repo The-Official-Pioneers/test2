@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.home;
+package it.uniba.pioneers.testtool;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,14 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import it.uniba.pioneers.testtool.R;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentHomeVisitatore#newInstance} factory method to
+ * Use the {@link FragmentAreaPersonaleVisitatore#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentHomeVisitatore extends Fragment {
+public class FragmentAreaPersonaleVisitatore extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,7 +23,7 @@ public class FragmentHomeVisitatore extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentHomeVisitatore() {
+    public FragmentAreaPersonaleVisitatore() {
         // Required empty public constructor
     }
 
@@ -35,11 +33,11 @@ public class FragmentHomeVisitatore extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentHomeVisitatore.
+     * @return A new instance of fragment FragmentAreaPersonaleVisitatore.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentHomeVisitatore newInstance(String param1, String param2) {
-        FragmentHomeVisitatore fragment = new FragmentHomeVisitatore();
+    public static FragmentAreaPersonaleVisitatore newInstance(String param1, String param2) {
+        FragmentAreaPersonaleVisitatore fragment = new FragmentAreaPersonaleVisitatore();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,6 +58,6 @@ public class FragmentHomeVisitatore extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_visitatore, container, false);
+        return inflater.inflate(R.layout.fragment_area_personale_visitatore, container, false);
     }
 }

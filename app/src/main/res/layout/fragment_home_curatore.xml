@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <EditText
@@ -28,19 +28,18 @@
 
 
         <Button
-            android:id="@+id/btn_gestisci_museo"
+            android:id="@+id/btn_tue_visite"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="50dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:onClick="GestisciMuseo"
             android:text="Gestisci Museo"
             android:textColor="#212121" />
 
         <Button
-            android:id="@+id/btn_tuoi_percorsi"
+            android:id="@+id/btn_visite_effettuate"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="5dp"
@@ -61,9 +60,7 @@
             android:layout_height="wrap_content"
 
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="5dp"
-            >
+            android:layout_marginTop="25dp">
 
             <ImageButton
                 android:id="@+id/btn_interagisci"

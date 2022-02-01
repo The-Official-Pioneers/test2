@@ -18,15 +18,18 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
+import it.uniba.pioneers.testtool.MainActivity;
 
 public class Visitatore {
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+    public static SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
     public long getId() {
         return id;
@@ -53,11 +56,22 @@ public class Visitatore {
     }
 
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = Guida.format.parse(dataNascita);
+        this.dataNascita = addDay(Visitatore.format.parse(dataNascita), 1);
     }
 
     public Date getDataNascita() {
         return dataNascita;
+    }
+
+    public String getShorterDataNascita(){
+         return output.format(MainActivity.visitatore.getDataNascita());
+    }
+
+    public static Date addDay(Date date, int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DAY_OF_YEAR, i);
+        return cal.getTime();
     }
 
     public void setDataNascita(Date dataNascita) {
@@ -125,7 +139,7 @@ public class Visitatore {
         this.setId(data.getInt(DbContract.VisitatoreEntry.COLUMN_ID));
         this.setNome(data.getString(DbContract.VisitatoreEntry.COLUMN_NOME));
         this.setCognome(data.getString(DbContract.VisitatoreEntry.COLUMN_COGNOME));
-        //this.setDataNascita(data.getString(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA));
+        this.setDataNascita(data.getString(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA));
         this.setEmail(data.getString(DbContract.VisitatoreEntry.COLUMN_EMAIL));
         this.setPassword(data.getString(DbContract.VisitatoreEntry.COLUMN_PASSWORD));
         this.setPropic(data.getString(DbContract.VisitatoreEntry.COLUMN_PROPIC));
@@ -150,7 +164,7 @@ public class Visitatore {
         this.setId(data.getInt(DbContract.VisitatoreEntry.COLUMN_ID));
         this.setNome(data.getString(DbContract.VisitatoreEntry.COLUMN_NOME));
         this.setCognome(data.getString(DbContract.VisitatoreEntry.COLUMN_COGNOME));
-        //this.setDataNascita(data.getString(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA));
+        this.setDataNascita(data.getString(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA));
         this.setEmail(data.getString(DbContract.VisitatoreEntry.COLUMN_EMAIL));
         this.setPassword(data.getString(DbContract.VisitatoreEntry.COLUMN_PASSWORD));
         this.setPropic(data.getString(DbContract.VisitatoreEntry.COLUMN_PROPIC));

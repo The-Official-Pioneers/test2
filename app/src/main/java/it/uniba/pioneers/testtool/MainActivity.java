@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,11 +27,10 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import it.uniba.pioneers.data.Opera;
-import it.uniba.pioneers.data.users.CuratoreMuseale;
+import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
 import it.uniba.pioneers.testtool.home.CaptureAct;
-import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
-import it.uniba.pioneers.testtool.home.ui.curatore.IlTuoMuseoFragment;
+import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,10 +39,11 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
     public DialogNodeInfo dialogOperaInfo = new DialogNodeInfo();
-    public FragmentHomeCuratore f;
-    public IlTuoMuseoFragment tm;
+    public FragmentHomeGuida f;
     public static Opera opera = new Opera();
-    public static CuratoreMuseale c = new CuratoreMuseale();
+
+    //AGGIUNTO DA IVAN
+    public static Visitatore visitatore = new Visitatore();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +59,13 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
-        c.setId(6);
-        c.readDataDb(MainActivity.this);
+        //AGGIUNTO DA IVAN
+        visitatore.setId(2);
+        visitatore.readDataDb(MainActivity.this);
 
         /*** INIZIO TRANSAZIONE ***/
         //// if per tipo di utente e fragment da committare
-        f = new FragmentHomeCuratore();
+        f = new FragmentHomeGuida();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
 
         /*** FINE TRANSAZIONE ***/
+
     }
 
     //se clicco il bottone back e sta aperto il drawer
@@ -202,22 +203,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void GestisciMuseo (View v){
-        Button btnIlTuoMuseo = (Button) v.findViewById(R.id.btn_gestisci_museo);
-
-        btnIlTuoMuseo.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                tm = new IlTuoMuseoFragment();
-                androidx.fragment.app.FragmentManager supportFragmentManager;
-                supportFragmentManager = getSupportFragmentManager();
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_list, tm)
-                        .commit();
-
-            }
-        });
-
-
+    //AGGIUNTO DA IVAN
+    public void goToPersonalArea(MenuItem item) {
+        Intent intent = new Intent(this, AreaPersonaleVisitatore.class);
+        startActivity(intent);
     }
+
 }
