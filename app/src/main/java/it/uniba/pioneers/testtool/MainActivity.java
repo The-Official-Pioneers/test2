@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import it.uniba.pioneers.data.Area;
 import it.uniba.pioneers.data.Opera;
 import it.uniba.pioneers.data.Zona;
+import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
 import it.uniba.pioneers.testtool.home.CaptureAct;
 import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
@@ -56,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Area> areeZona;
     public int tipoUtente=1;
     public int idUtente;
+
+    //AGGIUNTO DA IVAN
+    public static Visitatore visitatore = new Visitatore();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
+
+        //AGGIUNTO DA IVAN
+        visitatore.setId(2);
+        visitatore.readDataDb(MainActivity.this);
 
         /*** INIZIO TRANSAZIONE ***/
         //// if per tipo di utente e fragment da committare
@@ -254,4 +263,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+    //AGGIUNTO DA IVAN
+    public void goToPersonalArea(MenuItem item) {
+        Intent intent = new Intent(this, AreaPersonaleVisitatore.class);
+        startActivity(intent);
+    }
+
 }

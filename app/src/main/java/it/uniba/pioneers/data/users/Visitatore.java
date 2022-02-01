@@ -63,6 +63,7 @@ public class Visitatore {
         return dataNascita;
     }
 
+    //Usato per l'area personale degli utenti
     public String getShorterDataNascita(){
          return output.format(MainActivity.visitatore.getDataNascita());
     }
