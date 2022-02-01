@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -19,17 +18,19 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
+import it.uniba.pioneers.testtool.MainActivity;
 
 public class Guida {
 
-    public static String dtStart = "2010-10-15T09:27:37Z";
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
+    SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
     public long getId() {
         return id;
@@ -55,9 +56,22 @@ public class Guida {
         this.cognome = cognome;
     }
 
+    //CODICE MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = Guida.format.parse(dataNascita);
+        this.dataNascita = addDay(Visitatore.format.parse(dataNascita), 1);
     }
+
+    public static Date addDay(Date date, int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DAY_OF_YEAR, i);
+        return cal.getTime();
+    }
+
+    public String getShorterDataNascita(){
+        return output.format(MainActivity.visitatore.getDataNascita());
+    }
+    //CODICE MODIFICATO DA IVAN
 
     public void setDataNascita(long dataNascita) {
         this.dataNascita = new Date(dataNascita);

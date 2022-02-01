@@ -1,7 +1,5 @@
 package it.uniba.pioneers.data.users;
 
-import static java.lang.Thread.sleep;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -20,17 +18,20 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
+import it.uniba.pioneers.testtool.MainActivity;
 
 
 public class CuratoreMuseale {
 
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
+    SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
     public String getNome() {
         return nome;
@@ -48,13 +49,27 @@ public class CuratoreMuseale {
         this.cognome = cognome;
     }
 
+    //CODICE MODIFICATO DA IVAN
+    public void setDataNascita(String dataNascita) throws ParseException {
+        this.dataNascita = addDay(Visitatore.format.parse(dataNascita), 1);
+    }
+
+    public static Date addDay(Date date, int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DAY_OF_YEAR, i);
+        return cal.getTime();
+    }
+
+    public String getShorterDataNascita(){
+        return output.format(MainActivity.visitatore.getDataNascita());
+    }
+    //CODICE MODIFICATO DA IVAN
+
     public Date getDataNascita() {
         return dataNascita;
     }
 
-    public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = CuratoreMuseale.format.parse(dataNascita);
-    }
 
     public void setDataNascita(Date dataNascita) {
         this.dataNascita = dataNascita;

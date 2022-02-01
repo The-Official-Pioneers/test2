@@ -47,25 +47,28 @@
         <activity
             android:name=".EditorActivity2"
             android:exported="true"
-            android:label="@string/title_activity_editor2"/>
+            android:label="@string/title_activity_editor2"></activity>
         <activity
             android:name=".EditorActivity"
-            android:exported="true"/>
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.TestTool.NoActionBar"/>
+            android:theme="@style/Theme.TestTool.NoActionBar"></activity>
         <activity
             android:name=".home.CaptureAct"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <activity
             android:name=".InfoOpera"
-            android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:exported="true"></activity>
+
+        <activity
+            android:name=".AreaPersonaleVisitatore"
+            android:screenOrientation="fullSensor"></activity>
     </application>
 
 </manifest>

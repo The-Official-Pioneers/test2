@@ -400,14 +400,14 @@ public class Opera {
             JSONObject data = new JSONObject();
             try {
                 data.put("id", getId());
-                data.put("titolo", getTitolo());
-                data.put("descrizione", getDescrizione());
-                data.put("foto", getFoto());
-                data.put("qr", getQr());
-                data.put("altezza", getAltezza());
-                data.put("larghezza", getLarghezza());
-                data.put("profondita", getProfondita());
-                data.put("area", getArea());
+                data.put("titolo", this.titolo);
+                data.put("descrizione", this.descrizione);
+                data.put("foto", this.foto);
+                data.put("qr", this.qr);
+                data.put("altezza", this.altezza);
+                data.put("larghezza", this.larghezza);
+                data.put("profondita", this.profondita);
+                data.put("area", this.area);
 
             } catch (JSONException e) {
                 e.printStackTrace();
