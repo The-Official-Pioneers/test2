@@ -1,6 +1,7 @@
 package it.uniba.pioneers.testtool.editor.grafo.node;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.widget.Toast;
 
@@ -34,19 +35,13 @@ public class Node extends ConstraintLayout {
         if(flag){
             GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this.getRootView().getContext(), R.drawable.shape_circle).mutate();
             this.findViewById(R.id.vistaProva).setBackground(drawable);
-            Toast.makeText(this.getRootView().getContext(), "ciaoooo", Toast.LENGTH_LONG).show();
-
+            //QUI ANDRà settata l'immagine
             this.circle = true;
         }else{
             GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this.getRootView().getContext(), R.drawable.shape).mutate();
             this.findViewById(R.id.vistaProva).setBackground(drawable);
-            Toast.makeText(this.getRootView().getContext(), "ciaoooo", Toast.LENGTH_LONG).show();
 
             this.circle = false;
         }
     }
-
-
-
-
 }

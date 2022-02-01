@@ -93,16 +93,17 @@ public class Grafo extends ConstraintLayout {
         return null;
     }
 
-    MyRunnableRefresh rr = null;
+    MyRunnableRefresh2 rr = null;
     public void addStartNode(GraphNode dataNode){
         graph.addNode(dataNode);
 
-        rr = new MyRunnableRefresh(this, context, visitaIniziale);
+        rr = new MyRunnableRefresh2(this, context, visitaIniziale);
         this.post(rr);
     }
 
     public void addSuccessorToNode(GraphNode parentDataNode, GraphNode childDataNode){
         parentDataNode.addSuccessor(childDataNode);
+        //postInvalidate();
         this.post(new MyRunnableRefresh2(this, context, visitaIniziale));
     }
 
@@ -127,11 +128,16 @@ public class Grafo extends ConstraintLayout {
     }
 
     private class GraphViewer implements Runnable{
-        protected final Grafo graphObject;
-        protected final Context context;
+        protected Grafo graphObject;
+        protected Context context;
         float r1, r2, r3, r4;
         int height, weight;
+        GraphNode startVisit;
 
+        public GraphViewer(Grafo graphObject) {
+            bindGraph(graphObject);
+            initRow();
+        }
 
         private void initRow(){
             height = graphObject.getHeight();
@@ -143,16 +149,39 @@ public class Grafo extends ConstraintLayout {
             r4 = r2*3;
         }
 
-        private GraphViewer(Grafo graphObject) {
-            context = graphObject.context;
+        private void bindGraph(Grafo graphObject) {
             this.graphObject = graphObject;
-            initRow();
+            this.startVisit = this.graphObject.visitaIniziale;
+            this.context = this.graphObject.context;
+        }
+
+        private void refreshDrawView(){
+            if(drawView != null)
+                drawView.invalidate();
+        }
+
+        private Line buildLine(GraphNode start, GraphNode stop){
+            return new Line(
+                    (start.getX() + fromDpToPx(24)),
+                    (start.getY() + fromDpToPx(47)),
+                    (stop.getX() + fromDpToPx(24)),
+                    stop.getY()
+            );
         }
 
         @Override
         public void run() {
-
+            refreshDrawView();
         }
+    }
+
+    public Line buildLineGraph(GraphNode start, GraphNode stop){
+        return new Line(
+                (start.getX() + fromDpToPx(24)),
+                (start.getY() + fromDpToPx(47)),
+                (stop.getX() + fromDpToPx(24)),
+                stop.getY()
+        );
     }
 
     private class MyRunnable implements Runnable {
@@ -179,7 +208,7 @@ public class Grafo extends ConstraintLayout {
         protected float calcX(int n){
             Log.v("size", String.valueOf(size.x));
             Log.v("sizen", String.valueOf(size.x/n));
-            float x = ((float) size.x/n);
+            float x = ((float) size.x/n) - fromDpToPx(48);
             Log.v("X-VALUE", String.valueOf(x));
             return n > 1 ?  x : ((float) size.x/powOfTwo(1)) - fromDpToPx(48);
         }
@@ -494,31 +523,6 @@ public class Grafo extends ConstraintLayout {
         }
     }
 
-    private class MyRunnableRefresh extends MyRunnable{
-        GraphNode visita = null;
-
-        public MyRunnableRefresh(Grafo self, Context context, GraphNode startDataNode) {
-            super(self, context);
-            this.visita = startDataNode;
-        }
-
-        @Override
-        public void run(){
-            initRow();
-
-            addView(visita);
-            visita.setY(r1);
-            visita.setX(calcX(1));
-            visita.setCircle(true);
-
-            ///////////////////////////
-            nodeVisitaInitListeners(visita);
-
-            actualVisita = visita;
-        }
-
-    }
-
     private class MyRunnableRefresh2 extends MyRunnable{
         GraphNode visita = null;
 
@@ -532,13 +536,66 @@ public class Grafo extends ConstraintLayout {
             initRow();
             visita.setY(r1);
             visita.setX(calcX(1));
-            visita.setCircle(true);
+            visita.draw();
 
-            ///////////////////////////
-            nodeVisitaInitListeners(visita);
+            //AGGIUNTA DI TUTTE LE ZONE
+            GraphNode zona = new GraphNode(self.context, self, NodeType.ZONA);
+            visita.addSuccessor(zona);
+
+            GraphNode zona1 = new GraphNode(self.context, self, NodeType.ZONA);
+            visita.addSuccessor(zona1);
+
+            GraphNode zona2 = new GraphNode(self.context, self, NodeType.ZONA);
+            visita.addSuccessor(zona2);
+
+            //AGGIUNTA DI DELLE AREE
+            GraphNode area = new GraphNode(self.context, self, NodeType.AREA);
+            zona.addSuccessor(area);
+
+            GraphNode area2 = new GraphNode(self.context, self, NodeType.AREA);
+            zona2.addSuccessor(area2);
+
+            GraphNode area3 = new GraphNode(self.context, self, NodeType.AREA);
+            zona1.addSuccessor(area3);
+
+            //AGIUNTA DELLE OPERE
+            GraphNode opera = new GraphNode(self.context, self, NodeType.OPERA);
+            area.addSuccessor(opera);
+
+            GraphNode opera2 = new GraphNode(self.context, self, NodeType.OPERA);
+            area.addSuccessor(opera2);
+
+            GraphNode opera3 = new GraphNode(self.context, self, NodeType.OPERA);
+            area2.addSuccessor(opera3);
+
+
+            //POSIZIONAMENTO DI TUTTI I NODI
+            AtomicInteger cntZona = new AtomicInteger(1);
+            int numZona = graph.successors(visita).size();
+
+            for(GraphNode zonaNode : graph.successors(visita)){
+                zonaNode.setX(cntZona.getAndIncrement() * calcX(numZona));
+                zonaNode.setY(r2);
+
+                AtomicInteger cntArea = new AtomicInteger(1);
+                int numArea = graph.successors(zonaNode).size();
+
+                for(GraphNode areaNode : graph.successors(zonaNode)){
+                    areaNode.setX(cntArea.getAndIncrement() * calcX(numArea));
+                    areaNode.setY(r3);
+
+                    AtomicInteger cntOpera = new AtomicInteger(1);
+                    int numOpera = graph.successors(areaNode).size();
+
+                    for(GraphNode operaNode : graph.successors(areaNode)){
+                        operaNode.setX(cntOpera.getAndIncrement() * calcX(numOpera));
+                        operaNode.setY(r4);
+                    }
+                }
+            }
+            visita.drawAllChild();
 
             actualVisita = visita;
         }
-
     }
 }
