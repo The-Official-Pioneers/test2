@@ -51,13 +51,14 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     public DialogNodeInfo dialogOperaInfo = new DialogNodeInfo();
     public FragmentHomeCuratore frag;
-    public static FragmentSingolaArea fragmentSingolaArea;
     public static Opera opera;
     public static Zona zona;
     public static ArrayList<Area> areeZona;
     public static Area areaSelezionata;
+    public static FragmentSingolaArea fragmentSingolaArea;
     public static ArrayList<Opera> opereArea;
     public static Opera operaSelezionata;
+    public static FragmentSingolaOpera fragmentSingolaOpera;
     public int tipoUtente=1;
     public int idUtente;
 
@@ -191,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
             this.id = id;
         }
         public void run(){
-            opera = new Opera();
-            opera.setId(this.id);
-            opera.readDataDb(MainActivity.this);
+            operaSelezionata = new Opera();
+            operaSelezionata.setId(this.id);
+            operaSelezionata.readDataDb(MainActivity.this);
         }
     }
 
