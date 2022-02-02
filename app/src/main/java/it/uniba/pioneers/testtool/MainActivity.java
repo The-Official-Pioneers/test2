@@ -42,7 +42,6 @@ import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
 import it.uniba.pioneers.testtool.home.CaptureAct;
 import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
-import it.uniba.pioneers.testtool.ui.FragmentListaAree;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -55,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
     public static Opera opera;
     public static Zona zona;
     public static ArrayList<Area> areeZona;
+    public static Area areaSelezionata;
+    public static FragmentSingolaArea fragmentSingolaArea;
+    public static ArrayList<Opera> opereArea;
+    public static Opera operaSelezionata;
+    public static FragmentSingolaOpera fragmentSingolaOpera;
     public int tipoUtente=1;
     public int idUtente;
 
@@ -75,12 +79,10 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
-        //AGGIUNTO DA IVAN
         visitatore.setId(2);
-        visitatore.readDataDb(MainActivity.this);
 
         /*** INIZIO TRANSAZIONE ***/
-        //// if per tipo di utente e fragment da committare
+                                        //// if per tipo di utente e fragment da committare
         frag = new FragmentHomeCuratore();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
@@ -184,49 +186,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void gestisciMuseo(View view) {
-        Area.areeZona(this, 10 ,new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    Boolean status = response.getBoolean("status");
-                    areeZona = new ArrayList<Area>();
-
-                    if (status) {
-                        //JSONObject resultData = response.getJSONObject("data");
-                        JSONArray resultAree = response.getJSONArray("data");
-
-                        for(int i =0; i< resultAree.length(); i++) {
-                            Area tmp = new Area();
-                            tmp.setDataFromJSON(resultAree.getJSONObject(i));
-                            areeZona.add(tmp);
-                        }
-                        FragmentListaAree fls = new FragmentListaAree();
-                        androidx.fragment.app.FragmentManager supportFragmentManager;
-                        supportFragmentManager = getSupportFragmentManager();
-                        supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container_list, fls)
-                                .addToBackStack(null)
-                                .commit();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException | ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     private class Inserisci extends Thread{
         private final int id;
         public Inserisci(int id){
             this.id = id;
         }
         public void run(){
-            opera = new Opera();
-            opera.setId(this.id);
-            opera.readDataDb(MainActivity.this);
+            operaSelezionata = new Opera();
+            operaSelezionata.setId(this.id);
+            operaSelezionata.readDataDb(MainActivity.this);
         }
     }
 
@@ -264,8 +232,118 @@ public class MainActivity extends AppCompatActivity {
 
     //AGGIUNTO DA IVAN
     public void goToPersonalArea(MenuItem item) {
+        //AGGIUNTO DA IVAN
+
+        visitatore.readDataDb(MainActivity.this);
         Intent intent = new Intent(this, AreaPersonaleVisitatore.class);
         startActivity(intent);
     }
+
+
+
+    public void gestisciMuseo(View view) {
+        Area.areeZona(this, 10 ,new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Boolean status = response.getBoolean("status");
+                    areeZona = new ArrayList<Area>();
+
+                    if (status) {
+                        //JSONObject resultData = response.getJSONObject("data");
+                        JSONArray resultAree = response.getJSONArray("data");
+
+                        for(int i =0; i< resultAree.length(); i++) {
+                            Area tmp = new Area();
+                            tmp.setDataFromJSON(resultAree.getJSONObject(i));
+                            areeZona.add(tmp);
+                        }
+                        FragmentListaAree fls = new FragmentListaAree();
+                        androidx.fragment.app.FragmentManager supportFragmentManager;
+                        supportFragmentManager = getSupportFragmentManager();
+                        supportFragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container_list, fls)
+                                .addToBackStack(null)
+                                .commit();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException | ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void modificaNomeArea(View view){
+          new AlertDialog.Builder(this)
+                    .setTitle("Confermi")
+                    .setMessage("Confermi la modifica?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
+                            String nome = fragmentSingolaArea.editableNome.getText().toString();
+                            if(nome == "" || nome.equals(areaSelezionata.getNome())){
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setMessage("Modifica almeno un campo per salvare")
+                                        .setPositiveButton(android.R.string.yes,null)
+                                        .show();
+                            }else{
+                                areaSelezionata.setNome(nome);
+                                areaSelezionata.updateDataDb(MainActivity.this);
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setMessage("Modifica effettuata")
+                                        .setPositiveButton(android.R.string.yes,null)
+                                        .show();
+                            }
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+    }
+
+    public void mostraOpereArea(View view) {
+        Opera.opereArea(this, MainActivity.areaSelezionata.getId() ,new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Boolean status = response.getBoolean("status");
+                    opereArea = new ArrayList<Opera>();
+
+                    if (status) {
+                        JSONArray resultOpere = response.getJSONArray("data");
+                        //JSONObject j =  resultOpere.getJSONObject(4);
+                        //Toast.makeText(getApplicationContext(), String.valueOf(j.getString("titolo")), Toast.LENGTH_SHORT).show();
+
+
+                        for(int i = 0; i< resultOpere.length(); i++) {
+                            Opera tmp = new Opera();
+                            tmp.setId(resultOpere.getJSONObject(i).getInt("id"));
+                            tmp.setTitolo(resultOpere.getJSONObject(i).getString("titolo"));
+                            tmp.setDescrizione(resultOpere.getJSONObject(i).getString("descrizione"));
+                            tmp.setFoto(resultOpere.getJSONObject(i).getString("foto"));
+                            tmp.setArea(resultOpere.getJSONObject(i).getInt("area"));
+                            opereArea.add(tmp);
+                        }
+
+                        FragmentListaOpere flo = new FragmentListaOpere();
+                        androidx.fragment.app.FragmentManager supportFragmentManager;
+                        supportFragmentManager = getSupportFragmentManager();
+                        supportFragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container_list, flo)
+                                .addToBackStack(null)
+                                .commit();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+
 
 }

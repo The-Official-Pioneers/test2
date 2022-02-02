@@ -10,6 +10,7 @@
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/activity_home.xml" value="0.3625" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/activity_info_opera.xml" value="0.2989583333333333" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/activity_main.xml" value="0.3605072463768116" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/content_main.xml" value="0.2953125" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_area_personale_visitatore.xml" value="0.1762917933130699" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_dashboard.xml" value="0.1762917933130699" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_first.xml" value="0.259375" />
@@ -17,7 +18,11 @@
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_home_guida.xml" value="0.33" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_home_visitatore.xml" value="0.33" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_il_tuo_museo.xml" value="0.3625" />
-        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_lista_aree.xml" value="0.3625" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_lista_aree.xml" value="0.33" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_lista_opere.xml" value="0.27309782608695654" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_login.xml" value="0.27309782608695654" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_singola_area.xml" value="0.33" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_singola_opera.xml" value="0.2953125" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/nav_header.xml" value="0.259375" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/singola_area.xml" value="0.3625" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layouts/activity/layout/fragment_home.xml" value="0.1762917933130699" />

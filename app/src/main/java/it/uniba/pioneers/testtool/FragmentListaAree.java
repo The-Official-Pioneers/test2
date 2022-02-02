@@ -1,16 +1,16 @@
-package it.uniba.pioneers.testtool.ui;
+package it.uniba.pioneers.testtool;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-
-import it.uniba.pioneers.testtool.MainActivity;
-import it.uniba.pioneers.testtool.R;
+import androidx.fragment.app.FragmentManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,11 +64,12 @@ public class FragmentListaAree extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_aree, container, false);
 
-        String[] lista = {      // da generalizzare con for
-                MainActivity.areeZona.get(0).getNome(),
-                MainActivity.areeZona.get(1).getNome(),
-                MainActivity.areeZona.get(2).getNome(),
-        };
+        String[] lista = new String[MainActivity.areeZona.size()];
+        for(int i = 0; i<MainActivity.areeZona.size(); i++){
+            lista[i] = MainActivity.areeZona.get(i).getNome();
+        }
+
+
 
         ListView lv = (ListView) view.findViewById(R.id.listView);
         ArrayAdapter<String> lvAdapter = new ArrayAdapter<String>(
@@ -77,6 +78,19 @@ public class FragmentListaAree extends Fragment {
                 lista
         );
         lv.setAdapter(lvAdapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(),String.valueOf(MainActivity.areeZona.get(i).getId()), Toast.LENGTH_SHORT).show();
+                MainActivity.areaSelezionata = MainActivity.areeZona.get(i);
+                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
+                MainActivity.fragmentSingolaArea = new FragmentSingolaArea();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_list, MainActivity.fragmentSingolaArea)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
