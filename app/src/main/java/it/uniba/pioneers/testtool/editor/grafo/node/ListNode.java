@@ -24,10 +24,6 @@ public class ListNode extends Node{
     final String ARG_DESCRIZIONE = "descrizione";
     final String ARG_ANNO = "anno";
 
-    public ListNode clone(Context context) {
-        return new ListNode(context, this.linearLayout, this.data);
-    }
-
     private final class MyTouchListener implements OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {

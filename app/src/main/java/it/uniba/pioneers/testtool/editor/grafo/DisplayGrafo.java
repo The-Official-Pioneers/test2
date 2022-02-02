@@ -13,8 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo.node.ListNode;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
-import it.uniba.pioneers.testtool.editor.grafo.node.GraphNode;
-import it.uniba.pioneers.widget.NodeType;
 
 public class DisplayGrafo extends ConstraintLayout {
 

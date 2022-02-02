@@ -1,9 +1,7 @@
 package it.uniba.pioneers.testtool.editor.grafo.node;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -12,7 +10,6 @@ import androidx.core.content.ContextCompat;
 import org.json.JSONObject;
 
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.widget.NodeType;
 
 public class Node extends ConstraintLayout {
     public NodeType type;
@@ -20,7 +17,7 @@ public class Node extends ConstraintLayout {
     public boolean isDroppable = false;
     public boolean circle = false;
 
-    JSONObject data;
+    public JSONObject data;
 
 
     public Node(@NonNull Context context) {

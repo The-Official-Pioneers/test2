@@ -10,8 +10,6 @@ import androidx.annotation.Nullable;
 
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo;
-import it.uniba.pioneers.testtool.editor.grafo.node.GraphNode;
-import it.uniba.pioneers.widget.NodeType;
 
 public class OptionsEditor extends LinearLayout {
 

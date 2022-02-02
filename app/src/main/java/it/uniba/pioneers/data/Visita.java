@@ -496,6 +496,22 @@ public class Visita {
 
         }
     }
-    
 
+    public static void getGraphData(Context context,Visita visita,
+                                    Response.Listener<JSONObject> responseListener,
+                                    Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visita/all-data/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.VisitaEntry.COLUMN_ID, visita.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
 }

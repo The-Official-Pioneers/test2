@@ -7,18 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.common.graph.MutableGraph;
 
+import org.json.JSONObject;
+
+import java.util.Set;
+
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo.Grafo;
-import it.uniba.pioneers.widget.NodeType;
 
 public class GraphNode extends Node {
     Grafo graphParent = null;
-    MutableGraph<GraphNode> graph = null;
+    private NodeType type;
+    public MutableGraph<GraphNode> graph = null;
     GraphNode self = null;
+    JSONObject data = null;
 
     public boolean inizializated = false;
     public void setInizializated(boolean flag){
@@ -32,12 +36,24 @@ public class GraphNode extends Node {
         setOnDragListener(new MyDragListener());
     }
 
+    public void removeAllChild(){
+        for(GraphNode node : getSuccessors(graphParent, self)){
+            graph.removeNode(node);
+        }
+
+        if(type == NodeType.OPERA) {
+            return;
+        }
+        removeAllChild();
+    }
+
     private class MyDragListener implements OnDragListener {
 
         @Override
         public boolean onDrag(View v, DragEvent event) {
             int action = event.getAction();
-            switch (event.getAction()) {
+
+            switch (action) {
                 case DragEvent.ACTION_DRAG_STARTED:
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
@@ -47,14 +63,15 @@ public class GraphNode extends Node {
                 case DragEvent.ACTION_DROP:
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
+                    JSONObject data = ((ListNode)event.getLocalState()).data; //CONVERSIONE DI TIPO DA ListNode -> GraphNode
                     if(self.type == NodeType.VISITA){
-                        graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.ZONA));
+                        graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.ZONA, data));
 
                     }else if(self.type == NodeType.ZONA){
-                        graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.AREA));
+                        graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.AREA, data));
 
                     }else if(self.type == NodeType.AREA){
-                        graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.OPERA));
+                        graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.OPERA, data));
 
                     }else if(self.type == NodeType.OPERA){
 
@@ -80,14 +97,35 @@ public class GraphNode extends Node {
 
     public GraphNode(@NonNull Context context, Grafo graphParent, NodeType type) {
         super(context);
-        this.graph = graphParent.graph;
-        this.self = this;
-        this.type = type;
-        this.graphParent = graphParent;
+        setFields(graphParent, type);
 
         init(context);
         GraphNode self = this;
 
+        setOnClickListener(graphParent, type);
+    }
+
+    private void setFields(Grafo graphParent, NodeType type) {
+        this.graph = graphParent.graph;
+        this.self = this;
+        this.type = type;
+        this.graphParent = graphParent;
+    }
+
+    private void setFields(Grafo graphParent, NodeType type, JSONObject data) {
+        setFields(graphParent, type);
+        this.data = data;
+    }
+
+    public GraphNode(@NonNull Context context, Grafo graphParent, NodeType type, JSONObject data) {
+        super(context);
+        setFields(graphParent, type, data);
+        init(context);
+
+        setOnClickListener(graphParent, type);
+    }
+
+    private void setOnClickListener(Grafo graphParent, NodeType type) {
         if(type != NodeType.VISITA && type != NodeType.OPERA){
             setOnClickListener(view -> {//THIS (View)
                 resetLines();
@@ -98,7 +136,7 @@ public class GraphNode extends Node {
                     clicked = false;
                     setCircle(false);
                     hideAllChild();
-                    for(GraphNode node : graphParent.graph.successors((GraphNode) graphParent.graph.predecessors((GraphNode) view).toArray()[0])){
+                    for(GraphNode node : getSuccessors(graphParent, (GraphNode) view)){
                         node.clicked = false;
                         node.setCircle(false);
                         node.hideAllChild();
@@ -118,7 +156,7 @@ public class GraphNode extends Node {
                     clicked = true;
                     setCircle(true);
 
-                    for(GraphNode node : graphParent.graph.successors((GraphNode) graphParent.graph.predecessors(self).toArray()[0])){
+                    for(GraphNode node : getSuccessors(graphParent, self)){
                         if(node != self){
                             node.clicked = false;
                             node.setCircle(false);
@@ -128,6 +166,11 @@ public class GraphNode extends Node {
                 }
             });
         }
+    }
+
+    @NonNull
+    private Set<GraphNode> getSuccessors(Grafo graphParent, GraphNode view) {
+        return graphParent.graph.successors((GraphNode) graphParent.graph.predecessors(view).toArray()[0]);
     }
 
     public void drawAllChild(){

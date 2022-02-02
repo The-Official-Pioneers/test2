@@ -105,7 +105,6 @@ public class GrafoFragment extends Fragment {
         );
 
         listaNodi.setLayoutParams(param);
-        listaNodi.setVisibility(View.GONE);
         grafoManipulateLayout.addView(displayGrafo);
         grafoManipulateLayout.addView(listaNodi);
     }
