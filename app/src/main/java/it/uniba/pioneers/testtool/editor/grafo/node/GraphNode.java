@@ -1,20 +1,31 @@
 package it.uniba.pioneers.testtool.editor.grafo.node;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.Base64;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.common.graph.MutableGraph;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Set;
 
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.EditorActivity;
 import it.uniba.pioneers.testtool.editor.grafo.Grafo;
 
 public class GraphNode extends Node {
@@ -25,6 +36,7 @@ public class GraphNode extends Node {
     JSONObject data = null;
 
     public boolean inizializated = false;
+
     public void setInizializated(boolean flag){
         this.inizializated = flag;
     }
@@ -94,17 +106,6 @@ public class GraphNode extends Node {
         this.graph.putEdge(this, dataNodeEnd);
     }
 
-
-    public GraphNode(@NonNull Context context, Grafo graphParent, NodeType type) {
-        super(context);
-        setFields(graphParent, type);
-
-        init(context);
-        GraphNode self = this;
-
-        setOnClickListener(graphParent, type);
-    }
-
     private void setFields(Grafo graphParent, NodeType type) {
         this.graph = graphParent.graph;
         this.self = this;
@@ -123,6 +124,41 @@ public class GraphNode extends Node {
         init(context);
 
         setOnClickListener(graphParent, type);
+        setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                try {
+                    GraphNode node = ((GraphNode)view);
+
+                    int id = node.data.getInt("id");
+
+                    if(self.type == NodeType.VISITA){
+                        builder.setMessage(String.valueOf(id))
+                                .setTitle("VISITA #"+id);
+                    }else if(self.type == NodeType.ZONA){
+                        builder.setMessage(String.valueOf(id))
+                                .setTitle("ZONA #"+id);
+                    }else if(self.type == NodeType.AREA){
+                        builder.setMessage(String.valueOf(id))
+                                .setTitle("AREA #"+id);
+                    }else if(self.type == NodeType.OPERA){
+                        builder.setMessage(String.valueOf(id))
+                                .setTitle("OPERA #"+id);
+                    }
+
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    return true;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+        });
     }
 
     private void setOnClickListener(Grafo graphParent, NodeType type) {

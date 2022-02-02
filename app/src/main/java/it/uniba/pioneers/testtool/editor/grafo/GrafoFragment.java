@@ -81,7 +81,6 @@ public class GrafoFragment extends Fragment {
         listaNodi = getView().findViewById(R.id.listaNodi);
         optionsEditor = getView().findViewById(R.id.optionsGrafo);
 
-
         Log.v("grafoManipulateLayout", String.valueOf(grafoManipulateLayout));
 
         DisplayGrafo displayGrafo = new DisplayGrafo(getContext());

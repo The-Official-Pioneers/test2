@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -18,6 +19,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
@@ -135,43 +138,15 @@ public class Grafo extends ConstraintLayout {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Snackbar.make(
+                                self.getRootView(),
+                                "Non è stato possibile comunicare con il server",
+                                BaseTransientBottomBar.LENGTH_LONG
+                        )
+                                .show();
                     }
                 });
 
-/*        visita = new GraphNode(context, this, NodeType.VISITA); //CREAZIONE VISITA
-        //AGGIUNTA DI TUTTE LE ZONE
-        GraphNode zona = new GraphNode(context, this, NodeType.ZONA);
-        visita.addSuccessor(zona);
-
-        GraphNode zona1 = new GraphNode(context, this, NodeType.ZONA);
-        visita.addSuccessor(zona1);
-
-        GraphNode zona2 = new GraphNode(context, this, NodeType.ZONA);
-        visita.addSuccessor(zona2);
-
-        //AGGIUNTA DI DELLE AREE
-        GraphNode area = new GraphNode(context, this, NodeType.AREA);
-        zona.addSuccessor(area);
-
-        GraphNode area2 = new GraphNode(context, this, NodeType.AREA);
-        zona1.addSuccessor(area2);
-
-        GraphNode area3 = new GraphNode(context, this, NodeType.AREA);
-        zona1.addSuccessor(area3);
-
-        //AGIUNTA DELLE OPERE
-        GraphNode opera = new GraphNode(context, this, NodeType.OPERA);
-        area.addSuccessor(opera);
-
-        GraphNode opera2 = new GraphNode(context, this, NodeType.OPERA);
-        area.addSuccessor(opera2);
-
-        GraphNode opera3 = new GraphNode(context, this, NodeType.OPERA);
-        area2.addSuccessor(opera3);
-
-        addStartNode(visita);
-  */
     }
 
     private Activity getActivity() {
@@ -199,6 +174,7 @@ public class Grafo extends ConstraintLayout {
     public Grafo(@NonNull Context context) {
         super(context);
         init(context);
+
     }
 
     public Grafo(@NonNull Context context, @Nullable AttributeSet attrs) {
