@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,7 +30,8 @@ import it.uniba.pioneers.testtool.MainActivity;
 
 public class Guida {
 
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
+    public static String dtStart = "2010-10-15T09:27:37Z";
+    public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
     SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
     public long getId() {
@@ -58,7 +60,7 @@ public class Guida {
 
     //CODICE MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = addDay(Visitatore.format.parse(dataNascita), 1);
+        this.dataNascita = Visitatore.format.parse(dataNascita);
     }
 
     public static Date addDay(Date date, int i) {
@@ -117,6 +119,14 @@ public class Guida {
         this.specializzazione = specializzazione;
     }
 
+    public void setStatusComputation(boolean status) {
+        this.statusComputation = status;
+    }
+
+    public boolean getStatusComputation() {
+        return this.statusComputation;
+    }
+
     private long id;
     private String nome;
     private String cognome;
@@ -125,6 +135,7 @@ public class Guida {
     private String password;
     private String propic;
     private String specializzazione;
+    boolean statusComputation = false;
 
     //ONLINE STATE
     private boolean online;
@@ -160,6 +171,7 @@ public class Guida {
         setPassword(data.getString(DbContract.GuidaEntry.COLUMN_PASSWORD));
         setPropic(data.getString(DbContract.GuidaEntry.COLUMN_PROPIC));
         setSpecializzazione(data.getString(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE));
+        setOnline(true);
     }
 
     //CREATE JSON OBJECT
@@ -323,7 +335,7 @@ public class Guida {
         }
     }
 
-    public void createDataDb(Context context){
+    public void createDataDb(Context context, Response.Listener<JSONObject> responseListener){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
             String url = Server.getUrl() + "/guida/create/";
@@ -345,22 +357,7 @@ public class Guida {
             Guida self = this;
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                Boolean status =  response.getBoolean("status");
-                                if(status){
-                                    self.setDataFromJSON(response.getJSONObject("data"));
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException | ParseException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
+                    responseListener, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();

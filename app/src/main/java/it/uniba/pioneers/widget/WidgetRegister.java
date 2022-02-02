@@ -1,43 +1,28 @@
 package it.uniba.pioneers.widget;
 
-import static android.widget.Toast.*;
-
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.RemoteViews;
 import android.widget.Spinner;
-import android.widget.Toast;
-import androidx.appcompat.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.PopupMenu;
-
-import org.checkerframework.common.returnsreceiver.qual.This;
-import org.json.JSONException;
 
 import it.uniba.pioneers.testtool.R;
 
 /**
  * Implementation of App Widget functionality.
  */
-public class WidgetCuratoreRegister extends LinearLayout {
+public class WidgetRegister extends LinearLayout {
 
     public void init() {
         LayoutInflater layoutInflater = LayoutInflater.from(this.getContext());
-        layoutInflater.inflate(R.layout.widget_curatore_register, this);
+        layoutInflater.inflate(R.layout.widget_register, this);
     }
 
-    public WidgetCuratoreRegister(@NonNull Context context) {
+    public WidgetRegister(@NonNull Context context) {
         super(context);
         init();
         setDayDate(context);
@@ -45,7 +30,7 @@ public class WidgetCuratoreRegister extends LinearLayout {
         setYearsDate(context);
     }
 
-    public WidgetCuratoreRegister(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public WidgetRegister(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
         setDayDate(context);
@@ -53,7 +38,7 @@ public class WidgetCuratoreRegister extends LinearLayout {
         setYearsDate(context);
     }
 
-    public WidgetCuratoreRegister(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public WidgetRegister(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
         setDayDate(context);
@@ -61,7 +46,7 @@ public class WidgetCuratoreRegister extends LinearLayout {
         setYearsDate(context);
     }
 
-    public WidgetCuratoreRegister(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public WidgetRegister(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
         setDayDate(context);

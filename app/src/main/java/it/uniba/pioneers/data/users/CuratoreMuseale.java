@@ -30,7 +30,7 @@ import it.uniba.pioneers.testtool.MainActivity;
 
 public class CuratoreMuseale {
 
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
+    public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
     SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
     public String getNome() {
@@ -51,7 +51,7 @@ public class CuratoreMuseale {
 
     //CODICE MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = addDay(Visitatore.format.parse(dataNascita), 1);
+        this.dataNascita = CuratoreMuseale.format.parse(dataNascita);
     }
 
     public static Date addDay(Date date, int i) {
@@ -64,7 +64,6 @@ public class CuratoreMuseale {
     public String getShorterDataNascita(){
         return output.format(MainActivity.visitatore.getDataNascita());
     }
-    //CODICE MODIFICATO DA IVAN
 
     public Date getDataNascita() {
         return dataNascita;
@@ -153,22 +152,22 @@ public class CuratoreMuseale {
     }
 
     public CuratoreMuseale(JSONObject data) throws JSONException, ParseException {
-        setId(data.getInt(DbContract.CuratoreMusealeEntry.COLUMN_ID));
-        setNome(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_NOME));
-        setCognome(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_COGNOME));
-        setDataNascita(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA));
-        setEmail(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL));
-        setPassword(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD));
-        setPropic(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC));
-        setZona(data.getInt(DbContract.CuratoreMusealeEntry.COLUMN_ZONA));
-        setOnline(true);
+        this.setId(data.getInt(DbContract.CuratoreMusealeEntry.COLUMN_ID));
+        this.setNome(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_NOME));
+        this.setCognome(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_COGNOME));
+        this.setDataNascita(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA));
+        this.setEmail(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL));
+        this.setPassword(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD));
+        this.setPropic(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC));
+        this.setZona(data.getInt(DbContract.CuratoreMusealeEntry.COLUMN_ZONA));
+        this.setOnline(true);
     }
 
     public void setDataFromJSON(JSONObject data) throws JSONException, ParseException {
         setId(data.getInt(DbContract.CuratoreMusealeEntry.COLUMN_ID));
         setNome(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_NOME));
         setCognome(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_COGNOME));
-        //this.setDataNascita(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA));
+        this.setDataNascita(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA));
         setEmail(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL));
         setPassword(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD));
         setPropic(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC));
@@ -332,10 +331,11 @@ public class CuratoreMuseale {
         }
     }
 
-    public void createDataDb(Context context){
+    public void createDataDb(Context context, Response.Listener<JSONObject> responseListener){
 
         if(isOnline()){
             try{
+                System.out.println("Sono arrivato");
                 RequestQueue queue = Volley.newRequestQueue(context);
                 String url = Server.getUrl() + "/curatore-museale/create/";
 
@@ -347,12 +347,10 @@ public class CuratoreMuseale {
                     data.put(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL, getEmail());
                     data.put(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD, getPassword());
                     data.put(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC, getPropic().toString());
-                    if(getZona() == 0){
-                        //IL CURATORE SI STA REGISTRANDO, AGGIUNGERA' LA ZONA IN SEGUITO
-                        data.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, null);
-                    }else{
-                        data.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
-                    }
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
+
+                    System.out.println(data.toString());
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -360,23 +358,7 @@ public class CuratoreMuseale {
                 CuratoreMuseale self = this;
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    Boolean status =  response.getBoolean("status");
-                                    self.setStatusComputation(status);
-                                    if(status){
-                                        Toast.makeText(context, "validi: " + self.getStatusComputation() + "", Toast.LENGTH_SHORT).show();
-                                        self.setDataFromJSON(response.getJSONObject("data"));
-                                    }else{
-                                        Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                                    }
-                                } catch (JSONException | ParseException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
+                        responseListener, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();

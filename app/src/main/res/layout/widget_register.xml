@@ -1,3 +1,7 @@
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,14 +10,15 @@
     android:background="@color/white">
 
     <ImageView
+        android:id="@+id/nullImg"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:layout_marginRight="130dp"
         android:layout_marginLeft="130dp"
-        android:src="@drawable/ic_baseline_add_a_photo_24"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="130dp"
         android:onClick="addImage"
-        android:id="@+id/nullImg"/>
+        android:src="@drawable/ic_baseline_add_a_photo_24" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="140dp"
@@ -28,13 +33,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="2dp"
-        android:text="Image"
+        android:text="Profile Image"
         android:textStyle="bold"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-        android:id="@+id/uriImgString"
+        android:id="@+id/Base64ImgString"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="2dp"
@@ -45,7 +50,7 @@
         android:visibility="gone"/>
 
     <EditText
-        android:id="@+id/nomeCuratore"
+        android:id="@+id/nomeFormRef"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -62,7 +67,7 @@
         android:textColorLink="@color/black" />
 
     <EditText
-        android:id="@+id/cognomeCuratore"
+        android:id="@+id/cognomeFormRef"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -79,7 +84,7 @@
         android:textColorLink="@color/black" />
 
     <EditText
-        android:id="@+id/emailCuratore"
+        android:id="@+id/emailFormRef"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -96,7 +101,7 @@
         android:textColorLink="@color/black" />
 
     <EditText
-        android:id="@+id/passwordCuratore"
+        android:id="@+id/passwordFormRef"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -111,6 +116,23 @@
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/black"
         android:textColorLink="@color/black" />
+    <EditText
+        android:id="@+id/specializzazione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="24dp"
+        android:autofillHints="@string/prompt_email"
+        android:hint="Specializzazione"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:selectAllOnFocus="true"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/black"
+        android:textColorLink="@color/black"
+        android:visibility="gone"/>
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -121,9 +143,9 @@
         android:id="@+id/day_spinner"
         style="@style/Widget.AppCompat.Spinner"
         android:layout_width="89dp"
+        android:layout_height="?attr/dropdownListPreferredItemHeight"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="15dp"
-        android:layout_height="?attr/dropdownListPreferredItemHeight"
         android:background="#f5f5f5"
         android:dropDownWidth="300dp"
         android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
@@ -158,6 +180,75 @@
 
 </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/darker_gray"
+        android:visibility="gone"
+        android:id="@+id/subFormCuratoreSeparator"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/subFormCuratore">
+
+        <EditText
+            android:id="@+id/tipoZona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="24dp"
+            android:autofillHints="@string/prompt_email"
+            android:hint="Tipo di zona"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/black"
+            android:textColorHint="@color/black"
+            android:textColorLink="@color/black" />
+
+        <EditText
+            android:id="@+id/nomeZona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="24dp"
+            android:autofillHints="@string/prompt_email"
+            android:hint="Nome zona"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/black"
+            android:textColorHint="@color/black"
+            android:textColorLink="@color/black" />
+
+        <EditText
+            android:id="@+id/cittaZona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="24dp"
+            android:autofillHints="@string/prompt_email"
+            android:hint="Città"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/black"
+            android:textColorHint="@color/black"
+            android:textColorLink="@color/black" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/guida"
         android:layout_width="match_parent"
@@ -174,7 +265,9 @@
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.359"
         android:background="@color/design_default_color_primary"
-        android:onClick="registerCuratore"
+        android:onClick="registerButton"
         android:textColor="@color/white"/>
 
-</LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
