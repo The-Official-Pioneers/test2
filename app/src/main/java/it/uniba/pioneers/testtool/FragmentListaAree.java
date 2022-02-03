@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentListaAree#newInstance} factory method to
@@ -23,7 +25,8 @@ public class FragmentListaAree extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    public static ArrayAdapter<String> lvAdapter;
+    public static ArrayList<String> lista;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -64,15 +67,15 @@ public class FragmentListaAree extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_aree, container, false);
 
-        String[] lista = new String[MainActivity.areeZona.size()];
+        lista = new ArrayList<String>();
         for(int i = 0; i<MainActivity.areeZona.size(); i++){
-            lista[i] = MainActivity.areeZona.get(i).getNome();
+            lista.add(MainActivity.areeZona.get(i).getNome());
         }
 
 
 
         ListView lv = (ListView) view.findViewById(R.id.listView);
-        ArrayAdapter<String> lvAdapter = new ArrayAdapter<String>(
+        lvAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 lista
@@ -91,8 +94,23 @@ public class FragmentListaAree extends Fragment {
                         .commit();
             }
         });
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tuo museo");
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MainActivity.areeZona=null;
+        MainActivity.areaSelezionata=null;
+        MainActivity.opereArea=null;
+        MainActivity.operaSelezionata=null;
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        MainActivity.toggle.setDrawerIndicatorEnabled(true);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Test Tool");
+
     }
 }
