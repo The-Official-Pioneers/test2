@@ -505,4 +505,36 @@ public class CuratoreMuseale {
             int deletedRows = db.delete(DbContract.CuratoreMusealeEntry.TABLE_NAME, selection, selectionArgs);
         }
     }
+
+    public void login(Context context, Response.Listener<JSONObject> responseListener) {
+
+        if (isOnline()) {
+            try {
+                RequestQueue queue = Volley.newRequestQueue(context);
+                String url = Server.getUrl() + "/curatore-museale/login/";
+
+                JSONObject data = new JSONObject();
+                try {
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL, getEmail());
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD, getPassword());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                CuratoreMuseale self = this;
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                        responseListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                        System.out.println(error.toString());
+                    }
+                });
+                queue.add(jsonObjectRequest);
+
+            } catch (Exception e) {
+            }
+        }
+    }
 }

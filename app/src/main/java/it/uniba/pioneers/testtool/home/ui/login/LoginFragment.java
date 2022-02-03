@@ -1,6 +1,5 @@
 package it.uniba.pioneers.testtool.home.ui.login;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,8 +23,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.databinding.FragmentLoginBinding;
-import it.uniba.pioneers.testtool.home.WelcomeFragment;
-import it.uniba.pioneers.testtool.home.ui.RegisterFragment;
 
 public class LoginFragment extends Fragment {
 
@@ -112,7 +109,7 @@ public class LoginFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                            passwordEditText.getText().toString(), getView().getContext());
                 }
                 return false;
             }
@@ -123,7 +120,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                        passwordEditText.getText().toString(), getView().getContext());
             }
         });
     }
@@ -132,7 +129,6 @@ public class LoginFragment extends Fragment {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
         if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         }
     }
 
