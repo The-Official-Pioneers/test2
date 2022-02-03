@@ -6,7 +6,8 @@ import static android.view.View.GONE;
 import static java.lang.Thread.sleep;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,18 +18,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import android.os.SystemClock;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,26 +37,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.transition.MaterialFade;
+import com.android.volley.Response;
+import com.google.android.material.snackbar.Snackbar;
 
-import org.checkerframework.checker.units.qual.C;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
+import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
-import it.uniba.pioneers.sqlite.DbContract;
-import it.uniba.pioneers.testtool.EditorActivity;
+import it.uniba.pioneers.data.users.Guida;
+import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.home.HomeActivity;
-import it.uniba.pioneers.widget.ListaNodi;
-import it.uniba.pioneers.widget.WidgetCuratoreRegister;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.text.ParseException;
+import it.uniba.pioneers.widget.WidgetRegister;
+
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -77,7 +75,8 @@ public class RegisterFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private WidgetCuratoreRegister ln;
+    private WidgetRegister ln;
+    private String userType = null;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -148,18 +147,21 @@ public class RegisterFragment extends Fragment {
     public void callBackHandler(View view, String string){
         switch (string) {
             case "curatore":
-                setWidegetCuratore(view);
+                userType = "curatore";
+                setWidegetRegister(view);
                 break;
             case "visitatore":
-                Toast.makeText(view.getContext(), "visitatore", Toast.LENGTH_SHORT).show();
+                userType = "visitatore";
+                setWidegetRegister(view);
                 break;
             case "guida":
-                Toast.makeText(view.getContext(), "guida", Toast.LENGTH_SHORT).show();
+                userType = "guida";
+                setWidegetRegister(view);
                 break;
         }
     }
 
-    public void setWidegetCuratore(View view) {
+    public void setWidegetRegister(View view) {
         Animation fadeIn = new AlphaAnimation(1, 0); //@Param: fromAlpha e toAlpha => valore alfa iniziale per l'animazione, dove 1.0 significa completamente opaco e 0.0 significa completamente trasparente.
         fadeIn.setInterpolator(new DecelerateInterpolator());
         fadeIn.setDuration(100);
@@ -183,13 +185,39 @@ public class RegisterFragment extends Fragment {
         who.setVisibility(view.GONE);
 
         ln.setVisibility(View.VISIBLE);
+        if(userType == "guida"){
+            TextView spec = (TextView) getView().findViewById(R.id.specializzazione);
+            spec.setVisibility(View.VISIBLE);
+        }
+        if(userType == "curatore"){
+            LinearLayout subForm = (LinearLayout) getView().findViewById(R.id.subFormCuratore);
+            subForm.setVisibility(View.VISIBLE);
+
+            LinearLayout subFormSeparator = (LinearLayout) getView().findViewById(R.id.subFormCuratoreSeparator);
+            subFormSeparator.setVisibility(View.VISIBLE);
+        }
+        Button myButton = (Button) getView().findViewById(R.id.guida);
+        myButton.setEnabled(false);
     }
 
     public void addImageToForm(View view){
         try {
-            if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
-            } else {
+            if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    new AlertDialog.Builder(view.getContext())
+                            .setTitle("Permessi Galleria")
+                            .setMessage("Questi permessi sono necessari al fine di poter impostare la tua immagine di profilo personale. Puoi anche non concederli se non vuoi impostare un immagine di profilo")
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }else{
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
+                }
+            }else{
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
             }
@@ -210,33 +238,35 @@ public class RegisterFragment extends Fragment {
                 } else {
                     //do something like displaying a message that he didn`t allow the app to access gallery and you wont be able to let him select from gallery
                 }
-                break;
+            break;
         }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            Uri imageUri = data.getData();
-            TextView uriImg = this.getView().findViewById(R.id.uriImgString);
-            uriImg.setText(data.getDataString());
 
-            // declare a stream to read the image data from the SD Card.
-            InputStream inputStream;
-
-            // we are getting an input stream, based on the URI of the image.
             try {
-                inputStream = ((HomeActivity)getActivity()).getContentResolverAct(imageUri);
-
-                // get a bitmap from the stream.
-                Bitmap image = BitmapFactory.decodeStream(inputStream);
+                //encode image to base64 string
+                final Uri imageUri = data.getData();
+                final InputStream inputStream = ((HomeActivity)getActivity()).getContentResolverAct(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(inputStream);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                selectedImage.compress(Bitmap.CompressFormat.JPEG,50,baos);
+                byte[] b = baos.toByteArray();
+                String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+                System.out.println(encImage);
 
                 // show the image to the user
                 ImageView targetImage = this.getView().findViewById(R.id.imgToSet);
-                targetImage.setImageBitmap(image);
+                targetImage.setImageBitmap(selectedImage);
                 ImageView nullImage = this.getView().findViewById(R.id.nullImg);
                 nullImage.setVisibility(GONE);
                 targetImage.setVisibility(View.VISIBLE);
+
+                //Set variable not visible
+                TextView base64Img = this.getView().findViewById(R.id.Base64ImgString);
+                base64Img.setText(encImage);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -247,42 +277,61 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    public void registerCuratoreFragment(View view){
-        JSONObject data = new JSONObject();
-        View v =  (View) view.getParent();
-        EditText nomeCuratore =  v.findViewById(R.id.nomeCuratore);
-        EditText cognomeCuratore =  v.findViewById(R.id.cognomeCuratore);
-        EditText emailCuratore =  v.findViewById(R.id.emailCuratore);
-        EditText passwordCuratore =  v.findViewById(R.id.passwordCuratore);
 
-        Spinner mySpinnerDay = (Spinner) v.findViewById(R.id.mounth_spinner);
-        String dayText = mySpinnerDay.getSelectedItem().toString();
 
-        Spinner mySpinnerMounth = (Spinner) v.findViewById(R.id.mounth_spinner);
-        String mounthtext = mySpinnerMounth.getSelectedItem().toString();
+    public void registerComputation(View view){
 
-        Spinner mySpinnerYear = (Spinner) v.findViewById(R.id.years_spinner);
-        String yearText = mySpinnerYear.getSelectedItem().toString();
+            JSONObject data = new JSONObject();
+            View v =  (View) view.getParent();
+            EditText nomeForm =  v.findViewById(R.id.nomeFormRef);
+            EditText cognomeForm =  v.findViewById(R.id.cognomeFormRef);
+            EditText emailForm =  v.findViewById(R.id.emailFormRef);
+            EditText passwordForm =  v.findViewById(R.id.passwordFormRef);
+            EditText specializzazione =  v.findViewById(R.id.specializzazione);
+            EditText zonaForm =  v.findViewById(R.id.tipoZona);
+            EditText nomeZonaForm =  v.findViewById(R.id.nomeZona);
+            EditText cittaZonaForm =  v.findViewById(R.id.cittaZona);
 
-        String date = yearText + "-" + mounthtext + "-" + dayText;
-        Date expiredDate = stringToDate(date, "EEE MMM d HH:mm:ss zz yyyy");
+            Spinner mySpinnerDay = (Spinner) v.findViewById(R.id.day_spinner);
+            String dayText = mySpinnerDay.getSelectedItem().toString();
 
-        TextView imgText = v.findViewById(R.id.uriImgString);
-        String uriString = imgText.getText().toString();
+            Spinner mySpinnerMounth = (Spinner) v.findViewById(R.id.mounth_spinner);
+            String mounthtext = mySpinnerMounth.getSelectedItem().toString();
 
-        try {
-            data.put("id", 0);
-            data.put("nome", nomeCuratore.getText().toString());
-            data.put("cognome",cognomeCuratore.getText().toString());
-            data.put("email",emailCuratore.getText().toString());
-            data.put("password", passwordCuratore.getText().toString());
-            data.put("data_nascita", date);
-            data.put("propic", uriString);
-            data.put("zona", 0);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        saveDataInDb("Curatore", data);
+            Spinner mySpinnerYear = (Spinner) v.findViewById(R.id.years_spinner);
+            String yearText = mySpinnerYear.getSelectedItem().toString();
+
+            String date = dayText + "/" + mounthtext + "/" + yearText;
+            Date expiredDate = stringToDate(date, "dd/MM/yyyy");
+
+            TextView imgText = v.findViewById(R.id.Base64ImgString);
+            String uriString = imgText.getText().toString();
+
+            try {
+                data.put("id", 0);
+                data.put("nome", nomeForm.getText().toString());
+                data.put("cognome",cognomeForm.getText().toString());
+                data.put("email",emailForm.getText().toString());
+                data.put("password", passwordForm.getText().toString());
+                data.put("data_nascita", date);
+                data.put("propic", uriString);
+                if(userType == "curatore"){
+                    data.put("tipoZona", zonaForm.getText().toString());
+                    data.put("nomeZona", nomeZonaForm.getText().toString());
+                    data.put("cittaZona", cittaZonaForm.getText().toString());
+                }
+                if(userType == "guida"){
+                    data.put("specializzazione", specializzazione.getText().toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            saveDataInDb(userType, data);
+
+    }
+
+    private void registerComputationGuida(View view) {
     }
 
     private Date stringToDate(String aDate,String aFormat) {
@@ -297,40 +346,149 @@ public class RegisterFragment extends Fragment {
     }
 
     public void saveDataInDb(String typeUser,JSONObject data) {
-        switch (typeUser){
-            case "Curatore":
-                saveDataInDbCuratore(data);
+        switch (userType){
+            case "curatore":
+                if(controllEmptyDataCuratore()){
+                    saveDataInDbCuratore(data);
+                }
+            break;
+            case "visitatore":
+                saveDataInDbVisitatore(data);
+            break;
+            case "guida":
+                saveDataInDbGuida(data);
             break;
         }
     }
 
-    private void saveDataInDbCuratore(JSONObject data) {
+    private boolean controllEmptyDataCuratore() {
+        View v =  getView();
+        EditText nomeForm =  v.findViewById(R.id.nomeFormRef);
+        EditText cognomeForm =  v.findViewById(R.id.cognomeFormRef);
+        EditText emailForm =  v.findViewById(R.id.emailFormRef);
+        EditText passwordForm =  v.findViewById(R.id.passwordFormRef);
+        EditText zonaForm =  v.findViewById(R.id.tipoZona);
+        EditText nomeZonaForm =  v.findViewById(R.id.nomeZona);
+        EditText cittaZonaForm =  v.findViewById(R.id.cittaZona);
+        Spinner mySpinnerDay = (Spinner) v.findViewById(R.id.day_spinner);
+        String dayText = mySpinnerDay.getSelectedItem().toString();
 
-        class RunCreate extends Thread{
-            public void run() {
-                try {
-                    it.uniba.pioneers.data.users.CuratoreMuseale curatore = new it.uniba.pioneers.data.users.CuratoreMuseale(data);
-                    curatore.createDataDb(getView().getContext());
-                    SystemClock.sleep(2000);
-                    System.out.println(curatore.getStatusComputation());
-                    if(curatore.getStatusComputation()){
-                        Intent intent = new Intent(getView().getContext(), MainActivity.class);
-                        startActivity(intent);
-                    }else{
-                        Intent intent = new Intent(getView().getContext(), HomeActivity.class);
-                        startActivity(intent);
+        Spinner mySpinnerMounth = (Spinner) v.findViewById(R.id.mounth_spinner);
+        String mounthtext = mySpinnerMounth.getSelectedItem().toString();
+
+        Spinner mySpinnerYear = (Spinner) v.findViewById(R.id.years_spinner);
+        String yearText = mySpinnerYear.getSelectedItem().toString();
+
+        String date = dayText + "/" + mounthtext + "/" + yearText;
+
+        return (nomeForm.getText().toString() != "");
+    }
+
+    private void saveDataInDbGuida(JSONObject data) {
+        try {
+            Guida guida = new Guida(data);
+            guida.createDataDb(getView().getContext(), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        Boolean status = response.getBoolean("status");
+                        guida.setStatusComputation(status);
+                        if (status) {
+                            Intent intent = new Intent(getView().getContext(), MainActivity.class);
+                            intent.putExtra("User", userType);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }catch(Exception e){ }
-            }
-        }
-        try{
-            RunCreate thread = new RunCreate();
-            thread.setPriority(10);
-            thread.start();
-        }catch (Exception e){
-            e.printStackTrace();
-            
-        }
+                }
+            });
+        }catch(Exception e){ }
+    }
+
+
+    private void saveDataInDbVisitatore(JSONObject data) {
+        try {
+            Visitatore visitatore = new Visitatore(data);
+            visitatore.createDataDb(getView().getContext(), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        Boolean status = response.getBoolean("status");
+                        visitatore.setStatusComputation(status);
+                        if (status) {
+                            Intent intent = new Intent(getView().getContext(), MainActivity.class);
+                            intent.putExtra("User", userType);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }catch(Exception e){ }
+    }
+
+
+    private void saveDataInDbCuratore(JSONObject data) {
+        try {
+            Zona zona = new Zona();
+            zona.setDenominazione(data.getString("nomeZona"));
+            zona.setTipo(data.getString("tipoZona"));
+            zona.setLuogo(data.getString("cittaZona"));
+            zona.setOnline(true);
+
+            zona.createDataDb(getView().getContext(), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        Boolean status = response.getBoolean("status");
+                        zona.setStatusComputation(status);
+                        if (status) {
+                            zona.setDataFromJSON(response.getJSONObject("data"));
+                            data.put("zona", zona.getId());
+                            System.out.println(data);
+                            CuratoreMuseale curatore = new CuratoreMuseale(data);
+                            curatore.setZona(zona.getId());
+                            curatore.createDataDb(getView().getContext(), new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        Boolean status = response.getBoolean("status");
+                                        curatore.setStatusComputation(status);
+                                        if (status) {
+                                            Intent intent = new Intent(getView().getContext(), MainActivity.class);
+                                            intent.putExtra("User", userType);
+                                            startActivity(intent);
+                                        } else {
+                                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }catch(Exception e){ }
     }
 
 }

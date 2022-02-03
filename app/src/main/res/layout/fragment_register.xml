@@ -73,12 +73,12 @@
         app:layout_constraintVertical_bias="0.359"
         android:onClick="clickedButton" />
 
-    <it.uniba.pioneers.widget.WidgetCuratoreRegister
+    <it.uniba.pioneers.widget.WidgetRegister
         android:id="@+id/curatoreForm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2">
 
-    </it.uniba.pioneers.widget.WidgetCuratoreRegister>
+    </it.uniba.pioneers.widget.WidgetRegister>
 
 </LinearLayout>

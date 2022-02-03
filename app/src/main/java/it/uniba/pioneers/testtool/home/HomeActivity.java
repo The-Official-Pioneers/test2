@@ -1,38 +1,14 @@
 package it.uniba.pioneers.testtool.home;
 
-import static android.view.View.GONE;
-
-import android.Manifest;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
 
-import org.checkerframework.common.returnsreceiver.qual.This;
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import it.uniba.pioneers.testtool.MainActivity;
@@ -128,9 +104,9 @@ public class HomeActivity extends AppCompatActivity {
     public InputStream getContentResolverAct(Uri imageUri) throws Exception{
         return getContentResolver().openInputStream(imageUri);
     }
-    public void registerCuratore(View v){
+    public void registerButton(View v){
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
-        fragment.registerCuratoreFragment(v);
+        fragment.registerComputation(v);
     }
 
 }
