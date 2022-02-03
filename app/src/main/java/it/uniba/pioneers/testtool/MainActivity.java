@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
     public static int MY_PERMISSIONS_REQUEST_CAMERA=100;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    private DrawerLayout drawer;
+    public DrawerLayout drawer;
+    public static ActionBarDrawerToggle toggle;
     public DialogNodeInfo dialogOperaInfo = new DialogNodeInfo();
     public FragmentHomeCuratore frag;
     public static Opera opera;
@@ -88,10 +89,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolBarHome);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
+        /*
+        toggle.setDrawerIndicatorEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        */
 
         visitatore.setId(2);
         visitatore.readDataDb(MainActivity.this, new Response.Listener<JSONObject>() {
@@ -184,9 +189,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }else if(areeZona!=null){
                 super.onBackPressed();
+            }else{
+                super.onBackPressed();
             }
         }
-
 
     }
 
@@ -203,13 +209,13 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+      if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+
     }
 
     @Override

@@ -94,6 +94,8 @@ public class FragmentListaAree extends Fragment {
                         .commit();
             }
         });
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tuo museo");
 
         // Inflate the layout for this fragment
         return view;
@@ -106,5 +108,9 @@ public class FragmentListaAree extends Fragment {
         MainActivity.areaSelezionata=null;
         MainActivity.opereArea=null;
         MainActivity.operaSelezionata=null;
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        MainActivity.toggle.setDrawerIndicatorEnabled(true);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Test Tool");
+
     }
 }
