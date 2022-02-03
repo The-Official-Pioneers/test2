@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
+        visitatore.setId(2);
+        visitatore.readDataDb(MainActivity.this);
+
+
         /*** INIZIO TRANSAZIONE ***/
                                         //// if per tipo di utente e fragment da committare
         frag = new FragmentHomeCuratore();
@@ -305,8 +309,7 @@ public class MainActivity extends AppCompatActivity {
     //AGGIUNTO DA IVAN
     public void goToPersonalArea(MenuItem item) throws InterruptedException {
         //AGGIUNTO DA IVAN
-        visitatore.setId(2);
-        visitatore.readDataDb(MainActivity.this);
+
         //Thread.sleep(1000);
         Intent intent = new Intent(this, AreaPersonaleVisitatore.class);
         startActivity(intent);
