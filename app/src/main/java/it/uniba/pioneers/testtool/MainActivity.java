@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
+
         visitatore.setId(2);
         visitatore.readDataDb(MainActivity.this);
 
