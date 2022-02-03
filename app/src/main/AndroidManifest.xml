@@ -64,7 +64,9 @@
 
         <activity
             android:name=".InfoOpera"
-            android:exported="true"></activity>
+            android:exported="true"
+            android:parentActivityName=".MainActivity">
+        </activity>
 
         <activity
             android:name=".AreaPersonaleVisitatore"

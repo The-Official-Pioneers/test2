@@ -121,7 +121,7 @@ public class Opera {
         this.setId(0);
         this.setTitolo("");
         this.setDescrizione("");
-        this.setFoto(null);
+        this.setFoto("");
         this.setQr("");
         this.setAltezza(0);
         this.setLarghezza(0);
@@ -169,6 +169,28 @@ public class Opera {
         this.setLarghezza(data.getInt("larghezza"));
         this.setProfondita(data.getInt("profondita"));
         this.setArea(data.getInt("area"));
+    }
+
+    public static void opereArea(Context context, int idArea,  Response.Listener<JSONObject> responseListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/opera/opereArea/";
+
+        JSONObject data = new JSONObject();
+        try{
+            data.put("id", idArea);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                responseListener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                System.out.println(error.toString());
+            }
+        });
+        queue.add(jsonObjectRequest);
     }
 
     public void readDataDb(Context context){

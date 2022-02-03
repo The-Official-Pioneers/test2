@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
@@ -27,7 +28,7 @@ import it.uniba.pioneers.sqlite.DbHelper;
 import it.uniba.pioneers.testtool.MainActivity;
 
 public class Visitatore {
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
 
     public static SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -56,7 +57,7 @@ public class Visitatore {
     }
 
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = addDay(Visitatore.format.parse(dataNascita), 1);
+        this.dataNascita = Visitatore.format.parse(dataNascita);
     }
 
     public Date getDataNascita() {
@@ -103,6 +104,14 @@ public class Visitatore {
         this.propic = propic;
     }
 
+    public boolean getStatusComputation() {
+        return this.statusComputation;
+    }
+
+    public void setStatusComputation(boolean status) {
+        this.statusComputation = status;
+    }
+
 
     private long id;
     private String nome;
@@ -111,6 +120,7 @@ public class Visitatore {
     private String email;
     private String password;
     private String propic;
+    boolean statusComputation = false;
 
     //ONLINE STATE
     private boolean online;
@@ -140,10 +150,11 @@ public class Visitatore {
         this.setId(data.getInt(DbContract.VisitatoreEntry.COLUMN_ID));
         this.setNome(data.getString(DbContract.VisitatoreEntry.COLUMN_NOME));
         this.setCognome(data.getString(DbContract.VisitatoreEntry.COLUMN_COGNOME));
-        this.setDataNascita(data.getString(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA));
+        setDataNascita(data.getString(DbContract.VisitatoreEntry.COLUMN_DATA_NASCITA));
         this.setEmail(data.getString(DbContract.VisitatoreEntry.COLUMN_EMAIL));
         this.setPassword(data.getString(DbContract.VisitatoreEntry.COLUMN_PASSWORD));
         this.setPropic(data.getString(DbContract.VisitatoreEntry.COLUMN_PROPIC));
+        setOnline(true);
     }
 
     //CREATE JSON OBJECT
@@ -281,8 +292,10 @@ public class Visitatore {
         }
     }
 
-    public void createDataDb(Context context){
+    public void createDataDb(Context context, Response.Listener<JSONObject> responseListener){
+
         if(isOnline()){
+
             RequestQueue queue = Volley.newRequestQueue(context);
             String url = Server.getUrl() + "/visitatore/create/";
 
@@ -301,22 +314,7 @@ public class Visitatore {
             Visitatore self = this;
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                Boolean status =  response.getBoolean("status");
-                                if(status){
-                                    self.setDataFromJSON(response.getJSONObject("data"));
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException | ParseException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
+                    responseListener, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
