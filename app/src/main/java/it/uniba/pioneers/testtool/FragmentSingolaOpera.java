@@ -84,35 +84,48 @@ public class FragmentSingolaOpera extends Fragment {
         img = (ImageView) getActivity().findViewById(R.id.img_foto);
         Button modifica = (Button) getActivity().findViewById(R.id.btn_modifica);
 
-        byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        img.setImageBitmap(decodedByte);
+
 
 
         Intent info = getActivity().getIntent();
-        if(info != null) {
+        if (info != null) {
 
             if (MainActivity.tipoUtente == 1) {
                 editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
                 editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
 
-                if(savedInstanceState!=null){
+                if (savedInstanceState != null) {
                     editableTitolo.setText(savedInstanceState.getString("titolo"));
                     editableDescrizione.setText(savedInstanceState.getString("descrizione"));
                 }
-                editableTitolo.setText(MainActivity.operaSelezionata.getTitolo());
-                editableDescrizione.setText(MainActivity.operaSelezionata.getDescrizione());
-            }
-            else{   // se utente non è curatore, non può modificare nulla
+                if(MainActivity.operaSelezionata!=null) {
+                    byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    img.setImageBitmap(decodedByte);
+                    editableTitolo.setText(MainActivity.operaSelezionata.getTitolo());
+                    editableDescrizione.setText(MainActivity.operaSelezionata.getDescrizione());
+                }
+                else{
+                    editableTitolo.setText("");
+                    editableDescrizione.setText("");
+                }
+
+            } else {   // se utente non è curatore, non può modificare nulla
+
+                byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                img.setImageBitmap(decodedByte);
+
                 editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
                 editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
                 editableTitolo.setVisibility(View.GONE);
                 editableDescrizione.setVisibility(View.GONE);
-                titolo.append('\n'+MainActivity.operaSelezionata.getTitolo());
-                descrizione.append('\n'+MainActivity.operaSelezionata.getDescrizione());
+                titolo.append('\n' + MainActivity.operaSelezionata.getTitolo());
+                descrizione.append('\n' + MainActivity.operaSelezionata.getDescrizione());
                 modifica.setVisibility(View.GONE);
             }
         }
+
     }
 
     @Override

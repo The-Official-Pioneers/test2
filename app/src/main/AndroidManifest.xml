@@ -69,8 +69,7 @@
         </activity>
 
         <activity
-            android:name=".AreaPersonaleVisitatore"
-            android:screenOrientation="fullSensor"></activity>
+            android:name=".AreaPersonaleVisitatore"></activity>
     </application>
 
 </manifest>

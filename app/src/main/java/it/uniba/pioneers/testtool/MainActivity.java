@@ -92,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
-        visitatore.setId(2);
-
         /*** INIZIO TRANSAZIONE ***/
                                         //// if per tipo di utente e fragment da committare
         frag = new FragmentHomeCuratore();
@@ -305,10 +303,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //AGGIUNTO DA IVAN
-    public void goToPersonalArea(MenuItem item) {
+    public void goToPersonalArea(MenuItem item) throws InterruptedException {
         //AGGIUNTO DA IVAN
-
+        visitatore.setId(2);
         visitatore.readDataDb(MainActivity.this);
+        //Thread.sleep(1000);
         Intent intent = new Intent(this, AreaPersonaleVisitatore.class);
         startActivity(intent);
     }
@@ -423,11 +422,11 @@ public class MainActivity extends AppCompatActivity {
                             opereArea.add(tmp);
                         }
                     }
-                        FragmentListaOpere flo = new FragmentListaOpere();
+                        fragmentListaOpere = new FragmentListaOpere();
                         androidx.fragment.app.FragmentManager supportFragmentManager;
                         supportFragmentManager = getSupportFragmentManager();
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container_list, flo)
+                                .replace(R.id.fragment_container_list, fragmentListaOpere)
                                 .addToBackStack(null)
                                 .commit();
 
@@ -440,42 +439,75 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void aggiungiOpera(View view) {
-
-
+        fragmentSingolaOpera = new FragmentSingolaOpera();
+        androidx.fragment.app.FragmentManager supportFragmentManager;
+        supportFragmentManager = getSupportFragmentManager();
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_list, fragmentSingolaOpera)
+                .addToBackStack(null)
+                .commit();
     }
     public void eliminaOpera(View view) {
 
 
     }
     public void modificaOpera(View view) {
-        new AlertDialog.Builder(this)
-                .setTitle("Confermi")
-                .setMessage("Confermare la modifica dell'opera?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
-                        String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
-                        String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
+        if(operaSelezionata!=null) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Confermi")
+                    .setMessage("Confermare la modifica dell'opera?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
+                            String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
+                            String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
 
-                        if(titolo.equals(MainActivity.operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) ) {
-                            new AlertDialog.Builder(MainActivity.this)
-                                    .setMessage("Modifica almeno un campo per salvare")
-                                    .setPositiveButton(android.R.string.yes,null)
-                                    .show();
+                            if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione())) {
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setMessage("Modifica almeno un campo per salvare")
+                                        .setPositiveButton(android.R.string.yes, null)
+                                        .show();
 
-                        }else{
-                            MainActivity.operaSelezionata.setTitolo(titolo);
-                            MainActivity.operaSelezionata.setDescrizione(descrizione);
-                            MainActivity.operaSelezionata.updateDataDb(MainActivity.this);
-                            new AlertDialog.Builder(MainActivity.this)
-                                    .setMessage("Modifica effettuata")
-                                    .setPositiveButton(android.R.string.yes,null)
-                                    .show();
+                            } else {
+                                operaSelezionata.setTitolo(titolo);
+                                operaSelezionata.setDescrizione(descrizione);
+                                operaSelezionata.updateDataDb(MainActivity.this);
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setMessage("Modifica effettuata")
+                                        .setPositiveButton(android.R.string.yes, null)
+                                        .show();
+                            }
                         }
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+        else{
+            String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
+            String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
+
+            if (titolo.equals("") || descrizione.equals("")) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setMessage("Aggiungi titolo e descrizione validi")
+                        .setPositiveButton(android.R.string.yes, null)
+                        .show();
+
+            } else {
+                Opera nuovaOpera = new Opera();
+
+                nuovaOpera.setTitolo(titolo);
+                nuovaOpera.setDescrizione(descrizione);
+                nuovaOpera.setFoto("");
+                nuovaOpera.setArea(areaSelezionata.getId());
+                nuovaOpera.createDataDb(MainActivity.this);
+
+                FragmentListaOpere.lista.add(nuovaOpera.getTitolo());
+                opereArea.add(nuovaOpera);
+                FragmentListaAree.lvAdapter.notifyDataSetChanged();
+
+                operaSelezionata = nuovaOpera;
+            }
+        }
     }
 
 }
