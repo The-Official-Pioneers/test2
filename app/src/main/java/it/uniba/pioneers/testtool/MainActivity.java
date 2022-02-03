@@ -75,10 +75,6 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
-        //AGGIUNTO DA IVAN
-        visitatore.setId(2);
-        visitatore.readDataDb(MainActivity.this);
-
         /*** INIZIO TRANSAZIONE ***/
         //// if per tipo di utente e fragment da committare
         frag = new FragmentHomeCuratore();
@@ -89,7 +85,28 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
 
         /*** FINE TRANSAZIONE ***/
+
+        //AGGIUNTO DA IVAN
+        visitatore.setId(2);
+        visitatore.readDataDb(MainActivity.this, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Boolean status =  response.getBoolean("status");
+                    if(status){
+                        visitatore.setDataFromJSON(response.getJSONObject("data"));
+                        Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(MainActivity.this, "Non è stato possibile leggere i dati dal db", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException | ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
+
 
     //se clicco il bottone back e sta aperto il drawer
     @Override

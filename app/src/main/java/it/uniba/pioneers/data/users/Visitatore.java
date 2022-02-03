@@ -171,7 +171,7 @@ public class Visitatore {
         this.setPropic(data.getString(DbContract.VisitatoreEntry.COLUMN_PROPIC));
     }
 
-    public void readDataDb(Context context){
+    public void readDataDb(Context context, Response.Listener<JSONObject> responseListener ){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
             String url = Server.getUrl() + "/visitatore/read/";
@@ -186,22 +186,7 @@ public class Visitatore {
             Visitatore self = this;
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                Boolean status =  response.getBoolean("status");
-                                if(status){
-                                    self.setDataFromJSON(response.getJSONObject("data"));
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException | ParseException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
+                    responseListener, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
