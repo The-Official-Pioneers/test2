@@ -4,32 +4,33 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 
 import it.uniba.pioneers.data.users.Visitatore;
-
-
 
 public class AreaPersonaleVisitatore extends AppCompatActivity {
 
@@ -47,14 +48,22 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
 
+        System.out.println("NOME: " + MainActivity.visitatore.getNome());
+        System.out.println("COGNOME: " + MainActivity.visitatore.getCognome());
+        System.out.println("EMAIL: " + MainActivity.visitatore.getEmail());
+        System.out.println("DATA NASCITA: " + MainActivity.visitatore.getShorterDataNascita());
+
         byte[] bytes = Base64.decode(MainActivity.visitatore.getPropic(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         propic.setImageBitmap(decodedByte);
+        propic.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         nome.setText(MainActivity.visitatore.getNome());
         cognome.setText(MainActivity.visitatore.getCognome());
         email.setText(MainActivity.visitatore.getEmail());
         datanascita.setText(MainActivity.visitatore.getShorterDataNascita());
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -80,6 +89,8 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
                     MainActivity.visitatore.setDataNascita( Visitatore.output.parse(newDatan) );
                 }
                 MainActivity.visitatore.updateDataDb(view.getContext());
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Profilo aggiornato con successo!",
+                        Snackbar.LENGTH_LONG).show();
             } catch(ParseException e){
                 Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
                         Snackbar.LENGTH_LONG).show();
@@ -181,6 +192,9 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
                     String passToSave = digest(newPassword);
                     MainActivity.visitatore.setPassword(passToSave);
                     MainActivity.visitatore.updateDataDb(view.getContext());
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "Password aggiornata con successo!",
+                            Snackbar.LENGTH_LONG).show();
+
                 } catch (NoSuchAlgorithmException e) {
                     Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
                             Snackbar.LENGTH_LONG).show();
@@ -221,45 +235,115 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
 
     public void changePropic(View view) {
 
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("scale", true);
-        intent.putExtra("outputX", 256);
-        intent.putExtra("outputY", 256);
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("return-data", true);
         startActivityForResult(intent, 1);
 
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) {
-            Snackbar.make(getWindow().getDecorView().getRootView(), "Nessuna foto scelta", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-        if (requestCode == 1) {
-            final Bundle extras = data.getExtras();
-            if (extras != null) {
-                //Get image
-                Bitmap newProfilePic = extras.getParcelable("data");
 
-                ByteArrayOutputStream baos = new  ByteArrayOutputStream();
-                newProfilePic.compress(Bitmap.CompressFormat.PNG,100, baos);
-                byte [] b=baos.toByteArray();
-                String propicString = Base64.encodeToString(b, Base64.DEFAULT);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Uri targetUri = data.getData();
+            Bitmap bitmap;
+            ImageView oldPropic = (ImageView) findViewById(R.id.img_propic);
+            try {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                oldPropic.setImageBitmap(bitmap);
+                oldPropic.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                ImageView oldPropic = (ImageView) findViewById(R.id.img_propic);
-                oldPropic.setImageBitmap(newProfilePic);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,50,baos);
+                byte[] b = baos.toByteArray();
+                String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
-                System.out.println("AWE E' CAMBIATA LA FOTO SIUM");
-                //MainActivity.visitatore.setPropic(propicString);
+                MainActivity.visitatore.setPropic(encImage);
+                MainActivity.visitatore.updateDataDb(this);
 
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Foto caricata con successo!",
+                        Snackbar.LENGTH_LONG).show();
+
+            } catch (FileNotFoundException e) {
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+                        Snackbar.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {         // controllo uscita senza salvare da barra
+
+        String textNome = ((EditText) findViewById(R.id.txt_nome)).getText().toString();
+        String textCognome = ((EditText) findViewById(R.id.txt_cognome)).getText().toString();
+        String textDatan = ((EditText) findViewById(R.id.txt_datan)).getText().toString();
+        String textEmail = ((EditText) findViewById(R.id.txt_email)).getText().toString();
+
+        boolean check1 = textNome.equals(MainActivity.visitatore.getNome());
+        boolean check2 = textCognome.equals(MainActivity.visitatore.getCognome());
+        boolean check3 = textDatan.equals(MainActivity.visitatore.getDataNascita());
+        boolean check4 = textEmail.equals(MainActivity.visitatore.getEmail());
+
+
+        if(!check1 || !check2 ||!check3 ||!check4) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Uscire?")
+                    .setMessage("Uscire senza salvare le modifiche?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }else{
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed(){     // controllo uscita senza salvare da tasto indietro
+
+        String textNome = ((EditText) findViewById(R.id.txt_nome)).getText().toString();
+        String textCognome = ((EditText) findViewById(R.id.txt_cognome)).getText().toString();
+        String textDatan = ((EditText) findViewById(R.id.txt_datan)).getText().toString();
+        String textEmail = ((EditText) findViewById(R.id.txt_email)).getText().toString();
+
+        boolean check1 = textNome.equals(MainActivity.visitatore.getNome());
+        boolean check2 = textCognome.equals(MainActivity.visitatore.getCognome());
+        boolean check3 = textDatan.equals(MainActivity.visitatore.getDataNascita());
+        boolean check4 = textEmail.equals(MainActivity.visitatore.getEmail());
+
+
+        if(!check1 || !check2 ||!check3 ||!check4) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Uscire?")
+                    .setMessage("Uscire senza salvare le modifiche?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }else{
+            super.onBackPressed();
+        }
+
+        super.onBackPressed();
     }
 
 }

@@ -70,7 +70,7 @@
 
         <activity
             android:name=".AreaPersonaleVisitatore"
-            android:screenOrientation="fullSensor"></activity>
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

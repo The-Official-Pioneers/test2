@@ -93,6 +93,22 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
         visitatore.setId(2);
+        visitatore.readDataDb(MainActivity.this, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Boolean status =  response.getBoolean("status");
+                    if(status){
+                        visitatore.setDataFromJSON(response.getJSONObject("data"));
+                        Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(MainActivity.this, "Non è stato possibile leggere i dati dal db", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException | ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         /*** INIZIO TRANSAZIONE ***/
                                         //// if per tipo di utente e fragment da committare
@@ -306,9 +322,6 @@ public class MainActivity extends AppCompatActivity {
 
     //AGGIUNTO DA IVAN
     public void goToPersonalArea(MenuItem item) {
-        //AGGIUNTO DA IVAN
-
-        visitatore.readDataDb(MainActivity.this);
         Intent intent = new Intent(this, AreaPersonaleVisitatore.class);
         startActivity(intent);
     }

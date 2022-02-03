@@ -28,7 +28,7 @@ import it.uniba.pioneers.sqlite.DbHelper;
 import it.uniba.pioneers.testtool.MainActivity;
 
 public class Visitatore {
-    public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
 
     public static SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -367,7 +367,7 @@ public class Visitatore {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
