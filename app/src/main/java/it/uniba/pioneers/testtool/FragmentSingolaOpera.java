@@ -25,8 +25,8 @@ public class FragmentSingolaOpera extends Fragment {
     public TextView descrizione;
     public ImageView img;
 
-    public EditText editableTitolo;
-    public EditText editableDescrizione;
+    public static EditText editableTitolo;
+    public static EditText editableDescrizione;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -91,8 +91,8 @@ public class FragmentSingolaOpera extends Fragment {
 
         Intent info = getActivity().getIntent();
         if(info != null) {
-            InfoOpera.tipoUtente = info.getIntExtra("tipoUtente", 0);
-            if (InfoOpera.tipoUtente == 1) {
+
+            if (MainActivity.tipoUtente == 1) {
                 editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
                 editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
 
@@ -113,5 +113,11 @@ public class FragmentSingolaOpera extends Fragment {
                 modifica.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MainActivity.operaSelezionata=null;
     }
 }

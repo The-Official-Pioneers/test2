@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +26,8 @@ public class FragmentListaOpere extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    public static ArrayAdapter<String> lvAdapter;
+    public static ArrayList<String> lista;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -64,14 +68,13 @@ public class FragmentListaOpere extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_opere, container, false);
 
-        String[] lista = new String[MainActivity.opereArea.size()];
+        lista = new ArrayList<String>();
         for(int i = 0; i<MainActivity.opereArea.size(); i++){
-            lista[i] = MainActivity.opereArea.get(i).getTitolo();
+            lista.add(MainActivity.opereArea.get(i).getTitolo());
         }
 
-
         ListView lv = (ListView) view.findViewById(R.id.listView);
-        ArrayAdapter<String> lvAdapter = new ArrayAdapter<String>(
+        lvAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 lista
@@ -93,5 +96,19 @@ public class FragmentListaOpere extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+    public void onViewCreated( View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(MainActivity.opereArea.size()!=0){
+            TextView txtNoOpere = (TextView) getActivity().findViewById(R.id.txt_no_opere);
+            txtNoOpere.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MainActivity.opereArea=null;
+        MainActivity.operaSelezionata=null;
     }
 }

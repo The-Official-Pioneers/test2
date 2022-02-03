@@ -46,7 +46,7 @@ public class InfoOpera extends AppCompatActivity {
      }
 
 
-   public void salvaModifiche(View view) {
+   public void modificaOpera(View view) {
         new AlertDialog.Builder(this)
                 .setTitle("Confermi")
                 .setMessage("Confermare la modifica dell'opera?")

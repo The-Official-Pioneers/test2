@@ -19,7 +19,7 @@ public class FragmentSingolaArea extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public EditText editableNome;
+    public static EditText editableNome;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -67,4 +67,13 @@ public class FragmentSingolaArea extends Fragment {
         editableNome = (EditText) getActivity().findViewById(R.id.txt_edit_nome);
         editableNome.setText(MainActivity.areaSelezionata.getNome());
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MainActivity.areaSelezionata=null;
+        MainActivity.opereArea=null;
+        MainActivity.operaSelezionata=null;
+    }
+
 }
