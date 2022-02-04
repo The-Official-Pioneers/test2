@@ -85,6 +85,7 @@ public class FragmentListaOpere extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getActivity(),String.valueOf(MainActivity.opereArea.get(i).getId()), Toast.LENGTH_SHORT).show();
                 MainActivity.operaSelezionata = MainActivity.opereArea.get(i);
+                MainActivity.currOpera=i;
                 FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 MainActivity.fragmentSingolaOpera = new FragmentSingolaOpera();
                 fragmentManager.beginTransaction()

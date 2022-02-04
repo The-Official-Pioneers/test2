@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Use the {@link FragmentListaAree#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentListaAree extends Fragment {
+public class FragmentListaAree extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,6 +86,7 @@ public class FragmentListaAree extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getActivity(),String.valueOf(MainActivity.areeZona.get(i).getId()), Toast.LENGTH_SHORT).show();
                 MainActivity.areaSelezionata = MainActivity.areeZona.get(i);
+                MainActivity.currArea=i;
                 FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 MainActivity.fragmentSingolaArea = new FragmentSingolaArea();
                 fragmentManager.beginTransaction()
