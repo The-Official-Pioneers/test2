@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_list, frag)
                 .commit();
-
     }
 
     @Override
@@ -395,40 +394,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gestisciMuseo(View view) {
+        if (tipoUtente.equals("ospite")) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Accedi")
+                    .setMessage("Registrati/Accedi per poter gestire il tuo museo")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        } else {
+            Area.areeZona(this, (int) curatore.getZona(), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        Boolean status = response.getBoolean("status");
+                        areeZona = new ArrayList<Area>();
 
+                        if (status) {
+                            //JSONObject resultData = response.getJSONObject("data");
+                            JSONArray resultAree = response.getJSONArray("data");
 
-
-        Area.areeZona(this, 10 ,new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    Boolean status = response.getBoolean("status");
-                    areeZona = new ArrayList<Area>();
-
-                    if (status) {
-                        //JSONObject resultData = response.getJSONObject("data");
-                        JSONArray resultAree = response.getJSONArray("data");
-
-                        for(int i =0; i< resultAree.length(); i++) {
-                            Area tmp = new Area();
-                            tmp.setDataFromJSON(resultAree.getJSONObject(i));
-                            areeZona.add(tmp);
+                            for (int i = 0; i < resultAree.length(); i++) {
+                                Area tmp = new Area();
+                                tmp.setDataFromJSON(resultAree.getJSONObject(i));
+                                areeZona.add(tmp);
+                            }
+                            FragmentListaAree fls = new FragmentListaAree();
+                            androidx.fragment.app.FragmentManager supportFragmentManager;
+                            supportFragmentManager = getSupportFragmentManager();
+                            supportFragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container_list, fls)
+                                    .addToBackStack(null)
+                                    .commit();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                         }
-                        FragmentListaAree fls = new FragmentListaAree();
-                        androidx.fragment.app.FragmentManager supportFragmentManager;
-                        supportFragmentManager = getSupportFragmentManager();
-                        supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container_list, fls)
-                                .addToBackStack(null)
-                                .commit();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                    } catch (JSONException | ParseException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException | ParseException e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+        }
     }
 
     public void aggiungiArea(View view) {
@@ -588,7 +593,7 @@ public class MainActivity extends AppCompatActivity {
                             byte[] b = baos.toByteArray();
                             String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
-                            if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && image.equals(MainActivity.operaSelezionata.getFoto())) {
+                            if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && encImage.equals(MainActivity.operaSelezionata.getFoto())) {
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setMessage("Modifica almeno un campo per salvare")
                                         .setPositiveButton(android.R.string.yes, null)
@@ -641,8 +646,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
     public void modificaFoto(View view) {
           if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -665,6 +668,4 @@ public class MainActivity extends AppCompatActivity {
              startActivityForResult(intent, PICK_FROM_GALLERY);
         }
     }
-
-
 }

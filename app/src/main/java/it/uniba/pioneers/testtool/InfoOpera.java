@@ -22,9 +22,6 @@ public class InfoOpera extends AppCompatActivity {
 
     private static FragmentSingolaOpera fso;
 
-
-    public static int tipoUtente;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +84,7 @@ public class InfoOpera extends AppCompatActivity {
     }
     @Override
     public void onBackPressed(){     // controllo uscita senza salvare da tasto indietro
-        if(tipoUtente==1) {
+        if(MainActivity.tipoUtente.equals("curatore")) {
             boolean c = String.valueOf(fso.editableTitolo.getText()).equals(MainActivity.operaSelezionata.getTitolo());
             boolean c2 = String.valueOf(fso.editableDescrizione.getText()).equals(MainActivity.operaSelezionata.getDescrizione());
 
@@ -118,7 +115,7 @@ public class InfoOpera extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {         // controllo uscita senza salvare da barra
-        if(tipoUtente==1) {
+        if(MainActivity.tipoUtente.equals("curatore")) {
             boolean c = String.valueOf(fso.editableTitolo.getText()).equals(MainActivity.operaSelezionata.getTitolo());
             boolean c2 = String.valueOf(fso.editableDescrizione.getText()).equals(MainActivity.operaSelezionata.getDescrizione());
 
