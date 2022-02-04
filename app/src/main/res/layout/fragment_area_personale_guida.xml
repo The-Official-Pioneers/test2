@@ -116,7 +116,7 @@
                         android:layout_marginRight="5dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Zona:" />
+                        android:text="Specializzazione:" />
 
                 </LinearLayout>
 

@@ -77,6 +77,10 @@
         <activity
             android:name=".AreaPersonaleCuratore"
             android:parentActivityName=".MainActivity"></activity>
+
+        <activity
+            android:name=".AreaPersonaleGuida"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
