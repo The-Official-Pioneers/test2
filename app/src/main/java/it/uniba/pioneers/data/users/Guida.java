@@ -159,7 +159,7 @@ public class Guida {
         setPropic(null);
         setSpecializzazione("");
 
-        setOnline(false);
+        setOnline(true);
     }
 
     public Guida(JSONObject data) throws JSONException, ParseException {
@@ -502,6 +502,39 @@ public class Guida {
             String[] selectionArgs = { String.valueOf(getId()) };
 
             int deletedRows = db.delete(DbContract.GuidaEntry.TABLE_NAME, selection, selectionArgs);
+        }
+    }
+
+    public void login(Context context, Response.Listener<JSONObject> responseListener) {
+
+        if (isOnline()) {
+            try {
+                System.out.println("Sono arrivato");
+                RequestQueue queue = Volley.newRequestQueue(context);
+                String url = Server.getUrl() + "/guida/login/";
+
+                JSONObject data = new JSONObject();
+                try {
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL, getEmail());
+                    data.put(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD, getPassword());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Guida self = this;
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                        responseListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                        System.out.println(error.toString());
+                    }
+                });
+                queue.add(jsonObjectRequest);
+
+            } catch (Exception e) {
+            }
         }
     }
 }

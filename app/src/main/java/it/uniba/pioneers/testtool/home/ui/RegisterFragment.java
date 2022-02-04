@@ -348,9 +348,7 @@ public class RegisterFragment extends Fragment {
     public void saveDataInDb(String typeUser,JSONObject data) {
         switch (userType){
             case "curatore":
-                if(controllEmptyDataCuratore()){
-                    saveDataInDbCuratore(data);
-                }
+                saveDataInDbCuratore(data);
             break;
             case "visitatore":
                 saveDataInDbVisitatore(data);
@@ -466,7 +464,8 @@ public class RegisterFragment extends Fragment {
                                         curatore.setStatusComputation(status);
                                         if (status) {
                                             Intent intent = new Intent(getView().getContext(), MainActivity.class);
-                                            intent.putExtra("User", userType);
+                                            intent.putExtra("user", userType);
+                                            intent.putExtra("idUser", curatore.getId());
                                             startActivity(intent);
                                         } else {
                                             Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();

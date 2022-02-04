@@ -93,7 +93,8 @@ public class FragmentListaOpere extends Fragment {
                         .commit();
             }
         });
-
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(MainActivity.areaSelezionata.getNome());
         // Inflate the layout for this fragment
         return view;
     }
@@ -110,5 +111,7 @@ public class FragmentListaOpere extends Fragment {
         super.onDestroy();
         MainActivity.opereArea=null;
         MainActivity.operaSelezionata=null;
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tuo Museo");
+
     }
 }
