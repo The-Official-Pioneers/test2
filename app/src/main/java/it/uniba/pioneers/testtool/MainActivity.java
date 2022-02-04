@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import it.uniba.pioneers.data.Area;
 import it.uniba.pioneers.data.Opera;
 import it.uniba.pioneers.data.Zona;
+import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
 import it.uniba.pioneers.testtool.home.CaptureAct;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     //AGGIUNTO DA IVAN
     public static Visitatore visitatore = new Visitatore();
+    public static CuratoreMuseale curatore = new CuratoreMuseale();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,10 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState(); //Ruota il toggle quando viene cliccato
 
 
-        visitatore.setId(2);
+        curatore.setId(1);
+        curatore.readDataDb(MainActivity.this);
+
+        /*visitatore.setId(2);
         visitatore.readDataDb(MainActivity.this, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        */
 
         /*** INIZIO TRANSAZIONE ***/
                                         //// if per tipo di utente e fragment da committare
@@ -324,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
 
     //AGGIUNTO DA IVAN
     public void goToPersonalArea(MenuItem item) throws InterruptedException {
-        Intent intent = new Intent(this, AreaPersonaleVisitatore.class);
+        Intent intent = new Intent(this, AreaPersonaleCuratore.class);
         startActivity(intent);
     }
 
