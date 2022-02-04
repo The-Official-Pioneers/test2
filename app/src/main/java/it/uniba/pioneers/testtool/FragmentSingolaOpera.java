@@ -90,7 +90,7 @@ public class FragmentSingolaOpera extends Fragment {
            FloatingActionButton elimina = (FloatingActionButton) getActivity().findViewById(R.id.btn_del);
             elimina.setVisibility(View.VISIBLE);
         }
-       if(MainActivity.tipoUtente.equals("curatore")){
+       if(!MainActivity.tipoUtente.equals("curatore")){
            FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
            modificaFoto.setVisibility(View.GONE);
        }

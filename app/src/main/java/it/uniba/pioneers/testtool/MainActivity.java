@@ -101,12 +101,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentListaOpere=null;
         fragmentSingolaOpera=null;
 
-
         Intent intent = getIntent();
        // tipoUtente = intent.getStringExtra("typeUser");
         tipoUtente="curatore";
         //idUtente = intent.getIntExtra("idUser");
         idUtente=1;
+
         frag = new FragmentHomeCuratore();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
@@ -130,8 +130,23 @@ public class MainActivity extends AppCompatActivity {
                 guida.readDataDb(MainActivity.this);
                 break;
             case "visitatore":
-                //visitatore.setId(idUtente);
-                //visitatore.readDataDb(MainActivity.this);
+                visitatore.setId(idUtente);
+                visitatore.readDataDb(MainActivity.this, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Boolean status =  response.getBoolean("status");
+                            if(status){
+                                visitatore.setDataFromJSON(response.getJSONObject("data"));
+                                Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(MainActivity.this, "Non Ã¨ stato possibile leggere i dati dal db", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException | ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 break;
         }
 
@@ -374,8 +389,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //AGGIUNTO DA IVAN
-    public void goToPersonalArea(MenuItem item) throws InterruptedException {
-        Intent intent = new Intent(this, AreaPersonaleCuratore.class);
+    public void goToPersonalArea(MenuItem item) throws InterruptedException { // controllo tipo utente
+        Intent intent = new Intent(this, AreaPersonaleGuida.class);
         startActivity(intent);
     }
 
