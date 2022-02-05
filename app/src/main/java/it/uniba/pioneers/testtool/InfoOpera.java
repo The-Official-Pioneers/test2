@@ -87,14 +87,15 @@ public class InfoOpera extends AppCompatActivity {
         if(MainActivity.tipoUtente.equals("curatore")) {
             boolean c = String.valueOf(fso.editableTitolo.getText()).equals(MainActivity.operaSelezionata.getTitolo());
             boolean c2 = String.valueOf(fso.editableDescrizione.getText()).equals(MainActivity.operaSelezionata.getDescrizione());
-
-            if(!c || !c2) {
+            boolean c3 = MainActivity.fotoModificata;
+            if(!c || !c2 || c3) {
                 new AlertDialog.Builder(this)
                         .setTitle("Uscire?")
                         .setMessage("Uscire senza salvare le modifiche?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 InfoOpera.super.onBackPressed();
+                                MainActivity.fotoModificata=false;
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

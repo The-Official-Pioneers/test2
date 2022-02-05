@@ -1,6 +1,7 @@
 package it.uniba.pioneers.testtool;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public static FragmentSingolaOpera fragmentSingolaOpera;
     public static int currOpera=-1;
     public static String tipoUtente;
+    public static boolean fotoModificata;
     public int idUtente;
 
     //AGGIUNTO DA IVAN
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         operaSelezionata=null;
         fragmentListaOpere=null;
         fragmentSingolaOpera=null;
+        fotoModificata=false;
 
         Intent intent = getIntent();
        // tipoUtente = intent.getStringExtra("typeUser");
@@ -168,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //se clicco il bottone back e sta aperto il drawer
+    @SuppressLint("WrongThread")
     @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START)){
@@ -177,14 +181,16 @@ public class MainActivity extends AppCompatActivity {
             if(operaSelezionata!=null){
                 boolean c = String.valueOf(FragmentSingolaOpera.editableTitolo.getText()).equals(MainActivity.operaSelezionata.getTitolo());
                 boolean c2 = String.valueOf(FragmentSingolaOpera.editableDescrizione.getText()).equals(MainActivity.operaSelezionata.getDescrizione());
+                boolean c3 = fotoModificata;
 
-                if(!c || !c2) {
+                if(!c || !c2 || c3) {
                     new AlertDialog.Builder(this)
                             .setTitle("Uscire?")
                             .setMessage("Uscire senza salvare le modifiche?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     MainActivity.super.onBackPressed();
+                                    fotoModificata=false;
                                 }
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -378,6 +384,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",
                         Snackbar.LENGTH_LONG).show();
+                fotoModificata=true;
 
             } catch (FileNotFoundException e) {
                 Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
@@ -422,6 +429,7 @@ public class MainActivity extends AppCompatActivity {
                             androidx.fragment.app.FragmentManager supportFragmentManager;
                             supportFragmentManager = getSupportFragmentManager();
                             supportFragmentManager.beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                                     .replace(R.id.fragment_container_list, fls)
                                     .addToBackStack(null)
                                     .commit();
@@ -535,6 +543,7 @@ public class MainActivity extends AppCompatActivity {
                         androidx.fragment.app.FragmentManager supportFragmentManager;
                         supportFragmentManager = getSupportFragmentManager();
                         supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                                 .replace(R.id.fragment_container_list, fragmentListaOpere)
                                 .addToBackStack(null)
                                 .commit();
@@ -552,6 +561,7 @@ public class MainActivity extends AppCompatActivity {
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragment_container_list, fragmentSingolaOpera)
                 .addToBackStack(null)
                 .commit();
@@ -579,7 +589,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void modificaOpera(View view) {
-        if(operaSelezionata!=null) {
+        if(operaSelezionata!=null) {   // modifica opera gia esistente
             new AlertDialog.Builder(this)
                     .setTitle("Confermi")
                     .setMessage("Confermare la modifica dell'opera?")
@@ -593,7 +603,9 @@ public class MainActivity extends AppCompatActivity {
                             byte[] b = baos.toByteArray();
                             String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
-                            if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && encImage.equals(MainActivity.operaSelezionata.getFoto())) {
+                           System.out.print(encImage);
+                           System.out.print(MainActivity.operaSelezionata.getFoto());
+                            if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && !fotoModificata) {
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setMessage("Modifica almeno un campo per salvare")
                                         .setPositiveButton(android.R.string.yes, null)
@@ -615,18 +627,21 @@ public class MainActivity extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }
-        else{
+        else{  // modifica nuova opera == aggingi opera
             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
             String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
-            Bitmap image = ((BitmapDrawable)fragmentSingolaOpera.img.getDrawable()).getBitmap();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.JPEG,50,baos);
-            byte[] b = baos.toByteArray();
-            String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+            String encImage="";
+           if(fotoModificata){
+                Bitmap image = ((BitmapDrawable)fragmentSingolaOpera.img.getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.JPEG,50,baos);
+                byte[] b = baos.toByteArray();
+                encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
-            if (titolo.equals("") || descrizione.equals("")) {
+            }
+            if (titolo.equals("") || descrizione.equals("") || !fotoModificata) {
                 new AlertDialog.Builder(MainActivity.this)
-                        .setMessage("Aggiungi titolo e descrizione validi")
+                        .setMessage("Aggiungi foto, titolo e descrizione validi")
                         .setPositiveButton(android.R.string.yes, null)
                         .show();
 
@@ -635,6 +650,7 @@ public class MainActivity extends AppCompatActivity {
                 nuovaOpera.setTitolo(titolo);
                 nuovaOpera.setDescrizione(descrizione);
                 nuovaOpera.setFoto(encImage);
+
                 nuovaOpera.setArea(areaSelezionata.getId());
                 nuovaOpera.createDataDb(MainActivity.this);
 

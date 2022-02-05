@@ -90,6 +90,7 @@ public class FragmentListaAree extends Fragment{
                 FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 MainActivity.fragmentSingolaArea = new FragmentSingolaArea();
                 fragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, MainActivity.fragmentSingolaArea)
                         .addToBackStack(null)
                         .commit();
