@@ -3,6 +3,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.CountDownTimer;
 import android.view.View;
 import java.util.ArrayList;
 
@@ -31,7 +32,9 @@ public class DrawView extends View{
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    public void onDrawForeground(Canvas canvas) {
+        super.onDrawForeground(canvas);
+
         for (Line l : linesZona) {
             canvas.drawLine(l.startX, l.startY, l.stopX, l.stopY, paint);
         }
@@ -43,8 +46,8 @@ public class DrawView extends View{
         for (Line l : linesOpera) {
             canvas.drawLine(l.startX, l.startY, l.stopX, l.stopY, paint);
         }
-    }
 
+    }
 
     public void resetDrawView(Grafo graphWidget, int level){
         if(graphWidget.drawView != null)

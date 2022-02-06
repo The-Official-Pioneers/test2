@@ -21,13 +21,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DialogNodeInfo#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DialogNodeInfo extends DialogFragment {
-
 
     public static DialogNodeInfo newInstance(int title) {
         DialogNodeInfo frag = new DialogNodeInfo();
@@ -54,8 +48,6 @@ public class DialogNodeInfo extends DialogFragment {
     public void onStart() {
         super.onStart();
 
-        AlertDialog dialog = (AlertDialog) getDialog();
-
         final View decorView = getDialog()
                 .getWindow()
                 .getDecorView();
@@ -67,6 +59,5 @@ public class DialogNodeInfo extends DialogFragment {
                 PropertyValuesHolder.ofFloat("alpha", 0.0f, 1.0f));
         scaleDown.setDuration(500);
         scaleDown.start();
-
     }
 }

@@ -33,6 +33,8 @@ public class DisplayGrafo extends ConstraintLayout {
         self = this;
         //setOnDragListener(new MyOnDragListener()); // SET LISTENER ONDRAG
         this.graph.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+
     }
 
 

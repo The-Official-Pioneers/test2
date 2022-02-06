@@ -1,0 +1,145 @@
+package it.uniba.pioneers.testtool.editor.grafo.node.dialogs;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.util.TypedValue;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import org.json.JSONException;
+
+import java.sql.Date;
+import java.time.Instant;
+
+import it.uniba.pioneers.testtool.editor.grafo.node.GraphNode;
+import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
+
+public class NodeListDialog {
+
+    public static LinearLayout getRow(Context context, String key, String value){
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        TextView keyLabel = new TextView(context);
+        keyLabel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        keyLabel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+        keyLabel.setPadding(20, 20, 20, 20);
+        keyLabel.setText(key);
+
+        TextView valueLabel = new TextView(context);
+        valueLabel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        valueLabel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
+        valueLabel.setPadding(20, 20, 20, 20);
+        valueLabel.setText(value);
+
+        layout.addView(keyLabel);
+        layout.addView(valueLabel);
+
+        return layout;
+    }
+
+    public static AlertDialog NodeListDialog(Context context, GraphNode nodeObject) {
+        AlertDialog tmpDialog = getDialog(context, nodeObject);
+        return tmpDialog;
+    }
+
+    protected static AlertDialog getDialog(Context context, GraphNode nodeObject) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        int id = 0;
+        try {
+            id = nodeObject.data.getInt("id");
+            setDialogTitle(nodeObject, builder, id);
+
+            builder.setPositiveButton("Ok", (dialogInterface, i) -> {
+                dialogInterface.cancel();
+            });
+
+            if(nodeObject.type != NodeType.VISITA){
+                builder.setNeutralButton("Modifica", (dialogInterface, i) -> {
+
+                });
+
+                builder.setNegativeButton("Elimina", (dialogInterface, i) -> {
+                    nodeObject.deleteNode();
+                });
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        AlertDialog tmpDialog = builder.create();
+        loadDataLayout(context, nodeObject, tmpDialog);
+        return tmpDialog;
+    }
+
+    private static void loadDataLayout(Context context, GraphNode nodeObject, AlertDialog tmpDialog) {
+        ConstraintLayout alertLayout = new ConstraintLayout(context);
+
+        LinearLayout ln = new LinearLayout(context);
+        ln.setOrientation(LinearLayout.VERTICAL);
+        alertLayout.addView(ln);
+        try {
+            if(nodeObject.type == NodeType.VISITA){
+                String dateTmp = Date.from(Instant.ofEpochSecond(Long.parseLong(nodeObject.data.getString("data")))).toString();
+                ln.addView(getRow(context, "DATA CREAZIONE", dateTmp));
+
+            }else if(nodeObject.type == NodeType.ZONA){
+                String denominazione = nodeObject.data.getString("denominazione");
+                ln.addView(getRow(context, "DENOMINAZIONE", denominazione));
+
+                String descrizione = nodeObject.data.getString("descrizione");
+                ln.addView(getRow(context, "DESCRIZIONE", descrizione));
+
+                String tipo = nodeObject.data.getString("tipo");
+                ln.addView(getRow(context, "TIPO", tipo));
+
+                String luogo = nodeObject.data.getString("luogo");
+                ln.addView(getRow(context, "LUOGO", luogo));
+
+            }else if(nodeObject.type == NodeType.AREA){
+                String nome = nodeObject.data.getString("nome");
+                ln.addView(getRow(context, "NOME", nome));
+
+            }else if(nodeObject.type == NodeType.OPERA){
+                String titolo = nodeObject.data.getString("titolo");
+                ln.addView(getRow(context, "TITOLO", titolo));
+
+                String descrizione = nodeObject.data.getString("descrizione");
+                ln.addView(getRow(context, "DESCRIZIONE", descrizione));
+
+                String altezza = nodeObject.data.getString("altezza");
+                ln.addView(getRow(context, "ALTEZZA", altezza));
+
+                String larghezza = nodeObject.data.getString("larghezza");
+                ln.addView(getRow(context, "LARGHEZZA", larghezza));
+
+                String profondita = nodeObject.data.getString("profondita");
+                ln.addView(getRow(context, "PROFONDITA", profondita));
+
+            }
+            tmpDialog.setView(alertLayout);
+            //Toast.makeText(context, nodeObject.data.toString(4), Toast.LENGTH_LONG).show();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setDialogTitle(GraphNode nodeObject, AlertDialog.Builder builder, int id) {
+        if(nodeObject.type == NodeType.VISITA){
+            builder.setTitle("VISITA #"+ id);
+        }else if(nodeObject.type == NodeType.ZONA){
+            builder.setTitle("ZONA #"+ id);
+        }else if(nodeObject.type == NodeType.AREA){
+            builder.setTitle("AREA #"+ id);
+        }else if(nodeObject.type == NodeType.OPERA){
+            builder.setTitle("OPERA #"+ id);
+        }
+    }
+
+}

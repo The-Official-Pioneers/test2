@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 import it.uniba.pioneers.testtool.editor.options.OptionsEditor;
 
@@ -95,13 +96,18 @@ public class GrafoFragment extends Fragment {
         displayGrafo.setLayoutParams(param);
 
 
-        ListaNodi listaNodi = new ListaNodi(getContext());
+        ListaNodi listaNodi = new ListaNodi(getContext(), NodeType.OPERA);
         listaNodi.setId(R.id.listaNodi);
         param = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 3.0f
         );
+
+        grafoManipulateLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        ));
 
         listaNodi.setLayoutParams(param);
         grafoManipulateLayout.addView(displayGrafo);

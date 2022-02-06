@@ -1,13 +1,14 @@
 package it.uniba.pioneers.testtool.editor.grafo.node;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -16,83 +17,79 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 
 public class ListNode extends Node{
     LinearLayout linearLayout;
     public ListNode self = null;
 
-    final String ARG_DESCRIZIONE = "descrizione";
-    final String ARG_ANNO = "anno";
+    ListaNodi listaNodi = null;
 
     private final class MyTouchListener implements OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                ClipData data = ClipData.newPlainText("", "");
-                DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+            Toast.makeText(view.getContext(), String.valueOf(motionEvent.getAction()), Toast.LENGTH_LONG).show();
 
-                GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(self.getRootView().getContext(), R.drawable.shape_circle).mutate();
-                self.findViewById(R.id.vistaProva).setBackground(drawable);
-                self.circle = false;
+            switch (motionEvent.getAction()){
+                case MotionEvent.ACTION_UP:
+                    view.setVisibility(VISIBLE);
+                    break;
+                case MotionEvent.ACTION_DOWN:
+                    ClipData data = ClipData.newPlainText("", "");
+                    DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
 
-                view.startDragAndDrop(data, shadowBuilder, view, 0);
-                //view.setVisibility(GONE);
-                return true;
-            } else {
-                return false;
+                    GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(self.getRootView().getContext(), R.drawable.shape_circle).mutate();
+                    self.findViewById(R.id.vistaProva).setBackground(drawable);
+
+                    view.startDragAndDrop(data, shadowBuilder, view, 0);
+
+                    view.setVisibility(INVISIBLE);
+                    break;
+
             }
+            return true;
         }
     }
 
-
-    public void init(Context context) throws JSONException {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        layoutInflater.inflate(R.layout.sample_node, this);
-        self = this;
-
-        setCircle(this.circle);
-        // Defines the one method for the interface, which is called when the View is long-clicked
-        this.setOnTouchListener(new MyTouchListener());
-
-
-    }
-
-
-
-    public ListNode(@NonNull Context context) {
+    public ListNode(@NonNull Context context, ListaNodi listaNodi, JSONObject data, NodeType type) {
         super(context);
         try {
-            init(context);
+            this.listaNodi = listaNodi;
+            this.type = type;
+            initDroppableNode(context);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-
-    public ListNode(@NonNull Context context, LinearLayout ln, JSONObject data) {
-        super(context);
-        try {
-            initDroppableNode(context, ln);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void reset() {
+        clicked = false;
+        isDroppable = false;
+        setOnTouchListener(null);
+        setCircle(false);
     }
 
-    private void initDroppableNode(@NonNull Context context, LinearLayout ln) throws JSONException {
-        JSONObject data;
-
+    @SuppressLint("ClickableViewAccessibility")
+    private void initDroppableNode(@NonNull Context context) throws JSONException {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         layoutInflater.inflate(R.layout.sample_node, this);
-        this.linearLayout = ln;
-        this.circle = true;
-
+        linearLayout = listaNodi.linearLayout;
         self = this;
-
+        clicked = false;
         data = new JSONObject();
 
-        setCircle(this.circle);
-        // Defines the one method for the interface, which is called when the View is long-clicked
-        this.setOnTouchListener(new MyTouchListener());
-
-        this.isDroppable = true;
+        setOnClickListener(view -> {
+            for(ListNode node : listaNodi.listNodeArrayList){
+                if(!view.equals(node)){
+                    node.reset();
+                }else{
+                    self.clicked = true;
+                    self.isDroppable = true;
+                    self.setOnTouchListener(new MyTouchListener());
+                    self.setCircle(true);
+                }
+            }
+        });
     }
+
+
 }

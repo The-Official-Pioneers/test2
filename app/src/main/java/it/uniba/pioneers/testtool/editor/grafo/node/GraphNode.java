@@ -2,38 +2,36 @@ package it.uniba.pioneers.testtool.editor.grafo.node;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Base64;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.common.graph.MutableGraph;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.EditorActivity;
 import it.uniba.pioneers.testtool.editor.grafo.Grafo;
+import it.uniba.pioneers.testtool.editor.grafo.draw.Line;
+import it.uniba.pioneers.testtool.editor.grafo.node.dialogs.NodeDialog;
 
 public class GraphNode extends Node {
     Grafo graphParent = null;
-    private NodeType type;
+    public NodeType type;
     public MutableGraph<GraphNode> graph = null;
     GraphNode self = null;
-    JSONObject data = null;
+    public JSONObject data = null;
+
+    public int size = 0;
 
     public boolean inizializated = false;
 
@@ -48,15 +46,22 @@ public class GraphNode extends Node {
         setOnDragListener(new MyDragListener());
     }
 
-    public void removeAllChild(){
-        for(GraphNode node : getSuccessors(graphParent, self)){
-            graph.removeNode(node);
+    public void deleteNode(){
+        this.hide();
+        this.hideAllChild();
+        if(type == NodeType.ZONA){  
+            graphParent.drawView.linesZona.removeIf(line -> line.endNode.equals(this));
+        }else if(type == NodeType.AREA){
+            graphParent.drawView.linesArea.removeIf(line -> line.endNode.equals(this));
+        }else if(type == NodeType.OPERA){
+            graphParent.drawView.linesOpera.removeIf(line -> line.endNode.equals(this));
         }
+        graphParent.graph.removeNode(this);
+    }
 
-        if(type == NodeType.OPERA) {
-            return;
-        }
-        removeAllChild();
+    @NonNull
+    private Set<GraphNode> getPredecessors(Grafo graphParent, GraphNode self) {
+        return graphParent.graph.predecessors(self);
     }
 
     private class MyDragListener implements OnDragListener {
@@ -64,41 +69,43 @@ public class GraphNode extends Node {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             int action = event.getAction();
-
             switch (action) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    break;
-                case DragEvent.ACTION_DRAG_ENTERED:
-                    break;
-                case DragEvent.ACTION_DRAG_EXITED:
-                    break;
                 case DragEvent.ACTION_DROP:
-                    break;
-                case DragEvent.ACTION_DRAG_ENDED:
                     JSONObject data = ((ListNode)event.getLocalState()).data; //CONVERSIONE DI TIPO DA ListNode -> GraphNode
                     if(self.type == NodeType.VISITA){
                         graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.ZONA, data));
+                        Log.v("DROP", "VISITA");
 
                     }else if(self.type == NodeType.ZONA){
                         graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.AREA, data));
+                        Log.v("DROP", "ZONA");
 
                     }else if(self.type == NodeType.AREA){
-                        graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.OPERA, data));
+                        ListNode listNode = ((ListNode)event.getLocalState());
+                        Log.v("DROP", "AREA");
+                        if(listNode.type == NodeType.OPERA){
+                            Log.v("DROP", "AREA/OPERA");
+                            GraphNode graphNode = new GraphNode(graphParent.getContext(), graphParent, listNode.type, listNode.data);
+                            self.hideAllChild();
+                            //self.addSuccessor(graphNode);
+
+                            //self.drawAllChild();
+                            //listNode.setVisibility(GONE);
+                        }else{
+                            listNode.reset();
+                            listNode.setVisibility(VISIBLE);
+                        }
+
 
                     }else if(self.type == NodeType.OPERA){
 
                     }
-
                     break;
                 default:
                     break;
             }
             return true;
         }
-    }
-
-    public GraphNode(@NonNull Context context) {
-        super(context);
     }
 
     public void addSuccessor(GraphNode dataNodeEnd){
@@ -124,42 +131,11 @@ public class GraphNode extends Node {
         init(context);
 
         setOnClickListener(graphParent, type);
-        setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
+        setOnLongClickListener(context);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                try {
-                    GraphNode node = ((GraphNode)view);
-
-                    int id = node.data.getInt("id");
-
-                    if(self.type == NodeType.VISITA){
-                        builder.setMessage(String.valueOf(id))
-                                .setTitle("VISITA #"+id);
-                    }else if(self.type == NodeType.ZONA){
-                        builder.setMessage(String.valueOf(id))
-                                .setTitle("ZONA #"+id);
-                    }else if(self.type == NodeType.AREA){
-                        builder.setMessage(String.valueOf(id))
-                                .setTitle("AREA #"+id);
-                    }else if(self.type == NodeType.OPERA){
-                        builder.setMessage(String.valueOf(id))
-                                .setTitle("OPERA #"+id);
-                    }
-
-
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    return true;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-        });
     }
+
+
 
     private void setOnClickListener(Grafo graphParent, NodeType type) {
         if(type != NodeType.VISITA && type != NodeType.OPERA){
@@ -206,43 +182,80 @@ public class GraphNode extends Node {
 
     @NonNull
     private Set<GraphNode> getSuccessors(Grafo graphParent, GraphNode view) {
-        return graphParent.graph.successors((GraphNode) graphParent.graph.predecessors(view).toArray()[0]);
+        return graphParent.graph.successors((GraphNode) getPredecessors(graphParent, view).toArray()[0]);
     }
 
     public void drawAllChild(){
-        draw();
-        for(GraphNode nodeChild : graphParent.graph.successors(this)){
+        int numSuccessors = graphParent.graph.successors(this).size();
 
+        if(numSuccessors <= 3){
+            size = 200;
+        }else if(numSuccessors < 6){
+            size = 150;
+        }else if(numSuccessors < 9){
+            size = 120;
+        }else {
+            size = 90;
+        }
+
+        draw();
+        AtomicInteger count = new AtomicInteger(1);
+
+        for(GraphNode nodeChild : graphParent.graph.successors(this)){
             if(type == NodeType.VISITA){
+                nodeChild.setY(graphParent.r2);
+                nodeChild.setX(count.getAndIncrement() * graphParent.calcX(numSuccessors));
+
                 graphParent.drawView.linesZona.add(graphParent.buildLineGraph(this, nodeChild));
+
                 nodeChild.draw();
             }else if(type == NodeType.ZONA){
+                nodeChild.setY(graphParent.r3);
+                nodeChild.setX(count.getAndIncrement() * graphParent.calcX(numSuccessors));
+
                 graphParent.drawView.linesArea.add(graphParent.buildLineGraph(this, nodeChild));
+
                 nodeChild.draw();
             }else if(type == NodeType.AREA){
+                nodeChild.setY(graphParent.r4);
+                nodeChild.setX(count.getAndIncrement() * graphParent.calcX(numSuccessors));
+
                 graphParent.drawView.linesOpera.add(graphParent.buildLineGraph(this, nodeChild));
+
                 nodeChild.draw();
             }else if(type == NodeType.OPERA){
                 nodeChild.draw();
             }
 
+            nodeChild.findViewById(R.id.vistaProva)
+                    .setLayoutParams(new LinearLayout.LayoutParams(size, size));
         }
     }
 
 
     public void draw(){
-        if(!inizializated){
+        boolean flag = true;
+
+        for(int k = 0; k < graphParent.getChildCount(); ++k){
+            if(graphParent.getChildAt(k).equals(this)){
+                flag = false;
+                break;
+            }
+        }
+
+        if(flag){
             graphParent.addView(this);
             setInizializated(true);
-            resetLines();
             clicked = false;
         }
+        resetLines();
 
         if(type != NodeType.VISITA && type != NodeType.OPERA){
             setCircle(false);
         }else{
             setCircle(true);
         }
+
         setVisibility(VISIBLE);
 
     }
@@ -257,13 +270,13 @@ public class GraphNode extends Node {
     public void hideAllChild(){
         for(GraphNode nodeChild : graphParent.graph.successors(this)){
             if(type == NodeType.VISITA){
-                graphParent.drawView.resetDrawView(graphParent, 1);
+                graphParent.drawView.linesZona.removeIf(line -> line.startNode.equals(this));
                 nodeChild.hideAllChild();
             }else if(type == NodeType.ZONA){
-                graphParent.drawView.resetDrawView(graphParent, 2);
+                graphParent.drawView.linesArea.removeIf(line -> line.startNode.equals(this));
                 nodeChild.hideAllChild();
             }else if(type == NodeType.AREA){
-                graphParent.drawView.resetDrawView(graphParent, 3);
+                graphParent.drawView.linesOpera.removeIf(line -> line.startNode.equals(this));
                 nodeChild.hideAllChild();
             }
             nodeChild.hide();

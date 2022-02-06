@@ -7,6 +7,7 @@ import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -23,16 +24,18 @@ import java.util.ArrayList;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo.node.ListNode;
 import it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo;
+import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
 
 @SuppressWarnings("ALL")
-public class ListaNodi extends ScrollView {
+public class ListaNodi extends HorizontalScrollView {
     public LinearLayout linearLayout;
-    ScrollView scrollView;
+    HorizontalScrollView scrollView;
     Button buttonAdd;
 
     public ArrayList<ListNode> listNodeArrayList = new ArrayList<>();
 
     DisplayGrafo displayGrafo = null;
+    public NodeType listType = null;
 
     class MyDragListener implements OnDragListener {
 
@@ -78,7 +81,7 @@ public class ListaNodi extends ScrollView {
         layoutInflater.inflate(R.layout.layout_lista_nodi, this);
         this.setOnDragListener(new MyDragListener());
 
-        this.scrollView = (ScrollView) this.getChildAt(0);
+        this.scrollView = (HorizontalScrollView) this.getChildAt(0);
         this.linearLayout = (LinearLayout) this.scrollView.getChildAt(0);
         this.buttonAdd = (Button) this.linearLayout.getChildAt(0);
 
@@ -88,15 +91,21 @@ public class ListaNodi extends ScrollView {
 
             JSONObject object = new JSONObject();
 
-            object.put("descrizione", "dasdasdasdasdsaddassd");
-            object.put("anno", "2111");
+            object.put("visita_id", 3);
+            object.put("area", 3);
+            object.put("descrizione", "Fake descrizione");
+            object.put("titolo", "Fake titolo");
+            object.put("altezza", 3000);
+            object.put("larghezza", 3000);
+            object.put("profondita", 3000);
+
 
             for(int i = 0; i < 10; ++i){
-                this.addNode(new ListNode(this.linearLayout.getContext(), this.linearLayout, object));
+                this.addNode(new ListNode(this.linearLayout.getContext(), this, object, NodeType.OPERA));
             }
 
             this.buttonAdd.setOnClickListener(view1 -> {
-                this.linearLayout.addView(new ListNode(this.linearLayout.getContext(), this.linearLayout, object));
+                this.linearLayout.addView(new ListNode(this.linearLayout.getContext(), this, object, NodeType.OPERA));
 
             });
             Toast.makeText(this.getContext(), this.linearLayout.toString(), Toast.LENGTH_LONG).show();
@@ -123,23 +132,10 @@ public class ListaNodi extends ScrollView {
         }
     }
 
-    public ListaNodi(@NonNull Context context) {
+    public ListaNodi(@NonNull Context context, NodeType listType) {
         super(context);
         init();
     }
 
-    public ListaNodi(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
 
-    public ListaNodi(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    public ListaNodi(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
 }
