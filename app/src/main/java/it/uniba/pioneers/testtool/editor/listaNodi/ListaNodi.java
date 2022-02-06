@@ -92,6 +92,7 @@ public class ListaNodi extends HorizontalScrollView {
             JSONObject object = new JSONObject();
 
             object.put("visita_id", 3);
+            object.put("id", 66);
             object.put("area", 3);
             object.put("descrizione", "Fake descrizione");
             object.put("titolo", "Fake titolo");
@@ -101,12 +102,13 @@ public class ListaNodi extends HorizontalScrollView {
 
 
             for(int i = 0; i < 10; ++i){
-                this.addNode(new ListNode(this.linearLayout.getContext(), this, object, NodeType.OPERA));
+                this.addNode(new ListNode(this.linearLayout.getContext(),
+                        this, object, NodeType.OPERA));
             }
 
-            this.buttonAdd.setOnClickListener(view1 -> {
-                this.linearLayout.addView(new ListNode(this.linearLayout.getContext(), this, object, NodeType.OPERA));
-
+            buttonAdd.setOnClickListener(view1 -> {
+                this.linearLayout.addView(new ListNode(this.linearLayout.getContext(),
+                        this, object, NodeType.OPERA));
             });
             Toast.makeText(this.getContext(), this.linearLayout.toString(), Toast.LENGTH_LONG).show();
 

@@ -2,13 +2,11 @@ package it.uniba.pioneers.testtool.editor.grafo.node;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -21,7 +19,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo.Grafo;
-import it.uniba.pioneers.testtool.editor.grafo.draw.Line;
 import it.uniba.pioneers.testtool.editor.grafo.node.dialogs.NodeDialog;
 
 public class GraphNode extends Node {
@@ -71,33 +68,29 @@ public class GraphNode extends Node {
             int action = event.getAction();
             switch (action) {
                 case DragEvent.ACTION_DROP:
-                    JSONObject data = ((ListNode)event.getLocalState()).data; //CONVERSIONE DI TIPO DA ListNode -> GraphNode
-                    if(self.type == NodeType.VISITA){
-                        graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.ZONA, data));
-                        Log.v("DROP", "VISITA");
+                    ListNode listNode = ((ListNode)event.getLocalState());
+                    JSONObject data = listNode.data; //CONVERSIONE DI TIPO DA ListNode -> GraphNode
 
-                    }else if(self.type == NodeType.ZONA){
-                        graphParent.addSuccessorToNode(self, new GraphNode(graphParent.getContext(), graphParent, NodeType.AREA, data));
-                        Log.v("DROP", "ZONA");
+                    if(
+                            (self.type == NodeType.VISITA && listNode.type == NodeType.ZONA)
+                            || (self.type == NodeType.ZONA && listNode.type == NodeType.AREA)
+                            || (self.type == NodeType.AREA && listNode.type == NodeType.OPERA)
+                        ){
+                        GraphNode graphNode = new GraphNode(graphParent.getContext(), graphParent, listNode.type, listNode.data);
+                        self.hideAllChild();
+                        self.hideAllNodeAtSameLevel();
 
-                    }else if(self.type == NodeType.AREA){
-                        ListNode listNode = ((ListNode)event.getLocalState());
-                        Log.v("DROP", "AREA");
-                        if(listNode.type == NodeType.OPERA){
-                            Log.v("DROP", "AREA/OPERA");
-                            GraphNode graphNode = new GraphNode(graphParent.getContext(), graphParent, listNode.type, listNode.data);
-                            self.hideAllChild();
-                            self.addSuccessor(graphNode);
-                            self.drawAllChild();
-                            //listNode.setVisibility(GONE);
-                        }else{
-                            listNode.reset();
-                            listNode.setVisibility(VISIBLE);
-                        }
+                        self.hide();
+                        self.setCircle(true);
+                        self.clicked = true;
+                        self.draw();
 
-
-                    }else if(self.type == NodeType.OPERA){
-
+                        self.addSuccessor(graphNode);
+                        self.drawAllChild();
+                        listNode.setVisibility(GONE);
+                    }else{
+                        listNode.reset();
+                        listNode.setVisibility(VISIBLE);
                     }
                     break;
                 default:
@@ -120,8 +113,22 @@ public class GraphNode extends Node {
     }
 
     private void setFields(Grafo graphParent, NodeType type, JSONObject data) {
-        setFields(graphParent, type);
         this.data = data;
+        setFields(graphParent, type);
+    }
+
+    protected void setOnLongClickListener(@NonNull Context context) {
+        setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                GraphNode node = ((GraphNode)view);
+                System.out.println(node.data.toString());
+                AlertDialog dialog1 = NodeDialog.NodeDialog(context, node);
+                dialog1.show();
+
+                return true;
+            }
+        });
     }
 
     public GraphNode(@NonNull Context context, Grafo graphParent, NodeType type, JSONObject data) {
@@ -135,11 +142,9 @@ public class GraphNode extends Node {
     }
 
 
-
     private void setOnClickListener(Grafo graphParent, NodeType type) {
         if(type != NodeType.VISITA && type != NodeType.OPERA){
             setOnClickListener(view -> {//THIS (View)
-                resetLines();
                 inizializated = true;
 
                 Log.v("ckck", String.valueOf(clicked));
@@ -167,15 +172,19 @@ public class GraphNode extends Node {
                     clicked = true;
                     setCircle(true);
 
-                    for(GraphNode node : getSuccessors(graphParent, self)){
-                        if(node != self){
-                            node.clicked = false;
-                            node.setCircle(false);
-                            node.hideAllChild();
-                        }
-                    }
+                    hideAllNodeAtSameLevel();
                 }
             });
+        }
+    }
+
+    private void hideAllNodeAtSameLevel() {
+        for(GraphNode node : getSuccessors(graphParent, self)){
+            if(node != self){
+                node.clicked = false;
+                node.setCircle(false);
+                node.hideAllChild();
+            }
         }
     }
 
@@ -206,6 +215,8 @@ public class GraphNode extends Node {
 
 
             if(type == NodeType.VISITA){
+                graphParent.drawView.resetDrawView(graphParent, 0);
+
                 nodeChild.setY(graphParent.r2);
                 nodeChild.setX(count.getAndIncrement() * graphParent.calcX(numSuccessors));
 
@@ -248,7 +259,6 @@ public class GraphNode extends Node {
             setInizializated(true);
             clicked = false;
         }
-        resetLines();
 
         if(type != NodeType.VISITA && type != NodeType.OPERA){
             setCircle(false);
@@ -288,7 +298,6 @@ public class GraphNode extends Node {
 
     private void resetLines() {
         if(type == NodeType.VISITA){
-            graphParent.drawView.resetDrawView(graphParent, 0);
         }else if(type == NodeType.ZONA){
             graphParent.drawView.resetDrawView(graphParent, 1);
         }else if(type == NodeType.AREA){

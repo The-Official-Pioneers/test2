@@ -53,6 +53,9 @@ public class ListNode extends Node{
     public ListNode(@NonNull Context context, ListaNodi listaNodi, JSONObject data, NodeType type) {
         super(context);
         try {
+            System.out.println(data.toString());
+
+            this.data = data;
             this.listaNodi = listaNodi;
             this.type = type;
             initDroppableNode(context);
@@ -75,8 +78,6 @@ public class ListNode extends Node{
         linearLayout = listaNodi.linearLayout;
         self = this;
         clicked = false;
-        data = new JSONObject();
-
         setOnClickListener(view -> {
             for(ListNode node : listaNodi.listNodeArrayList){
                 if(!view.equals(node)){

@@ -52,9 +52,6 @@ public class Grafo extends ConstraintLayout {
     public DrawView drawView = null;
 
     GraphNode actualVisita = null;
-    GraphNode actualZona = null;
-    GraphNode actualArea = null;
-    GraphNode actualOpera = null;
 
     public GraphNode visita = null;
 
@@ -93,59 +90,52 @@ public class Grafo extends ConstraintLayout {
         tmpVisita.setId(3);
 
         Grafo self = this;
-        Visita.getGraphData(context, tmpVisita, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            if (response.getBoolean("status") == true) {
-                                Log.v("VISITE", response.getJSONObject("data").toString(4));
-                                JSONObject data = response.getJSONObject("data");
+        Visita.getGraphData(context, tmpVisita,
+                response -> {
+                    try {
+                        if (response.getBoolean("status") == true) {
+                            Log.v("VISITE", response.getJSONObject("data").toString(4));
+                            JSONObject data = response.getJSONObject("data");
 
-                                visita = new GraphNode(context, self, NodeType.VISITA, data.getJSONObject("visita"));
-                                JSONArray arrZona = data.getJSONArray("arrZona");
-                                JSONArray arrArea = data.getJSONArray("arrArea");
-                                JSONArray arrOpera = data.getJSONArray("arrOpera");
+                            visita = new GraphNode(context, self, NodeType.VISITA, data.getJSONObject("visita"));
+                            JSONArray arrZona = data.getJSONArray("arrZona");
+                            JSONArray arrArea = data.getJSONArray("arrArea");
+                            JSONArray arrOpera = data.getJSONArray("arrOpera");
 
-                                for (int i = 0; i < arrZona.length(); ++i) {
-                                    JSONObject zonaJSON = arrZona.getJSONObject(i);
-                                    GraphNode zona = new GraphNode(context, self, NodeType.ZONA, zonaJSON);
-                                    visita.addSuccessor(zona);
-                                    for (int j = 0; j < arrArea.length(); ++j) {
-                                        JSONObject areaJSON = arrArea.getJSONObject(j);
-                                        if (areaJSON.getInt("zona") == zonaJSON.getInt("id")) {
-                                            GraphNode area = new GraphNode(context, self, NodeType.AREA, areaJSON);
-                                            zona.addSuccessor(area);
+                            for (int i = 0; i < arrZona.length(); ++i) {
+                                JSONObject zonaJSON = arrZona.getJSONObject(i);
+                                GraphNode zona = new GraphNode(context, self, NodeType.ZONA, zonaJSON);
+                                visita.addSuccessor(zona);
+                                for (int j = 0; j < arrArea.length(); ++j) {
+                                    JSONObject areaJSON = arrArea.getJSONObject(j);
+                                    if (areaJSON.getInt("zona") == zonaJSON.getInt("id")) {
+                                        GraphNode area = new GraphNode(context, self, NodeType.AREA, areaJSON);
+                                        zona.addSuccessor(area);
 
-                                            for (int k = 0; k < arrOpera.length(); ++k) {
-                                                JSONObject operaJSON = arrOpera.getJSONObject(k);
-                                                if (operaJSON.getInt("area") == areaJSON.getInt("id")) {
-                                                    GraphNode opera = new GraphNode(context, self, NodeType.OPERA, operaJSON);
-                                                    area.addSuccessor(opera);
-                                                }
+                                        for (int k = 0; k < arrOpera.length(); ++k) {
+                                            JSONObject operaJSON = arrOpera.getJSONObject(k);
+                                            if (operaJSON.getInt("area") == areaJSON.getInt("id")) {
+                                                GraphNode opera = new GraphNode(context, self, NodeType.OPERA, operaJSON);
+                                                area.addSuccessor(opera);
                                             }
                                         }
                                     }
                                 }
-                                addStartNode(visita);
-                            } else {
-
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            addStartNode(visita);
+                        } else {
+
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Snackbar.make(
-                                self.getRootView(),
-                                "Non è stato possibile comunicare con il server",
-                                BaseTransientBottomBar.LENGTH_LONG
-                        )
-                                .show();
-                    }
-                });
+                error -> Snackbar.make(
+                        self.getRootView(),
+                        "Non è stato possibile comunicare con il server",
+                        BaseTransientBottomBar.LENGTH_LONG
+                ).show()
+        );
 
     }
 
