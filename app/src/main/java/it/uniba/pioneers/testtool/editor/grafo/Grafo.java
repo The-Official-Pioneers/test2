@@ -232,6 +232,7 @@ public class Grafo extends ConstraintLayout {
             initRow();
             visita.setY(r1);
             visita.setX(calcX(1));
+            visita.size = 200;
 
             loadNode();
             visita.drawAllChild();

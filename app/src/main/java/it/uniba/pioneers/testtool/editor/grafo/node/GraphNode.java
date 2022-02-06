@@ -87,9 +87,8 @@ public class GraphNode extends Node {
                             Log.v("DROP", "AREA/OPERA");
                             GraphNode graphNode = new GraphNode(graphParent.getContext(), graphParent, listNode.type, listNode.data);
                             self.hideAllChild();
-                            //self.addSuccessor(graphNode);
-
-                            //self.drawAllChild();
+                            self.addSuccessor(graphNode);
+                            self.drawAllChild();
                             //listNode.setVisibility(GONE);
                         }else{
                             listNode.reset();
@@ -188,20 +187,24 @@ public class GraphNode extends Node {
     public void drawAllChild(){
         int numSuccessors = graphParent.graph.successors(this).size();
 
-        if(numSuccessors <= 3){
-            size = 200;
-        }else if(numSuccessors < 6){
-            size = 150;
-        }else if(numSuccessors < 9){
-            size = 120;
-        }else {
-            size = 90;
-        }
+ //       this.findViewById(R.id.vistaProva)
+   //             .setLayoutParams(new LinearLayout.LayoutParams(size, size));
 
         draw();
         AtomicInteger count = new AtomicInteger(1);
 
         for(GraphNode nodeChild : graphParent.graph.successors(this)){
+            if(numSuccessors <= 3){
+                nodeChild.size = 200;
+            }else if(numSuccessors < 6){
+                nodeChild.size = 150;
+            }else if(numSuccessors < 9){
+                nodeChild.size = 120;
+            }else {
+                nodeChild.size = 90;
+            }
+
+
             if(type == NodeType.VISITA){
                 nodeChild.setY(graphParent.r2);
                 nodeChild.setX(count.getAndIncrement() * graphParent.calcX(numSuccessors));
@@ -226,9 +229,6 @@ public class GraphNode extends Node {
             }else if(type == NodeType.OPERA){
                 nodeChild.draw();
             }
-
-            nodeChild.findViewById(R.id.vistaProva)
-                    .setLayoutParams(new LinearLayout.LayoutParams(size, size));
         }
     }
 
@@ -255,6 +255,9 @@ public class GraphNode extends Node {
         }else{
             setCircle(true);
         }
+
+        findViewById(R.id.vistaProva)
+                .setLayoutParams(new LinearLayout.LayoutParams(size, size));
 
         setVisibility(VISIBLE);
 

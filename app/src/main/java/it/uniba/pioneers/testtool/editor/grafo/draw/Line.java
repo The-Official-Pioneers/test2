@@ -29,26 +29,11 @@ public class Line {
         this.startNode = startNode;
         this.endNode = endNode;
 
+        startX = startNode.getX() + ((float)startNode.size/2);
+        startY = startNode.getY() + (float)startNode.size;
 
-        View vStart = startNode.findViewById(R.id.vistaProva);
-        Log.v("START-NODE", String.valueOf(vStart.getWidth()));
-
-        this.startX = startNode.getX() + ((float)startNode.size/2);
-        this.startY = startNode.getY() + (float)startNode.size;
-
-
-
-        View vEnd = endNode.findViewById(R.id.vistaProva);
-        Log.v("START-NODE-END", String.valueOf(vEnd.getWidth()));
-
-        //IL NODO END HA PROP SETTATE
-        if(endNode.type == NodeType.ZONA){
-            this.stopX = endNode.getX() + ((float)startNode.size/2);
-            this.stopY = endNode.getY();
-        }else{
-            this.stopX = endNode.getX() + ((float)startNode.size/2);
-            this.stopY = endNode.getY();
-        }
+        stopX = endNode.getX() + ((float)endNode.size/2);
+        stopY = endNode.getY();
 
     }
 
