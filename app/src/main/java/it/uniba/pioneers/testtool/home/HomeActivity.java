@@ -2,6 +2,7 @@ package it.uniba.pioneers.testtool.home;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -33,9 +34,20 @@ public class HomeActivity extends AppCompatActivity {
                 .add(R.id.fragmentContainerView4, f).addToBackStack(null)
                 .commit();
         /*** FINE TRANSAZIONE ***/
-
-
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     public void onClickButton(View view) {
         Toast.makeText(this, "Ha funzionato", Toast.LENGTH_SHORT).show();
@@ -106,6 +118,10 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void registerButton(View v){
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
+       /* if(fragment.controllData(v)){
+
+        } */
+
         fragment.registerComputation(v);
     }
 
