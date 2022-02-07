@@ -76,7 +76,8 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:elevation="16dp"
-        android:onClick="aggiungiOpera"
+        android:onClick="eliminaArea"
+        android:visibility="visible"
         android:src="@android:drawable/ic_delete"
         tools:ignore="SpeakableTextPresentCheck" />
 

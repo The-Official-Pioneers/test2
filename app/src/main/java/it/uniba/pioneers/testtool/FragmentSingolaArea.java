@@ -66,6 +66,7 @@ public class FragmentSingolaArea extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         editableNome = (EditText) getActivity().findViewById(R.id.txt_edit_nome);
         editableNome.setText(MainActivity.areaSelezionata.getNome());
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

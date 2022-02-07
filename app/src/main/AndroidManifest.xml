@@ -26,7 +26,8 @@
 
         <receiver
             android:name="it.uniba.pioneers.widget.WidgetCuratoreRegister"
-            android:exported="true">
+            android:exported="true"
+            tools:ignore="MissingClass">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -57,12 +58,14 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:theme="@style/Theme.TestTool.NoActionBar" />
         <activity
             android:name=".home.CaptureAct"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
         <activity
             android:name=".InfoOpera"
             android:exported="true"

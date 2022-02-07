@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentSingolaOpera#newInstance} factory method to
@@ -23,7 +25,7 @@ import androidx.fragment.app.Fragment;
 public class FragmentSingolaOpera extends Fragment {
     public TextView titolo;
     public TextView descrizione;
-    public ImageView img;
+    public static ImageView img;
 
     public static EditText editableTitolo;
     public static EditText editableDescrizione;
@@ -84,13 +86,20 @@ public class FragmentSingolaOpera extends Fragment {
         img = (ImageView) getActivity().findViewById(R.id.img_foto);
         Button modifica = (Button) getActivity().findViewById(R.id.btn_modifica);
 
-
+       if(MainActivity.tipoUtente.equals("curatore") && MainActivity.operaSelezionata!=null){
+           FloatingActionButton elimina = (FloatingActionButton) getActivity().findViewById(R.id.btn_del);
+            elimina.setVisibility(View.VISIBLE);
+        }
+       if(!MainActivity.tipoUtente.equals("curatore")){
+           FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
+           modificaFoto.setVisibility(View.GONE);
+       }
 
 
         Intent info = getActivity().getIntent();
         if (info != null) {
 
-            if (MainActivity.tipoUtente == 1) {
+            if (MainActivity.tipoUtente.equals("curatore")) {
                 editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
                 editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
 
@@ -125,7 +134,6 @@ public class FragmentSingolaOpera extends Fragment {
                 modifica.setVisibility(View.GONE);
             }
         }
-
     }
 
     @Override

@@ -85,9 +85,11 @@ public class FragmentListaOpere extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getActivity(),String.valueOf(MainActivity.opereArea.get(i).getId()), Toast.LENGTH_SHORT).show();
                 MainActivity.operaSelezionata = MainActivity.opereArea.get(i);
+                MainActivity.currOpera=i;
                 FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 MainActivity.fragmentSingolaOpera = new FragmentSingolaOpera();
                 fragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, MainActivity.fragmentSingolaOpera)
                         .addToBackStack(null)
                         .commit();
@@ -104,6 +106,7 @@ public class FragmentListaOpere extends Fragment {
             TextView txtNoOpere = (TextView) getActivity().findViewById(R.id.txt_no_opere);
             txtNoOpere.setVisibility(View.GONE);
         }
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -111,7 +114,7 @@ public class FragmentListaOpere extends Fragment {
         super.onDestroy();
         MainActivity.opereArea=null;
         MainActivity.operaSelezionata=null;
+        MainActivity.fotoModificata=false;
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tuo Museo");
-
     }
 }
