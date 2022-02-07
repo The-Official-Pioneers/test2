@@ -29,16 +29,14 @@ import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
 @SuppressWarnings("ALL")
 public class ListaNodi extends HorizontalScrollView {
     public LinearLayout linearLayout;
-    HorizontalScrollView scrollView;
-    Button buttonAdd;
-
     public ArrayList<ListNode> listNodeArrayList = new ArrayList<>();
-
-    DisplayGrafo displayGrafo = null;
     public NodeType listType = null;
 
-    class MyDragListener implements OnDragListener {
+    HorizontalScrollView scrollView;
+    Button buttonAdd;
+    DisplayGrafo displayGrafo = null;
 
+    class MyDragListener implements OnDragListener {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             int action = event.getAction();
@@ -76,18 +74,28 @@ public class ListaNodi extends HorizontalScrollView {
             return true;
         }
     }
+
     public void init(){
         LayoutInflater layoutInflater = LayoutInflater.from(this.getContext());
         layoutInflater.inflate(R.layout.layout_lista_nodi, this);
-        this.setOnDragListener(new MyDragListener());
+        setOnDragListener(new MyDragListener());
 
-        this.scrollView = (HorizontalScrollView) this.getChildAt(0);
-        this.linearLayout = (LinearLayout) this.scrollView.getChildAt(0);
-        this.buttonAdd = (Button) this.linearLayout.getChildAt(0);
-
+        scrollView = (HorizontalScrollView) this.getChildAt(0);
+        linearLayout = (LinearLayout) this.scrollView.getChildAt(0);
+        buttonAdd = (Button) this.linearLayout.getChildAt(0);
 
         try {
             displayGrafo = getRootView().findViewById(R.id.displayGrafo);
+
+            /*
+
+
+
+            for(int i = 0; i < 10; ++i){
+                this.addNode(new ListNode(this.linearLayout.getContext(),
+                        this, object, NodeType.OPERA));
+            }
+*/
 
             JSONObject object = new JSONObject();
 
@@ -100,27 +108,19 @@ public class ListaNodi extends HorizontalScrollView {
             object.put("larghezza", 3000);
             object.put("profondita", 3000);
 
-
-            for(int i = 0; i < 10; ++i){
+            buttonAdd.setOnClickListener(view1 -> {
                 this.addNode(new ListNode(this.linearLayout.getContext(),
                         this, object, NodeType.OPERA));
-            }
-
-            buttonAdd.setOnClickListener(view1 -> {
-                this.linearLayout.addView(new ListNode(this.linearLayout.getContext(),
-                        this, object, NodeType.OPERA));
             });
-            Toast.makeText(this.getContext(), this.linearLayout.toString(), Toast.LENGTH_LONG).show();
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void addNode(ListNode listNode){
-        this.linearLayout.addView(listNode);
         listNodeArrayList.add(listNode);
+        linearLayout.addView(listNode);
     }
 
     public void removeNode(int id){
@@ -138,6 +138,4 @@ public class ListaNodi extends HorizontalScrollView {
         super(context);
         init();
     }
-
-
 }

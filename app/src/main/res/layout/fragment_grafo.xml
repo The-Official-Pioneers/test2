@@ -16,11 +16,20 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/listaNodiLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
     <it.uniba.pioneers.testtool.editor.options.OptionsEditor
         android:id="@+id/optionsGrafo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="8">
+        android:layout_weight="4">
 
     </it.uniba.pioneers.testtool.editor.options.OptionsEditor>
 

@@ -32,8 +32,9 @@ public class GrafoFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public LinearLayout layoutEditorGrafo = null;
-    public LinearLayout grafoManipulateLayout = null;
+    public static LinearLayout layoutEditorGrafo = null;
+    public static LinearLayout grafoManipulateLayout = null;
+    public static LinearLayout listaNodiLinearLayout = null;
 
     public DisplayGrafo displayGrafo = null;
     public ListaNodi listaNodi = null;
@@ -57,7 +58,6 @@ public class GrafoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -77,6 +77,7 @@ public class GrafoFragment extends Fragment {
 
         layoutEditorGrafo = getView().findViewById(R.id.layoutEditorGrafo);
         grafoManipulateLayout = getView().findViewById(R.id.grafoManipulateLayout);
+        listaNodiLinearLayout = getView().findViewById(R.id.listaNodiLinearLayout);
 
         displayGrafo = getView().findViewById(R.id.displayGrafo);
         listaNodi = getView().findViewById(R.id.listaNodi);
@@ -96,22 +97,13 @@ public class GrafoFragment extends Fragment {
         displayGrafo.setLayoutParams(param);
 
 
-        ListaNodi listaNodi = new ListaNodi(getContext(), NodeType.OPERA);
-        listaNodi.setId(R.id.listaNodi);
-        param = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                3.0f
-        );
+        //ListaNodi listaNodi = new ListaNodi(getContext(), NodeType.OPERA);
+        //listaNodi.setId(R.id.listaNodi);
 
-        grafoManipulateLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-        ));
 
-        listaNodi.setLayoutParams(param);
         grafoManipulateLayout.addView(displayGrafo);
-        grafoManipulateLayout.addView(listaNodi);
+        //listaNodi.setLayoutParams(param);
+        //grafoManipulateLayout.addView(listaNodi);
     }
 
 }

@@ -178,7 +178,6 @@ public class Grafo extends ConstraintLayout {
     public void setNodePositions() {
         AtomicInteger cntZona = new AtomicInteger(1);
         int numZona = graph.successors(visita).size();
-
     }
 
     public void initRow() {
@@ -226,7 +225,6 @@ public class Grafo extends ConstraintLayout {
 
             loadNode();
             visita.drawAllChild();
-            actualVisita = visita;
         }
 
         private void loadNode() {

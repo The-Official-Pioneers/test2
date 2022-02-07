@@ -33,7 +33,7 @@ public class Line {
         startY = startNode.getY() + (float)startNode.size;
 
         stopX = endNode.getX() + ((float)endNode.size/2);
-        stopY = endNode.getY();
+        stopY = endNode.getY() + ((float)endNode.size/100)*4;
 
     }
 

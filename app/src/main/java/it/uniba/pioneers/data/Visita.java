@@ -514,4 +514,22 @@ public class Visita {
                 new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
         queue.add(jsonObjectRequest);
     }
+
+    public static void getAllPossibleChild(Context context,Visita visita,
+                                           Response.Listener<JSONObject> responseListener,
+                                           Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visita/child/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.VisitaEntry.COLUMN_ID, visita.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
 }

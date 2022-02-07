@@ -461,4 +461,22 @@ public class Zona {
             int deletedRows = db.delete(DbContract.ZonaEntry.TABLE_NAME, selection, selectionArgs);
         }
     }
+
+    public static void getAllPossibleChild(Context context, Zona zona,
+                                           Response.Listener<JSONObject> responseListener,
+                                           Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/zona/child/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.VisitaEntry.COLUMN_ID, zona.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
 }
