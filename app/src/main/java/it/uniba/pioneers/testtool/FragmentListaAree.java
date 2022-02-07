@@ -72,8 +72,6 @@ public class FragmentListaAree extends Fragment{
             lista.add(MainActivity.areeZona.get(i).getNome());
         }
 
-
-
         ListView lv = (ListView) view.findViewById(R.id.listView);
         lvAdapter = new ArrayAdapter<String>(
                 getActivity(),
@@ -89,7 +87,7 @@ public class FragmentListaAree extends Fragment{
                 MainActivity.currArea=i;
                 FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 MainActivity.fragmentSingolaArea = new FragmentSingolaArea();
-                fragmentManager.beginTransaction()
+                fragmentManager.beginTransaction()    // caricamento del fragment che mostrera l'area selezionata
                         .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, MainActivity.fragmentSingolaArea)
                         .addToBackStack(null)
@@ -97,9 +95,8 @@ public class FragmentListaAree extends Fragment{
             }
         });
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tuo museo");
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       // ((MainActivity) getActivity()).getSupportActionBar().setNavigationOnClickListener();
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Il Tuo Museo");
 
         return view;
     }
@@ -110,10 +107,9 @@ public class FragmentListaAree extends Fragment{
         MainActivity.areeZona=null;
         MainActivity.areaSelezionata=null;
         MainActivity.opereArea=null;
-        MainActivity.operaSelezionata=null;
+        MainActivity.operaSelezionata=null;           // modifica della toolbar in base a dove si trova l'utente
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         MainActivity.toggle.setDrawerIndicatorEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Test Tool");
-
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("TestTool");
     }
 }

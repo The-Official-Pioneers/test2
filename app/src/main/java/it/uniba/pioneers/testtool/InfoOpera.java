@@ -33,15 +33,13 @@ public class InfoOpera extends AppCompatActivity {
     @Override
      protected void onStart() {
          super.onStart();
-         fso = new FragmentSingolaOpera();
+         fso = new FragmentSingolaOpera();    // carica il fragment FragmentSingolaOpera(usato anche dalla MainActivity)
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_list, fso)
                 .commit();
-
      }
-
 
    public void modificaOpera(View view) {
         new AlertDialog.Builder(this)
@@ -74,21 +72,17 @@ public class InfoOpera extends AppCompatActivity {
                 .show();
     }
 
-    @Override
-    protected void onSaveInstanceState( Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(fso.editableTitolo.getText()!=null && fso.editableDescrizione.getText()!=null){
-            outState.putString("titolo", String.valueOf(fso.editableTitolo.getText()));
-            outState.putString("descrizione", String.valueOf(fso.editableDescrizione.getText()));
-        }
+    private boolean checkExit() {
+        boolean c1 = String.valueOf(fso.editableTitolo.getText()).equals(MainActivity.operaSelezionata.getTitolo());
+        boolean c2 = String.valueOf(fso.editableDescrizione.getText()).equals(MainActivity.operaSelezionata.getDescrizione());
+        boolean c3 = MainActivity.fotoModificata;
+        return (!c1 || !c2 || c3);
     }
+
     @Override
     public void onBackPressed(){     // controllo uscita senza salvare da tasto indietro
         if(MainActivity.tipoUtente.equals("curatore")) {
-            boolean c = String.valueOf(fso.editableTitolo.getText()).equals(MainActivity.operaSelezionata.getTitolo());
-            boolean c2 = String.valueOf(fso.editableDescrizione.getText()).equals(MainActivity.operaSelezionata.getDescrizione());
-            boolean c3 = MainActivity.fotoModificata;
-            if(!c || !c2 || c3) {
+            if(checkExit()) {
                 new AlertDialog.Builder(this)
                         .setTitle("Uscire?")
                         .setMessage("Uscire senza salvare le modifiche?")
@@ -117,10 +111,7 @@ public class InfoOpera extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {         // controllo uscita senza salvare da barra
         if(MainActivity.tipoUtente.equals("curatore")) {
-            boolean c = String.valueOf(fso.editableTitolo.getText()).equals(MainActivity.operaSelezionata.getTitolo());
-            boolean c2 = String.valueOf(fso.editableDescrizione.getText()).equals(MainActivity.operaSelezionata.getDescrizione());
-
-            if(!c || !c2) {
+            if(checkExit()) {
                 new AlertDialog.Builder(this)
                         .setTitle("Uscire?")
                         .setMessage("Uscire senza salvare le modifiche?")

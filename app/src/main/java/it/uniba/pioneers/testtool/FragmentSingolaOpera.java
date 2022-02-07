@@ -80,12 +80,11 @@ public class FragmentSingolaOpera extends Fragment {
     @Override
     public void onViewCreated( View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         titolo = (TextView) getActivity().findViewById(R.id.txt_titolo);
         descrizione = (TextView) getActivity().findViewById(R.id.txt_descrizione);
         img = (ImageView) getActivity().findViewById(R.id.img_foto);
         Button modifica = (Button) getActivity().findViewById(R.id.btn_modifica);
-
+                                    // modifica visibilità della UI in base al tipo di utente e se l'opera esiste o la si sta creando
        if(MainActivity.tipoUtente.equals("curatore") && MainActivity.operaSelezionata!=null){
            FloatingActionButton elimina = (FloatingActionButton) getActivity().findViewById(R.id.btn_del);
             elimina.setVisibility(View.VISIBLE);
@@ -95,7 +94,6 @@ public class FragmentSingolaOpera extends Fragment {
            modificaFoto.setVisibility(View.GONE);
        }
 
-
         Intent info = getActivity().getIntent();
         if (info != null) {
 
@@ -103,10 +101,6 @@ public class FragmentSingolaOpera extends Fragment {
                 editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
                 editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
 
-                if (savedInstanceState != null) {
-                    editableTitolo.setText(savedInstanceState.getString("titolo"));
-                    editableDescrizione.setText(savedInstanceState.getString("descrizione"));
-                }
                 if(MainActivity.operaSelezionata!=null) {
                     byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
