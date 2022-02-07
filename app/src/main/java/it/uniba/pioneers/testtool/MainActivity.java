@@ -27,7 +27,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.android.volley.Response;
@@ -53,8 +52,6 @@ import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
 import it.uniba.pioneers.testtool.home.CaptureAct;
 import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
-import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
-import it.uniba.pioneers.testtool.home.HomeActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -65,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public DrawerLayout drawer;
     public FragmentManager supportFragmentManager;
     public static ActionBarDrawerToggle toggle;
+    public FragmentHomeCuratore frag;
     public static Opera opera;
     public static Zona zona;
     public static ArrayList<Area> areeZona;
@@ -102,9 +100,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentListaOpere=null;
         fragmentSingolaOpera=null;
         fotoModificata=false;
-        // da login ottengo id e tipo utente
-        //Intent intent = getIntent();
-        // tipoUtente = intent.getStringExtra("typeUser");
+
+        Intent intent = getIntent();
+       // tipoUtente = intent.getStringExtra("typeUser");
         tipoUtente="curatore";
         //idUtente = intent.getIntExtra("idUser");
         idUtente=1;
@@ -148,38 +146,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        // creazione della toolbar
-        Toolbar toolbar = findViewById(R.id.toolBarHome);
-        toolbar.setTitle("E-culture Tool");
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        toolbar.setLogo(R.mipmap.ic_launcher_logo);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.shuttle_gary));
-        setSupportActionBar(toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
-        toggle.syncState(); //Ruota il toggle quando viene cliccato
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(areeZona!=null) {
-                    onBackPressed();
-                }
-                else{
-                    drawer.openDrawer(GravityCompat.START);
-                }
-            }
-        });
-        if(operaSelezionata!=null){
-            toggle.setDrawerIndicatorEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
-
-        switch (tipoUtente){         // lettura dati utente da db per popolare l'area personales
+        switch (tipoUtente){
             case "curatore":
                 curatore.setId(idUtente);
                 curatore.readDataDb(MainActivity.this);
+                //zona.setId();
                 break;
             case "guida":
                 guida.setId(idUtente);
@@ -291,7 +263,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -405,11 +378,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return;
+
     }
 
-    private class Inserisci extends Thread{
+    private class LeggiOpera extends Thread{
         private final int id;
-        public Inserisci(int id){
+        public LeggiOpera(int id){
             this.id = id;
         }
         public void run(){
@@ -427,13 +401,20 @@ public class MainActivity extends AppCompatActivity {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result != null) {
                 if (result.getContents() != null) {
-                    Inserisci i = new Inserisci(Integer.parseInt(result.getContents()));
+                    LeggiOpera i = new LeggiOpera(Integer.parseInt(result.getContents()));
                     i.setPriority(4);
                     i.start();
                     SystemClock.sleep(1000);
-
-                    Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
-                    startActivity(informazioniOpera);
+                    if(operaSelezionata.getTitolo().equals("") && operaSelezionata.getDescrizione().equals("") ) {
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setMessage("Nessun risultato")
+                                .setPositiveButton(android.R.string.yes, null)
+                                .show();
+                        return;
+                    }else {
+                        Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
+                        startActivity(informazioniOpera);
+                    }
                 } else {
                     new AlertDialog.Builder(MainActivity.this)
                             .setMessage("Nessun risultato")
@@ -443,8 +424,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 super.onActivityResult(requestCode, resultCode, data);
             }
-        } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {   // ottego l'immagine scelta dalla galleria
-            // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             Uri targetUri = data.getData();
             Bitmap bitmap;
             ImageView oldPropic = (ImageView) fragmentSingolaOpera.img;
@@ -453,16 +434,15 @@ public class MainActivity extends AppCompatActivity {
                 oldPropic.setImageBitmap(bitmap);
                 oldPropic.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",
-                        Snackbar.LENGTH_LONG).show();
-                fotoModificata=true;
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",
+                            Snackbar.LENGTH_LONG).show();
+                    fotoModificata = true;
 
-            } catch (FileNotFoundException e) {
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
-                        Snackbar.LENGTH_LONG).show();
+                } catch (FileNotFoundException e) {
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+                            Snackbar.LENGTH_LONG).show();
+                }
             }
-        }
-
     }
 
     //AGGIUNTO DA IVAN
@@ -561,30 +541,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void modificaNomeArea(View view){
-        new AlertDialog.Builder(this)
-                .setTitle("Confermi")
-                .setMessage("Confermi la modifica?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        String nome = fragmentSingolaArea.editableNome.getText().toString();
-                        if(nome == "" || nome.equals(areaSelezionata.getNome())){
-                            new AlertDialog.Builder(MainActivity.this)
-                                    .setMessage("Modifica almeno un campo per salvare")
-                                    .setPositiveButton(android.R.string.yes,null)
-                                    .show();
-                        }else{
-                            areaSelezionata.setNome(nome);
-                            areaSelezionata.updateDataDb(MainActivity.this);
-                            new AlertDialog.Builder(MainActivity.this)
-                                    .setMessage("Modifica effettuata")
-                                    .setPositiveButton(android.R.string.yes,null)
-                                    .show();
+          new AlertDialog.Builder(this)
+                    .setTitle("Confermi")
+                    .setMessage("Confermi la modifica?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
+                            String nome = fragmentSingolaArea.editableNome.getText().toString();
+                            if(nome == "" || nome.equals(areaSelezionata.getNome())){
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setMessage("Modifica almeno un campo per salvare")
+                                        .setPositiveButton(android.R.string.yes,null)
+                                        .show();
+                            }else{
+                                areaSelezionata.setNome(nome);
+                                areaSelezionata.updateDataDb(MainActivity.this);
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setMessage("Modifica effettuata")
+                                        .setPositiveButton(android.R.string.yes,null)
+                                        .show();
+                            }
                         }
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
     }
 
     public void mostraOpereArea(View view) {    // ottengo tutte le opere di una area
@@ -606,20 +586,21 @@ public class MainActivity extends AppCompatActivity {
                             opereArea.add(tmp);
                         }
                     }
-                    fragmentListaOpere = new FragmentListaOpere();
-                    androidx.fragment.app.FragmentManager supportFragmentManager;   // carico il fragment con la lista di tutte le opere dell'aera
-                    supportFragmentManager = getSupportFragmentManager();
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                            .replace(R.id.fragment_container_list, fragmentListaOpere)
-                            .addToBackStack(null)
-                            .commit();
+                        fragmentListaOpere = new FragmentListaOpere();
+                        androidx.fragment.app.FragmentManager supportFragmentManager;
+                        supportFragmentManager = getSupportFragmentManager();
+                        supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                                .replace(R.id.fragment_container_list, fragmentListaOpere)
+                                .addToBackStack(null)
+                                .commit();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+
     }
 
     public void aggiungiOpera(View view) {
@@ -670,8 +651,8 @@ public class MainActivity extends AppCompatActivity {
                             byte[] b = baos.toByteArray();
                             String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
-                            System.out.print(encImage);
-                            System.out.print(MainActivity.operaSelezionata.getFoto());
+                           System.out.print(encImage);
+                           System.out.print(MainActivity.operaSelezionata.getFoto());
                             if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && !fotoModificata) {
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setMessage("Modifica almeno un campo per salvare")
@@ -699,7 +680,7 @@ public class MainActivity extends AppCompatActivity {
             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
             String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
             String encImage="";
-            if(fotoModificata){
+           if(fotoModificata){
                 Bitmap image = ((BitmapDrawable)fragmentSingolaOpera.img.getDrawable()).getBitmap();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 image.compress(Bitmap.CompressFormat.JPEG,50,baos);
