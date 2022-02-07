@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                                 visitatore.setDataFromJSON(response.getJSONObject("data"));
                                 Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(MainActivity.this, "Non Ã¨ stato possibile leggere i dati dal db", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Non e' stato possibile leggere i dati dal db", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException | ParseException e) {
                             e.printStackTrace();
@@ -163,11 +163,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-        }
     }
 
     //se clicco il bottone back e sta aperto il drawer
@@ -245,12 +240,10 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-      if (id == R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override
@@ -351,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == SCAN_QR && resultCode == RESULT_OK) {
+        if (requestCode != PICK_FROM_GALLERY && resultCode == RESULT_OK) {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result != null) {
                 if (result.getContents() != null) {
@@ -362,7 +355,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                     Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
-                    informazioniOpera.putExtra("tipoUtente", tipoUtente);  // curatore = 1, visitatore = 2, guida = 3
                     startActivity(informazioniOpera);
                 } else {
                     new AlertDialog.Builder(MainActivity.this)

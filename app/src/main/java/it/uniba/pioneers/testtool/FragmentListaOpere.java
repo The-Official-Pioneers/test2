@@ -115,6 +115,5 @@ public class FragmentListaOpere extends Fragment {
         MainActivity.operaSelezionata=null;
         MainActivity.fotoModificata=false;
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tuo Museo");
-
     }
 }
