@@ -49,38 +49,39 @@
         <activity
             android:name=".EditorActivity2"
             android:exported="true"
-            android:label="@string/title_activity_editor2"></activity>
+            android:label="@string/title_activity_editor2" />
         <activity
             android:name=".EditorActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.TestTool.NoActionBar"></activity>
+            android:theme="@style/Theme.TestTool.NoActionBar" />
         <activity
             android:name=".home.CaptureAct"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
-
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".InfoOpera"
             android:exported="true"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".AreaPersonale"
+            android:parentActivityName=".MainActivity" />
 
         <activity
             android:name=".AreaPersonaleVisitatore"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
 
         <activity
             android:name=".AreaPersonaleCuratore"
-            android:parentActivityName=".MainActivity"></activity>
-
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AreaPersonaleGuida"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

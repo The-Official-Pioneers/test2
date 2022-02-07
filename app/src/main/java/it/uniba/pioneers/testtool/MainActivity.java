@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
     public static Visitatore visitatore = new Visitatore();
     public static CuratoreMuseale curatore = new CuratoreMuseale();
     public static Guida guida = new Guida();
+    public static String tipo_utente = "curatore";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,12 +105,12 @@ public class MainActivity extends AppCompatActivity {
         */
 
         //GUIDA
-        guida.setId(1004);
-        guida.readDataDb(MainActivity.this);
+        //guida.setId(1004);
+        //guida.readDataDb(MainActivity.this);
 
         //CURATORE
-        //curatore.setId(1);
-        //curatore.readDataDb(MainActivity.this);
+        curatore.setId(1);
+        curatore.readDataDb(MainActivity.this);
 
         //VISITATORE
         /*visitatore.setId(2);
@@ -127,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        });
-        */
+        });*/
+
 
         /*** INIZIO TRANSAZIONE ***/
                                         //// if per tipo di utente e fragment da committare
@@ -343,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
     //AGGIUNTO DA IVAN
     public void goToPersonalArea(MenuItem item) throws InterruptedException {
-        Intent intent = new Intent(this, AreaPersonaleGuida.class);
+        Intent intent = new Intent(this, AreaPersonale.class);
         startActivity(intent);
     }
 

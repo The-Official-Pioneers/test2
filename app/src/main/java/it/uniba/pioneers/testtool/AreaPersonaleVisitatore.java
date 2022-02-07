@@ -50,16 +50,10 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
         setContentView(R.layout.fragment_area_personale_visitatore);
 
         ImageView propic = (ImageView) findViewById(R.id.img_propic);
-
         EditText nome = (EditText) findViewById(R.id.txt_nome);
         EditText cognome = (EditText) findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
-
-        System.out.println("NOME: " + MainActivity.visitatore.getNome());
-        System.out.println("COGNOME: " + MainActivity.visitatore.getCognome());
-        System.out.println("EMAIL: " + MainActivity.visitatore.getEmail());
-        System.out.println("DATA NASCITA: " + MainActivity.visitatore.getShorterDataNascita());
 
         byte[] bytes = Base64.decode(MainActivity.visitatore.getPropic(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);

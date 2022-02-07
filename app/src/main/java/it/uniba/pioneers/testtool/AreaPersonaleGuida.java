@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
@@ -41,34 +40,6 @@ import it.uniba.pioneers.data.users.Guida;
 public class AreaPersonaleGuida extends AppCompatActivity {
 
     private static final int PICK_FROM_GALLERY = 1;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.fragment_area_personale_guida);
-
-        ImageView propic = (ImageView) findViewById(R.id.img_propic);
-
-        EditText nome = (EditText) findViewById(R.id.txt_nome);
-        EditText cognome = (EditText) findViewById(R.id.txt_cognome);
-        EditText datanascita = (EditText) findViewById(R.id.txt_datan);
-        EditText email = (EditText) findViewById(R.id.txt_email);
-        EditText specializzazione = (EditText) findViewById(R.id.txt_specializzazione);
-
-        byte[] bytes = Base64.decode(MainActivity.guida.getPropic(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        propic.setImageBitmap(decodedByte);
-        propic.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-        nome.setText(MainActivity.guida.getNome());
-        cognome.setText(MainActivity.guida.getCognome());
-        email.setText(MainActivity.guida.getEmail());
-        datanascita.setText(MainActivity.guida.getShorterDataNascita());
-        specializzazione.setText( MainActivity.guida.getSpecializzazione());
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
 
     public void editProfile(View view){
 
@@ -107,12 +78,13 @@ public class AreaPersonaleGuida extends AppCompatActivity {
     }
 
     private boolean checkForChanges(EditText nomeToCheck, EditText cognomeToCheck, EditText datanToCheck,
-                                    EditText emailToCheck, EditText zonaToCheck){
+                                    EditText emailToCheck, EditText specialToCheck){
+
         if( !(nomeToCheck.getText().toString().equals(MainActivity.guida.getNome())) ||
                 !(cognomeToCheck.getText().toString().equals(MainActivity.guida.getCognome())) ||
                 !(datanToCheck.getText().toString().equals(MainActivity.guida.getShorterDataNascita())) ||
                 !(emailToCheck.getText().toString().equals(MainActivity.guida.getEmail())) ||
-                !(zonaToCheck.getText().toString().equals(MainActivity.guida.getEmail()))){
+                !(specialToCheck.getText().toString().equals(MainActivity.guida.getSpecializzazione()))){
             return true;
         }
 
