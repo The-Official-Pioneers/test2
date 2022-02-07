@@ -624,6 +624,7 @@ public class MainActivity extends AppCompatActivity {
                 .show();
 
     }
+
     public void modificaAggiungiOpera(View view) {
         if(operaSelezionata!=null) {   // modifica opera gia esistente
             new AlertDialog.Builder(this)
