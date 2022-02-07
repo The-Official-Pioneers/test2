@@ -106,6 +106,7 @@ public class FragmentListaOpere extends Fragment {
             TextView txtNoOpere = (TextView) getActivity().findViewById(R.id.txt_no_opere);
             txtNoOpere.setVisibility(View.GONE);
         }
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

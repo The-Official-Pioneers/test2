@@ -134,7 +134,7 @@ public class FragmentSingolaOpera extends Fragment {
                 modifica.setVisibility(View.GONE);
             }
         }
-
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

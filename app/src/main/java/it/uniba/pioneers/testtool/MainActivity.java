@@ -1,7 +1,6 @@
 package it.uniba.pioneers.testtool;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,10 +27,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.android.volley.Response;
 import com.google.android.material.snackbar.Snackbar;
@@ -94,11 +90,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        areeZona=new ArrayList<Area>();
+        areeZona=null;
         areaSelezionata=null;
         fragmentListaAree=null;
         fragmentSingolaArea=null;
-        opereArea=new ArrayList<Opera>();
+        opereArea=null;
         operaSelezionata=null;
         fragmentListaOpere=null;
         fragmentSingolaOpera=null;
@@ -158,6 +154,17 @@ public class MainActivity extends AppCompatActivity {
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
         toggle.syncState(); //Ruota il toggle quando viene cliccato
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(areeZona!=null) {
+                    onBackPressed();
+                }
+                else{
+                    drawer.openDrawer(GravityCompat.START);
+                }
+            }
+        });
     }
 
     @Override
@@ -166,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //se clicco il bottone back e sta aperto il drawer
-    @SuppressLint("WrongThread")
     @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START)){
@@ -244,13 +250,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
     }
 
     public void goEditorActivity(View view){
@@ -352,7 +351,6 @@ public class MainActivity extends AppCompatActivity {
                     i.setPriority(4);
                     i.start();
                     SystemClock.sleep(1000);
-
 
                     Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
                     startActivity(informazioniOpera);

@@ -99,9 +99,8 @@ public class FragmentListaAree extends Fragment{
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tuo museo");
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // ((MainActivity) getActivity()).getSupportActionBar().setNavigationOnClickListener();
 
-
-        // Inflate the layout for this fragment
         return view;
     }
 
