@@ -49,12 +49,11 @@ public class AreaPersonaleCuratore extends AppCompatActivity {
         setContentView(R.layout.fragment_area_personale_curatore);
 
         ImageView propic = (ImageView) findViewById(R.id.img_propic);
-
         EditText nome = (EditText) findViewById(R.id.txt_nome);
         EditText cognome = (EditText) findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
-        EditText zona = (EditText) findViewById(R.id.txt_specializzazione);
+        EditText zona = (EditText) findViewById(R.id.txt_zona);
 
         byte[] bytes = Base64.decode(MainActivity.curatore.getPropic(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -76,7 +75,7 @@ public class AreaPersonaleCuratore extends AppCompatActivity {
         EditText cognome = (EditText) findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
-        EditText zona = (EditText) findViewById(R.id.txt_specializzazione);
+        EditText zona = (EditText) findViewById(R.id.txt_zona);
 
         if(checkForChanges(nome,cognome,datanascita,email,zona)){
 
@@ -115,7 +114,6 @@ public class AreaPersonaleCuratore extends AppCompatActivity {
                 !(zonaToCheck.getText().toString().equals(MainActivity.curatore.getEmail()))){
             return true;
         }
-
         Snackbar.make(getWindow().getDecorView().getRootView(), "Nessuna modifica effettuata", Snackbar.LENGTH_LONG).show();
         return false;
     }
@@ -325,7 +323,7 @@ public class AreaPersonaleCuratore extends AppCompatActivity {
         String textCognome = ((EditText) findViewById(R.id.txt_cognome)).getText().toString();
         String textDatan = ((EditText) findViewById(R.id.txt_datan)).getText().toString();
         String textEmail = ((EditText) findViewById(R.id.txt_email)).getText().toString();
-        Long longZona = Long.parseLong(((EditText) findViewById(R.id.txt_specializzazione)).getText().toString());
+        Long longZona = Long.parseLong(((EditText) findViewById(R.id.txt_zona)).getText().toString());
 
         boolean check1 = textNome.equals(MainActivity.curatore.getNome());
         boolean check2 = textCognome.equals(MainActivity.curatore.getCognome());

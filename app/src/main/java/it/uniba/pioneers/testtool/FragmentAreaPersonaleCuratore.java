@@ -14,10 +14,10 @@ import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentAreaPersonaleVisitatore#newInstance} factory method to
+ * Use the {@link FragmentAreaPersonaleCuratore#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentAreaPersonaleVisitatore extends Fragment {
+public class FragmentAreaPersonaleCuratore extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +28,7 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentAreaPersonaleVisitatore() {
+    public FragmentAreaPersonaleCuratore() {
         // Required empty public constructor
     }
 
@@ -38,11 +38,11 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentAreaPersonaleVisitatore.
+     * @return A new instance of fragment FragmentAreaPersonaleCuratore.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentAreaPersonaleVisitatore newInstance(String param1, String param2) {
-        FragmentAreaPersonaleVisitatore fragment = new FragmentAreaPersonaleVisitatore();
+    public static FragmentAreaPersonaleCuratore newInstance(String param1, String param2) {
+        FragmentAreaPersonaleCuratore fragment = new FragmentAreaPersonaleCuratore();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,41 +63,44 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_area_personale_visitatore, container, false);
+        return inflater.inflate(R.layout.fragment_area_personale_curatore, container, false);
     }
 
     @Override
     public void onViewCreated( View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setDataVisitatore();
+        setDataCuratore();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        setDataVisitatore();
+        setDataCuratore();
     }
 
-    private void setDataVisitatore(){
+    private void setDataCuratore(){
         ImageView propic = (ImageView) getActivity().findViewById(R.id.img_propic);
         EditText nome = (EditText) getActivity().findViewById(R.id.txt_nome);
         EditText cognome = (EditText) getActivity().findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) getActivity().findViewById(R.id.txt_datan);
         EditText email = (EditText) getActivity().findViewById(R.id.txt_email);
+        EditText zona = (EditText) getActivity().findViewById(R.id.txt_zona);
 
-        byte[] bytes = Base64.decode(MainActivity.visitatore.getPropic(), Base64.DEFAULT);
+        byte[] bytes = Base64.decode(MainActivity.curatore.getPropic(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         propic.setImageBitmap(decodedByte);
         propic.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        nome.setText(MainActivity.visitatore.getNome());
-        cognome.setText(MainActivity.visitatore.getCognome());
-        email.setText(MainActivity.visitatore.getEmail());
-        datanascita.setText(MainActivity.visitatore.getShorterDataNascita());
+        nome.setText(MainActivity.curatore.getNome());
+        cognome.setText(MainActivity.curatore.getCognome());
+        email.setText(MainActivity.curatore.getEmail());
+        datanascita.setText(MainActivity.curatore.getShorterDataNascita());
+        zona.setText( String.valueOf(MainActivity.curatore.getZona()) );
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
+
 }

@@ -376,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
 
     //AGGIUNTO DA IVAN
     public void goToPersonalArea(MenuItem item) throws InterruptedException { // controllo tipo utente
-        Intent intent = new Intent(this, AreaPersonaleGuida.class);
+        Intent intent = new Intent(this, AreaPersonale.class);
         startActivity(intent);
     }
 
