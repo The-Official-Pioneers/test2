@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,9 +29,8 @@ import it.uniba.pioneers.testtool.MainActivity;
 
 public class Guida {
 
-    public static String dtStart = "2010-10-15T09:27:37Z";
-    public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
-    SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
+    public static SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
     public long getId() {
         return id;
@@ -58,9 +56,18 @@ public class Guida {
         this.cognome = cognome;
     }
 
-    //CODICE MODIFICATO DA IVAN
+    //MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = Visitatore.format.parse(dataNascita);
+        this.dataNascita = Guida.format.parse(dataNascita);
+    }
+
+    public Date getDataNascita() {
+        return dataNascita;
+    }
+
+    //Usato per l'area personale degli utenti
+    public String getShorterDataNascita(){
+        return output.format(MainActivity.guida.getDataNascita());
     }
 
     public static Date addDay(Date date, int i) {
@@ -69,18 +76,10 @@ public class Guida {
         cal.add(Calendar.DAY_OF_YEAR, i);
         return cal.getTime();
     }
-
-    public String getShorterDataNascita(){
-        return output.format(MainActivity.visitatore.getDataNascita());
-    }
-    //CODICE MODIFICATO DA IVAN
+    //MODIFICATO DA IVAN
 
     public void setDataNascita(long dataNascita) {
         this.dataNascita = new Date(dataNascita);
-    }
-
-    public Date getDataNascita() {
-        return dataNascita;
     }
 
     public void setDataNascita(Date dataNascita) {

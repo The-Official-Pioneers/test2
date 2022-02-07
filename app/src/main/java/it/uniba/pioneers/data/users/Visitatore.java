@@ -29,7 +29,6 @@ import it.uniba.pioneers.testtool.MainActivity;
 
 public class Visitatore {
     public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
-
     public static SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
     public long getId() {
@@ -56,6 +55,7 @@ public class Visitatore {
         this.cognome = cognome;
     }
 
+    //MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
         this.dataNascita = Visitatore.format.parse(dataNascita);
     }
@@ -75,6 +75,7 @@ public class Visitatore {
         cal.add(Calendar.DAY_OF_YEAR, i);
         return cal.getTime();
     }
+    //MODIFICATO DA IVAN
 
     public void setDataNascita(Date dataNascita) {
         this.dataNascita = dataNascita;

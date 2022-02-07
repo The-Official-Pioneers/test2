@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Use the {@link FragmentListaAree#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentListaAree extends Fragment {
+public class FragmentListaAree extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,9 +86,11 @@ public class FragmentListaAree extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getActivity(),String.valueOf(MainActivity.areeZona.get(i).getId()), Toast.LENGTH_SHORT).show();
                 MainActivity.areaSelezionata = MainActivity.areeZona.get(i);
+                MainActivity.currArea=i;
                 FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 MainActivity.fragmentSingolaArea = new FragmentSingolaArea();
                 fragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, MainActivity.fragmentSingolaArea)
                         .addToBackStack(null)
                         .commit();
@@ -96,8 +98,9 @@ public class FragmentListaAree extends Fragment {
         });
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tuo museo");
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // ((MainActivity) getActivity()).getSupportActionBar().setNavigationOnClickListener();
 
-        // Inflate the layout for this fragment
         return view;
     }
 

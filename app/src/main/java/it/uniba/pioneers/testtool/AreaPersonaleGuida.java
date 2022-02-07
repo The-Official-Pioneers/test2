@@ -36,18 +36,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 
-import it.uniba.pioneers.data.users.Visitatore;
+import it.uniba.pioneers.data.users.Guida;
 
-public class AreaPersonaleVisitatore extends AppCompatActivity {
+public class AreaPersonaleGuida extends AppCompatActivity {
 
     private static final int PICK_FROM_GALLERY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.fragment_area_personale_visitatore);
+        setContentView(R.layout.fragment_area_personale_guida);
 
         ImageView propic = (ImageView) findViewById(R.id.img_propic);
 
@@ -55,24 +54,20 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
         EditText cognome = (EditText) findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
+        EditText specializzazione = (EditText) findViewById(R.id.txt_specializzazione);
 
-        System.out.println("NOME: " + MainActivity.visitatore.getNome());
-        System.out.println("COGNOME: " + MainActivity.visitatore.getCognome());
-        System.out.println("EMAIL: " + MainActivity.visitatore.getEmail());
-        System.out.println("DATA NASCITA: " + MainActivity.visitatore.getShorterDataNascita());
-
-        byte[] bytes = Base64.decode(MainActivity.visitatore.getPropic(), Base64.DEFAULT);
+        byte[] bytes = Base64.decode(MainActivity.guida.getPropic(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         propic.setImageBitmap(decodedByte);
         propic.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        nome.setText(MainActivity.visitatore.getNome());
-        cognome.setText(MainActivity.visitatore.getCognome());
-        email.setText(MainActivity.visitatore.getEmail());
-        datanascita.setText(MainActivity.visitatore.getShorterDataNascita());
+        nome.setText(MainActivity.guida.getNome());
+        cognome.setText(MainActivity.guida.getCognome());
+        email.setText(MainActivity.guida.getEmail());
+        datanascita.setText(MainActivity.guida.getShorterDataNascita());
+        specializzazione.setText( MainActivity.guida.getSpecializzazione());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     public void editProfile(View view){
@@ -81,22 +76,25 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
         EditText cognome = (EditText) findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
+        EditText specializzazione = (EditText) findViewById(R.id.txt_specializzazione);
 
-        if(checkForChanges(nome,cognome,datanascita,email)){
+        if(checkForChanges(nome,cognome,datanascita,email,specializzazione)){
 
             String newNome = nome.getText().toString();
             String newCognome = cognome.getText().toString();
             String newDatan = datanascita.getText().toString();
             String newEmail = email.getText().toString();
+            String newSpecializzazione = specializzazione.getText().toString();
 
             try{
-                MainActivity.visitatore.setNome(newNome);
-                MainActivity.visitatore.setCognome(newCognome);
-                MainActivity.visitatore.setEmail(newEmail);
+                MainActivity.guida.setNome(newNome);
+                MainActivity.guida.setCognome(newCognome);
+                MainActivity.guida.setEmail(newEmail);
+                MainActivity.guida.setSpecializzazione(newSpecializzazione);
                 if(validateDate(newDatan)){
-                    MainActivity.visitatore.setDataNascita( Visitatore.output.parse(newDatan) );
+                    MainActivity.guida.setDataNascita( Guida.output.parse(newDatan) );
                 }
-                MainActivity.visitatore.updateDataDb(view.getContext());
+                MainActivity.guida.updateDataDb(view.getContext());
                 Snackbar.make(getWindow().getDecorView().getRootView(), "Profilo aggiornato con successo!",
                         Snackbar.LENGTH_LONG).show();
             } catch(ParseException e){
@@ -108,12 +106,13 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
 
     }
 
-    private boolean checkForChanges(EditText nomeToCheck, EditText cognomeToCheck, EditText datanToCheck, EditText emailToCheck){
-
-        if( !(nomeToCheck.getText().toString().equals(MainActivity.visitatore.getNome())) ||
-                !(cognomeToCheck.getText().toString().equals(MainActivity.visitatore.getCognome())) ||
-                !(datanToCheck.getText().toString().equals(MainActivity.visitatore.getShorterDataNascita())) ||
-                !(emailToCheck.getText().toString().equals(MainActivity.visitatore.getEmail()))){
+    private boolean checkForChanges(EditText nomeToCheck, EditText cognomeToCheck, EditText datanToCheck,
+                                    EditText emailToCheck, EditText zonaToCheck){
+        if( !(nomeToCheck.getText().toString().equals(MainActivity.guida.getNome())) ||
+                !(cognomeToCheck.getText().toString().equals(MainActivity.guida.getCognome())) ||
+                !(datanToCheck.getText().toString().equals(MainActivity.guida.getShorterDataNascita())) ||
+                !(emailToCheck.getText().toString().equals(MainActivity.guida.getEmail())) ||
+                !(zonaToCheck.getText().toString().equals(MainActivity.guida.getEmail()))){
             return true;
         }
 
@@ -122,11 +121,10 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
     }
 
     private boolean validateDate(String dateToValid){
-
         //output is SimpleDateFormat of this type ("dd/MM/yyyy")
         try {
             if(countSlashes(dateToValid)){
-                Visitatore.output.parse(dateToValid);
+                Guida.output.parse(dateToValid);
             } else {
                 return false;
             }
@@ -196,11 +194,10 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
 
                 String newPassword = passwordInput.getText().toString();
 
-
                 try {
                     String passToSave = digest(newPassword);
-                    MainActivity.visitatore.setPassword(passToSave);
-                    MainActivity.visitatore.updateDataDb(view.getContext());
+                    MainActivity.guida.setPassword(passToSave);
+                    MainActivity.guida.updateDataDb(view.getContext());
 
                     //Necessario per chiudere la tastiera dopo aver premuto OK
                     InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -235,7 +232,6 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
     }
 
     public static String bytesToHex(byte[] bytes) {
-
         final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
         char[] hexChars = new char[bytes.length * 2];
@@ -248,7 +244,6 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
     }
 
     public void changePropic(View view) {
-
         try {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -265,7 +260,6 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -283,7 +277,7 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
                             .setMessage("Consentire all'app l'accesso alla galleria, negando l'accesso non si potrà caricare una nuova foto.")
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    ActivityCompat.requestPermissions(AreaPersonaleVisitatore.this,
+                                    ActivityCompat.requestPermissions(AreaPersonaleGuida.this,
                                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
                                 }
@@ -313,8 +307,8 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
                 byte[] b = baos.toByteArray();
                 String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
-                MainActivity.visitatore.setPropic(encImage);
-                MainActivity.visitatore.updateDataDb(this);
+                MainActivity.guida.setPropic(encImage);
+                MainActivity.guida.updateDataDb(this);
 
                 Snackbar.make(getWindow().getDecorView().getRootView(), "Foto caricata con successo!",
                         Snackbar.LENGTH_LONG).show();
@@ -331,13 +325,15 @@ public class AreaPersonaleVisitatore extends AppCompatActivity {
         String textCognome = ((EditText) findViewById(R.id.txt_cognome)).getText().toString();
         String textDatan = ((EditText) findViewById(R.id.txt_datan)).getText().toString();
         String textEmail = ((EditText) findViewById(R.id.txt_email)).getText().toString();
+        String textSpecializzazione = ((EditText) findViewById(R.id.txt_specializzazione)).getText().toString();
 
-        boolean check1 = textNome.equals(MainActivity.visitatore.getNome());
-        boolean check2 = textCognome.equals(MainActivity.visitatore.getCognome());
-        boolean check3 = textDatan.equals(MainActivity.visitatore.getShorterDataNascita());
-        boolean check4 = textEmail.equals(MainActivity.visitatore.getEmail());
+        boolean check1 = textNome.equals(MainActivity.guida.getNome());
+        boolean check2 = textCognome.equals(MainActivity.guida.getCognome());
+        boolean check3 = textDatan.equals(MainActivity.guida.getShorterDataNascita());
+        boolean check4 = textEmail.equals(MainActivity.guida.getEmail());
+        boolean check5 = textSpecializzazione.equals(MainActivity.guida.getSpecializzazione());
 
-        if(check1 && check2 && check3 && check4){
+        if(check1 && check2 && check3 && check4 && check5){
             return true;
         } else {
             return false;

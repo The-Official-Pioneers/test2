@@ -30,8 +30,8 @@ import it.uniba.pioneers.testtool.MainActivity;
 
 public class CuratoreMuseale {
 
-    public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
-    SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
+    public static SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
     public String getNome() {
         return nome;
@@ -49,9 +49,18 @@ public class CuratoreMuseale {
         this.cognome = cognome;
     }
 
-    //CODICE MODIFICATO DA IVAN
+    //MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
         this.dataNascita = CuratoreMuseale.format.parse(dataNascita);
+    }
+
+    public Date getDataNascita() {
+        return dataNascita;
+    }
+
+    //Usato per l'area personale degli utenti
+    public String getShorterDataNascita(){
+        return output.format(MainActivity.curatore.getDataNascita());
     }
 
     public static Date addDay(Date date, int i) {
@@ -60,22 +69,11 @@ public class CuratoreMuseale {
         cal.add(Calendar.DAY_OF_YEAR, i);
         return cal.getTime();
     }
-
-    public String getShorterDataNascita(){
-        return output.format(MainActivity.visitatore.getDataNascita());
-    }
-
-    public Date getDataNascita() {
-        return dataNascita;
-    }
+    //MODIFICATO DA IVAN
 
 
     public void setDataNascita(Date dataNascita) {
         this.dataNascita = dataNascita;
-    }
-
-    public void setDataNascita(int dataNascita) {
-        this.dataNascita = new Date(dataNascita);
     }
 
     public String getEmail() {
@@ -164,14 +162,14 @@ public class CuratoreMuseale {
     }
 
     public void setDataFromJSON(JSONObject data) throws JSONException, ParseException {
-        setId(data.getInt(DbContract.CuratoreMusealeEntry.COLUMN_ID));
-        setNome(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_NOME));
-        setCognome(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_COGNOME));
+        this.setId(data.getInt(DbContract.CuratoreMusealeEntry.COLUMN_ID));
+        this.setNome(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_NOME));
+        this.setCognome(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_COGNOME));
         this.setDataNascita(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_DATA_NASCITA));
-        setEmail(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL));
-        setPassword(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD));
-        setPropic(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC));
-        setZona(data.getInt(DbContract.CuratoreMusealeEntry.COLUMN_ZONA));
+        this.setEmail(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL));
+        this.setPassword(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PASSWORD));
+        this.setPropic(data.getString(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC));
+        this.setZona(data.getInt(DbContract.CuratoreMusealeEntry.COLUMN_ZONA));
     }
 
     public JSONObject toJSON() throws JSONException {
