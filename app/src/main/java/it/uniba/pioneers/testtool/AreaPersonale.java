@@ -62,7 +62,7 @@ public class AreaPersonale extends AppCompatActivity {
     }
 
     private void startFrag(){
-        switch(MainActivity.tipo_utente){
+        switch(MainActivity.tipoUtente){
             case "visitatore":
                 startFragVisitatore();
                 break;
@@ -112,7 +112,7 @@ public class AreaPersonale extends AppCompatActivity {
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
 
-        if(MainActivity.tipo_utente.equals("visitatore")){
+        if(MainActivity.tipoUtente.equals("visitatore")){
 
             if(checkForChangesVisitatore(nome,cognome,datanascita,email)){
 
@@ -138,7 +138,7 @@ public class AreaPersonale extends AppCompatActivity {
 
             }
 
-        } else if(MainActivity.tipo_utente.equals("guida")){
+        } else if(MainActivity.tipoUtente.equals("guida")){
 
             EditText specializzazione = (EditText) findViewById(R.id.txt_specializzazione);
 
@@ -168,7 +168,7 @@ public class AreaPersonale extends AppCompatActivity {
                 }
 
             }
-        } else if(MainActivity.tipo_utente.equals("curatore")){
+        } else if(MainActivity.tipoUtente.equals("curatore")){
 
             EditText zona = (EditText) findViewById(R.id.txt_zona);
 
@@ -318,7 +318,7 @@ public class AreaPersonale extends AppCompatActivity {
                 try {
                     String passToSave = digest(newPassword);
 
-                    switch (MainActivity.tipo_utente){
+                    switch (MainActivity.tipoUtente){
                         case "visitatore":
                             updatePasswordVisitatore(passToSave);
                             break;
@@ -454,7 +454,7 @@ public class AreaPersonale extends AppCompatActivity {
                 byte[] b = baos.toByteArray();
                 String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
-                switch (MainActivity.tipo_utente){
+                switch (MainActivity.tipoUtente){
                     case "visitatore":
                         updatePropicVisitatore(encImage);
                         break;
@@ -499,7 +499,7 @@ public class AreaPersonale extends AppCompatActivity {
         String textDatan = ((EditText) findViewById(R.id.txt_datan)).getText().toString();
         String textEmail = ((EditText) findViewById(R.id.txt_email)).getText().toString();
 
-        if(MainActivity.tipo_utente.equals("visitatore")){
+        if(MainActivity.tipoUtente.equals("visitatore")){
 
             boolean check1 = textNome.equals(MainActivity.visitatore.getNome());
             boolean check2 = textCognome.equals(MainActivity.visitatore.getCognome());
@@ -508,7 +508,7 @@ public class AreaPersonale extends AppCompatActivity {
 
             return (check1 && check2 && check3 && check4);
 
-        } else if(MainActivity.tipo_utente.equals("guida")){
+        } else if(MainActivity.tipoUtente.equals("guida")){
 
             boolean check1 = textNome.equals(MainActivity.guida.getNome());
             boolean check2 = textCognome.equals(MainActivity.guida.getCognome());
@@ -520,7 +520,7 @@ public class AreaPersonale extends AppCompatActivity {
 
             return (check1 && check2 && check3 && check4 && check5);
 
-        } else if(MainActivity.tipo_utente.equals("curatore")){
+        } else if(MainActivity.tipoUtente.equals("curatore")){
 
             boolean check1 = textNome.equals(MainActivity.curatore.getNome());
             boolean check2 = textCognome.equals(MainActivity.curatore.getCognome());

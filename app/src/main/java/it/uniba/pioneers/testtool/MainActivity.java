@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         fotoModificata=false;
                                             // da login ottengo id e tipo utente
         //Intent intent = getIntent();
-       // tipoUtente = intent.getStringExtra("typeUser");
+       // tipoUtente = intent.getStringExtra("user");
         tipoUtente="curatore";
         //idUtente = intent.getIntExtra("idUser");
         idUtente=1;
@@ -377,9 +377,9 @@ public class MainActivity extends AppCompatActivity {
         return;
     }
 
-    private class Inserisci extends Thread{
+    private class LeggiOpera extends Thread{
         private final int id;
-        public Inserisci(int id){
+        public LeggiOpera(int id){
             this.id = id;
         }
         public void run(){
@@ -397,13 +397,20 @@ public class MainActivity extends AppCompatActivity {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result != null) {
                 if (result.getContents() != null) {
-                    Inserisci i = new Inserisci(Integer.parseInt(result.getContents()));
+                    LeggiOpera i = new LeggiOpera(Integer.parseInt(result.getContents()));
                     i.setPriority(4);
                     i.start();
                     SystemClock.sleep(1000);
-
-                    Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
-                    startActivity(informazioniOpera);
+                    if(operaSelezionata.getTitolo().equals("") && operaSelezionata.getDescrizione().equals("") ) {
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setMessage("Nessun risultato")
+                                .setPositiveButton(android.R.string.yes, null)
+                                .show();
+                        return;
+                    }else {
+                        Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
+                        startActivity(informazioniOpera);
+                    }
                 } else {
                     new AlertDialog.Builder(MainActivity.this)
                             .setMessage("Nessun risultato")
@@ -414,25 +421,26 @@ public class MainActivity extends AppCompatActivity {
                 super.onActivityResult(requestCode, resultCode, data);
             }
         } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {   // ottego l'immagine scelta dalla galleria
-           // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            Uri targetUri = data.getData();
-            Bitmap bitmap;
-            ImageView oldPropic = (ImageView) fragmentSingolaOpera.img;
-            try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                oldPropic.setImageBitmap(bitmap);
-                oldPropic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",
-                        Snackbar.LENGTH_LONG).show();
-                fotoModificata=true;
+                Uri targetUri = data.getData();
+                Bitmap bitmap;
+                ImageView oldPropic = (ImageView) fragmentSingolaOpera.img;
+                try {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                    oldPropic.setImageBitmap(bitmap);
+                    oldPropic.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            } catch (FileNotFoundException e) {
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
-                        Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",
+                            Snackbar.LENGTH_LONG).show();
+                    fotoModificata = true;
+
+                } catch (FileNotFoundException e) {
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+                            Snackbar.LENGTH_LONG).show();
+                }
             }
-        }
-
     }
 
     //AGGIUNTO DA IVAN
