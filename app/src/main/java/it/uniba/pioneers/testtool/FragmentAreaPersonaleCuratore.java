@@ -79,7 +79,6 @@ public class FragmentAreaPersonaleCuratore extends Fragment {
     }
 
     private void setDataCuratore(){
-
         ImageView propic = (ImageView) getActivity().findViewById(R.id.img_propic);
         EditText nome = (EditText) getActivity().findViewById(R.id.txt_nome);
         EditText cognome = (EditText) getActivity().findViewById(R.id.txt_cognome);
@@ -97,7 +96,6 @@ public class FragmentAreaPersonaleCuratore extends Fragment {
         email.setText(MainActivity.curatore.getEmail());
         datanascita.setText(MainActivity.curatore.getShorterDataNascita());
         zona.setText( String.valueOf(MainActivity.curatore.getZona()) );
-
     }
 
     @Override
