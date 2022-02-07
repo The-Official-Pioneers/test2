@@ -69,8 +69,11 @@
         <activity
             android:name=".InfoOpera"
             android:exported="true"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".AreaPersonale"
+            android:parentActivityName=".MainActivity" />
 
         <activity
             android:name=".AreaPersonaleVisitatore"
@@ -78,11 +81,10 @@
 
         <activity
             android:name=".AreaPersonaleCuratore"
-            android:parentActivityName=".MainActivity"></activity>
-
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AreaPersonaleGuida"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

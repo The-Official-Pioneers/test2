@@ -218,7 +218,7 @@ public class CuratoreMuseale {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
@@ -414,7 +414,7 @@ public class CuratoreMuseale {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
