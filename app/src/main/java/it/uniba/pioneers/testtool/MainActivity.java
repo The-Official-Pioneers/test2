@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             case "curatore":
                 curatore.setId(idUtente);
                 curatore.readDataDb(MainActivity.this);
+                //zona.setId();
                 break;
             case "guida":
                 guida.setId(idUtente);
@@ -148,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+
         Toolbar toolbar = findViewById(R.id.toolBarHome);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -165,6 +167,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        if(operaSelezionata!=null){
+            MainActivity.toggle.setDrawerIndicatorEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -364,6 +370,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onActivityResult(requestCode, resultCode, data);
             }
         } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             Uri targetUri = data.getData();
             Bitmap bitmap;
             ImageView oldPropic = (ImageView) fragmentSingolaOpera.img;
@@ -610,6 +617,7 @@ public class MainActivity extends AppCompatActivity {
                                         .setMessage("Modifica effettuata")
                                         .setPositiveButton(android.R.string.yes, null)
                                         .show();
+                                fotoModificata=false;
                             }
                         }
                     })
