@@ -209,6 +209,7 @@ public class RegisterFragment extends Fragment {
     }
 
     public void addImageToForm(View view){
+        System.out.println("PRENDO");
         try {
             if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -360,6 +361,7 @@ public class RegisterFragment extends Fragment {
                 saveDataInDbCuratore(data);
             break;
             case "visitatore":
+                System.out.println("STO SALVANDO IN VISITATORE");
                 saveDataInDbVisitatore(data);
             break;
             case "guida":
@@ -421,6 +423,7 @@ public class RegisterFragment extends Fragment {
     private void saveDataInDbVisitatore(JSONObject data) {
         try {
             Visitatore visitatore = new Visitatore(data);
+            System.out.println("COMPUTO");
             visitatore.createDataDb(getView().getContext(), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {

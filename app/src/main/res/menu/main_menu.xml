@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="it.uniba.pioneers.testtool.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_baseline_add_circle_24"
+        android:orderInCategory="100"
+        android:title="Prova 1"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:orderInCategory="100"
+        android:title="Prova 1"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_provo"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:orderInCategory="100"
+        android:title="Prova 1"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_provo2"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:orderInCategory="100"
+        android:title="Prova 2"
+        app:showAsAction="never" />
+
+
+</menu>
