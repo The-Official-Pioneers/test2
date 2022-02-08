@@ -64,8 +64,16 @@ public class FragmentListaOpere extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         View view = inflater.inflate(R.layout.fragment_lista_opere, container, false);
 
         lista = new ArrayList<String>();
@@ -94,6 +102,7 @@ public class FragmentListaOpere extends Fragment {
                         .addToBackStack(null)
                         .commit();
             }
+
         });
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(MainActivity.areaSelezionata.getNome());
@@ -106,6 +115,11 @@ public class FragmentListaOpere extends Fragment {
             txtNoOpere.setVisibility(View.GONE);
         }
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     @Override

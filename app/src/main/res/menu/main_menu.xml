@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"    xmlns:app="http://schemas.android.com/apk/res-auto"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="it.uniba.pioneers.testtool.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_baseline_add_circle_24"
+        android:id="@+id/action_save_opera"
+        android:icon="@drawable/ic_baseline_save_24"
         android:orderInCategory="100"
-        android:title="Prova 1"
-        app:showAsAction="always" />
+        android:title="Save"
+        app:showAsAction="always"
+        android:visible="false"/>
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_baseline_settings_24"
+        android:id="@+id/action_delete_opera"
+        android:icon="@drawable/ic_baseline_delete_forever_24"
         android:orderInCategory="100"
-        android:title="Prova 1"
-        app:showAsAction="always" />
+        android:title="Delete"
+        app:showAsAction="always"
+        android:visible="false"/>
 
     <item
-        android:id="@+id/action_provo"
-        android:icon="@drawable/ic_baseline_settings_24"
+        android:id="@+id/action_save_area"
+        android:icon="@drawable/ic_baseline_save_24"
         android:orderInCategory="100"
-        android:title="Prova 1"
-        app:showAsAction="never" />
-
+        android:title="Save"
+        app:showAsAction="always"
+        android:visible="false"/>
     <item
-        android:id="@+id/action_provo2"
-        android:icon="@drawable/ic_baseline_settings_24"
+        android:id="@+id/action_delete_area"
+        android:icon="@drawable/ic_baseline_delete_forever_24"
         android:orderInCategory="100"
-        android:title="Prova 2"
-        app:showAsAction="never" />
-
+        android:title="Delete"
+        app:showAsAction="always"
+        android:visible="false"/>
 
 </menu>

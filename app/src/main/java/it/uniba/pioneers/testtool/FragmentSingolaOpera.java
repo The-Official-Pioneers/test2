@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +73,7 @@ public class FragmentSingolaOpera extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_singola_opera, container, false);
     }
@@ -83,17 +84,7 @@ public class FragmentSingolaOpera extends Fragment {
         titolo = (TextView) getActivity().findViewById(R.id.txt_titolo);
         descrizione = (TextView) getActivity().findViewById(R.id.txt_descrizione);
         img = (ImageView) getActivity().findViewById(R.id.img_foto);
-        Button modifica = (Button) getActivity().findViewById(R.id.btn_modifica);
                                     // modifica visibilità della UI in base al tipo di utente e se l'opera esiste o la si sta creando
-       if(MainActivity.tipoUtente.equals("curatore") && MainActivity.operaSelezionata!=null){
-           FloatingActionButton elimina = (FloatingActionButton) getActivity().findViewById(R.id.btn_del);
-            elimina.setVisibility(View.VISIBLE);
-        }
-       if(!MainActivity.tipoUtente.equals("curatore")){
-           FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
-           modificaFoto.setVisibility(View.GONE);
-       }
-
         Intent info = getActivity().getIntent();
         if (info != null) {
 
@@ -125,14 +116,20 @@ public class FragmentSingolaOpera extends Fragment {
                 editableDescrizione.setVisibility(View.GONE);
                 titolo.append('\n' + MainActivity.operaSelezionata.getTitolo());
                 descrizione.append('\n' + MainActivity.operaSelezionata.getDescrizione());
-                modifica.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MainActivity.fragmentSingolaOpera=null;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         MainActivity.operaSelezionata=null;
+        MainActivity.fragmentSingolaOpera=null;
     }
 }

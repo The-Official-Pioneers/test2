@@ -66,7 +66,7 @@ public class FragmentListaAree extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_aree, container, false);
-
+        setHasOptionsMenu(true);
         lista = new ArrayList<String>();
         for(int i = 0; i<MainActivity.areeZona.size(); i++){
             lista.add(MainActivity.areeZona.get(i).getNome());
