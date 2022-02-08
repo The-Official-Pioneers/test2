@@ -33,8 +33,6 @@ public class Node extends ConstraintLayout {
         super(context);
     }
 
-
-
     public void setCircle(boolean flag){
         if(flag){
             GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this.getRootView().getContext(), R.drawable.shape_circle).mutate();

@@ -47,15 +47,11 @@ public class Grafo extends ConstraintLayout {
 
     WindowManager wm = null;
     Display display = null;
-    Point size = new Point();
+    public Point size = new Point();
 
     public DrawView drawView = null;
 
-    GraphNode actualVisita = null;
-
     public GraphNode visita = null;
-
-    ListaNodi listaNodi = null;
 
     Context context = null;
 
@@ -144,40 +140,13 @@ public class Grafo extends ConstraintLayout {
         this.post(new GraphViewer(this, context, visita));
     }
 
-    public void addSuccessorToNode(GraphNode parentDataNode, GraphNode childDataNode) {
-        //parentDataNode.addSuccessor(childDataNode);
-        //postInvalidate();
-        //this.post(new MyRunnableRefresh2(this, context, visitaIniziale));
-    }
-
     public Grafo(@NonNull Context context) {
         super(context);
-        init(context);
-
-    }
-
-    public Grafo(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
-    }
-
-    public Grafo(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-    }
-
-    public Grafo(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
     }
 
     public Line buildLineGraph(GraphNode start, GraphNode stop) {
         return new Line(start, stop);
-    }
-
-    public void setNodePositions() {
-        AtomicInteger cntZona = new AtomicInteger(1);
-        int numZona = graph.successors(visita).size();
     }
 
     public void initRow() {
@@ -197,11 +166,8 @@ public class Grafo extends ConstraintLayout {
     int height, weight;
 
     public float calcX(int n) {
-        Log.v("size", String.valueOf(size.x));
-        Log.v("sizen", String.valueOf(size.x / n));
         float x = ((float) size.x / n) - fromDpToPx(20);
-        Log.v("X-VALUE", String.valueOf(x));
-        return n > 1 ? x : ((float) size.x / powOfTwo(1)) - fromDpToPx(24);
+        return n > 1 ? x : ((float) size.x / 2) - fromDpToPx(24);
     }
 
     private class GraphViewer implements Runnable {
@@ -221,7 +187,7 @@ public class Grafo extends ConstraintLayout {
             initRow();
             visita.setY(r1);
             visita.setX(calcX(1));
-            visita.size = 200;
+            visita.size = 170;
 
             loadNode();
             visita.drawAllChild();

@@ -378,7 +378,7 @@ public class GraphNode extends Node {
 
         for(GraphNode nodeChild : graphParent.graph.successors(this)){
             if(numSuccessors <= 3){
-                nodeChild.size = 200;
+                nodeChild.size = 170;
             }else if(numSuccessors < 6){
                 nodeChild.size = 150;
             }else if(numSuccessors < 9){
@@ -387,24 +387,30 @@ public class GraphNode extends Node {
                 nodeChild.size = 90;
             }
 
+            float tmpX = 0;
+
+            if(numSuccessors > 1){
+                tmpX = count.getAndIncrement() * ((float)graphParent.size.x/numSuccessors - (float)nodeChild.size/2);
+            }else{
+                tmpX = ((float)graphParent.size.x/2);
+            }
 
             if(type == NodeType.VISITA){
                 nodeChild.setY(graphParent.r2);
-                nodeChild.setX(count.getAndIncrement() * graphParent.calcX(numSuccessors));
-
+                nodeChild.setX(tmpX);
                 graphParent.drawView.linesZona.add(graphParent.buildLineGraph(this, nodeChild));
 
                 nodeChild.draw();
             }else if(type == NodeType.ZONA){
                 nodeChild.setY(graphParent.r3);
-                nodeChild.setX(count.getAndIncrement() * graphParent.calcX(numSuccessors));
+                nodeChild.setX(tmpX);
 
                 graphParent.drawView.linesArea.add(graphParent.buildLineGraph(this, nodeChild));
 
                 nodeChild.draw();
             }else if(type == NodeType.AREA){
                 nodeChild.setY(graphParent.r4);
-                nodeChild.setX(count.getAndIncrement() * graphParent.calcX(numSuccessors));
+                nodeChild.setX(tmpX);
 
                 graphParent.drawView.linesOpera.add(graphParent.buildLineGraph(this, nodeChild));
 

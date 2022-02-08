@@ -2,8 +2,12 @@ package it.uniba.pioneers.testtool.editor.grafo.node.dialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.TypedValue;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,6 +17,8 @@ import org.json.JSONException;
 import java.sql.Date;
 import java.time.Instant;
 
+import it.uniba.pioneers.data.server.Server;
+import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.testtool.editor.grafo.node.GraphNode;
 import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
 
@@ -21,16 +27,16 @@ public class NodeListDialog {
     public static LinearLayout getRow(Context context, String key, String value){
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
         TextView keyLabel = new TextView(context);
-        keyLabel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        keyLabel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         keyLabel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         keyLabel.setPadding(20, 20, 20, 20);
         keyLabel.setText(key);
 
         TextView valueLabel = new TextView(context);
-        valueLabel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        valueLabel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         valueLabel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
         valueLabel.setPadding(20, 20, 20, 20);
         valueLabel.setText(value);
@@ -41,7 +47,7 @@ public class NodeListDialog {
         return layout;
     }
 
-    public static AlertDialog NodeListDialog(Context context, GraphNode nodeObject) {
+    public static AlertDialog nodeListDialog(Context context, GraphNode nodeObject) {
         AlertDialog tmpDialog = getDialog(context, nodeObject);
         return tmpDialog;
     }
@@ -49,9 +55,8 @@ public class NodeListDialog {
     protected static AlertDialog getDialog(Context context, GraphNode nodeObject) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        int id = 0;
         try {
-            id = nodeObject.data.getInt("id");
+            int id = nodeObject.data.getInt("id");
             setDialogTitle(nodeObject, builder, id);
 
             builder.setPositiveButton("Ok", (dialogInterface, i) -> {
@@ -80,9 +85,12 @@ public class NodeListDialog {
     private static void loadDataLayout(Context context, GraphNode nodeObject, AlertDialog tmpDialog) {
         ConstraintLayout alertLayout = new ConstraintLayout(context);
 
+        ScrollView scrollView = new ScrollView(context);
+
         LinearLayout ln = new LinearLayout(context);
         ln.setOrientation(LinearLayout.VERTICAL);
-        alertLayout.addView(ln);
+        scrollView.addView(ln);
+        alertLayout.addView(scrollView);
         try {
             if(nodeObject.type == NodeType.VISITA){
                 String dateTmp = Date.from(Instant.ofEpochSecond(Long.parseLong(nodeObject.data.getString("data")))).toString();
@@ -106,6 +114,8 @@ public class NodeListDialog {
                 ln.addView(getRow(context, "NOME", nome));
 
             }else if(nodeObject.type == NodeType.OPERA){
+                loadImage(context, nodeObject, ln); //CARICAMENTO DINAMICO IMMAGINE TRAMITE STREAM DEL WEBSERVER
+
                 String titolo = nodeObject.data.getString("titolo");
                 ln.addView(getRow(context, "TITOLO", titolo));
 
@@ -128,6 +138,23 @@ public class NodeListDialog {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void loadImage(Context context, GraphNode nodeObject, LinearLayout ln) throws JSONException {
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 2));
+        layout.setBackgroundColor(Color.WHITE);
+
+        WebView webView = new WebView(layout.getContext());
+        webView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1000));
+        webView.setBackgroundColor(Color.WHITE);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //CARICAMENTO DELL'IMMAGINE DALLA CACHE SE POSSIBILE
+        webView.getSettings().setJavaScriptEnabled(false);
+        layout.addView(webView);
+        ln.addView(layout);
+
+        webView.loadUrl(Server.getUrl()+"/opera/image/"+ nodeObject.data.getInt(DbContract.OperaEntry.COLUMN_ID));
     }
 
     public static void setDialogTitle(GraphNode nodeObject, AlertDialog.Builder builder, int id) {
