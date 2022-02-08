@@ -104,7 +104,7 @@ public class Area {
 
     }
 
-    public static void areeZona(Context context, int idZona,  Response.Listener<JSONObject> responseListener){
+    public static void areeZona(Context context, int idZona, Response.Listener<JSONObject> responseListener){
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = Server.getUrl() + "/area/areeZona/";
 

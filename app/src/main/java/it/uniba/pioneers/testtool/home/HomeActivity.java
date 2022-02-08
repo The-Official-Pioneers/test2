@@ -35,10 +35,10 @@ public class HomeActivity extends AppCompatActivity {
                 .commit();
         /*** FINE TRANSAZIONE ***/
     }
-    @Override
-    public void onBackPressed() {
+    //@Override
+   /* public void onBackPressed() {
         this.finishAffinity();
-    }
+    }*/
 
 
     @Override
@@ -66,8 +66,8 @@ public class HomeActivity extends AppCompatActivity {
         //                                                                    => secondo parametro è l'animazione di quando stacco un fragment dal backstack
         //                                                                    => terzo parametro bho
         //                                                                    => quarto parametro è l'animazione di quando faccio un pop dal backsteck ma senza rimuovere il fragment'
-        supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.slide_in_left, 0, 0,
-                android.R.anim.slide_out_right)
+        supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentContainerView4, f).addToBackStack(null)
                 .commit();
         /*** FINE TRANSAZIONE ***/
@@ -90,8 +90,8 @@ public class HomeActivity extends AppCompatActivity {
         //                                                                    => secondo parametro è l'animazione di quando stacco un fragment dal backstack
         //                                                                    => terzo parametro bho
         //                                                                    => quarto parametro è l'animazione di quando faccio un pop dal backsteck ma senza rimuovere il fragment'
-        supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.slide_in_left, 0, 0,
-                android.R.anim.slide_out_right)
+        supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentContainerView4, f, "tag")
                 .addToBackStack(null)
                 .commit();
@@ -130,4 +130,9 @@ public class HomeActivity extends AppCompatActivity {
         fragment.registerComputation(v);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }

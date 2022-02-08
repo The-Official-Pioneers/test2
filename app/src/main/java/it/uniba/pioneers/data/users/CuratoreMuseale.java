@@ -30,7 +30,7 @@ import it.uniba.pioneers.testtool.MainActivity;
 
 public class CuratoreMuseale {
 
-    public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
     public static SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
     public String getNome() {
@@ -220,7 +220,7 @@ public class CuratoreMuseale {
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                     //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Non Ã¨ avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -270,7 +270,7 @@ public class CuratoreMuseale {
 
             long id = cursor.getLong(
                     cursor.getColumnIndexOrThrow(
-                        DbContract.CuratoreMusealeEntry.COLUMN_ID
+                            DbContract.CuratoreMusealeEntry.COLUMN_ID
                     )
             );
 
@@ -416,7 +416,7 @@ public class CuratoreMuseale {
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                     //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Non Ã¨ avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -479,7 +479,7 @@ public class CuratoreMuseale {
                                 if(status){
                                     Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Non Ã¨ avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

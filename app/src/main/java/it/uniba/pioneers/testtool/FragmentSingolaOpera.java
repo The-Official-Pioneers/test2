@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,21 +70,18 @@ public class FragmentSingolaOpera extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_singola_opera, container, false);
-    }
-
-    @Override
-    public void onViewCreated( View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void setDataOpera(){
         titolo = (TextView) getActivity().findViewById(R.id.txt_titolo);
         descrizione = (TextView) getActivity().findViewById(R.id.txt_descrizione);
         img = (ImageView) getActivity().findViewById(R.id.img_foto);
-                                    // modifica visibilità della UI in base al tipo di utente e se l'opera esiste o la si sta creando
+        // modifica visibilità della UI in base al tipo di utente e se l'opera esiste o la si sta creando
+        if(MainActivity.tipoUtente.equals("curatore") && MainActivity.operaSelezionata!=null && !MainActivity.qr){
+        }
+        if(!MainActivity.tipoUtente.equals("curatore")){
+            FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
+            modificaFoto.setVisibility(View.GONE);
+        }
+
         Intent info = getActivity().getIntent();
         if (info != null) {
 
@@ -121,9 +118,28 @@ public class FragmentSingolaOpera extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        setDataOpera();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         MainActivity.fragmentSingolaOpera=null;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        return inflater.inflate(R.layout.fragment_singola_opera, container, false);
+    }
+
+    @Override
+    public void onViewCreated( View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setDataOpera();
     }
 
     @Override
