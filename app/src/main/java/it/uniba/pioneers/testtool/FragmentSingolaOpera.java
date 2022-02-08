@@ -70,29 +70,20 @@ public class FragmentSingolaOpera extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_singola_opera, container, false);
-    }
-
-    @Override
-    public void onViewCreated( View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void setDataOpera(){
         titolo = (TextView) getActivity().findViewById(R.id.txt_titolo);
         descrizione = (TextView) getActivity().findViewById(R.id.txt_descrizione);
         img = (ImageView) getActivity().findViewById(R.id.img_foto);
         Button modifica = (Button) getActivity().findViewById(R.id.btn_modifica);
-                                    // modifica visibilità della UI in base al tipo di utente e se l'opera esiste o la si sta creando
-       if(MainActivity.tipoUtente.equals("curatore") && MainActivity.operaSelezionata!=null){
-           FloatingActionButton elimina = (FloatingActionButton) getActivity().findViewById(R.id.btn_del);
+        // modifica visibilità della UI in base al tipo di utente e se l'opera esiste o la si sta creando
+        if(MainActivity.tipoUtente.equals("curatore") && MainActivity.operaSelezionata!=null && !MainActivity.qr){
+            FloatingActionButton elimina = (FloatingActionButton) getActivity().findViewById(R.id.btn_del);
             elimina.setVisibility(View.VISIBLE);
         }
-       if(!MainActivity.tipoUtente.equals("curatore")){
-           FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
-           modificaFoto.setVisibility(View.GONE);
-       }
+        if(!MainActivity.tipoUtente.equals("curatore")){
+            FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
+            modificaFoto.setVisibility(View.GONE);
+        }
 
         Intent info = getActivity().getIntent();
         if (info != null) {
@@ -131,8 +122,20 @@ public class FragmentSingolaOpera extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        MainActivity.operaSelezionata=null;
+    public void onResume() {
+        super.onResume();
+        setDataOpera();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_singola_opera, container, false);
+    }
+
+    @Override
+    public void onViewCreated( View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setDataOpera();
     }
 }
