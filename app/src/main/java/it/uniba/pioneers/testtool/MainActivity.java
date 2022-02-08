@@ -441,8 +441,17 @@ public class MainActivity extends AppCompatActivity {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     operaSelezionata.setDataFromJSON(response.getJSONObject("data"));
-                                    Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
-                                    startActivity(informazioniOpera);
+                                    //Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
+                                   // startActivity(informazioniOpera);
+                                    fragmentSingolaOpera = new FragmentSingolaOpera();
+                                    androidx.fragment.app.FragmentManager supportFragmentManager;
+                                    supportFragmentManager = getSupportFragmentManager();
+                                    supportFragmentManager.beginTransaction()
+                                            .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                                            .replace(R.id.fragment_container_list, fragmentSingolaOpera)
+                                            .addToBackStack(null)
+                                            .commit();
+
                                 }else{
                                     new AlertDialog.Builder(MainActivity.this)
                                             .setMessage("Nessun risultato")
