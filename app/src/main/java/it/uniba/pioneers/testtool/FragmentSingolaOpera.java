@@ -8,7 +8,6 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +25,7 @@ public class FragmentSingolaOpera extends Fragment {
     public TextView titolo;
     public TextView descrizione;
     public static ImageView img;
+    FragmentSingolaOpera fragmentSingolaOpera;
 
     public static EditText editableTitolo;
     public static EditText editableDescrizione;
@@ -120,12 +120,18 @@ public class FragmentSingolaOpera extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setDataOpera();
+        if(this.fragmentSingolaOpera != null){
+            MainActivity.fragmentSingolaOpera = this.fragmentSingolaOpera;
+        }
+        if(MainActivity.tipoUtente.equals("curatore")){
+            setDataOpera();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        this.fragmentSingolaOpera = MainActivity.fragmentSingolaOpera;
         MainActivity.fragmentSingolaOpera=null;
     }
 

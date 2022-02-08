@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -92,8 +93,11 @@ public class InfoOpera extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {         // controllo uscita senza salvare da barra
-        if (MainActivity.tipoUtente.equals("curatore")) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId()== R.id.action_save_opera) {
+            modificaAggiungiOpera(null);
+        } else if (MainActivity.tipoUtente.equals("curatore")) {  // controllo uscita senza salvare da barra
             if (checkExit()) {
                 new AlertDialog.Builder(this)
                         .setTitle("Uscire?")
@@ -116,6 +120,28 @@ public class InfoOpera extends AppCompatActivity {
             }
         } else {
             return false;
+        }
+        return true;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.action_delete_opera).setVisible(false);
+        menu.findItem(R.id.action_save_opera).setVisible(false);
+        menu.findItem(R.id.action_delete_area).setVisible(false);
+        menu.findItem(R.id.action_save_area).setVisible(false);
+
+        if(MainActivity.operaSelezionata != null && MainActivity.tipoUtente.equals("curatore")){
+            menu.findItem(R.id.action_delete_opera).setVisible(true);
+            menu.findItem(R.id.action_save_opera).setVisible(true);
         }
         return true;
     }
@@ -215,14 +241,12 @@ public class InfoOpera extends AppCompatActivity {
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                     oldPropic.setImageBitmap(bitmap);
-                    oldPropic.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    /*ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
                     byte[] b = baos.toByteArray();
                     String encImage = Base64.encodeToString(b, Base64.DEFAULT);
-
-                    MainActivity.operaSelezionata.setFoto(encImage);
+                    MainActivity.operaSelezionata.setFoto(encImage);*/
                    // Toast.makeText(getApplicationContext(), encImage, Toast.LENGTH_SHORT).show();
 
                     Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",

@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
                 curatore.readDataDb(this);
                 break;
         }
-
                                               // creazione della toolbar
         Toolbar toolbar = findViewById(R.id.toolBarHome);
         setSupportActionBar(toolbar);
@@ -204,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -474,11 +472,19 @@ public class MainActivity extends AppCompatActivity {
             try {
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                 oldPropic.setImageBitmap(bitmap);
-                oldPropic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                //oldPropic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                if(operaSelezionata!=null){
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                    byte[] b = baos.toByteArray();
+                    String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",
-                            Snackbar.LENGTH_LONG).show();
-                    fotoModificata = true;
+                    operaSelezionata.setFoto(encImage);
+                }
+
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",
+                        Snackbar.LENGTH_LONG).show();
+                fotoModificata = true;
 
             } catch (FileNotFoundException e) {
                 Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
