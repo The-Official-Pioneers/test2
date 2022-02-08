@@ -106,8 +106,7 @@ public class MainActivity extends AppCompatActivity {
        // tipoUtente = intent.getStringExtra("user");
         tipoUtente="curatore";
         //idUtente = intent.getIntExtra("idUser");
-        idUtente=1;
-
+        idUtente=5;
         switch(tipoUtente){    // caricamento della home corretta
             case "curatore":
                 FragmentHomeCuratore fragC = new FragmentHomeCuratore();
@@ -147,6 +146,36 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        switch(tipoUtente){ // lettura dati utente da db per popolare l'area personales
+            case "visitatore":
+                visitatore.setId(idUtente);
+                visitatore.readDataDb(this, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Boolean status =  response.getBoolean("status");
+                            if(status){
+                                MainActivity.visitatore.setDataFromJSON(response.getJSONObject("data"));
+                                //Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(MainActivity.this, "Non e' stato possibile leggere i dati dal db", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException | ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                break;
+            case "guida":
+                guida.setId(idUtente);
+                guida.readDataDb(this);
+                break;
+            case "curatore":
+                curatore.setId(idUtente);
+                curatore.readDataDb(this);
+                break;
+        }
+
                                               // creazione della toolbar
         Toolbar toolbar = findViewById(R.id.toolBarHome);
         setSupportActionBar(toolbar);
@@ -168,37 +197,6 @@ public class MainActivity extends AppCompatActivity {
         if(operaSelezionata!=null){
             toggle.setDrawerIndicatorEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-
-        switch (tipoUtente){         // lettura dati utente da db per popolare l'area personales
-            case "curatore":
-                curatore.setId(idUtente);
-                curatore.readDataDb(MainActivity.this);
-                break;
-            case "guida":
-                guida.setId(idUtente);
-                guida.readDataDb(MainActivity.this);
-                break;
-            case "visitatore":
-                visitatore.setId(idUtente);
-                visitatore.readDataDb(MainActivity.this, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Boolean status =  response.getBoolean("status");
-                            if(status){
-                                visitatore.setDataFromJSON(response.getJSONObject("data"));
-                                Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(MainActivity.this, "Non e' stato possibile leggere i dati dal db", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException | ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                break;
         }
     }
 
@@ -261,16 +259,17 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     super.onBackPressed();
                 }
-            }else{
-               /* new AlertDialog.Builder(this)
+            }else if(areeZona==null){
+                new AlertDialog.Builder(this)
                         .setTitle("Uscire?")
                         .setMessage("Sei sicuro di voler uscire dall'app?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 idUtente = 0;
                                 tipoUtente = "";
-                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                startActivity(intent);
+
+                                finish();
+                               //startActivity(intent);
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -279,7 +278,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();*/
+                        .show();
+            }else{
                 super.onBackPressed();
             }
         }
@@ -458,11 +458,11 @@ public class MainActivity extends AppCompatActivity {
                             Snackbar.LENGTH_LONG).show();
                     fotoModificata = true;
 
-                } catch (FileNotFoundException e) {
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
-                            Snackbar.LENGTH_LONG).show();
-                }
+            } catch (FileNotFoundException e) {
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+                        Snackbar.LENGTH_LONG).show();
             }
+        }
     }
 
     //AGGIUNTO DA IVAN
@@ -472,6 +472,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gestisciMuseo(View view) {
+        Toast.makeText(getApplicationContext(), ""+curatore.getZona(), Toast.LENGTH_SHORT).show();
+
         if (tipoUtente.equals("ospite")) {   // controllo sul tipo di utente
             new AlertDialog.Builder(this)
                     .setTitle("Accedi")
@@ -480,7 +482,7 @@ public class MainActivity extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         } else {    // ottengo tutte le aree del museo del curatore corrente
-            Area.areeZona(this, 10, new Response.Listener<JSONObject>() {
+            Area.areeZona(this, (int) curatore.getZona(), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
@@ -502,7 +504,7 @@ public class MainActivity extends AppCompatActivity {
                                     .addToBackStack(null)
                                     .commit();
                         } else {
-                            Toast.makeText(getApplicationContext(), "ciao", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "Problemi con la lettura dal DB", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException | ParseException e) {
                         e.printStackTrace();

@@ -29,7 +29,8 @@ import it.uniba.pioneers.testtool.MainActivity;
 
 public class Guida {
 
-    public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    //public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
     public static SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
     public long getId() {
