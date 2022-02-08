@@ -179,13 +179,13 @@ public class GraphNode extends Node {
     private void setOnClickListener(Grafo graphParent, NodeType type) {
         if(type != NodeType.VISITA && type != NodeType.OPERA){
             setOnClickListener(view -> {//THIS (View)
-                extracted(graphParent, type, (GraphNode) view);
+                setNodeSize(graphParent, type, (GraphNode) view);
             });
         }
 
         if(type != NodeType.OPERA){
             setOnClickListener(view -> {
-                extracted(graphParent, type, (GraphNode) view);
+                setNodeSize(graphParent, type, (GraphNode) view);
 
                 if(self.type == NodeType.VISITA){
                     Visita tmpVisita = new Visita();
@@ -308,7 +308,7 @@ public class GraphNode extends Node {
         }
     }
 
-    private void extracted(Grafo graphParent, NodeType type, GraphNode view) {
+    private void setNodeSize(Grafo graphParent, NodeType type, GraphNode view) {
         inizializated = true;
 
         Log.v("ckck", String.valueOf(clicked));
@@ -377,23 +377,9 @@ public class GraphNode extends Node {
         AtomicInteger count = new AtomicInteger(1);
 
         for(GraphNode nodeChild : graphParent.graph.successors(this)){
-            if(numSuccessors <= 3){
-                nodeChild.size = 170;
-            }else if(numSuccessors < 6){
-                nodeChild.size = 150;
-            }else if(numSuccessors < 9){
-                nodeChild.size = 120;
-            }else {
-                nodeChild.size = 90;
-            }
+            setNodeSize(numSuccessors, nodeChild);
 
-            float tmpX = 0;
-
-            if(numSuccessors > 1){
-                tmpX = count.getAndIncrement() * ((float)graphParent.size.x/numSuccessors - (float)nodeChild.size/2);
-            }else{
-                tmpX = ((float)graphParent.size.x/2);
-            }
+            float tmpX = getTmpX(numSuccessors, count, nodeChild);
 
             if(type == NodeType.VISITA){
                 nodeChild.setY(graphParent.r2);
@@ -419,6 +405,49 @@ public class GraphNode extends Node {
                 nodeChild.draw();
             }
         }
+    }
+
+    private void setNodeSize(int numSuccessors, GraphNode nodeChild) {
+
+        switch (numSuccessors){
+            case 1:
+            case 2:
+            case 3:
+                nodeChild.size = 170;
+                break;
+            case 4:
+            case 5:
+            case 6:
+                nodeChild.size = 150;
+                break;
+            case 7:
+                nodeChild.size = 130;
+                break;
+            case 8:
+            case 9:
+            case 10:
+                nodeChild.size = 100;
+                break;
+            case 11:
+            case 12:
+            case 13:
+                nodeChild.size = 80;
+                break;
+            default:
+                nodeChild.size = 60;
+                break;
+        }
+    }
+
+    private float getTmpX(int numSuccessors, AtomicInteger count, GraphNode nodeChild) {
+        float tmpX;
+
+        if(numSuccessors > 1){
+            tmpX = (count.getAndIncrement() * (((float)graphParent.size.x / (numSuccessors + 1)))) - (float)nodeChild.size/2;
+        }else{
+            tmpX = ((float)graphParent.size.x/2 - (float)nodeChild.size/2);
+        }
+        return tmpX;
     }
 
 
@@ -448,7 +477,6 @@ public class GraphNode extends Node {
                 .setLayoutParams(new LinearLayout.LayoutParams(size, size));
 
         setVisibility(VISIBLE);
-
     }
 
     public void hide(){

@@ -149,7 +149,7 @@ public class NodeListDialog {
         WebView webView = new WebView(layout.getContext());
         webView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1000));
         webView.setBackgroundColor(Color.WHITE);
-        webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //CARICAMENTO DELL'IMMAGINE DALLA CACHE SE POSSIBILE
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE); //CARICAMENTO DELL'IMMAGINE DALLA CACHE SE POSSIBILE
         webView.getSettings().setJavaScriptEnabled(false);
         layout.addView(webView);
         ln.addView(layout);
