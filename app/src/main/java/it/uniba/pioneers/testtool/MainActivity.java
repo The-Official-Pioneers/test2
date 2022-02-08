@@ -108,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
         //idUtente = intent.getIntExtra("idUser");
         idUtente=1;
 
+        gestioneToolBar();
+
         switch(tipoUtente){    // caricamento della home corretta
             case "curatore":
                 FragmentHomeCuratore fragC = new FragmentHomeCuratore();
@@ -142,6 +144,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    private void gestioneToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolBarHome);
+        toolbar.setTitle("E-culture Tool");
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+        toolbar.setLogo(R.mipmap.ic_app_menu);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
+        setSupportActionBar(toolbar);
     }
 
     @Override

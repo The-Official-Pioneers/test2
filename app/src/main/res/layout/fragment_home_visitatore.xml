@@ -1,87 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/txt_input_cerca"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.FragmentHomeVisitatore">
+    tools:context=".home.FragmentHomeVisitatore"
+    android:orientation="vertical">
+
 
     <LinearLayout
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/text_cerca"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/login_edittext"
-            android:drawableLeft="@drawable/ic_baseline_search_24"
-            android:gravity="center"
-            android:hint="Cerca ..."
-            android:inputType="text"
-            tools:ignore="TextContrastCheck" />
-
-
-        <Button
-            android:id="@+id/btn_crea_visita"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="Crea Visita"
-            android:textColor="#212121" />
-
-        <Button
-            android:id="@+id/btn_tue_visite"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_margin="5dp"
-            android:text="Le tue visite"
-            android:textColor="#212121" />
-
-        <Button
-            android:id="@+id/btn_visite_predefinite"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_margin="5dp"
-            android:text="Visite predefinite"
-            android:textColor="#212121" />
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/qr_card_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="5dp"
-            >
+            android:layout_width="160dp"
+            android:layout_height="190dp"
+            android:layout_margin="10dp">
 
-            <ImageButton
-                android:id="@+id/btn_interagisci"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="25dp"
-                android:contentDescription="Interagisci"
-                android:onClick="scannerQr"
-                android:src="@drawable/ic_baseline_qr_code_scanner_24" />
-
-            <TextView
-                android:id="@+id/text_interagisci"
+            <LinearLayout
+                android:id="@+id/gestione_museo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="interagisci con l'opera"
-                android:gravity="center_horizontal"
-                android:text="Interagisci con l'opera"
-                android:textColor="#212121"
-                android:textSize="14sp" />
+                android:gravity="center"
+                android:clickable="true"
+                android:foreground="?selectableItemBackground"
+                android:onClick="gestisciMuseo"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/cercle_bg_purple"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_baseline_museum_24">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Gestisci museo"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/lightgray">
+
+                </View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Gestisci il tuo museo"
+                    android:textColor="@android:color/darker_gray" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="160dp"
+            android:layout_height="190dp"
+            android:layout_margin="10dp">
+
+            <LinearLayout
+                android:id="@+id/scanner_qr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:onClick="scannerQr"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/cercle_bg_pink"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_baseline_qr_code_24">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Scanner QR"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/lightgray">
+
+                </View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Scansiona la tua opera preferita"
+                    android:textColor="@android:color/darker_gray" />
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="160dp"
+            android:layout_height="190dp"
+            android:layout_margin="10dp">
+
+            <LinearLayout
+                android:id="@+id/crea_percorso"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:clickable="true"
+                android:foreground="?selectableItemBackground"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/cercle_bg_green"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_baseline_create_24">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Crea percorso"
+                    android:onClick="goEditorActivity"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/lightgray">
+
+                </View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Crea un tuo percorso personalizzato"
+                    android:textColor="@android:color/darker_gray" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="160dp"
+            android:layout_height="190dp"
+            android:layout_margin="10dp">
+
+            <LinearLayout
+                android:id="@+id/tuoi_percorsi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:clickable="true"
+                android:foreground="?selectableItemBackground"
+                android:onClick="iTuoiPercorsi"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/cercle_bg_yellow"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_baseline_flag_24">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="I tuoi percorsi"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/lightgray">
+
+                </View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Mostra tutti i tuoi percorsi"
+                    android:textColor="@android:color/darker_gray" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</LinearLayout>
