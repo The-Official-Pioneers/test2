@@ -190,7 +190,9 @@ public class Grafo extends ConstraintLayout {
             visita.size = 170;
 
             loadNode();
-            visita.drawAllChild();
+            visita.draw();
+            visita.setCircle(false);
+            //visita.drawAllChild();
         }
 
         private void loadNode() {

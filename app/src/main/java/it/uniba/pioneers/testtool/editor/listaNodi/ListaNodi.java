@@ -2,21 +2,12 @@ package it.uniba.pioneers.testtool.editor.listaNodi;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.icu.util.MeasureUnit;
-import android.util.AttributeSet;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,52 +38,34 @@ public class ListaNodi extends HorizontalScrollView {
         scrollView = (HorizontalScrollView) this.getChildAt(0);
         linearLayout = (LinearLayout) this.scrollView.getChildAt(0);
         buttonAdd = (Button) this.linearLayout.getChildAt(0);
-        buttonAdd.setText("Nascondi Duplicati");
+        buttonAdd.setText("Mostra tutti");
         buttonAdd.setWidth(200);
         buttonAdd.setTextSize(8);
         buttonAdd.setBackgroundColor(Color.DKGRAY);
 
+        hideDuplicate();
         try {
             displayGrafo = getRootView().findViewById(R.id.displayGrafo);
 
             JSONObject object = new JSONObject();
-
-            object.put("visita_id", 3);
-            object.put("id", 66);
-            object.put("area", 3);
-            object.put("descrizione", "Fake descrizione");
-            object.put("titolo", "Fake titolo");
-            object.put("altezza", 3000);
-            object.put("larghezza", 3000);
-            object.put("profondita", 3000);
+            hideDuplicate(); //TODO RISOLVERE PROBLEMA
 
             buttonAdd.setOnClickListener(view1 -> {
-                if(buttonAdd.getText().equals("Nascondi Duplicati")){
-                    buttonAdd.setText("Mostra Tutti");
+                if(buttonAdd.getText().equals("Mostra tutti")){
+                    buttonAdd.setText("Nascondi Duplicati");
                     buttonAdd.setBackgroundColor(Color.LTGRAY);
                     buttonAdd.setTextColor(Color.BLACK);
-
-                    for(GraphNode node : parentNode.graphParent.graph.successors(parentNode)){
-                            for(ListNode listNode : listNodeArrayList){
-                                try {
-                                    if(node.data.getInt("id") == listNode.data.getInt("id")){
-                                        listNode.setVisibility(GONE);
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                    }
-
-                }else{
-                    buttonAdd.setText("Nascondi Duplicati");
-                    buttonAdd.setBackgroundColor(Color.DKGRAY);
-                    buttonAdd.setTextColor(Color.WHITE);
 
                     for(ListNode listNode : listNodeArrayList){
                         listNode.setCircle(false);
                         listNode.setVisibility(VISIBLE);
                     }
+                }else{
+                    buttonAdd.setText("Mostra tutti");
+                    buttonAdd.setBackgroundColor(Color.DKGRAY);
+                    buttonAdd.setTextColor(Color.WHITE);
+
+                    hideDuplicate();
                 }
             });
 
@@ -101,9 +74,24 @@ public class ListaNodi extends HorizontalScrollView {
         }
     }
 
+    private void hideDuplicate() {
+        for(GraphNode node : parentNode.graphParent.graph.successors(parentNode)){
+            for(ListNode listNode : listNodeArrayList){
+                try {
+                    if(node.data.getInt("id") == listNode.data.getInt("id")){
+                        listNode.setVisibility(GONE);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public void addNode(ListNode listNode){
         listNodeArrayList.add(listNode);
         linearLayout.addView(listNode);
+        hideDuplicate();
     }
 
     public void removeNode(int id){
