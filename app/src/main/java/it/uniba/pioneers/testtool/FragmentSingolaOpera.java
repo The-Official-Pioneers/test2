@@ -8,7 +8,6 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +25,7 @@ public class FragmentSingolaOpera extends Fragment {
     public TextView titolo;
     public TextView descrizione;
     public static ImageView img;
+    FragmentSingolaOpera fragmentSingolaOpera;
 
     public static EditText editableTitolo;
     public static EditText editableDescrizione;
@@ -70,31 +70,17 @@ public class FragmentSingolaOpera extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_singola_opera, container, false);
-    }
-
-    @Override
-    public void onViewCreated( View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    public void setDataOpera(){
         titolo = (TextView) getActivity().findViewById(R.id.txt_titolo);
         descrizione = (TextView) getActivity().findViewById(R.id.txt_descrizione);
         img = (ImageView) getActivity().findViewById(R.id.img_foto);
-        Button modifica = (Button) getActivity().findViewById(R.id.btn_modifica_opera);
-
-       if(MainActivity.tipoUtente.equals("curatore") && MainActivity.operaSelezionata!=null){
-           FloatingActionButton elimina = (FloatingActionButton) getActivity().findViewById(R.id.btn_del);
-            elimina.setVisibility(View.VISIBLE);
+        // modifica visibilità della UI in base al tipo di utente e se l'opera esiste o la si sta creando
+        if(MainActivity.tipoUtente.equals("curatore") && MainActivity.operaSelezionata!=null && !MainActivity.qr){
         }
-       if(!MainActivity.tipoUtente.equals("curatore")){
-           FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
-           modificaFoto.setVisibility(View.GONE);
-       }
-
+        if(!MainActivity.tipoUtente.equals("curatore")){
+            FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
+            modificaFoto.setVisibility(View.GONE);
+        }
 
         Intent info = getActivity().getIntent();
         if (info != null) {
@@ -103,10 +89,6 @@ public class FragmentSingolaOpera extends Fragment {
                 editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
                 editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
 
-                if (savedInstanceState != null) {
-                    editableTitolo.setText(savedInstanceState.getString("titolo"));
-                    editableDescrizione.setText(savedInstanceState.getString("descrizione"));
-                }
                 if(MainActivity.operaSelezionata!=null) {
                     byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -131,14 +113,57 @@ public class FragmentSingolaOpera extends Fragment {
                 editableDescrizione.setVisibility(View.GONE);
                 titolo.append('\n' + MainActivity.operaSelezionata.getTitolo());
                 descrizione.append('\n' + MainActivity.operaSelezionata.getDescrizione());
-                modifica.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(this.fragmentSingolaOpera != null){
+            MainActivity.fragmentSingolaOpera = this.fragmentSingolaOpera;
+        }
+        if(MainActivity.tipoUtente.equals("curatore")){
+            setDataOpera();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.fragmentSingolaOpera = MainActivity.fragmentSingolaOpera;
+        MainActivity.fragmentSingolaOpera=null;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        return inflater.inflate(R.layout.fragment_singola_opera, container, false);
+    }
+
+    @Override
+    public void onViewCreated( View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setDataOpera();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         MainActivity.operaSelezionata=null;
+        MainActivity.fragmentSingolaOpera=null;
+        //MainActivity.qr=false;
+        if(MainActivity.qr){
+            ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            MainActivity.toggle.setDrawerIndicatorEnabled(true);
+            ((MainActivity)getActivity()).getSupportActionBar().setTitle("TestTool");
+            MainActivity.operaSelezionata=null;
+            MainActivity.qr=false;
+        }
     }
 }

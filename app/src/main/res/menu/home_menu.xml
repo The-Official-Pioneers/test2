@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
     <item android:title="General">
@@ -8,20 +9,11 @@
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_baseline_person_24"
                 android:onClick="goToPersonalArea"
-                android:title="Profile" />
+                android:title="Profile"
+                app:showAsAction="always" />
         </menu>
     </item>
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_baseline_settings_24"
-            android:title="Settings" />
-        <item
-            android:id="@+id/nav_help"
-            android:icon="@drawable/ic_baseline_help_outline_24"
-            android:title="Help" />
-    </group>
 
 
 </menu>

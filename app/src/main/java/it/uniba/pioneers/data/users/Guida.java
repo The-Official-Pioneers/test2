@@ -30,6 +30,7 @@ import it.uniba.pioneers.testtool.R;
 
 public class Guida {
 
+    //public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
     public static SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -533,6 +534,34 @@ public class Guida {
 
             } catch (Exception e) {
             }
+        }
+    }
+
+    public void controllEmail(Context context, Response.Listener<JSONObject> responseListener) {
+        try {
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/guida/emailControll/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL, getEmail());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Guida self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    responseListener, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+
+        } catch (Exception e) {
         }
     }
 }

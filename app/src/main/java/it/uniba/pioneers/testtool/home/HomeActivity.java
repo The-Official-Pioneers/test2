@@ -2,6 +2,7 @@ package it.uniba.pioneers.testtool.home;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -32,9 +33,25 @@ public class HomeActivity extends AppCompatActivity {
                 .add(R.id.fragmentContainerView4, f).addToBackStack(null)
                 .commit();
         /*** FINE TRANSAZIONE ***/
-
-
     }
+    //@Override
+   /* public void onBackPressed() {
+        this.finishAffinity();
+    }*/
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     public void onClickButton(View view) {
 
@@ -47,8 +64,8 @@ public class HomeActivity extends AppCompatActivity {
         //                                                                    => secondo parametro è l'animazione di quando stacco un fragment dal backstack
         //                                                                    => terzo parametro bho
         //                                                                    => quarto parametro è l'animazione di quando faccio un pop dal backsteck ma senza rimuovere il fragment'
-        supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.slide_in_left, 0, 0,
-                android.R.anim.slide_out_right)
+        supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentContainerView4, f).addToBackStack(null)
                 .commit();
         /*** FINE TRANSAZIONE ***/
@@ -68,8 +85,8 @@ public class HomeActivity extends AppCompatActivity {
         //                                                                    => secondo parametro è l'animazione di quando stacco un fragment dal backstack
         //                                                                    => terzo parametro bho
         //                                                                    => quarto parametro è l'animazione di quando faccio un pop dal backsteck ma senza rimuovere il fragment'
-        supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.slide_in_left, 0, 0,
-                android.R.anim.slide_out_right)
+        supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentContainerView4, f, "tag")
                 .addToBackStack(null)
                 .commit();
@@ -100,8 +117,17 @@ public class HomeActivity extends AppCompatActivity {
         return getContentResolver().openInputStream(imageUri);
     }
     public void registerButton(View v){
+        System.out.println("SONO ENTRATO QUI");
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
+       /* if(fragment.controllData(v)){
+
+        } */
         fragment.registerComputation(v);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }

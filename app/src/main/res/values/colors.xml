@@ -17,4 +17,8 @@
     <color name="black_overlay">#66000000</color>
     <color name="light_blue_50">#FFE1F5FE</color>
     <color name="light_blue_200">#FF81D4FA</color>
+    <color name="alto">#DAD7D7</color>
+    <color name="shuttle_gary">#556267</color>
+    <color name="burnt_sienna">#E58845</color>
+    <color name="cranberry">#D75871</color>
 </resources>

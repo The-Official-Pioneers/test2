@@ -64,8 +64,16 @@ public class FragmentListaOpere extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         View view = inflater.inflate(R.layout.fragment_lista_opere, container, false);
 
         lista = new ArrayList<String>();
@@ -88,16 +96,16 @@ public class FragmentListaOpere extends Fragment {
                 MainActivity.currOpera=i;
                 FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 MainActivity.fragmentSingolaOpera = new FragmentSingolaOpera();
-                fragmentManager.beginTransaction()
+                fragmentManager.beginTransaction()          // caricamento del fragment che mostrera l'opera selezionata
                         .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, MainActivity.fragmentSingolaOpera)
                         .addToBackStack(null)
                         .commit();
             }
+
         });
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(MainActivity.areaSelezionata.getNome());
-        // Inflate the layout for this fragment
         return view;
     }
     public void onViewCreated( View view, Bundle savedInstanceState) {
@@ -110,11 +118,16 @@ public class FragmentListaOpere extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         MainActivity.opereArea=null;
         MainActivity.operaSelezionata=null;
-        MainActivity.fotoModificata=false;
+        MainActivity.fotoModificata=false;               // modifica della toolbar in base a dove si trova l'utente
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tuo Museo");
     }
 }

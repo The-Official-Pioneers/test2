@@ -50,7 +50,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="5dp"
                 android:scrollbars="vertical"
-                android:text="@string/nome_singola_opera"
+                android:text="Nome: "
                 android:textSize="25dp" />
 
             <EditText
@@ -72,7 +72,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="5dp"
                 android:scrollbars="vertical"
-                android:text="@string/descrizione_singola_opera"
+                android:text="Descrizione: "
                 android:textSize="25dp" />
 
 
@@ -93,31 +93,7 @@
                 android:layout_height="match_parent"
                 android:gravity="bottom|center|fill_vertical"
                 android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_modifica_opera"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_margin="5dp"
-                    android:onClick="modificaOpera"
-                    android:text="@string/btn_salva_singola"
-                    android:visibility="visible" />
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_del"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:elevation="16dp"
-        android:onClick="eliminaOpera"
-        android:src="@android:drawable/ic_delete"
-        android:visibility="gone"
-        tools:ignore="SpeakableTextPresentCheck" />
-
 </FrameLayout>

@@ -490,4 +490,32 @@ public class Visitatore {
             }
         }
     }
+
+    public void controllEmail(Context context, Response.Listener<JSONObject> responseListener) {
+        try {
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Server.getUrl() + "/visitatore/emailControll/";
+
+            JSONObject data = new JSONObject();
+            try {
+                data.put(DbContract.CuratoreMusealeEntry.COLUMN_EMAIL, getEmail());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Visitatore self = this;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    responseListener, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    System.out.println(error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+
+        } catch (Exception e) {
+        }
+    }
 }

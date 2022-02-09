@@ -3,6 +3,8 @@ package it.uniba.pioneers.testtool.home.ui;
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.GONE;
 
+import static java.lang.Thread.sleep;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +14,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,21 +38,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import com.android.volley.Response;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
@@ -52,6 +55,11 @@ import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.home.HomeActivity;
 import it.uniba.pioneers.widget.WidgetRegister;
+
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,6 +109,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -122,6 +131,11 @@ public class RegisterFragment extends Fragment {
         ln.setVisibility(View.GONE);
 
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     public void setAnimationToButton(View view){
@@ -195,6 +209,7 @@ public class RegisterFragment extends Fragment {
     }
 
     public void addImageToForm(View view){
+        System.out.println("PRENDO");
         try {
             if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -274,58 +289,59 @@ public class RegisterFragment extends Fragment {
 
 
     public void registerComputation(View view){
-
-            JSONObject data = new JSONObject();
-            View v =  (View) view.getParent();
-            EditText nomeForm =  v.findViewById(R.id.nomeFormRef);
-            EditText cognomeForm =  v.findViewById(R.id.cognomeFormRef);
-            EditText emailForm =  v.findViewById(R.id.emailFormRef);
-            EditText passwordForm =  v.findViewById(R.id.passwordFormRef);
-            EditText specializzazione =  v.findViewById(R.id.specializzazione);
-            EditText zonaForm =  v.findViewById(R.id.tipoZona);
-            EditText nomeZonaForm =  v.findViewById(R.id.nomeZona);
-            EditText cittaZonaForm =  v.findViewById(R.id.cittaZona);
-
-            Spinner mySpinnerDay = (Spinner) v.findViewById(R.id.day_spinner);
-            String dayText = mySpinnerDay.getSelectedItem().toString();
-
-            Spinner mySpinnerMounth = (Spinner) v.findViewById(R.id.mounth_spinner);
-            String mounthtext = mySpinnerMounth.getSelectedItem().toString();
-
-            Spinner mySpinnerYear = (Spinner) v.findViewById(R.id.years_spinner);
-            String yearText = mySpinnerYear.getSelectedItem().toString();
-
-            String date = dayText + "/" + mounthtext + "/" + yearText;
-            Date expiredDate = stringToDate(date, "dd/MM/yyyy");
-
-            TextView imgText = v.findViewById(R.id.Base64ImgString);
-            String uriString = imgText.getText().toString();
-
-            try {
-                data.put("id", 0);
-                data.put("nome", nomeForm.getText().toString());
-                data.put("cognome",cognomeForm.getText().toString());
-                data.put("email",emailForm.getText().toString());
-                data.put("password", passwordForm.getText().toString());
-                data.put("data_nascita", date);
-                data.put("propic", uriString);
-                if(userType == "curatore"){
-                    data.put("tipoZona", zonaForm.getText().toString());
-                    data.put("nomeZona", nomeZonaForm.getText().toString());
-                    data.put("cittaZona", cittaZonaForm.getText().toString());
-                }
-                if(userType == "guida"){
-                    data.put("specializzazione", specializzazione.getText().toString());
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            saveDataInDb(userType, data);
-
+        JSONObject data = createDataContainer(view);
+        saveDataInDb(userType, data);
     }
 
-    private void registerComputationGuida(View view) {
+
+    private JSONObject createDataContainer(View view) {
+        JSONObject data = new JSONObject();
+        View v =  (View) view.getParent();
+        EditText nomeForm =  v.findViewById(R.id.nomeFormRef);
+        EditText cognomeForm =  v.findViewById(R.id.cognomeFormRef);
+        EditText emailForm =  v.findViewById(R.id.emailFormRef);
+        EditText passwordForm =  v.findViewById(R.id.passwordFormRef);
+        EditText specializzazione =  v.findViewById(R.id.specializzazione);
+        EditText zonaForm =  v.findViewById(R.id.tipoZona);
+        EditText nomeZonaForm =  v.findViewById(R.id.nomeZona);
+        EditText cittaZonaForm =  v.findViewById(R.id.cittaZona);
+
+        Spinner mySpinnerDay = (Spinner) v.findViewById(R.id.day_spinner);
+        String dayText = mySpinnerDay.getSelectedItem().toString();
+
+        Spinner mySpinnerMounth = (Spinner) v.findViewById(R.id.mounth_spinner);
+        String mounthtext = mySpinnerMounth.getSelectedItem().toString();
+
+        Spinner mySpinnerYear = (Spinner) v.findViewById(R.id.years_spinner);
+        String yearText = mySpinnerYear.getSelectedItem().toString();
+
+        String date = dayText + "/" + mounthtext + "/" + yearText;
+        Date expiredDate = stringToDate(date, "dd/MM/yyyy");
+
+        TextView imgText = v.findViewById(R.id.Base64ImgString);
+        String uriString = imgText.getText().toString();
+
+        try {
+            data.put("id", 0);
+            data.put("nome", nomeForm.getText().toString());
+            data.put("cognome",cognomeForm.getText().toString());
+            data.put("email",emailForm.getText().toString());
+            data.put("password", passwordForm.getText().toString());
+            data.put("data_nascita", date);
+            data.put("propic", uriString);
+            if(userType == "curatore"){
+                data.put("tipoZona", zonaForm.getText().toString());
+                data.put("nomeZona", nomeZonaForm.getText().toString());
+                data.put("cittaZona", cittaZonaForm.getText().toString());
+            }
+            if(userType == "guida"){
+                data.put("specializzazione", specializzazione.getText().toString());
+            }
+            return data;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private Date stringToDate(String aDate,String aFormat) {
@@ -345,6 +361,7 @@ public class RegisterFragment extends Fragment {
                 saveDataInDbCuratore(data);
             break;
             case "visitatore":
+                System.out.println("STO SALVANDO IN VISITATORE");
                 saveDataInDbVisitatore(data);
             break;
             case "guida":
@@ -353,7 +370,7 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    private boolean controllEmptyDataCuratore() {
+    /*private boolean controllEmptyDataCuratore() {
         View v =  getView();
         EditText nomeForm =  v.findViewById(R.id.nomeFormRef);
         EditText cognomeForm =  v.findViewById(R.id.cognomeFormRef);
@@ -374,7 +391,7 @@ public class RegisterFragment extends Fragment {
         String date = dayText + "/" + mounthtext + "/" + yearText;
 
         return (nomeForm.getText().toString() != "");
-    }
+    } */
 
     private void saveDataInDbGuida(JSONObject data) {
         try {
@@ -390,7 +407,7 @@ public class RegisterFragment extends Fragment {
                             intent.putExtra("User", userType);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getView().getContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), HomeActivity.class);
                             startActivity(intent);
                         }
@@ -406,6 +423,7 @@ public class RegisterFragment extends Fragment {
     private void saveDataInDbVisitatore(JSONObject data) {
         try {
             Visitatore visitatore = new Visitatore(data);
+            System.out.println("COMPUTO");
             visitatore.createDataDb(getView().getContext(), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -417,7 +435,7 @@ public class RegisterFragment extends Fragment {
                             intent.putExtra("User", userType);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getView().getContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), HomeActivity.class);
                             startActivity(intent);
                         }
@@ -462,7 +480,7 @@ public class RegisterFragment extends Fragment {
                                             intent.putExtra("idUser", curatore.getId());
                                             startActivity(intent);
                                         } else {
-                                            Toast.makeText(getView().getContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getView().getContext(), HomeActivity.class);
                                             startActivity(intent);
                                         }
@@ -472,7 +490,7 @@ public class RegisterFragment extends Fragment {
                                 }
                             });
                         } else {
-                            Toast.makeText(getView().getContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), HomeActivity.class);
                             startActivity(intent);
                         }
@@ -484,4 +502,93 @@ public class RegisterFragment extends Fragment {
         }catch(Exception e){ }
     }
 
+    public boolean controllData(View v) {
+        try {
+            if(!controllDataCuratore() ){
+                return false;
+            }
+            if(!controllDataVisitatore()){
+                return false;
+            }
+            if(!controllDataGuida()){
+                return false;
+            }
+
+        }catch(Exception e){}
+        return true;
+    }
+
+    private boolean controllDataCuratore() throws JSONException, ParseException {
+        JSONObject data = createDataContainer(getView());
+        CuratoreMuseale curatoreMuseale = new CuratoreMuseale();
+        curatoreMuseale.setEmail(data.getString("email"));
+        curatoreMuseale.setPassword(data.getString("password"));
+        curatoreMuseale.setStatusComputation(true);
+        curatoreMuseale.controllEmail(getView().getContext(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Boolean status = response.getBoolean("status");
+                    if (status) {
+                        curatoreMuseale.setStatusComputation(false);
+                        Toast.makeText(getView().getContext(), "Email curatore già utilizzata", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        System.out.println("Curatore " + curatoreMuseale.getStatusComputation());
+        return curatoreMuseale.getStatusComputation();
+    }
+
+    private boolean controllDataVisitatore() throws JSONException, ParseException {
+        JSONObject data = createDataContainer(getView());
+        Visitatore visitatore = new Visitatore();
+        visitatore.setEmail(data.getString("email"));
+        visitatore.setPassword(data.getString("password"));
+        visitatore.controllEmail(getView().getContext(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Boolean status = response.getBoolean("status");
+                    if (status) {
+                        visitatore.setStatusComputation(false);
+                        Toast.makeText(getView().getContext(), "Email già utilizzata", Toast.LENGTH_SHORT).show();
+                    }else{
+                        visitatore.setStatusComputation(true);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        System.out.println("vivistat  " + visitatore.getStatusComputation());
+        return visitatore.getStatusComputation();
+    }
+
+    private boolean controllDataGuida() throws JSONException, ParseException {
+        JSONObject data = createDataContainer(getView());
+        Guida guida = new Guida();
+        guida.setEmail(data.getString("email"));
+        guida.setPassword(data.getString("password"));
+        guida.controllEmail(getView().getContext(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Boolean status = response.getBoolean("status");
+                    if (status) {
+                        guida.setStatusComputation(false);
+                        Toast.makeText(getView().getContext(), "Email già utilizzata", Toast.LENGTH_SHORT).show();
+                    }else{
+                        guida.setStatusComputation(true);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        System.out.println("guida  " + guida.getStatusComputation());
+        return guida.getStatusComputation();
+    }
 }

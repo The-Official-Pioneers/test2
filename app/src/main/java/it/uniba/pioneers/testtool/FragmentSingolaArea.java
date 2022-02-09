@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
  * create an instance of this fragment.
  */
 public class FragmentSingolaArea extends Fragment {
-
+    FragmentSingolaArea fragmentSingolaArea;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,6 +49,9 @@ public class FragmentSingolaArea extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(this.fragmentSingolaArea != null){
+            MainActivity.fragmentSingolaArea = this.fragmentSingolaArea;
+        }
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -66,7 +69,6 @@ public class FragmentSingolaArea extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         editableNome = (EditText) getActivity().findViewById(R.id.txt_edit_nome);
         editableNome.setText(MainActivity.areaSelezionata.getNome());
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -77,4 +79,18 @@ public class FragmentSingolaArea extends Fragment {
         MainActivity.operaSelezionata=null;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.fragmentSingolaArea = MainActivity.fragmentSingolaArea;
+        MainActivity.fragmentSingolaArea = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(this.fragmentSingolaArea != null){
+            MainActivity.fragmentSingolaArea = this.fragmentSingolaArea;
+        }
+    }
 }
