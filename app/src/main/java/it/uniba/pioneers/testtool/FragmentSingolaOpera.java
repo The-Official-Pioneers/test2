@@ -162,6 +162,8 @@ public class FragmentSingolaOpera extends Fragment {
             ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             MainActivity.toggle.setDrawerIndicatorEnabled(true);
             ((MainActivity)getActivity()).getSupportActionBar().setTitle("TestTool");
+            MainActivity.operaSelezionata=null;
+            MainActivity.qr=false;
         }
     }
 }

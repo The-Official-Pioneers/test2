@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     super.onBackPressed();
                 }
-            }else if(areeZona==null){
+            }else if(areeZona==null && !qr){
                 new AlertDialog.Builder(this)
                         .setTitle("Uscire?")
                         .setMessage("Sei sicuro di voler uscire dall'app?")
@@ -286,6 +286,24 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 super.onBackPressed();
             }
+        }else if(!qr && operaSelezionata == null){
+            new AlertDialog.Builder(this)
+                    .setTitle("Uscire?")
+                    .setMessage("Sei sicuro di voler uscire dall'app?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            idUtente = 0;
+                            tipoUtente = "";
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }else{
             super.onBackPressed();
         }
