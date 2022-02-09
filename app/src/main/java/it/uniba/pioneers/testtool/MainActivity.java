@@ -146,25 +146,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         // creazione della toolbar
-        Toolbar toolbar = findViewById(R.id.toolBarHome);
-        setSupportActionBar(toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
-        toggle.syncState(); //Ruota il toggle quando viene cliccato
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(areeZona!=null) {
-                    onBackPressed();
-                }
-                else{
-                    drawer.openDrawer(GravityCompat.START);
-                }
-            }
-        });
+        creaToolbar();
 
         switch(tipoUtente){ // lettura dati utente da db per popolare l'area personales
             case "visitatore":
@@ -195,10 +178,9 @@ public class MainActivity extends AppCompatActivity {
                 curatore.readDataDb(this);
                 break;
         }
-        invalidateOptionsMenu();
     }
 
-    public void creaToolbar(){
+    public void creaToolbar() {
         Toolbar toolbar = findViewById(R.id.toolBarHome);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -208,15 +190,14 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(areeZona!=null) {
+                if (areeZona != null || qr) {
                     onBackPressed();
-                }
-                else{
+                } else {
                     drawer.openDrawer(GravityCompat.START);
                 }
             }
         });
-        toggle.setDrawerIndicatorEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Override
@@ -224,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         creaToolbar();
     }
-
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -561,6 +541,7 @@ public class MainActivity extends AppCompatActivity {
                                 tmp.setDataFromJSON(resultAree.getJSONObject(i));
                                 areeZona.add(tmp);
                             }
+                            //creaToolbar();
                             FragmentListaAree fls = new FragmentListaAree();   // carico il fragment per mostrare la lista delle aree
                             androidx.fragment.app.FragmentManager supportFragmentManager;
                             supportFragmentManager = getSupportFragmentManager();

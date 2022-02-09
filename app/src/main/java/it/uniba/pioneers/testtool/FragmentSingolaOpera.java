@@ -157,8 +157,9 @@ public class FragmentSingolaOpera extends Fragment {
         super.onDestroy();
         MainActivity.operaSelezionata=null;
         MainActivity.fragmentSingolaOpera=null;
+        //MainActivity.qr=false;
         if(MainActivity.qr){
-            MainActivity.qr=false;
+            ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             MainActivity.toggle.setDrawerIndicatorEnabled(true);
             ((MainActivity)getActivity()).getSupportActionBar().setTitle("TestTool");
         }

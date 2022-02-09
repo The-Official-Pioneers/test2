@@ -101,20 +101,19 @@ public class FragmentListaAree extends Fragment{
         return view;
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MainActivity.toggle.setDrawerIndicatorEnabled(false);
-        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Il Tuo Museo");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
