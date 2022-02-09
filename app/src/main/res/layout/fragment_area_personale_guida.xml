@@ -69,54 +69,54 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/nome"
+                        android:id="@+id/nome_areap"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Nome:" />
+                        />
 
                     <TextView
-                        android:id="@+id/cognome"
+                        android:id="@+id/cognome_areap"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Cognome:" />
+                        />
 
                     <TextView
-                        android:id="@+id/datan"
+                        android:id="@+id/datan_areap"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Data di Nascita:" />
+                        />
 
                     <TextView
-                        android:id="@+id/email"
+                        android:id="@+id/email_areap"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Email:" />
+                        />
 
                     <TextView
-                        android:id="@+id/specializz"
+                        android:id="@+id/specializz_areap"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Specializzazione:" />
+                        />
 
                 </LinearLayout>
 
@@ -127,7 +127,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/txt_nome"
+                        android:id="@+id/txt_nome_opera"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_marginLeft="5dp"
@@ -202,7 +202,7 @@
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_modificaprofilo"
                         android:onClick="editProfile"
-                        android:text="Modifica Dati Profilo" />
+                        />
 
                     <Button
                         android:id="@+id/btn_edit_password"
@@ -215,7 +215,8 @@
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_password"
                         android:onClick="editPassword"
-                        android:text="Modifica Password" />
+                        />
+
                 </LinearLayout>
 
             </LinearLayout>

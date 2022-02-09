@@ -26,6 +26,7 @@ import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.sqlite.DbHelper;
 import it.uniba.pioneers.testtool.MainActivity;
+import it.uniba.pioneers.testtool.R;
 
 
 public class CuratoreMuseale {
@@ -218,9 +219,8 @@ public class CuratoreMuseale {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
-                                    //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -229,7 +229,7 @@ public class CuratoreMuseale {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
                     System.out.println(error.toString());
                 }
             });
@@ -359,7 +359,7 @@ public class CuratoreMuseale {
                         responseListener, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
                         System.out.println(error.toString());
                     }
                 });
@@ -414,9 +414,8 @@ public class CuratoreMuseale {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
-                                    //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -425,7 +424,7 @@ public class CuratoreMuseale {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
                     System.out.println(error.toString());
                 }
             });
@@ -479,7 +478,7 @@ public class CuratoreMuseale {
                                 if(status){
                                     Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -488,7 +487,7 @@ public class CuratoreMuseale {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
                     System.out.println(error.toString());
                 }
             });
@@ -525,7 +524,7 @@ public class CuratoreMuseale {
                         responseListener, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
                         System.out.println(error.toString());
                     }
                 });

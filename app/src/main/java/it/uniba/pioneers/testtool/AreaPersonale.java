@@ -62,7 +62,7 @@ public class AreaPersonale extends AppCompatActivity {
     }
 
     private void startFrag(){
-        switch(MainActivity.tipo_utente){
+        switch(MainActivity.tipoUtente){
             case "visitatore":
                 startFragVisitatore();
                 break;
@@ -80,7 +80,6 @@ public class AreaPersonale extends AppCompatActivity {
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
-                //.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.frame_areap, fragAreaVisit)
                 .commit();
     }
@@ -90,7 +89,6 @@ public class AreaPersonale extends AppCompatActivity {
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
-                //.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.frame_areap, fragAreaGuida)
                 .commit();
     }
@@ -100,19 +98,18 @@ public class AreaPersonale extends AppCompatActivity {
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
-                //.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.frame_areap, fragAreaCurat)
                 .commit();
     }
 
     public void editProfile(View view){
 
-        EditText nome = (EditText) findViewById(R.id.txt_nome);
+        EditText nome = (EditText) findViewById(R.id.txt_nome_opera);
         EditText cognome = (EditText) findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
 
-        if(MainActivity.tipo_utente.equals("visitatore")){
+        if(MainActivity.tipoUtente.equals("visitatore")){
 
             if(checkForChangesVisitatore(nome,cognome,datanascita,email)){
 
@@ -129,16 +126,16 @@ public class AreaPersonale extends AppCompatActivity {
                         MainActivity.visitatore.setDataNascita( Visitatore.output.parse(newDatan) );
                     }
                     MainActivity.visitatore.updateDataDb(view.getContext());
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "Profilo aggiornato con successo!",
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.aggiornamento_profilo_successo,
                             Snackbar.LENGTH_LONG).show();
                 } catch(ParseException e){
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
                             Snackbar.LENGTH_LONG).show();
                 }
 
             }
 
-        } else if(MainActivity.tipo_utente.equals("guida")){
+        } else if(MainActivity.tipoUtente.equals("guida")){
 
             EditText specializzazione = (EditText) findViewById(R.id.txt_specializzazione);
 
@@ -159,16 +156,16 @@ public class AreaPersonale extends AppCompatActivity {
                         MainActivity.guida.setDataNascita( Guida.output.parse(newDatan) );
                     }
                     MainActivity.guida.updateDataDb(view.getContext());
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "Profilo aggiornato con successo!",
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.aggiornamento_profilo_successo,
                             Snackbar.LENGTH_LONG).show();
 
                 } catch(ParseException e){
-                    Snackbar.make(view, "Impossibile procedere",
+                    Snackbar.make(view, R.string.impossibile_procedere,
                             Snackbar.LENGTH_LONG).show();
                 }
 
             }
-        } else if(MainActivity.tipo_utente.equals("curatore")){
+        } else if(MainActivity.tipoUtente.equals("curatore")){
 
             EditText zona = (EditText) findViewById(R.id.txt_zona);
 
@@ -189,10 +186,10 @@ public class AreaPersonale extends AppCompatActivity {
                         MainActivity.curatore.setDataNascita( CuratoreMuseale.output.parse(newDatan) );
                     }
                     MainActivity.curatore.updateDataDb(view.getContext());
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "Profilo aggiornato con successo!",
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.aggiornamento_profilo_successo,
                             Snackbar.LENGTH_LONG).show();
                 } catch(ParseException e){
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
                             Snackbar.LENGTH_LONG).show();
                 }
 
@@ -210,7 +207,7 @@ public class AreaPersonale extends AppCompatActivity {
                 !(emailToCheck.getText().toString().equals(MainActivity.visitatore.getEmail())) ){
             return true;
         }
-        Snackbar.make(getWindow().getDecorView().getRootView(), "Nessuna modifica effettuata", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getWindow().getDecorView().getRootView(), R.string.no_modifiche, Snackbar.LENGTH_LONG).show();
         return false;
     }
 
@@ -223,7 +220,7 @@ public class AreaPersonale extends AppCompatActivity {
                 !(specialToCheck.getText().toString().equals(MainActivity.guida.getSpecializzazione()))){
             return true;
         }
-        Snackbar.make(getWindow().getDecorView().getRootView(), "Nessuna modifica effettuata", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getWindow().getDecorView().getRootView(), R.string.no_modifiche, Snackbar.LENGTH_LONG).show();
         return false;
     }
 
@@ -237,7 +234,7 @@ public class AreaPersonale extends AppCompatActivity {
                 !(Long.parseLong(zonaToCheck.getText().toString()) == (MainActivity.curatore.getZona()))){
             return true;
         }
-        Snackbar.make(getWindow().getDecorView().getRootView(), "Nessuna modifica effettuata", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getWindow().getDecorView().getRootView(), R.string.no_modifiche, Snackbar.LENGTH_LONG).show();
         return false;
     }
 
@@ -269,9 +266,10 @@ public class AreaPersonale extends AppCompatActivity {
     public void editPassword(View view) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(view.getContext());
-        dialogBuilder.setTitle("Modifica Password");
-        dialogBuilder.setMessage("Inserisci la nuova password");
+        dialogBuilder.setTitle(R.string.modifica_password);
+        dialogBuilder.setMessage(R.string.inserisci_nuova_password);
 
+        //Definisco il layout per l'edittext per la nuova password
         LinearLayout lp = new LinearLayout(this);
 
         lp.setLayoutParams( new LinearLayout.LayoutParams(
@@ -279,20 +277,22 @@ public class AreaPersonale extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT)
         );
 
+        //Definisco l'edittext per la nuova password
         final EditText passwordInput = new EditText(view.getContext());
 
         passwordInput.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-        passwordInput.setHint("Inserisci nuova password");
+        passwordInput.setHint(R.string.inserisci_nuova_password);
         passwordInput.setTextSize(TypedValue.COMPLEX_UNIT_SP ,14);
         passwordInput.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         passwordInput.setTransformationMethod(new PasswordTransformationMethod());
 
+        //Definisco il bottone per mostrare/nascondere password
         final ToggleButton tb = new ToggleButton(this);
         tb.setChecked(false);
-        tb.setTextOff("Mostra");
-        tb.setTextOn("Nascondi");
-        tb.setText("Mostra");
+        tb.setTextOff(getResources().getString(R.string.mostra_pass));
+        tb.setTextOn(getResources().getString(R.string.nascondi_pass));
+        tb.setText(R.string.mostra_pass);
         tb.setTextSize(TypedValue.COMPLEX_UNIT_SP ,12);
         tb.setLayoutParams( new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT, 3));
@@ -318,7 +318,7 @@ public class AreaPersonale extends AppCompatActivity {
                 try {
                     String passToSave = digest(newPassword);
 
-                    switch (MainActivity.tipo_utente){
+                    switch (MainActivity.tipoUtente){
                         case "visitatore":
                             updatePasswordVisitatore(passToSave);
                             break;
@@ -330,30 +330,35 @@ public class AreaPersonale extends AppCompatActivity {
                             break;
                     }
 
-                    //Necessario per chiudere la tastiera dopo aver premuto OK
-                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    im.hideSoftInputFromWindow(passwordInput.getWindowToken(), 0);
+                    chiudiTastiera(passwordInput);
 
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "Password aggiornata con successo!",
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.pass_aggiornata_successo,
                             Snackbar.LENGTH_LONG).show();
 
                 } catch (NoSuchAlgorithmException e) {
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
                             Snackbar.LENGTH_LONG).show();
                 }
 
             }
         });
 
-        dialogBuilder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+        dialogBuilder.setNegativeButton(R.string.annulla, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
+                chiudiTastiera(passwordInput);
             }
         });
 
         dialogBuilder.setIcon(android.R.drawable.ic_dialog_alert);
         dialogBuilder.show();
 
+    }
+
+    private void chiudiTastiera(EditText textToClose){
+        //Necessario per chiudere la tastiera dopo aver premuto OK
+        InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        im.hideSoftInputFromWindow(textToClose.getWindowToken(), 0);
     }
 
     //Metodi necessari per l'aggiornamento della password nel metodo editPassword
@@ -404,7 +409,7 @@ public class AreaPersonale extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         } catch (Exception e) {
-            Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+            Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
                     Snackbar.LENGTH_LONG).show();
         }
     }
@@ -420,8 +425,8 @@ public class AreaPersonale extends AppCompatActivity {
                     startActivityForResult(intent, 1);
                 } else {
                     new AlertDialog.Builder(this)
-                            .setTitle("Permessi Galleria")
-                            .setMessage("Consentire all'app l'accesso alla galleria, negando l'accesso non si potrà caricare una nuova foto.")
+                            .setTitle(R.string.permessi_galleria)
+                            .setMessage(R.string.consentire_permessi_galleria)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     ActivityCompat.requestPermissions(AreaPersonale.this,
@@ -454,7 +459,7 @@ public class AreaPersonale extends AppCompatActivity {
                 byte[] b = baos.toByteArray();
                 String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
-                switch (MainActivity.tipo_utente){
+                switch (MainActivity.tipoUtente){
                     case "visitatore":
                         updatePropicVisitatore(encImage);
                         break;
@@ -468,11 +473,11 @@ public class AreaPersonale extends AppCompatActivity {
 
 
 
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Foto caricata con successo!",
+                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.foto_aggiornata_successo,
                         Snackbar.LENGTH_LONG).show();
 
             } catch (FileNotFoundException e) {
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
                         Snackbar.LENGTH_LONG).show();
             }
         }
@@ -494,38 +499,43 @@ public class AreaPersonale extends AppCompatActivity {
     //=============================================================================
 
     private boolean checkFieldsBeforeLeaving(){
-        String textNome = ((EditText) findViewById(R.id.txt_nome)).getText().toString();
+        String textNome = ((EditText) findViewById(R.id.txt_nome_opera)).getText().toString();
         String textCognome = ((EditText) findViewById(R.id.txt_cognome)).getText().toString();
         String textDatan = ((EditText) findViewById(R.id.txt_datan)).getText().toString();
         String textEmail = ((EditText) findViewById(R.id.txt_email)).getText().toString();
 
-        if(MainActivity.tipo_utente.equals("visitatore")){
+        boolean check1 = false;
+        boolean check2 = false;
+        boolean check3 = false;
+        boolean check4 = false;
 
-            boolean check1 = textNome.equals(MainActivity.visitatore.getNome());
-            boolean check2 = textCognome.equals(MainActivity.visitatore.getCognome());
-            boolean check3 = textDatan.equals(MainActivity.visitatore.getShorterDataNascita());
-            boolean check4 = textEmail.equals(MainActivity.visitatore.getEmail());
+        if(MainActivity.tipoUtente.equals("visitatore")){
+
+            check1 = textNome.equals(MainActivity.visitatore.getNome());
+            check2 = textCognome.equals(MainActivity.visitatore.getCognome());
+            check3 = textDatan.equals(MainActivity.visitatore.getShorterDataNascita());
+            check4 = textEmail.equals(MainActivity.visitatore.getEmail());
 
             return (check1 && check2 && check3 && check4);
 
-        } else if(MainActivity.tipo_utente.equals("guida")){
+        } else if(MainActivity.tipoUtente.equals("guida")){
 
-            boolean check1 = textNome.equals(MainActivity.guida.getNome());
-            boolean check2 = textCognome.equals(MainActivity.guida.getCognome());
-            boolean check3 = textDatan.equals(MainActivity.guida.getShorterDataNascita());
-            boolean check4 = textEmail.equals(MainActivity.guida.getEmail());
+            check1 = textNome.equals(MainActivity.guida.getNome());
+            check2 = textCognome.equals(MainActivity.guida.getCognome());
+            check3 = textDatan.equals(MainActivity.guida.getShorterDataNascita());
+            check4 = textEmail.equals(MainActivity.guida.getEmail());
 
             String textSpecializzazione = ((EditText) findViewById(R.id.txt_specializzazione)).getText().toString();
             boolean check5 = textSpecializzazione.equals(MainActivity.guida.getSpecializzazione());
 
             return (check1 && check2 && check3 && check4 && check5);
 
-        } else if(MainActivity.tipo_utente.equals("curatore")){
+        } else if(MainActivity.tipoUtente.equals("curatore")){
 
-            boolean check1 = textNome.equals(MainActivity.curatore.getNome());
-            boolean check2 = textCognome.equals(MainActivity.curatore.getCognome());
-            boolean check3 = textDatan.equals(MainActivity.curatore.getShorterDataNascita());
-            boolean check4 = textEmail.equals(MainActivity.curatore.getEmail());
+            check1 = textNome.equals(MainActivity.curatore.getNome());
+            check2 = textCognome.equals(MainActivity.curatore.getCognome());
+            check3 = textDatan.equals(MainActivity.curatore.getShorterDataNascita());
+            check4 = textEmail.equals(MainActivity.curatore.getEmail());
 
             Long longZona = Long.parseLong(((EditText) findViewById(R.id.txt_zona)).getText().toString());
             boolean check5 = longZona == MainActivity.curatore.getZona();
@@ -538,11 +548,10 @@ public class AreaPersonale extends AppCompatActivity {
     @Override
     //Controllo l'uscita senza salvare da barra
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if(!checkFieldsBeforeLeaving()) {
             new AlertDialog.Builder(this)
-                    .setTitle("Uscire?")
-                    .setMessage("Uscire senza salvare le modifiche?")
+                    .setTitle(R.string.uscire)
+                    .setMessage(R.string.uscire_no_salvare)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
@@ -564,11 +573,10 @@ public class AreaPersonale extends AppCompatActivity {
     @Override
     //Controllo l'uscita senza salvare da tasto indietro (tasto sulla barra inferiore del telefono)
     public void onBackPressed(){
-
         if(!checkFieldsBeforeLeaving()) {
             new AlertDialog.Builder(this)
-                    .setTitle("Uscire?")
-                    .setMessage("Uscire senza salvare le modifiche?")
+                    .setTitle(R.string.uscire)
+                    .setMessage(R.string.uscire_no_salvare)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
@@ -584,7 +592,6 @@ public class AreaPersonale extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-
     }
 
 }

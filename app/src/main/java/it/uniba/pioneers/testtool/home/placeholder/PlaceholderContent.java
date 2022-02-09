@@ -1,9 +1,13 @@
 package it.uniba.pioneers.testtool.home.placeholder;
 
+import android.content.res.Resources;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import it.uniba.pioneers.testtool.R;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -38,14 +42,15 @@ public class PlaceholderContent {
     }
 
     private static PlaceholderItem createPlaceholderItem(int position) {
-        return new PlaceholderItem(String.valueOf(position), "Item " + position, makeDetails(position));
+        return new PlaceholderItem(String.valueOf(position), Resources.getSystem().getString(R.string.placeholder_item)
+                + position, makeDetails(position));
     }
 
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
+        builder.append(Resources.getSystem().getString(R.string.placeholder_item_details)).append(position);
         for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
+            builder.append("\n" + Resources.getSystem().getString(R.string.placeholder_item_more_details));
         }
         return builder.toString();
     }

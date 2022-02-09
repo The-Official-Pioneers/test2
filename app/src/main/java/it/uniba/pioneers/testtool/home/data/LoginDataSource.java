@@ -8,14 +8,14 @@ import com.android.volley.Response;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.MainActivity;
-import it.uniba.pioneers.testtool.home.HomeActivity;
+import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.home.data.model.LoggedInUser;
-
-import java.io.IOException;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
@@ -36,7 +36,9 @@ public class LoginDataSource {
                         curatore.setStatusComputation(status);
                         if (status) {
                             curatore.setId(response.getJSONObject("data").getInt("id"));
-                            Toast.makeText(context, "Welcome Back " + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(context, R.string.bentornato_login + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
+
                             Intent intent = new Intent(context, MainActivity.class);
                             intent.putExtra("typeUser", "curatore");
                             intent.putExtra("idUser", curatore.getId());
@@ -53,7 +55,9 @@ public class LoginDataSource {
                                         visitatore.setStatusComputation(status);
                                         if (status) {
                                             visitatore.setId(response.getJSONObject("data").getInt("id"));
-                                            Toast.makeText(context, "Welcome Back " + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
+
+                                            Toast.makeText(context, R.string.bentornato_login + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
+
                                             Intent intent = new Intent(context, MainActivity.class);
                                             intent.putExtra("typeUser", "visitatore");
                                             intent.putExtra("idUser", visitatore.getId());
@@ -74,9 +78,11 @@ public class LoginDataSource {
                                                             intent.putExtra("typeUser", "guida");
                                                             intent.putExtra("idUser", guida.getId());
                                                             context.startActivity(intent);
-                                                            Toast.makeText(context, "Welcome Back " + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
+
+                                                            Toast.makeText(context, R.string.bentornato_login + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
+
                                                         } else {
-                                                            Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                                                         }
                                                     } catch (Exception e) {
                                                         e.printStackTrace();

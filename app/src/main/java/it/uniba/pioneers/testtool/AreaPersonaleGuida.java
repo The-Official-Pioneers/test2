@@ -43,7 +43,7 @@ public class AreaPersonaleGuida extends AppCompatActivity {
 
     public void editProfile(View view){
 
-        EditText nome = (EditText) findViewById(R.id.txt_nome);
+        EditText nome = (EditText) findViewById(R.id.txt_nome_opera);
         EditText cognome = (EditText) findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
@@ -293,7 +293,7 @@ public class AreaPersonaleGuida extends AppCompatActivity {
     }
 
     private boolean checkFieldsBeforeLeaving(){
-        String textNome = ((EditText) findViewById(R.id.txt_nome)).getText().toString();
+        String textNome = ((EditText) findViewById(R.id.txt_nome_opera)).getText().toString();
         String textCognome = ((EditText) findViewById(R.id.txt_cognome)).getText().toString();
         String textDatan = ((EditText) findViewById(R.id.txt_datan)).getText().toString();
         String textEmail = ((EditText) findViewById(R.id.txt_email)).getText().toString();

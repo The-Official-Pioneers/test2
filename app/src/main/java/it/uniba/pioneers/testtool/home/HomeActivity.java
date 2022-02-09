@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,7 +37,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void onClickButton(View view) {
-        Toast.makeText(this, "Ha funzionato", Toast.LENGTH_SHORT).show();
 
         FragmentManager fragmentManager = getFragmentManager();
         /*** INIZIO TRANSAZIONE ***/
@@ -57,14 +55,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void goMainActivity(View view) {
-        Toast.makeText(this, "aweo", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     public void AttachRegisterFragment(View view) {
-        Toast.makeText(this, "aweo", Toast.LENGTH_SHORT).show();
-
         /*** INIZIO TRANSAZIONE ***/
         RegisterFragment f = new RegisterFragment();
         androidx.fragment.app.FragmentManager supportFragmentManager;

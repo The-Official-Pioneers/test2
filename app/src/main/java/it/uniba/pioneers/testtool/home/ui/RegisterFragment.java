@@ -3,8 +3,6 @@ package it.uniba.pioneers.testtool.home.ui;
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.GONE;
 
-import static java.lang.Thread.sleep;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,13 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,14 +28,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.Response;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
@@ -54,10 +52,6 @@ import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.home.HomeActivity;
 import it.uniba.pioneers.widget.WidgetRegister;
-
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -396,7 +390,7 @@ public class RegisterFragment extends Fragment {
                             intent.putExtra("User", userType);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getView().getContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), HomeActivity.class);
                             startActivity(intent);
                         }
@@ -423,7 +417,7 @@ public class RegisterFragment extends Fragment {
                             intent.putExtra("User", userType);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getView().getContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), HomeActivity.class);
                             startActivity(intent);
                         }
@@ -468,7 +462,7 @@ public class RegisterFragment extends Fragment {
                                             intent.putExtra("idUser", curatore.getId());
                                             startActivity(intent);
                                         } else {
-                                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getView().getContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getView().getContext(), HomeActivity.class);
                                             startActivity(intent);
                                         }
@@ -478,7 +472,7 @@ public class RegisterFragment extends Fragment {
                                 }
                             });
                         } else {
-                            Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getView().getContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), HomeActivity.class);
                             startActivity(intent);
                         }

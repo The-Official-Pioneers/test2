@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     public static int currOpera=-1;
     public static String tipoUtente;
     public static boolean fotoModificata;
-    public int idUtente;
+    public static int idUtente;
 
     //AGGIUNTO DA IVAN
     public static Visitatore visitatore = new Visitatore();
@@ -101,10 +101,12 @@ public class MainActivity extends AppCompatActivity {
         fotoModificata=false;
 
         Intent intent = getIntent();
-       // tipoUtente = intent.getStringExtra("typeUser");
-        tipoUtente="curatore";
+        //tipoUtente = intent.getStringExtra("typeUser");
+        tipoUtente = "curatore";
         //idUtente = intent.getIntExtra("idUser");
-        idUtente=1;
+        idUtente = 1;
+
+
 
         frag = new FragmentHomeCuratore();
         androidx.fragment.app.FragmentManager supportFragmentManager;
@@ -118,26 +120,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        switch (tipoUtente){
-            case "curatore":
-                curatore.setId(idUtente);
-                curatore.readDataDb(MainActivity.this);
-                //zona.setId();
-                break;
-            case "guida":
-                guida.setId(idUtente);
-                guida.readDataDb(MainActivity.this);
-                break;
+        switch(MainActivity.tipoUtente){
             case "visitatore":
                 visitatore.setId(idUtente);
-                visitatore.readDataDb(MainActivity.this, new Response.Listener<JSONObject>() {
+                visitatore.readDataDb(this, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             Boolean status =  response.getBoolean("status");
                             if(status){
-                                visitatore.setDataFromJSON(response.getJSONObject("data"));
-                                Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                                MainActivity.visitatore.setDataFromJSON(response.getJSONObject("data"));
+                                //Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(MainActivity.this, "Non e' stato possibile leggere i dati dal db", Toast.LENGTH_SHORT).show();
                             }
@@ -147,8 +140,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 break;
+            case "guida":
+                guida.setId(idUtente);
+                guida.readDataDb(this);
+                break;
+            case "curatore":
+                curatore.setId(idUtente);
+                curatore.readDataDb(this);
+                break;
         }
-
 
         Toolbar toolbar = findViewById(R.id.toolBarHome);
         setSupportActionBar(toolbar);
@@ -406,6 +406,7 @@ public class MainActivity extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         } else {
+
             Area.areeZona(this, (int) curatore.getZona(), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -431,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
                                     .addToBackStack(null)
                                     .commit();
                         } else {
-                            Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException | ParseException e) {
                         e.printStackTrace();

@@ -1,5 +1,7 @@
 package it.uniba.pioneers.testtool.data;
 
+import it.uniba.pioneers.testtool.R;
+
 /**
  * A generic class that holds a result success w/ data or an error exception.
  */
@@ -12,10 +14,10 @@ public class Result<T> {
     public String toString() {
         if (this instanceof Result.Success) {
             Result.Success success = (Result.Success) this;
-            return "Success[data=" + success.getData().toString() + "]";
+            return R.string.successo_result_login + success.getData().toString() + "]";
         } else if (this instanceof Result.Error) {
             Result.Error error = (Result.Error) this;
-            return "Error[exception=" + error.getError().toString() + "]";
+            return R.string.errore_result_login + error.getError().toString() + "]";
         }
         return "";
     }

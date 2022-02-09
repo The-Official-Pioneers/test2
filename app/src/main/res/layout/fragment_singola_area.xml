@@ -24,7 +24,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="5dp"
                 android:scrollbars="vertical"
-                android:text="Nome Area: "
+                android:text="@string/nome_singola_area"
                 android:textSize="25dp" />
 
             <EditText
@@ -52,7 +52,7 @@
                     android:layout_gravity="bottom"
                     android:layout_margin="5dp"
                     android:onClick="modificaNomeArea"
-                    android:text="Salva"
+                    android:text="@string/btn_salva_singola"
                     android:visibility="visible" />
 
             </LinearLayout>
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:onClick="mostraOpereArea"
-                android:text="mostra le opere" />
+                android:text="@string/btn_opere_area" />
 
         </LinearLayout>
     </ScrollView>

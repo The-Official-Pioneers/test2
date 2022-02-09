@@ -84,7 +84,7 @@ public class FragmentSingolaOpera extends Fragment {
         titolo = (TextView) getActivity().findViewById(R.id.txt_titolo);
         descrizione = (TextView) getActivity().findViewById(R.id.txt_descrizione);
         img = (ImageView) getActivity().findViewById(R.id.img_foto);
-        Button modifica = (Button) getActivity().findViewById(R.id.btn_modifica);
+        Button modifica = (Button) getActivity().findViewById(R.id.btn_modifica_opera);
 
        if(MainActivity.tipoUtente.equals("curatore") && MainActivity.operaSelezionata!=null){
            FloatingActionButton elimina = (FloatingActionButton) getActivity().findViewById(R.id.btn_del);

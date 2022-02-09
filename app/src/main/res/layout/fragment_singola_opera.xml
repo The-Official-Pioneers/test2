@@ -50,7 +50,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="5dp"
                 android:scrollbars="vertical"
-                android:text="Nome: "
+                android:text="@string/nome_singola_opera"
                 android:textSize="25dp" />
 
             <EditText
@@ -72,7 +72,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="5dp"
                 android:scrollbars="vertical"
-                android:text="Descrizione: "
+                android:text="@string/descrizione_singola_opera"
                 android:textSize="25dp" />
 
 
@@ -95,13 +95,13 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_modifica"
+                    android:id="@+id/btn_modifica_opera"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_margin="5dp"
                     android:onClick="modificaOpera"
-                    android:text="Salva"
+                    android:text="@string/btn_salva_singola"
                     android:visibility="visible" />
             </LinearLayout>
 
