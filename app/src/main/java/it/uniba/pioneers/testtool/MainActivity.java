@@ -483,6 +483,10 @@ public class MainActivity extends AppCompatActivity {
 
                                 }else{
                                     operaSelezionata=null;
+                                    qr=false;
+                                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                                    MainActivity.toggle.setDrawerIndicatorEnabled(true);
+
                                     new AlertDialog.Builder(MainActivity.this)
                                             .setMessage(R.string.nessun_risultato)
                                             .setPositiveButton(android.R.string.yes, null)
@@ -491,12 +495,18 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             } catch (JSONException | ParseException e) {
                                 operaSelezionata=null;
+                                qr=false;
+                                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                                MainActivity.toggle.setDrawerIndicatorEnabled(true);
                                 e.printStackTrace();
                             }
                         }
                     });
                 } else {
                     operaSelezionata=null;
+                    qr=false;
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    MainActivity.toggle.setDrawerIndicatorEnabled(true);
                     new AlertDialog.Builder(MainActivity.this)
                             .setMessage(R.string.nessun_risultato)
                             .setPositiveButton(android.R.string.yes, null)
