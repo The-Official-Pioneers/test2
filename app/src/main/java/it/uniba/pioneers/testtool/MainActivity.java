@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 break;
             case "guida":
-                guida.setId(idUtente);
+               guida.setId(idUtente);
                 guida.readDataDb(this);
                 break;
             case "curatore":
@@ -482,6 +482,7 @@ public class MainActivity extends AppCompatActivity {
                                             .commit();
 
                                 }else{
+                                    operaSelezionata=null;
                                     new AlertDialog.Builder(MainActivity.this)
                                             .setMessage(R.string.nessun_risultato)
                                             .setPositiveButton(android.R.string.yes, null)
@@ -489,11 +490,13 @@ public class MainActivity extends AppCompatActivity {
                                     return;
                                 }
                             } catch (JSONException | ParseException e) {
+                                operaSelezionata=null;
                                 e.printStackTrace();
                             }
                         }
                     });
                 } else {
+                    operaSelezionata=null;
                     new AlertDialog.Builder(MainActivity.this)
                             .setMessage(R.string.nessun_risultato)
                             .setPositiveButton(android.R.string.yes, null)

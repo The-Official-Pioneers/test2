@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,9 +84,6 @@ public class FragmentHomeGuida extends Fragment  {
         Button tueVisite = (Button) getActivity().findViewById(R.id.btn_tue_visite);
         Button visiteEffettuate = (Button) getActivity().findViewById(R.id.btn_visite_effettuate);
         TextView interagisciOpera = (TextView) getActivity().findViewById(R.id.text_interagisci);
-        EditText text_cerca = (EditText) getActivity().findViewById(R.id.text_cerca);
-
-        text_cerca.setHint(R.string.text_cerca);
         tueVisite.setText(R.string.btn_tue_visite);
         visiteEffettuate.setText(R.string.btn_visite_effettuate);
         interagisciOpera.setText(R.string.text_interagisci);
