@@ -134,27 +134,35 @@ public class GraphNode extends Node {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             int action = event.getAction();
+            ListNode listNode = ((ListNode)event.getLocalState());
             switch (action) {
                 case DragEvent.ACTION_DROP:
-                    ListNode listNode = ((ListNode)event.getLocalState());
                     if(checkRelation(listNode) && checkIfPresent(listNode)){
                         GraphNode graphNode = new GraphNode(graphParent.getContext(), graphParent, listNode.type, listNode.data);
                         self.hide();
-                        self.setCircle(true);
-                        self.clicked = true;
-                        self.draw();
-
-                        self.hideAllChild();
                         self.hideAllNodeAtSameLevel();
+                        self.hideAllChild();
+
+                        self.draw();
 
                         self.addSuccessor(graphNode);
                         self.drawAllChild();
                         listNode.setVisibility(GONE);
+
+                        self.setCircle(true);
+                        self.clicked = true;
                     }else{
                         listNode.reset();
                         listNode.setVisibility(VISIBLE);
                     }
                     break;
+                case DragEvent.ACTION_DRAG_STARTED:
+                    if(checkRelation(listNode) && checkIfPresent(listNode)){
+                        self.hideAllNodeAtSameLevel();
+                        self.hideAllChild();
+                        self.drawAllChild();
+                        self.setCircle(true);
+                    }
                 default:
                     break;
             }
@@ -329,6 +337,7 @@ public class GraphNode extends Node {
 
             hideAllChild();
             drawAllChild();
+
             clicked = true;
             setCircle(true);
 
@@ -440,18 +449,27 @@ public class GraphNode extends Node {
     }
 
     private float getTmpX(int numSuccessors, AtomicInteger count, GraphNode nodeChild) {
-        float tmpX;
-
-        if(numSuccessors > 1){
-            tmpX = (count.getAndIncrement() * (((float)graphParent.size.x / (numSuccessors + 1)))) - (float)nodeChild.size/2;
-        }else{
-            tmpX = ((float)graphParent.size.x/2 - (float)nodeChild.size/2);
-        }
-        return tmpX;
+        //FORMULA DI CENTRATURA DEL NODO IN BASE AL NUMERO DI NODI DI QUEL LIVELLO
+        return (count.getAndIncrement() * (((float)graphParent.size.x / (numSuccessors + 1)))) - (float)nodeChild.size/2;
     }
 
 
     public void draw(){
+        checkIfAlreadyInit();
+
+        if(type != NodeType.VISITA && type != NodeType.OPERA){
+            setCircle(false);
+        }else{
+            setCircle(true);
+        }
+
+        findViewById(R.id.vistaProva)
+                .setLayoutParams(new LinearLayout.LayoutParams(size, size));
+
+        setVisibility(VISIBLE);
+    }
+
+    private void checkIfAlreadyInit() {
         boolean flag = true;
 
         for(int k = 0; k < graphParent.getChildCount(); ++k){
@@ -466,16 +484,12 @@ public class GraphNode extends Node {
             setInizializated(true);
             clicked = false;
         }
+    }
 
-        if(type != NodeType.VISITA && type != NodeType.OPERA){
-            setCircle(false);
-        }else{
-            setCircle(true);
-        }
-
+    public void onlyDraw(){
+        checkIfAlreadyInit();
         findViewById(R.id.vistaProva)
                 .setLayoutParams(new LinearLayout.LayoutParams(size, size));
-
         setVisibility(VISIBLE);
     }
 
