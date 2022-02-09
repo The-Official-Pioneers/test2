@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public static int currOpera=-1;
     public static String tipoUtente;
     public static boolean fotoModificata;
-    public int idUtente;
+    public static int idUtente;
 
     //AGGIUNTO DA IVAN
     public static Visitatore visitatore = new Visitatore();
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                                 MainActivity.visitatore.setDataFromJSON(response.getJSONObject("data"));
                                 //Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(MainActivity.this, "Non e' stato possibile leggere i dati dal db", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, R.string.impossibile_leggere_dati, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException | ParseException e) {
                             e.printStackTrace();
@@ -224,8 +224,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if(!c || !c2 || c3) {
                     new AlertDialog.Builder(this)
-                            .setTitle("Uscire?")
-                            .setMessage("Uscire senza salvare le modifiche?")
+                            .setTitle(R.string.uscire)
+                            .setMessage(R.string.uscire_no_salvare)
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     MainActivity.super.onBackPressed();
@@ -248,8 +248,8 @@ public class MainActivity extends AppCompatActivity {
                 boolean c = String.valueOf(FragmentSingolaArea.editableNome.getText()).equals(MainActivity.areaSelezionata.getNome());
                 if(!c) {
                     new AlertDialog.Builder(this)
-                            .setTitle("Uscire?")
-                            .setMessage("Uscire senza salvare le modifiche?")
+                            .setTitle(R.string.uscire)
+                            .setMessage(R.string.uscire_no_salvare)
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     MainActivity.super.onBackPressed();
@@ -267,8 +267,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }else if(areeZona==null && !qr){
                 new AlertDialog.Builder(this)
-                        .setTitle("Uscire?")
-                        .setMessage("Sei sicuro di voler uscire dall'app?")
+                        .setTitle(R.string.uscire)
+                        .setMessage(R.string.uscire_no_salvare)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 idUtente = 0;
@@ -288,8 +288,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }else if(!qr && operaSelezionata == null){
             new AlertDialog.Builder(this)
-                    .setTitle("Uscire?")
-                    .setMessage("Sei sicuro di voler uscire dall'app?")
+                    .setTitle(R.string.uscire)
+                    .setMessage(R.string.uscire_sicuro_app)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             idUtente = 0;
@@ -371,8 +371,8 @@ public class MainActivity extends AppCompatActivity {
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)) {
                 new AlertDialog.Builder(this)
-                        .setTitle("Permessi Camera")
-                        .setMessage("Consentire all'app l'accesso alla camera per scansionare i QR delle opere, negando l'accesso non ci si potrà interagire")
+                        .setTitle(R.string.permessi_camera)
+                        .setMessage(R.string.permessi_camera_consenti)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, SCAN_QR);
@@ -388,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
             integrator.setCaptureActivity(CaptureAct.class);
             integrator.setOrientationLocked(false);
             integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
-            integrator.setPrompt("Scanning code...");
+            integrator.setPrompt(getResources().getString(R.string.scan_qr_code));
             integrator.initiateScan();
         }
     }
@@ -396,8 +396,8 @@ public class MainActivity extends AppCompatActivity {
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 new AlertDialog.Builder(this)
-                        .setTitle("Permesso di accesso alla galleria")
-                        .setMessage("Consentire all'app l'accesso alla galleria per poter scegliere l'immagine o la foto da usare per l'opera")
+                        .setTitle(R.string.permessi_galleria)
+                        .setMessage(R.string.consentire_permessi_galleria)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
@@ -425,12 +425,12 @@ public class MainActivity extends AppCompatActivity {
                     integrator.setCaptureActivity(CaptureAct.class);
                     integrator.setOrientationLocked(false);
                     integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
-                    integrator.setPrompt("Scanning code...");
+                    integrator.setPrompt(getResources().getString(R.string.scan_qr_code));
                     integrator.initiateScan();
                 }else{
                     new AlertDialog.Builder(this)
-                            .setTitle("Permesso negato")
-                            .setMessage("Permesso di accesso alla camera non concesso")
+                            .setTitle(R.string.permesso_negato)
+                            .setMessage(R.string.permesso_negato_camera)
                             .setPositiveButton(android.R.string.ok, null)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
@@ -443,8 +443,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(intent, 1);
                 } else {
                     new AlertDialog.Builder(this)
-                            .setTitle("Permesso negato")
-                            .setMessage("Permesso di accesso alla galleria non concesso")
+                            .setTitle(R.string.permesso_negato)
+                            .setMessage(R.string.permesso_negato_galleria)
                             .setPositiveButton(android.R.string.ok, null)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
@@ -483,7 +483,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 }else{
                                     new AlertDialog.Builder(MainActivity.this)
-                                            .setMessage("Nessun risultato")
+                                            .setMessage(R.string.nessun_risultato)
                                             .setPositiveButton(android.R.string.yes, null)
                                             .show();
                                     return;
@@ -495,7 +495,7 @@ public class MainActivity extends AppCompatActivity {
                     });
                 } else {
                     new AlertDialog.Builder(MainActivity.this)
-                            .setMessage("Nessun risultato")
+                            .setMessage(R.string.nessun_risultato)
                             .setPositiveButton(android.R.string.yes, null)
                             .show();
                 }
@@ -520,12 +520,12 @@ public class MainActivity extends AppCompatActivity {
                     operaSelezionata.setFoto(encImage);
                 }
 
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",
+                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.foto_impostata_successo,
                         Snackbar.LENGTH_LONG).show();
                 fotoModificata = true;
 
             } catch (FileNotFoundException e) {
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
                         Snackbar.LENGTH_LONG).show();
             }
         }
@@ -540,8 +540,8 @@ public class MainActivity extends AppCompatActivity {
     public void gestisciMuseo(View view) {
         if (tipoUtente.equals("ospite")) {   // controllo sul tipo di utente
             new AlertDialog.Builder(this)
-                    .setTitle("Accedi")
-                    .setMessage("Registrati/Accedi per poter gestire il tuo museo")
+                    .setTitle(R.string.accedi)
+                    .setMessage(R.string.registrati_accedi_museo)
                     .setPositiveButton(android.R.string.ok, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -569,7 +569,7 @@ public class MainActivity extends AppCompatActivity {
                                     .addToBackStack(null)
                                     .commit();
                         } else {
-                            Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException | ParseException e) {
                         e.printStackTrace();

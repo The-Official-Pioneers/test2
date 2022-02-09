@@ -194,7 +194,7 @@ public class Opera {
         queue.add(jsonObjectRequest);
     }
 
-    public void readDataDb(Context context){
+    public void readDataDb(Context context, Response.Listener<JSONObject> responseListener){
 
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -207,27 +207,13 @@ public class Opera {
                 e.printStackTrace();
             }
 
-             Opera self = this;
+            Opera self = this;
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                Boolean status =  response.getBoolean("status");
-                                if(status){
-                                    self.setDataFromJSON(response.getJSONObject("data"));
-                                }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException | ParseException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
+                    responseListener, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
                     System.out.println(error.toString());
                 }
             });

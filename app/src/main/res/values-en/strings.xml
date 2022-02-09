@@ -281,6 +281,23 @@
     <string name="btn_visite_predefinite" translatable="false">Default Visits</string>
     <string name="text_cerca" translatable="false">Search...</string>
     <string name="text_interagisci" translatable="false">Interact with the work..</string>
+    <string name="impossibile_leggere_dati" translatable="false">Could not read data from database.</string>
+    <string name="uscire_sicuro_app" translatable="false">Are you sure you want to quit the app?</string>
+
+    <string name="permessi_camera" translatable="false">Camera Permission</string>
+    <string name="permessi_camera_consenti" translatable="false">Allow the app to access the camera:
+        denying the access you will not be able to interact with the qr code.</string>
+    <string name="scan_qr_code" translatable="false">Scanning code...</string>
+
+    <string name="permesso_negato" translatable="false">Permission denied</string>
+    <string name="permesso_negato_camera" translatable="false">Access to camera denied</string>
+    <string name="permesso_negato_galleria" translatable="false">Access to gallery denied</string>
+
+    <string name="nessun_risultato" translatable="false">No result</string>
+    <string name="foto_impostata_successo" translatable="false">Photo updated with success!</string>
+
+    <string name="accedi" translatable="false">Sign in</string>
+    <string name="registrati_accedi_museo" translatable="false">Register/Sign in to manage your museum</string>
     <!-- ====================================================================================== -->
 
 
