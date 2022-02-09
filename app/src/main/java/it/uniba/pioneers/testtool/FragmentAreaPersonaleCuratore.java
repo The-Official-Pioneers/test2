@@ -85,8 +85,9 @@ public class FragmentAreaPersonaleCuratore extends Fragment {
         EditText datanascita = (EditText) getActivity().findViewById(R.id.txt_datan);
         EditText email = (EditText) getActivity().findViewById(R.id.txt_email);
         EditText zona = (EditText) getActivity().findViewById(R.id.txt_zona);
-
+System.out.println(MainActivity.curatore.getPropic().toString());
         byte[] bytes = Base64.decode(MainActivity.curatore.getPropic(), Base64.DEFAULT);
+
         Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         propic.setImageBitmap(decodedByte);
         propic.setScaleType(ImageView.ScaleType.CENTER_CROP);

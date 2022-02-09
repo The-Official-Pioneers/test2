@@ -67,11 +67,6 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-            android:name=".InfoOpera"
-            android:exported="true"
-            android:parentActivityName=".MainActivity" />
-
-        <activity
             android:name=".AreaPersonale"
             android:parentActivityName=".MainActivity" />
 

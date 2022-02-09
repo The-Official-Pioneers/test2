@@ -120,6 +120,8 @@ public class FragmentSingolaOpera extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if(this.fragmentSingolaOpera != null){
             MainActivity.fragmentSingolaOpera = this.fragmentSingolaOpera;
         }
@@ -145,6 +147,8 @@ public class FragmentSingolaOpera extends Fragment {
     @Override
     public void onViewCreated( View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setDataOpera();
     }
 
@@ -153,5 +157,10 @@ public class FragmentSingolaOpera extends Fragment {
         super.onDestroy();
         MainActivity.operaSelezionata=null;
         MainActivity.fragmentSingolaOpera=null;
+        if(MainActivity.qr){
+            MainActivity.qr=false;
+            MainActivity.toggle.setDrawerIndicatorEnabled(true);
+            ((MainActivity)getActivity()).getSupportActionBar().setTitle("TestTool");
+        }
     }
 }

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int SCAN_QR = 2;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    public DrawerLayout drawer;
+    public static DrawerLayout drawer;
     public FragmentManager supportFragmentManager;
     public static ActionBarDrawerToggle toggle;
     public static Opera opera;
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     public static int currArea=-1;
     public static ArrayList<Opera> opereArea;
     public static Opera operaSelezionata;
+    public static String oldFoto;
     public static FragmentListaOpere fragmentListaOpere;
     public static FragmentSingolaOpera fragmentSingolaOpera;
     public static int currOpera=-1;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
        // tipoUtente = intent.getStringExtra("typeUser");
         tipoUtente="curatore";
         //idUtente = intent.getIntExtra("idUser");
-        idUtente=5;
+        idUtente=1;
         switch(tipoUtente){    // caricamento della home corretta
             case "curatore":
                 FragmentHomeCuratore fragC = new FragmentHomeCuratore();
@@ -140,12 +141,31 @@ public class MainActivity extends AppCompatActivity {
                 */
                 break;
         }
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        // creazione della toolbar
+        Toolbar toolbar = findViewById(R.id.toolBarHome);
+        setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
+        toggle.syncState(); //Ruota il toggle quando viene cliccato
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(areeZona!=null) {
+                    onBackPressed();
+                }
+                else{
+                    drawer.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+
         switch(tipoUtente){ // lettura dati utente da db per popolare l'area personales
             case "visitatore":
                 visitatore.setId(idUtente);
@@ -175,7 +195,10 @@ public class MainActivity extends AppCompatActivity {
                 curatore.readDataDb(this);
                 break;
         }
-                                              // creazione della toolbar
+        invalidateOptionsMenu();
+    }
+
+    public void creaToolbar(){
         Toolbar toolbar = findViewById(R.id.toolBarHome);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -193,11 +216,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        if(operaSelezionata!=null){
-            toggle.setDrawerIndicatorEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        toggle.setDrawerIndicatorEnabled(true);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        creaToolbar();
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -223,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     MainActivity.super.onBackPressed();
                                     fotoModificata=false;
+                                    operaSelezionata.setFoto(oldFoto);
                                 }
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -265,9 +293,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 idUtente = 0;
                                 tipoUtente = "";
-
                                 finish();
-                               //startActivity(intent);
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -280,6 +306,8 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 super.onBackPressed();
             }
+        }else{
+            super.onBackPressed();
         }
     }
 
@@ -318,13 +346,17 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.action_delete_area).setVisible(false);
         menu.findItem(R.id.action_save_area).setVisible(false);
 
-        if(fragmentSingolaOpera != null){
+        if(fragmentSingolaOpera != null && tipoUtente.equals("curatore")){
             menu.findItem(R.id.action_delete_opera).setVisible(true);
             menu.findItem(R.id.action_save_opera).setVisible(true);
         }
-        if(fragmentSingolaArea != null){
+        if(fragmentSingolaArea != null  && tipoUtente.equals("curatore")){
             menu.findItem(R.id.action_delete_area).setVisible(true);
             menu.findItem(R.id.action_save_area).setVisible(true);
+        }
+        if(operaSelezionata!=null || qr){
+            toggle.setDrawerIndicatorEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         return true;
     }
@@ -441,8 +473,7 @@ public class MainActivity extends AppCompatActivity {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     operaSelezionata.setDataFromJSON(response.getJSONObject("data"));
-                                    //Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
-                                   // startActivity(informazioniOpera);
+                                    qr=true;
                                     fragmentSingolaOpera = new FragmentSingolaOpera();
                                     androidx.fragment.app.FragmentManager supportFragmentManager;
                                     supportFragmentManager = getSupportFragmentManager();
@@ -487,7 +518,7 @@ public class MainActivity extends AppCompatActivity {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
                     byte[] b = baos.toByteArray();
                     String encImage = Base64.encodeToString(b, Base64.DEFAULT);
-
+                    oldFoto=operaSelezionata.getFoto();
                     operaSelezionata.setFoto(encImage);
                 }
 
@@ -577,7 +608,7 @@ public class MainActivity extends AppCompatActivity {
     public void eliminaArea(View view) {
         new AlertDialog.Builder(this)
                 .setTitle("Eliminazione")
-                .setMessage("Confermi l'eliminazione?")
+                .setMessage("Confermi l'eliminazione?\nCosi facendo eliminerai tutte le opere contenute nell'area")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         areeZona.remove(currArea);
