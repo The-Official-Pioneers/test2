@@ -69,6 +69,7 @@ public class NodeListDialog {
                 });
 
                 builder.setNegativeButton("Elimina", (dialogInterface, i) -> {
+                    ((GraphNode)nodeObject.graphParent.graph.predecessors(nodeObject).toArray()[0]).pick();
                     nodeObject.deleteNode();
                 });
             }

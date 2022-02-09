@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Base64;
 import android.util.Log;
@@ -33,11 +35,21 @@ public class Node extends ConstraintLayout {
         super(context);
     }
 
+    public void setColor(int color){
+        GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this.getRootView().getContext(),
+                R.drawable.shape_circle).mutate();
+        drawable.setColor(color);
+
+        this.findViewById(R.id.vistaProva).setBackground(drawable);
+    }
+
     public void setCircle(boolean flag){
         if(flag){
-            GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this.getRootView().getContext(), R.drawable.shape_circle).mutate();
+            GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this.getRootView().getContext(),
+                    R.drawable.shape_circle).mutate();
+
             this.findViewById(R.id.vistaProva).setBackground(drawable);
-            //QUI ANDRà settata l'immagine
+            setColor(Color.YELLOW);
             this.circle = true;
         }else{
             GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this.getRootView().getContext(), R.drawable.shape).mutate();

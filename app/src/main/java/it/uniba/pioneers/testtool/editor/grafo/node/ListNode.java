@@ -3,6 +3,7 @@ package it.uniba.pioneers.testtool.editor.grafo.node;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -39,6 +40,7 @@ public class ListNode extends Node{
 
                     GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(self.getRootView().getContext(), R.drawable.shape_circle).mutate();
                     self.findViewById(R.id.vistaProva).setBackground(drawable);
+                    drawable.setColor(Color.YELLOW);
 
                     view.startDragAndDrop(data, shadowBuilder, view, 0);
 

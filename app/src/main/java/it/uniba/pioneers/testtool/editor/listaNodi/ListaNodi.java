@@ -1,7 +1,9 @@
 package it.uniba.pioneers.testtool.editor.listaNodi;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.icu.util.MeasureUnit;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -22,12 +24,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.grafo.node.GraphNode;
 import it.uniba.pioneers.testtool.editor.grafo.node.ListNode;
 import it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo;
 import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
 
 @SuppressWarnings("ALL")
 public class ListaNodi extends HorizontalScrollView {
+    private final GraphNode parentNode;
     public LinearLayout linearLayout;
     public ArrayList<ListNode> listNodeArrayList = new ArrayList<>();
     public NodeType listType = null;
@@ -36,66 +40,20 @@ public class ListaNodi extends HorizontalScrollView {
     Button buttonAdd;
     DisplayGrafo displayGrafo = null;
 
-    class MyDragListener implements OnDragListener {
-        @Override
-        public boolean onDrag(View v, DragEvent event) {
-            int action = event.getAction();
-
-            ListNode tmp = (ListNode)event.getLocalState();
-            switch (event.getAction()) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    // do nothing
-                    break;
-                case DragEvent.ACTION_DRAG_ENTERED:
-                    break;
-                case DragEvent.ACTION_DRAG_EXITED:
-                    break;
-                case DragEvent.ACTION_DROP:
-                    if(!tmp.circle){
-
-                        GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(tmp.getRootView().getContext(), R.drawable.shape_circle).mutate();
-                        tmp.findViewById(R.id.vistaProva).setBackground(drawable);
-                        Toast.makeText(tmp.getRootView().getContext(), "ciaoooo", Toast.LENGTH_LONG).show();
-
-                        tmp.circle = true;
-                    }else{
-                        GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(tmp.getRootView().getContext(), R.drawable.shape).mutate();
-                        tmp.findViewById(R.id.vistaProva).setBackground(drawable);
-                        Toast.makeText(tmp.getRootView().getContext(), "ciaoooo", Toast.LENGTH_LONG).show();
-
-                        tmp.circle = false;
-                    }
-
-                    break;
-                case DragEvent.ACTION_DRAG_ENDED:
-                default:
-                    break;
-            }
-            return true;
-        }
-    }
-
     public void init(){
         LayoutInflater layoutInflater = LayoutInflater.from(this.getContext());
         layoutInflater.inflate(R.layout.layout_lista_nodi, this);
-        setOnDragListener(new MyDragListener());
 
         scrollView = (HorizontalScrollView) this.getChildAt(0);
         linearLayout = (LinearLayout) this.scrollView.getChildAt(0);
         buttonAdd = (Button) this.linearLayout.getChildAt(0);
+        buttonAdd.setText("Nascondi Duplicati");
+        buttonAdd.setWidth(200);
+        buttonAdd.setTextSize(8);
+        buttonAdd.setBackgroundColor(Color.DKGRAY);
 
         try {
             displayGrafo = getRootView().findViewById(R.id.displayGrafo);
-
-            /*
-
-
-
-            for(int i = 0; i < 10; ++i){
-                this.addNode(new ListNode(this.linearLayout.getContext(),
-                        this, object, NodeType.OPERA));
-            }
-*/
 
             JSONObject object = new JSONObject();
 
@@ -109,8 +67,33 @@ public class ListaNodi extends HorizontalScrollView {
             object.put("profondita", 3000);
 
             buttonAdd.setOnClickListener(view1 -> {
-                this.addNode(new ListNode(this.linearLayout.getContext(),
-                        this, object, NodeType.OPERA));
+                if(buttonAdd.getText().equals("Nascondi Duplicati")){
+                    buttonAdd.setText("Mostra Tutti");
+                    buttonAdd.setBackgroundColor(Color.LTGRAY);
+                    buttonAdd.setTextColor(Color.BLACK);
+
+                    for(GraphNode node : parentNode.graphParent.graph.successors(parentNode)){
+                            for(ListNode listNode : listNodeArrayList){
+                                try {
+                                    if(node.data.getInt("id") == listNode.data.getInt("id")){
+                                        listNode.setVisibility(GONE);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                    }
+
+                }else{
+                    buttonAdd.setText("Nascondi Duplicati");
+                    buttonAdd.setBackgroundColor(Color.DKGRAY);
+                    buttonAdd.setTextColor(Color.WHITE);
+
+                    for(ListNode listNode : listNodeArrayList){
+                        listNode.setCircle(false);
+                        listNode.setVisibility(VISIBLE);
+                    }
+                }
             });
 
         } catch (Exception e) {
@@ -134,8 +117,10 @@ public class ListaNodi extends HorizontalScrollView {
         }
     }
 
-    public ListaNodi(@NonNull Context context, NodeType listType) {
+    public ListaNodi(@NonNull Context context, NodeType listType, GraphNode parentNode) {
         super(context);
+        this.listType = listType;
+        this.parentNode = parentNode;
         init();
     }
 }

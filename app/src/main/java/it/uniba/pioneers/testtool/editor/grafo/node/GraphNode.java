@@ -2,6 +2,7 @@ package it.uniba.pioneers.testtool.editor.grafo.node;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ import it.uniba.pioneers.testtool.editor.grafo.node.dialogs.NodeDialog;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 
 public class GraphNode extends Node {
-    Grafo graphParent = null;
+    public Grafo graphParent = null;
     public NodeType type;
     public MutableGraph<GraphNode> graph = null;
     GraphNode self = null;
@@ -151,6 +152,7 @@ public class GraphNode extends Node {
 
                         self.setCircle(true);
                         self.clicked = true;
+                        self.pick();
                     }else{
                         listNode.reset();
                         listNode.setVisibility(VISIBLE);
@@ -162,6 +164,7 @@ public class GraphNode extends Node {
                         self.hideAllChild();
                         self.drawAllChild();
                         self.setCircle(true);
+                        self.pick();
                     }
                 default:
                     break;
@@ -178,7 +181,6 @@ public class GraphNode extends Node {
                 System.out.println(node.data.toString());
                 AlertDialog dialog1 = NodeDialog.NodeDialog(context, node);
                 dialog1.show();
-
                 return true;
             }
         });
@@ -206,7 +208,7 @@ public class GraphNode extends Node {
                                     try {
                                         Log.v("RESPONSE", response.toString());
                                         if(response.getBoolean("status")){
-                                            ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.ZONA);
+                                            ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.ZONA, self);
 
                                             JSONArray arrayData = response.getJSONArray("data");
 
@@ -246,7 +248,7 @@ public class GraphNode extends Node {
                                     Log.v("RESPONSE_ZONA", response.toString());
                                     try {
                                         if(response.getBoolean("status")){
-                                            ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.ZONA);
+                                            ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.ZONA, self);
 
                                             JSONArray arrayData = response.getJSONArray("data");
 
@@ -284,7 +286,7 @@ public class GraphNode extends Node {
                                     Log.v("RESPONSE_AREA", response.toString());
                                     try {
                                         if(response.getBoolean("status")){
-                                            ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.AREA);
+                                            ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.AREA, self);
 
                                             JSONArray arrayData = response.getJSONArray("data");
 
@@ -319,7 +321,6 @@ public class GraphNode extends Node {
     private void setNodeSize(Grafo graphParent, NodeType type, GraphNode view) {
         inizializated = true;
 
-        Log.v("ckck", String.valueOf(clicked));
         if(clicked){
             clicked = false;
             setCircle(false);
@@ -342,6 +343,14 @@ public class GraphNode extends Node {
             setCircle(true);
 
             hideAllNodeAtSameLevel();
+            pick();
+        }
+    }
+
+    public void pick() {
+        setColor(Color.RED);
+        if(type != NodeType.VISITA){
+            ((GraphNode) graphParent.graph.predecessors(self).toArray()[0]).setColor(Color.YELLOW);
         }
     }
 
