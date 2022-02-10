@@ -215,26 +215,6 @@
         <item>2021</item>
     </string-array>
 
-    <!-- FOR SPINNER SPECIALIZATION IN FORM -->
-    <string-array name="specialization_guida">
-        <item>Specialization</item>
-        <item>eta moderna</item>
-        <item>eta contemporanea</item>
-        <item>medioevo</item>
-        <item>eta antica</item>
-        <item>architettura contemporanea</item>
-        <item>oriente</item>
-        <item>egitto</item>
-    </string-array>
-
-    <!-- FOR SPINNER TIPOZONA IN FORM -->
-    <string-array name="tipo_zona_curatore">
-        <item>Tipo zona</item>
-        <item>museo</item>
-        <item>area archeologica</item>
-        <item>mostra itinerante</item>
-    </string-array>
-
     <!-- ===============CRUD STUFF=============== -->
     <string name="cambio_dati_no_validi" translatable="false">Non è avenuto nessun cambio dati,
         verifica che i valori siano validi.</string>
@@ -372,7 +352,6 @@
     <!-- ===============FRAGMENT LISTA OPERE=============== -->
     <string name="no_opere_presenti" translatable="false">Nessuna opera presente</string>
     <!-- ====================================================================================== -->
-
 
 
 </resources>

@@ -25,32 +25,10 @@ public class WidgetRegister extends LinearLayout {
     public WidgetRegister(@NonNull Context context) {
         super(context);
         init();
-        setSpecialization(context);
-        setTipoZona(context);
         setDayDate(context);
         setMounthDate(context);
         setYearsDate(context);
     }
-
-    private void setTipoZona(Context context) {
-        Spinner spinner = (Spinner) this.findViewById(R.id.tipoZona);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                R.array.tipo_zona_curatore,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
-
-    private void setSpecialization(Context context) {
-        Spinner spinner = (Spinner) this.findViewById(R.id.specializzazione);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                R.array.specialization_guida,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
-
-
 
     public WidgetRegister(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -58,8 +36,6 @@ public class WidgetRegister extends LinearLayout {
         setDayDate(context);
         setMounthDate(context);
         setYearsDate(context);
-        setSpecialization(context);
-        setTipoZona(context);
     }
 
     public WidgetRegister(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -68,8 +44,6 @@ public class WidgetRegister extends LinearLayout {
         setDayDate(context);
         setMounthDate(context);
         setYearsDate(context);
-        setSpecialization(context);
-        setTipoZona(context);
     }
 
     public WidgetRegister(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -78,8 +52,6 @@ public class WidgetRegister extends LinearLayout {
         setDayDate(context);
         setMounthDate(context);
         setYearsDate(context);
-        setSpecialization(context);
-        setTipoZona(context);
     }
 
     public void setDayDate(Context context){

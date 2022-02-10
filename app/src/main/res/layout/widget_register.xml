@@ -117,14 +117,13 @@
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/black"
         android:textColorLink="@color/black" />
-    <Spinner
+    <EditText
         android:id="@+id/specializzazione"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="24dp"
-        android:background="#f5f5f5"
         android:autofillHints="@string/prompt_email"
         android:hint="Specializzazione"
         android:inputType="textEmailAddress"
@@ -134,9 +133,7 @@
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/black"
         android:textColorLink="@color/black"
-        android:visibility="gone"
-        android:dropDownWidth="300dp"
-        android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"/>
+        android:visibility="gone"/>
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -200,7 +197,7 @@
         android:visibility="gone"
         android:id="@+id/subFormCuratore">
 
-        <Spinner
+        <EditText
             android:id="@+id/tipoZona"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -209,16 +206,13 @@
             android:layout_marginEnd="24dp"
             android:autofillHints="@string/prompt_email"
             android:hint="Tipo di zona"
-            android:background="#f5f5f5"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:selectAllOnFocus="true"
             android:textColor="@color/black"
             android:textColorHighlight="@color/black"
             android:textColorHint="@color/black"
-            android:textColorLink="@color/black"
-            android:dropDownWidth="300dp"
-            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight" />
+            android:textColorLink="@color/black" />
 
         <EditText
             android:id="@+id/nomeZona"

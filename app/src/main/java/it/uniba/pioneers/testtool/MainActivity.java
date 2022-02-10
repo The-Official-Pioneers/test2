@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         budleFragOpera=null;
 
         Intent intent = getIntent();
-       // tipoUtente = intent.getStringExtra("typeUser");
+       //tipoUtente = intent.getStringExtra("typeUser");
         tipoUtente="curatore";
         //idUtente = intent.getIntExtra("idUser");
         idUtente=1;
@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
             }else if(areeZona==null && !qr){
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.uscire)
-                        .setMessage(R.string.uscire_no_salvare)
+                        .setMessage(R.string.uscire_sicuro_app)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 idUtente = 0;
@@ -490,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
                                     androidx.fragment.app.FragmentManager supportFragmentManager;
                                     supportFragmentManager = getSupportFragmentManager();
                                     supportFragmentManager.beginTransaction()
-                                            .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                                            .setCustomAnimations(R.anim.fade_in, R.anim.slade_out, R.anim.fade_in, R.anim.slade_out)
                                             .replace(R.id.fragment_container_list, fragmentSingolaOpera)
                                             .addToBackStack(null)
                                             .commit();
@@ -719,7 +719,8 @@ public class MainActivity extends AppCompatActivity {
         androidx.fragment.app.FragmentManager supportFragmentManager;  // carico fragment per l'aggiunta/modifica di una opera
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                //.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                .setCustomAnimations(R.anim.fade_in, R.anim.slade_out, R.anim.fade_in, R.anim.slade_out)
                 .replace(R.id.fragment_container_list, fragmentSingolaOpera)
                 .addToBackStack(null)
                 .commit();
@@ -757,14 +758,14 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
                             String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
-                            Bitmap image = ((BitmapDrawable)fragmentSingolaOpera.img.getDrawable()).getBitmap();
-                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                            image.compress(Bitmap.CompressFormat.JPEG,50,baos);
-                            byte[] b = baos.toByteArray();
-                            String encImage = Base64.encodeToString(b, Base64.DEFAULT);
-
-                           System.out.print(encImage);
-                           System.out.print(MainActivity.operaSelezionata.getFoto());
+                            String encImage="";
+                            if(!operaSelezionata.getFoto().equals("")) {
+                                Bitmap image = ((BitmapDrawable) fragmentSingolaOpera.img.getDrawable()).getBitmap();
+                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                image.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                                byte[] b = baos.toByteArray();
+                                encImage = Base64.encodeToString(b, Base64.DEFAULT);
+                            }
                             if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && !fotoModificata) {
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setMessage(R.string.modifica_campo)
@@ -802,7 +803,7 @@ public class MainActivity extends AppCompatActivity {
                 encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
             }
-            if (titolo.equals("") || descrizione.equals("") || !fotoModificata) {
+            if (titolo.equals("") || descrizione.equals("")) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setMessage(R.string.aggiungi_campi_validi)
                         .setPositiveButton(android.R.string.yes, null)

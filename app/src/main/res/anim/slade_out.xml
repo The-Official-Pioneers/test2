@@ -1,9 +1,10 @@
 <!-- res/anim/slide_out.xml -->
 <set>
-    <translate xmlns:android="http://schemas.android.com/apk/res/android"
-        android:duration="@android:integer/config_longAnimTime"
-        android:interpolator="@android:anim/decelerate_interpolator"
-        android:fromXDelta="0%"
-        android:toXDelta="100%" />
+    <alpha xmlns:android="http://schemas.android.com/apk/res/android"
+        android:duration="@android:integer/config_shortAnimTime"
+        android:interpolator="@android:anim/bounce_interpolator"
+        android:fromAlpha="1"
+        android:toAlpha="0"
+        />
 
 </set>

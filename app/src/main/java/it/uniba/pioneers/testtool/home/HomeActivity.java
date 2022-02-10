@@ -119,11 +119,15 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void registerButton(View v){
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
-        fragment.controllData(v);
+       /* if(fragment.controllData(v)){
+
+        } */
+        fragment.registerComputation(v);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        finish();
     }
 }
