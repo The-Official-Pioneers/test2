@@ -1,6 +1,5 @@
 package it.uniba.pioneers.testtool;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -38,7 +37,6 @@ public class FragmentSingolaOpera extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     public FragmentSingolaOpera() {
         // Required empty public constructor
     }
@@ -62,12 +60,20 @@ public class FragmentSingolaOpera extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle b) {
+        super.onCreate(b);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        MainActivity.budleFragOpera=new Bundle();
+        MainActivity.budleFragOpera.putString("titolo", editableTitolo.getText().toString());
+        MainActivity.budleFragOpera.putString("descrizione", editableDescrizione.getText().toString());
     }
 
     public void setDataOpera(){
@@ -82,14 +88,15 @@ public class FragmentSingolaOpera extends Fragment {
             modificaFoto.setVisibility(View.GONE);
         }
 
-        Intent info = getActivity().getIntent();
-        if (info != null) {
+       // Intent info = getActivity().getIntent();
+        //if (info != null) {
 
             if (MainActivity.tipoUtente.equals("curatore")) {
                 editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
                 editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
 
                 if(MainActivity.operaSelezionata!=null) {
+                    //Toast.makeText(getActivity(),MainActivity.operaSelezionata.getFoto(), Toast.LENGTH_SHORT).show();
                     byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     img.setImageBitmap(decodedByte);
@@ -114,7 +121,12 @@ public class FragmentSingolaOpera extends Fragment {
                 titolo.append('\n' + MainActivity.operaSelezionata.getTitolo());
                 descrizione.append('\n' + MainActivity.operaSelezionata.getDescrizione());
             }
+      //  }
+        if(MainActivity.budleFragOpera!=null) {
+            editableTitolo.setText(MainActivity.budleFragOpera.getString("titolo"));
+            editableDescrizione.setText(MainActivity.budleFragOpera.getString("descrizione"));
         }
+
     }
 
     @Override
@@ -145,8 +157,8 @@ public class FragmentSingolaOpera extends Fragment {
     }
 
     @Override
-    public void onViewCreated( View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onViewCreated( View view, Bundle outState) {
+        super.onViewCreated(view, outState);
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setDataOpera();
@@ -165,5 +177,6 @@ public class FragmentSingolaOpera extends Fragment {
             MainActivity.operaSelezionata=null;
             MainActivity.qr=false;
         }
+       MainActivity.budleFragOpera=null;
     }
 }

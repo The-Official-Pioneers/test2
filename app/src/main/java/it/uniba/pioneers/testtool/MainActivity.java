@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,8 +80,9 @@ public class MainActivity extends AppCompatActivity {
     public static int currOpera=-1;
     public static String tipoUtente;
     public static boolean fotoModificata;
+    public static boolean nuovaOpera;
     public static int idUtente;
-
+    public static Bundle budleFragOpera;
     //AGGIUNTO DA IVAN
     public static Visitatore visitatore = new Visitatore();
     public static CuratoreMuseale curatore = new CuratoreMuseale();
@@ -102,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentListaOpere=null;
         fragmentSingolaOpera=null;
         fotoModificata=false;
+        nuovaOpera=false;
+        budleFragOpera=null;
 
         Intent intent = getIntent();
        // tipoUtente = intent.getStringExtra("typeUser");
@@ -207,6 +211,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
@@ -230,7 +239,10 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     MainActivity.super.onBackPressed();
                                     fotoModificata=false;
-                                    operaSelezionata.setFoto(oldFoto);
+                                    if(oldFoto!=null) {
+                                        operaSelezionata.setFoto(oldFoto);
+                                    }
+                                    oldFoto=null;
                                 }
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -345,7 +357,9 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.action_save_area).setVisible(false);
 
         if(fragmentSingolaOpera != null && tipoUtente.equals("curatore")){
-            menu.findItem(R.id.action_delete_opera).setVisible(true);
+            if(!qr){
+                menu.findItem(R.id.action_delete_opera).setVisible(true);
+            }
             menu.findItem(R.id.action_save_opera).setVisible(true);
         }
         if(fragmentSingolaArea != null  && tipoUtente.equals("curatore")){
@@ -711,26 +725,27 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
     public void eliminaOpera(View view) {
-        new AlertDialog.Builder(this)
-                .setTitle("Eliminazione")
-                .setMessage("Confermi l'eliminazione?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
-                        opereArea.remove(currOpera);
+        if(operaSelezionata!=null) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Eliminazione")
+                    .setMessage("Confermi l'eliminazione?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
+                            opereArea.remove(currOpera);
 
-                        FragmentListaOpere.lista.remove(operaSelezionata.getTitolo());
-                        opereArea.remove(operaSelezionata);
-                        FragmentListaOpere.lvAdapter.notifyDataSetChanged();  // aggiorno la listView
+                            FragmentListaOpere.lista.remove(operaSelezionata.getTitolo());
+                            opereArea.remove(operaSelezionata);
+                            FragmentListaOpere.lvAdapter.notifyDataSetChanged();  // aggiorno la listView
 
-                        operaSelezionata.deleteDataDb(getApplicationContext());  // aggiorno il db
-                        operaSelezionata=null;
-                        getSupportFragmentManager().popBackStack();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-
+                            operaSelezionata.deleteDataDb(getApplicationContext());  // aggiorno il db
+                            operaSelezionata = null;
+                            getSupportFragmentManager().popBackStack();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
     public void modificaAggiungiOpera(View view) {
@@ -774,6 +789,8 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         }
         else{ // aggingi opera
+            nuovaOpera=true;
+            invalidateOptionsMenu();
             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
             String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
             String encImage="";
@@ -792,18 +809,18 @@ public class MainActivity extends AppCompatActivity {
                         .show();
 
             } else {
-                Opera nuovaOpera = new Opera();
-                nuovaOpera.setTitolo(titolo);
-                nuovaOpera.setDescrizione(descrizione);
-                nuovaOpera.setFoto(encImage);
+                Opera nuova = new Opera();
+                nuova.setTitolo(titolo);
+                nuova.setDescrizione(descrizione);
+                nuova.setFoto(encImage);
 
-                nuovaOpera.setArea(areaSelezionata.getId());
-                nuovaOpera.createDataDb(MainActivity.this);
+                nuova.setArea(areaSelezionata.getId());
+                nuova.createDataDb(MainActivity.this);
 
-                FragmentListaOpere.lista.add(nuovaOpera.getTitolo());
-                opereArea.add(nuovaOpera);
+                FragmentListaOpere.lista.add(nuova.getTitolo());
+                opereArea.add(nuova);
                 FragmentListaAree.lvAdapter.notifyDataSetChanged();
-
+                nuovaOpera=false;
                 getSupportFragmentManager().popBackStack();
             }
         }
