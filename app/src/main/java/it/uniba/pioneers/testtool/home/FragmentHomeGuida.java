@@ -84,6 +84,7 @@ public class FragmentHomeGuida extends Fragment  {
         Button tueVisite = (Button) getActivity().findViewById(R.id.btn_tue_visite);
         Button visiteEffettuate = (Button) getActivity().findViewById(R.id.btn_visite_effettuate);
         TextView interagisciOpera = (TextView) getActivity().findViewById(R.id.text_interagisci);
+
         tueVisite.setText(R.string.btn_tue_visite);
         visiteEffettuate.setText(R.string.btn_visite_effettuate);
         interagisciOpera.setText(R.string.text_interagisci);

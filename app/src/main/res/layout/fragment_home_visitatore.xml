@@ -20,7 +20,6 @@
             android:background="@drawable/login_edittext"
             android:drawableLeft="@drawable/ic_baseline_search_24"
             android:gravity="center"
-
             android:inputType="text"
             tools:ignore="TextContrastCheck" />
 
@@ -33,7 +32,7 @@
             android:layout_marginTop="35dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-
+            android:onClick="creaVisita"
             android:textColor="#212121" />
 
         <Button
@@ -49,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="5dp"
-            android:text="Visite predefinite"
+            android:text="@string/btn_visite_predefinite"
             android:textColor="#212121" />
 
         <androidx.cardview.widget.CardView

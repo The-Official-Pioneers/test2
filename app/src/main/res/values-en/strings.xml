@@ -223,6 +223,13 @@
 
 
     <!-- ===============LOGIN STUFF=============== -->
+    <string name="benvenuto_welcome" translatable="false">Welcome!</string>
+    <string name="cominciamo_welcome" translatable="false">Let\'s Start</string>
+
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============LOGIN STUFF=============== -->
     <string name="error_logging_in" translatable="false">Error logging in</string>
     <string name="bentornato_login" translatable="false">Welcome Back </string>
     <string name="successo_result_login" translatable="false">Success[data= </string>
@@ -298,6 +305,23 @@
 
     <string name="accedi" translatable="false">Sign in</string>
     <string name="registrati_accedi_museo" translatable="false">Register/Sign in to manage your museum</string>
+
+    <string name="aggiungi_nuova_arae" translatable="false">Add a new area to your museum</string>
+    <string name="inserisci_nome_area" translatable="false">Enter the name of the area</string>
+
+    <string name="eliminazione" translatable="false">Elimination</string>
+    <string name="conferma_eliminazione" translatable="false">Confirm the elimination?</string>
+    <string name="conferma_eliminazione_finale" translatable="false">In this way you will eliminate all the works in the area</string>
+
+    <string name="confermi" translatable="false">Confirmation</string>
+    <string name="confermi_modifica" translatable="false">Confirm the change?</string>
+
+    <string name="modifica_campo" translatable="false">Edit at least one field to save</string>
+    <string name="modifica_effettuata" translatable="false">Change made</string>
+
+    <string name="conferma_modifica_opera" translatable="false">Confirm the change to the work?</string>
+
+    <string name="aggiungi_campi_validi" translatable="false">Insert valid photo, title and description</string>
     <!-- ====================================================================================== -->
 
 
@@ -311,6 +335,17 @@
     <!-- ===============SINGOLA OPERA=============== -->
     <string name="nome_singola_opera" translatable="false">Work\'s Name:</string>
     <string name="descrizione_singola_opera" translatable="false">Description</string>
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============FRAGMENT LISTA AREE=============== -->
+    <string name="il_tuo_museo" translatable="false">Your Museum</string>
+    <string name="testtool" translatable="false">TestTool</string>
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============FRAGMENT LISTA OPERE=============== -->
+    <string name="no_opere_presenti" translatable="false">No work present</string>
     <!-- ====================================================================================== -->
 
 </resources>

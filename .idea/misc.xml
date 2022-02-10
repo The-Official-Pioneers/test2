@@ -26,19 +26,40 @@
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/nav_header.xml" value="0.259375" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/singola_area.xml" value="0.3625" />
         <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layouts/activity/layout/fragment_home.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/media/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/activity_area_personale.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/activity_crea_visita.xml" value="0.2318840579710145" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/activity_home.xml" value="0.23324275362318841" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/activity_info_opera.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_area_personale_curatore.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/activity_main.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/content_main.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/dialog_layout.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_area_personale_curatore.xml" value="0.264" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_area_personale_curatore2.xml" value="0.11614583333333334" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_area_personale_guida.xml" value="0.2" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_area_personale_visitatore.xml" value="0.2" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_dashboard.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_dialog_node_info.xml" value="0.23324275362318841" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_home_curatore.xml" value="0.264" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_home_guida.xml" value="0.176" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_home_visitatore.xml" value="0.2" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_list_home.xml" value="0.23324275362318841" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_lista_aree.xml" value="0.24230072463768115" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_lista_nodi.xml" value="0.23324275362318841" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_lista_opere.xml" value="0.24230072463768115" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_login.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_notifications.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_option.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_register.xml" value="0.23324275362318841" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_singola_area.xml" value="0.24230072463768115" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_singola_opera.xml" value="0.24230072463768115" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/fragment_welcome.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/layout_lista_nodi.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/singola_area.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/widget_grafo.xml" value="0.2318840579710145" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layout/widget_register.xml" value="0.2318840579710145" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layouts/activity/layout/fragment_home.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/layouts/activity/layout/fragment_second.xml" value="0.23324275362318841" />
         <entry key="..\:/Users/media/Desktop/androidProjects/test2/app/src/main/res/menu/home_menu.xml" value="0.25025641025641027" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3769230769230769" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.3769230769230769" />

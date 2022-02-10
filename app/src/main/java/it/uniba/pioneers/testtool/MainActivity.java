@@ -584,8 +584,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void aggiungiArea(View view) {
         AlertDialog.Builder dialogInserimento = new AlertDialog.Builder(this);
-        dialogInserimento.setTitle("Aggiungi una nuova area al tuo museo");
-        dialogInserimento.setMessage("Inserisci il nome della nuova area");
+        dialogInserimento.setTitle(R.string.aggiungi_nuova_arae);
+        dialogInserimento.setMessage(R.string.inserisci_nome_area);
         final EditText nomeArea = new EditText(this);
         dialogInserimento.setView(nomeArea);
         dialogInserimento.setNegativeButton(android.R.string.cancel, null);
@@ -609,8 +609,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void eliminaArea(View view) {
         new AlertDialog.Builder(this)
-                .setTitle("Eliminazione")
-                .setMessage("Confermi l'eliminazione?\nCosi facendo eliminerai tutte le opere contenute nell'area")
+                .setTitle(R.string.eliminazione)
+                .setMessage(R.string.conferma_eliminazione + "\n"
+                        + R.string.conferma_eliminazione_finale)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         areeZona.remove(currArea);
@@ -630,21 +631,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void modificaNomeArea(View view){
           new AlertDialog.Builder(this)
-                    .setTitle("Confermi")
-                    .setMessage("Confermi la modifica?")
+                    .setTitle(R.string.confermi)
+                    .setMessage(R.string.confermi_modifica)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                             String nome = fragmentSingolaArea.editableNome.getText().toString();
                             if(nome == "" || nome.equals(areaSelezionata.getNome())){
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage("Modifica almeno un campo per salvare")
+                                        .setMessage(R.string.modifica_campo)
                                         .setPositiveButton(android.R.string.yes,null)
                                         .show();
                             }else{
                                 areaSelezionata.setNome(nome);
                                 areaSelezionata.updateDataDb(MainActivity.this);
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage("Modifica effettuata")
+                                        .setMessage(R.string.modifica_effettuata)
                                         .setPositiveButton(android.R.string.yes,null)
                                         .show();
                             }
@@ -702,8 +703,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void eliminaOpera(View view) {
         new AlertDialog.Builder(this)
-                .setTitle("Eliminazione")
-                .setMessage("Confermi l'eliminazione?")
+                .setTitle(R.string.eliminazione)
+                .setMessage(R.string.conferma_eliminazione)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                         opereArea.remove(currOpera);
@@ -726,8 +727,8 @@ public class MainActivity extends AppCompatActivity {
     public void modificaAggiungiOpera(View view) {
         if(operaSelezionata!=null) {   // modifica opera gia esistente
             new AlertDialog.Builder(this)
-                    .setTitle("Confermi")
-                    .setMessage("Confermare la modifica dell'opera?")
+                    .setTitle(R.string.confermi)
+                    .setMessage(R.string.conferma_modifica_opera)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
@@ -742,7 +743,7 @@ public class MainActivity extends AppCompatActivity {
                            System.out.print(MainActivity.operaSelezionata.getFoto());
                             if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && !fotoModificata) {
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage("Modifica almeno un campo per salvare")
+                                        .setMessage(R.string.modifica_campo)
                                         .setPositiveButton(android.R.string.yes, null)
                                         .show();
 
@@ -752,7 +753,7 @@ public class MainActivity extends AppCompatActivity {
                                 operaSelezionata.setFoto(encImage);
                                 operaSelezionata.updateDataDb(MainActivity.this);
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage("Modifica effettuata")
+                                        .setMessage(R.string.modifica_effettuata)
                                         .setPositiveButton(android.R.string.yes, null)
                                         .show();
                                 fotoModificata=false;
@@ -777,7 +778,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (titolo.equals("") || descrizione.equals("") || !fotoModificata) {
                 new AlertDialog.Builder(MainActivity.this)
-                        .setMessage("Aggiungi foto, titolo e descrizione validi")
+                        .setMessage(R.string.aggiungi_campi_validi)
                         .setPositiveButton(android.R.string.yes, null)
                         .show();
 
@@ -797,5 +798,10 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().popBackStack();
             }
         }
+    }
+
+    public void creaVisita(View view) {
+        Intent intent = new Intent(this, CreaVisita.class);
+        startActivity(intent);
     }
 }

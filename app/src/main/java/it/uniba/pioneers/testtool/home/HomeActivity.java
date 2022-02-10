@@ -118,7 +118,6 @@ public class HomeActivity extends AppCompatActivity {
         return getContentResolver().openInputStream(imageUri);
     }
     public void registerButton(View v){
-        System.out.println("SONO ENTRATO QUI");
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
        /* if(fragment.controllData(v)){
 

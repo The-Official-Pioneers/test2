@@ -106,7 +106,7 @@ public class FragmentListaAree extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Il Tuo Museo");
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
     }
 
     @Override
@@ -125,6 +125,6 @@ public class FragmentListaAree extends Fragment{
         MainActivity.operaSelezionata=null;           // modifica della toolbar in base a dove si trova l'utente
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         MainActivity.toggle.setDrawerIndicatorEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("TestTool");
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.testtool);
     }
 }

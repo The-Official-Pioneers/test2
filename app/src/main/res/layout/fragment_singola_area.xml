@@ -24,7 +24,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="5dp"
                 android:scrollbars="vertical"
-                android:text="Nome Area: "
+                android:text="@string/nome_singola_area"
                 android:textSize="25dp" />
 
             <EditText
@@ -37,13 +37,14 @@
                 android:minHeight="48dp"
                 android:text="NomeArea"
                 android:textSize="18dp" />
+
             <Button
                 android:id="@+id/btn_opereArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:onClick="mostraOpereArea"
-                android:text="mostra le opere" />
+                android:text="@string/btn_opere_area" />
 
         </LinearLayout>
     </ScrollView>

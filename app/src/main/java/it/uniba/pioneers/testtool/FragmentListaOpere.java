@@ -128,6 +128,6 @@ public class FragmentListaOpere extends Fragment {
         MainActivity.opereArea=null;
         MainActivity.operaSelezionata=null;
         MainActivity.fotoModificata=false;               // modifica della toolbar in base a dove si trova l'utente
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tuo Museo");
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
     }
 }

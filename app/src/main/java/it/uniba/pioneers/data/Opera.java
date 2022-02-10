@@ -213,7 +213,7 @@ public class Opera {
                     responseListener, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
                     System.out.println(error.toString());
                 }
             });

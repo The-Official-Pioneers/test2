@@ -223,6 +223,13 @@
 
 
     <!-- ===============LOGIN STUFF=============== -->
+    <string name="benvenuto_welcome" translatable="false">Benvenuto!</string>
+    <string name="cominciamo_welcome" translatable="false">Cominciamo</string>
+
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============LOGIN STUFF=============== -->
     <string name="error_logging_in" translatable="false">Errore durante il login</string>
     <string name="bentornato_login" translatable="false">Bentornato </string>
     <string name="successo_result_login" translatable="false">Successo[data= </string>
@@ -293,7 +300,6 @@
         alla camera per scansionare i QR delle opere, negando l\'accesso non ci si potrà interagire</string>
     <string name="scan_qr_code" translatable="false">Scannerizzando QR...</string>
 
-
     <string name="permesso_negato" translatable="false">Permesso negato</string>
     <string name="permesso_negato_camera" translatable="false">Permesso di accesso alla camera non concesso</string>
     <string name="permesso_negato_galleria" translatable="false">Permesso di accesso alla galleria non concesso</string>
@@ -304,7 +310,23 @@
     <string name="accedi" translatable="false">Accedi</string>
     <string name="registrati_accedi_museo" translatable="false">Registrati/Accedi per poter gestire il tuo museo</string>
 
+    <string name="aggiungi_nuova_arae" translatable="false">Aggiungi una nuova area al tuo museo</string>
+    <string name="inserisci_nome_area" translatable="false">Inserisci il nome della nuova area</string>
 
+    <string name="eliminazione" translatable="false">Eliminazione</string>
+    <string name="conferma_eliminazione" translatable="false">Confermi l\'eliminazione?</string>
+    <string name="conferma_eliminazione_finale" translatable="false">Cosi facendo eliminerai tutte
+        le opere contenute nell\'area</string>
+
+    <string name="confermi" translatable="false">Confermi</string>
+    <string name="confermi_modifica" translatable="false">Confermi la modifica?</string>
+
+    <string name="modifica_campo" translatable="false">Modifica almeno un campo per salvare</string>
+    <string name="modifica_effettuata" translatable="false">Modifica effettuata</string>
+
+    <string name="conferma_modifica_opera" translatable="false">Confermare la modifica dell\'opera?</string>
+
+    <string name="aggiungi_campi_validi" translatable="false">Aggiungi foto, titolo e descrizione validi</string>
     <!-- ====================================================================================== -->
 
 
@@ -319,5 +341,17 @@
     <string name="nome_singola_opera" translatable="false">Nome Opera:</string>
     <string name="descrizione_singola_opera" translatable="false">Descrizione</string>
     <!-- ====================================================================================== -->
+
+
+    <!-- ===============FRAGMENT LISTA AREE=============== -->
+    <string name="il_tuo_museo" translatable="false">Il Tuo Museo</string>
+    <string name="testtool" translatable="false">TestTool</string>
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============FRAGMENT LISTA OPERE=============== -->
+    <string name="no_opere_presenti" translatable="false">Nessuna opera presente</string>
+    <!-- ====================================================================================== -->
+
 
 </resources>
