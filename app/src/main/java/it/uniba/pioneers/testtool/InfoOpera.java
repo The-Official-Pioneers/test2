@@ -149,8 +149,8 @@ public class InfoOpera extends AppCompatActivity {
 
     public void modificaAggiungiOpera(View view) {
         new AlertDialog.Builder(this)
-                .setTitle("Confermi")
-                .setMessage("Confermare la modifica dell'opera?")
+                .setTitle(R.string.confermi)
+                .setMessage(R.string.conferma_modifica_opera)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                         String titolo = (String) fso.editableTitolo.getText().toString();
@@ -165,7 +165,7 @@ public class InfoOpera extends AppCompatActivity {
                         System.out.print(MainActivity.operaSelezionata.getFoto());
                         if (titolo.equals(MainActivity.operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && !MainActivity.fotoModificata) {
                             new AlertDialog.Builder(InfoOpera.this)
-                                    .setMessage("Modifica almeno un campo per salvare")
+                                    .setMessage(R.string.modifica_campo)
                                     .setPositiveButton(android.R.string.yes, null)
                                     .show();
 
@@ -175,7 +175,7 @@ public class InfoOpera extends AppCompatActivity {
                             MainActivity.operaSelezionata.setFoto(encImage);
                             MainActivity.operaSelezionata.updateDataDb(InfoOpera.this);
                             new AlertDialog.Builder(InfoOpera.this)
-                                    .setMessage("Modifica effettuata")
+                                    .setMessage(R.string.modifica_effettuata)
                                     .setPositiveButton(android.R.string.yes, null)
                                     .show();
                             MainActivity.fotoModificata = false;
