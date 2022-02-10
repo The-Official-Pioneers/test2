@@ -26,6 +26,7 @@ public class FragmentSingolaOpera extends Fragment {
     public TextView titolo;
     public TextView descrizione;
     public static ImageView img;
+    FragmentSingolaOpera fragmentSingolaOpera;
 
     public static EditText editableTitolo;
     public static EditText editableDescrizione;
@@ -120,12 +121,16 @@ public class FragmentSingolaOpera extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(this.fragmentSingolaOpera != null){
+            MainActivity.fragmentSingolaOpera = this.fragmentSingolaOpera;
+        }
         setDataOpera();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        this.fragmentSingolaOpera = MainActivity.fragmentSingolaOpera;
         MainActivity.fragmentSingolaOpera=null;
     }
 

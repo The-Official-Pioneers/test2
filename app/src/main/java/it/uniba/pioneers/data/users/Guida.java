@@ -59,7 +59,7 @@ public class Guida {
 
     //MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = Guida.format.parse(dataNascita);
+        this.dataNascita = Guida.output.parse(dataNascita);
     }
 
     public Date getDataNascita() {

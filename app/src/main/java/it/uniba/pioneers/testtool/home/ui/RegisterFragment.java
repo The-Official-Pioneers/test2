@@ -14,14 +14,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +41,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,11 +68,12 @@ import java.util.Date;
  * create an instance of this fragment.
  */
 public class RegisterFragment extends Fragment {
-
     //FOR PHOTO REQUEST
     private static final int RESULT_LOAD_IMG = 1;
     private static final int PICK_FROM_GALLERY = 1;
-    TextView textTargetUri;
+    boolean c1;
+    boolean c2;
+    boolean c3;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -129,8 +131,6 @@ public class RegisterFragment extends Fragment {
         setAnimationToButton(view);
         ln = this.getView().findViewById(R.id.curatoreForm);
         ln.setVisibility(View.GONE);
-
-
     }
 
     @Override
@@ -194,7 +194,7 @@ public class RegisterFragment extends Fragment {
 
         ln.setVisibility(View.VISIBLE);
         if(userType == "guida"){
-            TextView spec = (TextView) getView().findViewById(R.id.specializzazione);
+            Spinner spec = (Spinner) getView().findViewById(R.id.specializzazione);
             spec.setVisibility(View.VISIBLE);
         }
         if(userType == "curatore"){
@@ -288,12 +288,6 @@ public class RegisterFragment extends Fragment {
 
 
 
-    public void registerComputation(View view){
-        JSONObject data = createDataContainer(view);
-        saveDataInDb(userType, data);
-    }
-
-
     private JSONObject createDataContainer(View view) {
         JSONObject data = new JSONObject();
         View v =  (View) view.getParent();
@@ -301,8 +295,8 @@ public class RegisterFragment extends Fragment {
         EditText cognomeForm =  v.findViewById(R.id.cognomeFormRef);
         EditText emailForm =  v.findViewById(R.id.emailFormRef);
         EditText passwordForm =  v.findViewById(R.id.passwordFormRef);
-        EditText specializzazione =  v.findViewById(R.id.specializzazione);
-        EditText zonaForm =  v.findViewById(R.id.tipoZona);
+        Spinner specializzazione =  v.findViewById(R.id.specializzazione);
+        Spinner zonaForm =  v.findViewById(R.id.tipoZona);
         EditText nomeZonaForm =  v.findViewById(R.id.nomeZona);
         EditText cittaZonaForm =  v.findViewById(R.id.cittaZona);
 
@@ -330,12 +324,12 @@ public class RegisterFragment extends Fragment {
             data.put("data_nascita", date);
             data.put("propic", uriString);
             if(userType == "curatore"){
-                data.put("tipoZona", zonaForm.getText().toString());
+                data.put("tipoZona", zonaForm.getSelectedItem().toString());
                 data.put("nomeZona", nomeZonaForm.getText().toString());
                 data.put("cittaZona", cittaZonaForm.getText().toString());
             }
             if(userType == "guida"){
-                data.put("specializzazione", specializzazione.getText().toString());
+                data.put("specializzazione", specializzazione.getSelectedItem().toString());
             }
             return data;
         } catch (JSONException e) {
@@ -370,29 +364,6 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    /*private boolean controllEmptyDataCuratore() {
-        View v =  getView();
-        EditText nomeForm =  v.findViewById(R.id.nomeFormRef);
-        EditText cognomeForm =  v.findViewById(R.id.cognomeFormRef);
-        EditText emailForm =  v.findViewById(R.id.emailFormRef);
-        EditText passwordForm =  v.findViewById(R.id.passwordFormRef);
-        EditText zonaForm =  v.findViewById(R.id.tipoZona);
-        EditText nomeZonaForm =  v.findViewById(R.id.nomeZona);
-        EditText cittaZonaForm =  v.findViewById(R.id.cittaZona);
-        Spinner mySpinnerDay = (Spinner) v.findViewById(R.id.day_spinner);
-        String dayText = mySpinnerDay.getSelectedItem().toString();
-
-        Spinner mySpinnerMounth = (Spinner) v.findViewById(R.id.mounth_spinner);
-        String mounthtext = mySpinnerMounth.getSelectedItem().toString();
-
-        Spinner mySpinnerYear = (Spinner) v.findViewById(R.id.years_spinner);
-        String yearText = mySpinnerYear.getSelectedItem().toString();
-
-        String date = dayText + "/" + mounthtext + "/" + yearText;
-
-        return (nomeForm.getText().toString() != "");
-    } */
-
     private void saveDataInDbGuida(JSONObject data) {
         try {
             Guida guida = new Guida(data);
@@ -403,6 +374,7 @@ public class RegisterFragment extends Fragment {
                         Boolean status = response.getBoolean("status");
                         guida.setStatusComputation(status);
                         if (status) {
+                            Toast.makeText(getView().getContext(), "Registrazione avvenuta con successo! Benvenuto", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), MainActivity.class);
                             intent.putExtra("User", userType);
                             startActivity(intent);
@@ -431,6 +403,7 @@ public class RegisterFragment extends Fragment {
                         Boolean status = response.getBoolean("status");
                         visitatore.setStatusComputation(status);
                         if (status) {
+                            Toast.makeText(getView().getContext(), "Registrazione avvenuta con successo! Benvenuto", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), MainActivity.class);
                             intent.putExtra("User", userType);
                             startActivity(intent);
@@ -475,6 +448,7 @@ public class RegisterFragment extends Fragment {
                                         Boolean status = response.getBoolean("status");
                                         curatore.setStatusComputation(status);
                                         if (status) {
+                                            Toast.makeText(getView().getContext(), "Registrazione avvenuta con successo! Benvenuto", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getView().getContext(), MainActivity.class);
                                             intent.putExtra("user", userType);
                                             intent.putExtra("idUser", curatore.getId());
@@ -504,49 +478,70 @@ public class RegisterFragment extends Fragment {
 
     public boolean controllData(View v) {
         try {
-            if(!controllDataCuratore() ){
-                return false;
-            }
-            if(!controllDataVisitatore()){
-                return false;
-            }
-            if(!controllDataGuida()){
-                return false;
-            }
-
+            controllDataCuratore();
         }catch(Exception e){}
         return true;
     }
 
-    private boolean controllDataCuratore() throws JSONException, ParseException {
-        JSONObject data = createDataContainer(getView());
+    public void finalResultControll() throws JSONException {
+        System.out.println("c1: "+c1+ "\nc2: "+c2+"\nc3: "+c3);
+        if(!c1 && !c2 && !c3){
+            System.out.println("DONE!");
+            JSONObject data = createDataContainer(getView());
+            if(controllDataContainer(data)){
+                saveDataInDb(userType, data);
+            }else{
+                Toast.makeText(getView().getContext(), "Attenzione! Alcuni campi obbligatori sono vuoti", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private boolean controllDataContainer(JSONObject data) throws JSONException {
+        switch (userType){
+            case "curatore":
+                return !data.getString("nome").isEmpty() && !data.getString("cognome").isEmpty() && !data.getString("email").isEmpty() && !data.getString("password").isEmpty() && !(data.getString("data_nascita").contains("Days") || data.getString("data_nascita").contains("Mounth") || data.getString("data_nascita").contains("Years")) && !data.getString("tipoZona").equals("Tipo zona") && !data.getString("nomeZona").isEmpty() && !data.getString("cittaZona").isEmpty();
+            case "visitatore":
+                return !data.getString("nome").isEmpty() && !data.getString("cognome").isEmpty() && !data.getString("email").isEmpty() && !data.getString("password").isEmpty() && !(data.getString("data_nascita").contains("Days") || data.getString("data_nascita").contains("Mounth") || data.getString("data_nascita").contains("Years"));
+            case "guida":
+                return !data.getString("nome").isEmpty() && !data.getString("cognome").isEmpty() && !data.getString("email").isEmpty() && !data.getString("password").isEmpty() && !(data.getString("data_nascita").contains("Days") || data.getString("data_nascita").contains("Mounth") || data.getString("data_nascita").contains("Years")) && !data.getString("specializzazione").equals("Specialization");
+        }
+        return false;
+    }
+
+    private void controllDataCuratore() throws JSONException, ParseException, InterruptedException {
+        JSONObject datatmp = createDataContainer(getView());
         CuratoreMuseale curatoreMuseale = new CuratoreMuseale();
-        curatoreMuseale.setEmail(data.getString("email"));
-        curatoreMuseale.setPassword(data.getString("password"));
-        curatoreMuseale.setStatusComputation(true);
+        curatoreMuseale.setEmail(datatmp.getString("email"));
         curatoreMuseale.controllEmail(getView().getContext(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     Boolean status = response.getBoolean("status");
                     if (status) {
+                        curatoreMuseale.setStatusComputation(true);
+                        Toast.makeText(getView().getContext(), "Email già utilizzata", Toast.LENGTH_SHORT).show();
+                        setCuratoreCondition(true);
+                        controllDataVisitatore();
+                    }else{
                         curatoreMuseale.setStatusComputation(false);
-                        Toast.makeText(getView().getContext(), "Email curatore già utilizzata", Toast.LENGTH_SHORT).show();
+                        setCuratoreCondition(false);
+                        controllDataVisitatore();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        System.out.println("Curatore " + curatoreMuseale.getStatusComputation());
-        return curatoreMuseale.getStatusComputation();
     }
 
-    private boolean controllDataVisitatore() throws JSONException, ParseException {
+    public void setCuratoreCondition(boolean esit){
+        c1 = esit;
+    }
+
+    private void controllDataVisitatore() throws JSONException, ParseException {
         JSONObject data = createDataContainer(getView());
         Visitatore visitatore = new Visitatore();
         visitatore.setEmail(data.getString("email"));
-        visitatore.setPassword(data.getString("password"));
         visitatore.controllEmail(getView().getContext(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -555,19 +550,25 @@ public class RegisterFragment extends Fragment {
                     if (status) {
                         visitatore.setStatusComputation(false);
                         Toast.makeText(getView().getContext(), "Email già utilizzata", Toast.LENGTH_SHORT).show();
+                        setVisitatoreCondition(true);
+                        controllDataGuida();
                     }else{
                         visitatore.setStatusComputation(true);
+                        setVisitatoreCondition(false);
+                        controllDataGuida();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        System.out.println("vivistat  " + visitatore.getStatusComputation());
-        return visitatore.getStatusComputation();
     }
 
-    private boolean controllDataGuida() throws JSONException, ParseException {
+    public void setVisitatoreCondition(boolean esit){
+        c2 = esit;
+    }
+
+    private void controllDataGuida() throws JSONException, ParseException {
         JSONObject data = createDataContainer(getView());
         Guida guida = new Guida();
         guida.setEmail(data.getString("email"));
@@ -580,15 +581,21 @@ public class RegisterFragment extends Fragment {
                     if (status) {
                         guida.setStatusComputation(false);
                         Toast.makeText(getView().getContext(), "Email già utilizzata", Toast.LENGTH_SHORT).show();
+                        setGuidaCondition(true);
+                        finalResultControll();
                     }else{
                         guida.setStatusComputation(true);
+                        setGuidaCondition(false);
+                        finalResultControll();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        System.out.println("guida  " + guida.getStatusComputation());
-        return guida.getStatusComputation();
+    }
+
+    public void setGuidaCondition(boolean esit){
+        c3 = esit;
     }
 }

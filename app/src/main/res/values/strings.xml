@@ -215,4 +215,24 @@
         <item>2021</item>
     </string-array>
 
+    <!-- FOR SPINNER SPECIALIZATION IN FORM -->
+    <string-array name="specialization_guida">
+        <item>Specialization</item>
+        <item>eta moderna</item>
+        <item>eta contemporanea</item>
+        <item>medioevo</item>
+        <item>eta antica</item>
+        <item>architettura contemporanea</item>
+        <item>oriente</item>
+        <item>egitto</item>
+    </string-array>
+
+    <!-- FOR SPINNER TIPOZONA IN FORM -->
+    <string-array name="tipo_zona_curatore">
+        <item>Tipo zona</item>
+        <item>museo</item>
+        <item>area archeologica</item>
+        <item>mostra itinerante</item>
+    </string-array>
+
 </resources>

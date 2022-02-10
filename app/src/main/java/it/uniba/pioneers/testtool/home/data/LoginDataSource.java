@@ -76,7 +76,7 @@ public class LoginDataSource {
                                                             context.startActivity(intent);
                                                             Toast.makeText(context, "Welcome Back " + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
                                                         } else {
-                                                            Toast.makeText(context, "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(context, "Email o password errata", Toast.LENGTH_SHORT).show();
                                                         }
                                                     } catch (Exception e) {
                                                         e.printStackTrace();

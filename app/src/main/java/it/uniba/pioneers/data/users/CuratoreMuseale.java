@@ -51,7 +51,7 @@ public class CuratoreMuseale {
 
     //MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = CuratoreMuseale.format.parse(dataNascita);
+        this.dataNascita = CuratoreMuseale.output.parse(dataNascita);
     }
 
     public Date getDataNascita() {

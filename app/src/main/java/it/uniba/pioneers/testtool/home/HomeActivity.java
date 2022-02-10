@@ -124,15 +124,11 @@ public class HomeActivity extends AppCompatActivity {
     public void registerButton(View v){
         System.out.println("SONO ENTRATO QUI");
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
-       /* if(fragment.controllData(v)){
-
-        } */
-        fragment.registerComputation(v);
+        fragment.controllData(v);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
     }
 }
