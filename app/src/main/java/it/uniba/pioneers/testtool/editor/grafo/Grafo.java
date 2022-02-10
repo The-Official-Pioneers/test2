@@ -55,6 +55,53 @@ public class Grafo extends ConstraintLayout {
 
     Context context = null;
 
+    public JSONObject exportToJson(){
+
+        try {
+            JSONObject result = new JSONObject();
+
+
+            JSONObject jsonVisita = new JSONObject();
+            JSONArray jsonArrayZone = new JSONArray();
+
+            result.put("visita", jsonVisita);
+
+            jsonVisita.put("data", visita.data);
+            jsonVisita.put("zone", jsonArrayZone);
+
+            for(GraphNode nodeZona : graph.successors(visita)){
+                JSONObject jsonZona = new JSONObject();
+                JSONArray jsonArrayAree = new JSONArray();
+
+                jsonZona.put("data", nodeZona.data);
+                jsonZona.put("aree", jsonArrayAree);
+
+                for(GraphNode nodeArea : graph.successors(nodeZona)){
+                    JSONObject jsonArea = new JSONObject();
+                    JSONArray jsonArrayOpere = new JSONArray();
+
+                    jsonArea.put("data", nodeArea.data);
+                    jsonArea.put("opere", jsonArrayOpere);
+
+                    for(GraphNode nodeOpera : graph.successors(nodeArea)){
+                        JSONObject jsonOpera = new JSONObject();
+                        jsonOpera.put("data", nodeOpera.data);
+
+                        jsonArrayOpere.put(jsonOpera);
+                    }
+                    jsonArrayAree.put(jsonArea);
+                }
+                jsonArrayZone.put(jsonZona);
+            }
+
+            return result;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public float fromDpToPx(int dip) {
         Resources r = getResources();
         return TypedValue.applyDimension(
@@ -174,10 +221,9 @@ public class Grafo extends ConstraintLayout {
         protected final Grafo self;
         protected final Context context;
 
-        GraphNode visita = null;
 
         public GraphViewer(Grafo self, Context context, GraphNode startDataNode) {
-            this.visita = startDataNode;
+            visita = startDataNode;
             this.self = self;
             this.context = context;
         }
@@ -207,4 +253,6 @@ public class Grafo extends ConstraintLayout {
             }
         }
     }
+
+
 }

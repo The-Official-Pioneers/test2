@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 
 import org.json.JSONException;

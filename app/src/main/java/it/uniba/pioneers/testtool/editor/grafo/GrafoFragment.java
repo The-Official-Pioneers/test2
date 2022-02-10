@@ -21,10 +21,13 @@ public class GrafoFragment extends Fragment {
     public static LinearLayout layoutEditorGrafo = null;
     public static LinearLayout grafoManipulateLayout = null;
     public static LinearLayout listaNodiLinearLayout = null;
+    public static GrafoFragment grafoFragment = null;
+
 
     public DisplayGrafo displayGrafo = null;
     public ListaNodi listaNodi = null;
     public OptionsEditor optionsEditor = null;
+    public Grafo graph = null;
 
     public GrafoFragment() {
         // Required empty public constructor
@@ -34,9 +37,7 @@ public class GrafoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            //TODO EVENTUALE RESTORE
-        }
+        grafoFragment = this;
     }
 
     @Override
@@ -75,8 +76,10 @@ public class GrafoFragment extends Fragment {
         //ListaNodi listaNodi = new ListaNodi(getContext(), NodeType.OPERA);
         //listaNodi.setId(R.id.listaNodi);
 
-
         grafoManipulateLayout.addView(displayGrafo);
+
+        graph = displayGrafo.graph;
+
         //listaNodi.setLayoutParams(param);
         //grafoManipulateLayout.addView(listaNodi);
     }

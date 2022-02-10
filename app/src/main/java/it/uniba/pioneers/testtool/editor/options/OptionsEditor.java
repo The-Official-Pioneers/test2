@@ -1,31 +1,101 @@
 package it.uniba.pioneers.testtool.editor.options;
 
+import static androidx.core.content.FileProvider.getUriForFile;
+
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.sql.Time;
+import java.time.Instant;
+
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo;
+import it.uniba.pioneers.testtool.editor.grafo.GrafoFragment;
 
 public class OptionsEditor extends LinearLayout {
 
-    Button listaOpere = null;
-    Button salvaPercorso = null;
-    Button condividiPercorso = null;
-    Button eliminaPercorso = null;
+    ImageButton dowloadVisita = null;
+    ImageButton shareVisita = null;
+    ImageButton deleteVisita = null;
+
+    public File writeFileOnInternalStorage(String sFileName, String sBody){
+        File dir = new File(getContext().getFilesDir(),"visite");
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        File gpxfile = new File(dir, sFileName);
+
+        try {
+            FileWriter writer = new FileWriter(gpxfile);
+            writer.append(sBody);
+            writer.flush();
+            writer.close();
+
+            return  gpxfile;
+        } catch (Exception e){
+            e.printStackTrace();
+            return gpxfile;
+        }
+    }
 
     public void initButtonsListener(){
+        dowloadVisita.setOnClickListener(view -> {
 
+        });
+
+        shareVisita.setOnClickListener(view -> {
+
+            Intent i = new Intent();
+            i.setAction(Intent.ACTION_SEND);
+            try {
+                JSONObject exportedJson = GrafoFragment.grafoFragment.graph.exportToJson();
+                int idVisita = exportedJson.getJSONObject("visita").getJSONObject("data").getInt("id");
+                String exportedString = exportedJson.toString(4);
+                StringBuilder filename = new StringBuilder();
+                generateFilename(idVisita, filename);
+
+                File expFile = writeFileOnInternalStorage(filename.toString(), exportedString);
+                i.setType("text/*");
+                Uri contentUri = getUriForFile(getContext(), "it.uniba.pioneers.testtool", expFile);
+                i.putExtra(Intent.EXTRA_STREAM, contentUri);
+                GrafoFragment.grafoFragment.getActivity().startActivity(i);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+
+        deleteVisita.setOnClickListener(view -> {
+
+        });
+    }
+
+    private void generateFilename(int idVisita, StringBuilder filename) {
+        filename.append("visita");
+        filename.append(idVisita);
+        filename.append("_");
+        filename.append(Time.from(Instant.now()).getTime());
+        filename.append(".txt");
     }
 
     public void init(Context context){
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         layoutInflater.inflate(R.layout.widget_options_grafo, this);
 
+        dowloadVisita = findViewById(R.id.dowloadVisita);
+        shareVisita = findViewById(R.id.shareVisita);
+        deleteVisita = findViewById(R.id.deleteVisita);
 
         initButtonsListener();
 

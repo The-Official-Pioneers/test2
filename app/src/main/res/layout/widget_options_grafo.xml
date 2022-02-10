@@ -8,21 +8,21 @@
     android:orientation="horizontal">
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/dowloadVisita"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/ic_baseline_cloud_download_24" />
 
     <ImageButton
-        android:id="@+id/condividiPercorso"
+        android:id="@+id/shareVisita"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/ic_baseline_share_24" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/deleteVisita"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
