@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import it.uniba.pioneers.testtool.MainActivity;
@@ -68,4 +72,23 @@ public class FragmentHomeGuida extends Fragment  {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home_guida, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setTextEditText();
+    }
+
+    private void setTextEditText(){
+
+        Button tueVisite = (Button) getActivity().findViewById(R.id.btn_tue_visite);
+        Button visiteEffettuate = (Button) getActivity().findViewById(R.id.btn_visite_effettuate);
+        TextView interagisciOpera = (TextView) getActivity().findViewById(R.id.text_interagisci);
+
+        tueVisite.setText(R.string.btn_tue_visite);
+        visiteEffettuate.setText(R.string.btn_visite_effettuate);
+        interagisciOpera.setText(R.string.text_interagisci);
+
+    }
+
 }

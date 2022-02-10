@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int SCAN_QR = 2;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    public DrawerLayout drawer;
+    public static DrawerLayout drawer;
     public FragmentManager supportFragmentManager;
     public static ActionBarDrawerToggle toggle;
     public static Opera opera;
@@ -73,13 +74,15 @@ public class MainActivity extends AppCompatActivity {
     public static int currArea=-1;
     public static ArrayList<Opera> opereArea;
     public static Opera operaSelezionata;
+    public static String oldFoto;
     public static FragmentListaOpere fragmentListaOpere;
     public static FragmentSingolaOpera fragmentSingolaOpera;
     public static int currOpera=-1;
     public static String tipoUtente;
     public static boolean fotoModificata;
-    public int idUtente;
-
+    public static boolean nuovaOpera;
+    public static int idUtente;
+    public static Bundle budleFragOpera;
     //AGGIUNTO DA IVAN
     public static Visitatore visitatore = new Visitatore();
     public static CuratoreMuseale curatore = new CuratoreMuseale();
@@ -101,12 +104,14 @@ public class MainActivity extends AppCompatActivity {
         fragmentListaOpere=null;
         fragmentSingolaOpera=null;
         fotoModificata=false;
+        nuovaOpera=false;
+        budleFragOpera=null;
 
         Intent intent = getIntent();
        // tipoUtente = intent.getStringExtra("typeUser");
         tipoUtente="curatore";
         //idUtente = intent.getIntExtra("idUser");
-        idUtente=5;
+        idUtente=1;
         switch(tipoUtente){    // caricamento della home corretta
             case "curatore":
                 FragmentHomeCuratore fragC = new FragmentHomeCuratore();
@@ -140,12 +145,14 @@ public class MainActivity extends AppCompatActivity {
                 */
                 break;
         }
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        // creazione della toolbar
+        creaToolbar();
+
         switch(tipoUtente){ // lettura dati utente da db per popolare l'area personales
             case "visitatore":
                 visitatore.setId(idUtente);
@@ -158,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                                 MainActivity.visitatore.setDataFromJSON(response.getJSONObject("data"));
                                 //Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(MainActivity.this, "Non e' stato possibile leggere i dati dal db", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, R.string.impossibile_leggere_dati, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException | ParseException e) {
                             e.printStackTrace();
@@ -167,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 break;
             case "guida":
-                guida.setId(idUtente);
+               guida.setId(idUtente);
                 guida.readDataDb(this);
                 break;
             case "curatore":
@@ -175,8 +182,9 @@ public class MainActivity extends AppCompatActivity {
                 curatore.readDataDb(this);
                 break;
         }
+    }
 
-                                              // creazione della toolbar
+    public void creaToolbar() {
         Toolbar toolbar = findViewById(R.id.toolBarHome);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -186,25 +194,31 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(areeZona!=null) {
+                if (areeZona != null || qr) {
                     onBackPressed();
-                }
-                else{
+                } else {
                     drawer.openDrawer(GravityCompat.START);
                 }
             }
         });
-        if(operaSelezionata!=null){
-            toggle.setDrawerIndicatorEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        creaToolbar();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -219,12 +233,16 @@ public class MainActivity extends AppCompatActivity {
 
                 if(!c || !c2 || c3) {
                     new AlertDialog.Builder(this)
-                            .setTitle("Uscire?")
-                            .setMessage("Uscire senza salvare le modifiche?")
+                            .setTitle(R.string.uscire)
+                            .setMessage(R.string.uscire_no_salvare)
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     MainActivity.super.onBackPressed();
                                     fotoModificata=false;
+                                    if(oldFoto!=null) {
+                                        operaSelezionata.setFoto(oldFoto);
+                                    }
+                                    oldFoto=null;
                                 }
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -242,8 +260,8 @@ public class MainActivity extends AppCompatActivity {
                 boolean c = String.valueOf(FragmentSingolaArea.editableNome.getText()).equals(MainActivity.areaSelezionata.getNome());
                 if(!c) {
                     new AlertDialog.Builder(this)
-                            .setTitle("Uscire?")
-                            .setMessage("Uscire senza salvare le modifiche?")
+                            .setTitle(R.string.uscire)
+                            .setMessage(R.string.uscire_no_salvare)
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     MainActivity.super.onBackPressed();
@@ -259,17 +277,15 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     super.onBackPressed();
                 }
-            }else if(areeZona==null){
+            }else if(areeZona==null && !qr){
                 new AlertDialog.Builder(this)
-                        .setTitle("Uscire?")
-                        .setMessage("Sei sicuro di voler uscire dall'app?")
+                        .setTitle(R.string.uscire)
+                        .setMessage(R.string.uscire_no_salvare)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 idUtente = 0;
                                 tipoUtente = "";
-
                                 finish();
-                               //startActivity(intent);
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -282,6 +298,26 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 super.onBackPressed();
             }
+        }else if(!qr && operaSelezionata == null){
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.uscire)
+                    .setMessage(R.string.uscire_sicuro_app)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            idUtente = 0;
+                            tipoUtente = "";
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }else{
+            super.onBackPressed();
         }
     }
 
@@ -320,13 +356,19 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.action_delete_area).setVisible(false);
         menu.findItem(R.id.action_save_area).setVisible(false);
 
-        if(fragmentSingolaOpera != null){
-            menu.findItem(R.id.action_delete_opera).setVisible(true);
+        if(fragmentSingolaOpera != null && tipoUtente.equals("curatore")){
+            if(!qr){
+                menu.findItem(R.id.action_delete_opera).setVisible(true);
+            }
             menu.findItem(R.id.action_save_opera).setVisible(true);
         }
-        if(fragmentSingolaArea != null){
+        if(fragmentSingolaArea != null  && tipoUtente.equals("curatore")){
             menu.findItem(R.id.action_delete_area).setVisible(true);
             menu.findItem(R.id.action_save_area).setVisible(true);
+        }
+        if(operaSelezionata!=null || qr){
+            toggle.setDrawerIndicatorEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         return true;
     }
@@ -343,8 +385,8 @@ public class MainActivity extends AppCompatActivity {
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)) {
                 new AlertDialog.Builder(this)
-                        .setTitle("Permessi Camera")
-                        .setMessage("Consentire all'app l'accesso alla camera per scansionare i QR delle opere, negando l'accesso non ci si potrà interagire")
+                        .setTitle(R.string.permessi_camera)
+                        .setMessage(R.string.permessi_camera_consenti)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, SCAN_QR);
@@ -360,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
             integrator.setCaptureActivity(CaptureAct.class);
             integrator.setOrientationLocked(false);
             integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
-            integrator.setPrompt("Scanning code...");
+            integrator.setPrompt(getResources().getString(R.string.scan_qr_code));
             integrator.initiateScan();
         }
     }
@@ -368,8 +410,8 @@ public class MainActivity extends AppCompatActivity {
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 new AlertDialog.Builder(this)
-                        .setTitle("Permesso di accesso alla galleria")
-                        .setMessage("Consentire all'app l'accesso alla galleria per poter scegliere l'immagine o la foto da usare per l'opera")
+                        .setTitle(R.string.permessi_galleria)
+                        .setMessage(R.string.consentire_permessi_galleria)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
@@ -397,12 +439,12 @@ public class MainActivity extends AppCompatActivity {
                     integrator.setCaptureActivity(CaptureAct.class);
                     integrator.setOrientationLocked(false);
                     integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
-                    integrator.setPrompt("Scanning code...");
+                    integrator.setPrompt(getResources().getString(R.string.scan_qr_code));
                     integrator.initiateScan();
                 }else{
                     new AlertDialog.Builder(this)
-                            .setTitle("Permesso negato")
-                            .setMessage("Permesso di accesso alla camera non concesso")
+                            .setTitle(R.string.permesso_negato)
+                            .setMessage(R.string.permesso_negato_camera)
                             .setPositiveButton(android.R.string.ok, null)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
@@ -415,8 +457,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(intent, 1);
                 } else {
                     new AlertDialog.Builder(this)
-                            .setTitle("Permesso negato")
-                            .setMessage("Permesso di accesso alla galleria non concesso")
+                            .setTitle(R.string.permesso_negato)
+                            .setMessage(R.string.permesso_negato_galleria)
                             .setPositiveButton(android.R.string.ok, null)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
@@ -443,23 +485,44 @@ public class MainActivity extends AppCompatActivity {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     operaSelezionata.setDataFromJSON(response.getJSONObject("data"));
-                                    Intent informazioniOpera = new Intent(MainActivity.this, InfoOpera.class);
-                                    startActivity(informazioniOpera);
+                                    qr=true;
+                                    fragmentSingolaOpera = new FragmentSingolaOpera();
+                                    androidx.fragment.app.FragmentManager supportFragmentManager;
+                                    supportFragmentManager = getSupportFragmentManager();
+                                    supportFragmentManager.beginTransaction()
+                                            .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                                            .replace(R.id.fragment_container_list, fragmentSingolaOpera)
+                                            .addToBackStack(null)
+                                            .commit();
+
                                 }else{
+                                    operaSelezionata=null;
+                                    qr=false;
+                                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                                    MainActivity.toggle.setDrawerIndicatorEnabled(true);
+
                                     new AlertDialog.Builder(MainActivity.this)
-                                            .setMessage("Nessun risultato")
+                                            .setMessage(R.string.nessun_risultato)
                                             .setPositiveButton(android.R.string.yes, null)
                                             .show();
                                     return;
                                 }
                             } catch (JSONException | ParseException e) {
+                                operaSelezionata=null;
+                                qr=false;
+                                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                                MainActivity.toggle.setDrawerIndicatorEnabled(true);
                                 e.printStackTrace();
                             }
                         }
                     });
                 } else {
+                    operaSelezionata=null;
+                    qr=false;
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    MainActivity.toggle.setDrawerIndicatorEnabled(true);
                     new AlertDialog.Builder(MainActivity.this)
-                            .setMessage("Nessun risultato")
+                            .setMessage(R.string.nessun_risultato)
                             .setPositiveButton(android.R.string.yes, null)
                             .show();
                 }
@@ -474,14 +537,22 @@ public class MainActivity extends AppCompatActivity {
             try {
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                 oldPropic.setImageBitmap(bitmap);
-                oldPropic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                //oldPropic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                if(operaSelezionata!=null){
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                    byte[] b = baos.toByteArray();
+                    String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+                    oldFoto=operaSelezionata.getFoto();
+                    operaSelezionata.setFoto(encImage);
+                }
 
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",
-                            Snackbar.LENGTH_LONG).show();
-                    fotoModificata = true;
+                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.foto_impostata_successo,
+                        Snackbar.LENGTH_LONG).show();
+                fotoModificata = true;
 
             } catch (FileNotFoundException e) {
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Impossibile procedere",
+                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
                         Snackbar.LENGTH_LONG).show();
             }
         }
@@ -496,8 +567,8 @@ public class MainActivity extends AppCompatActivity {
     public void gestisciMuseo(View view) {
         if (tipoUtente.equals("ospite")) {   // controllo sul tipo di utente
             new AlertDialog.Builder(this)
-                    .setTitle("Accedi")
-                    .setMessage("Registrati/Accedi per poter gestire il tuo museo")
+                    .setTitle(R.string.accedi)
+                    .setMessage(R.string.registrati_accedi_museo)
                     .setPositiveButton(android.R.string.ok, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -515,6 +586,7 @@ public class MainActivity extends AppCompatActivity {
                                 tmp.setDataFromJSON(resultAree.getJSONObject(i));
                                 areeZona.add(tmp);
                             }
+                            //creaToolbar();
                             FragmentListaAree fls = new FragmentListaAree();   // carico il fragment per mostrare la lista delle aree
                             androidx.fragment.app.FragmentManager supportFragmentManager;
                             supportFragmentManager = getSupportFragmentManager();
@@ -524,7 +596,7 @@ public class MainActivity extends AppCompatActivity {
                                     .addToBackStack(null)
                                     .commit();
                         } else {
-                            Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException | ParseException e) {
                         e.printStackTrace();
@@ -536,8 +608,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void aggiungiArea(View view) {
         AlertDialog.Builder dialogInserimento = new AlertDialog.Builder(this);
-        dialogInserimento.setTitle("Aggiungi una nuova area al tuo museo");
-        dialogInserimento.setMessage("Inserisci il nome della nuova area");
+        dialogInserimento.setTitle(R.string.aggiungi_nuova_arae);
+        dialogInserimento.setMessage(R.string.inserisci_nome_area);
         final EditText nomeArea = new EditText(this);
         dialogInserimento.setView(nomeArea);
         dialogInserimento.setNegativeButton(android.R.string.cancel, null);
@@ -561,8 +633,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void eliminaArea(View view) {
         new AlertDialog.Builder(this)
-                .setTitle("Eliminazione")
-                .setMessage("Confermi l'eliminazione?")
+                .setTitle(R.string.eliminazione)
+                .setMessage(R.string.conferma_eliminazione + "\n" + R.string.conferma_eliminazione_finale)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         areeZona.remove(currArea);
@@ -582,21 +654,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void modificaNomeArea(View view){
           new AlertDialog.Builder(this)
-                    .setTitle("Confermi")
-                    .setMessage("Confermi la modifica?")
+                    .setTitle(R.string.confermi)
+                    .setMessage(R.string.confermi_modifica)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                             String nome = fragmentSingolaArea.editableNome.getText().toString();
                             if(nome == "" || nome.equals(areaSelezionata.getNome())){
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage("Modifica almeno un campo per salvare")
+                                        .setMessage(R.string.modifica_campo)
                                         .setPositiveButton(android.R.string.yes,null)
                                         .show();
                             }else{
                                 areaSelezionata.setNome(nome);
                                 areaSelezionata.updateDataDb(MainActivity.this);
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage("Modifica effettuata")
+                                        .setMessage(R.string.modifica_effettuata)
                                         .setPositiveButton(android.R.string.yes,null)
                                         .show();
                             }
@@ -653,33 +725,34 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
     public void eliminaOpera(View view) {
-        new AlertDialog.Builder(this)
-                .setTitle("Eliminazione")
-                .setMessage("Confermi l'eliminazione?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
-                        opereArea.remove(currOpera);
+        if(operaSelezionata!=null) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.eliminazione)
+                    .setMessage(R.string.conferma_eliminazione)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
+                            opereArea.remove(currOpera);
 
-                        FragmentListaOpere.lista.remove(operaSelezionata.getTitolo());
-                        opereArea.remove(operaSelezionata);
-                        FragmentListaOpere.lvAdapter.notifyDataSetChanged();  // aggiorno la listView
+                            FragmentListaOpere.lista.remove(operaSelezionata.getTitolo());
+                            opereArea.remove(operaSelezionata);
+                            FragmentListaOpere.lvAdapter.notifyDataSetChanged();  // aggiorno la listView
 
-                        operaSelezionata.deleteDataDb(getApplicationContext());  // aggiorno il db
-                        operaSelezionata=null;
-                        getSupportFragmentManager().popBackStack();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-
+                            operaSelezionata.deleteDataDb(getApplicationContext());  // aggiorno il db
+                            operaSelezionata = null;
+                            getSupportFragmentManager().popBackStack();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
     public void modificaAggiungiOpera(View view) {
         if(operaSelezionata!=null) {   // modifica opera gia esistente
             new AlertDialog.Builder(this)
-                    .setTitle("Confermi")
-                    .setMessage("Confermare la modifica dell'opera?")
+                    .setTitle(R.string.confermi)
+                    .setMessage(R.string.conferma_modifica_opera)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
@@ -694,7 +767,7 @@ public class MainActivity extends AppCompatActivity {
                            System.out.print(MainActivity.operaSelezionata.getFoto());
                             if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && !fotoModificata) {
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage("Modifica almeno un campo per salvare")
+                                        .setMessage(R.string.modifica_campo)
                                         .setPositiveButton(android.R.string.yes, null)
                                         .show();
 
@@ -704,7 +777,7 @@ public class MainActivity extends AppCompatActivity {
                                 operaSelezionata.setFoto(encImage);
                                 operaSelezionata.updateDataDb(MainActivity.this);
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage("Modifica effettuata")
+                                        .setMessage(R.string.modifica_effettuata)
                                         .setPositiveButton(android.R.string.yes, null)
                                         .show();
                                 fotoModificata=false;
@@ -716,6 +789,8 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         }
         else{ // aggingi opera
+            nuovaOpera=true;
+            invalidateOptionsMenu();
             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
             String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
             String encImage="";
@@ -729,25 +804,31 @@ public class MainActivity extends AppCompatActivity {
             }
             if (titolo.equals("") || descrizione.equals("") || !fotoModificata) {
                 new AlertDialog.Builder(MainActivity.this)
-                        .setMessage("Aggiungi foto, titolo e descrizione validi")
+                        .setMessage(R.string.aggiungi_campi_validi)
                         .setPositiveButton(android.R.string.yes, null)
                         .show();
 
             } else {
-                Opera nuovaOpera = new Opera();
-                nuovaOpera.setTitolo(titolo);
-                nuovaOpera.setDescrizione(descrizione);
-                nuovaOpera.setFoto(encImage);
+                Opera nuova = new Opera();
+                nuova.setTitolo(titolo);
+                nuova.setDescrizione(descrizione);
+                nuova.setFoto(encImage);
 
-                nuovaOpera.setArea(areaSelezionata.getId());
-                nuovaOpera.createDataDb(MainActivity.this);
+                nuova.setArea(areaSelezionata.getId());
+                nuova.createDataDb(MainActivity.this);
 
-                FragmentListaOpere.lista.add(nuovaOpera.getTitolo());
-                opereArea.add(nuovaOpera);
+                FragmentListaOpere.lista.add(nuova.getTitolo());
+                opereArea.add(nuova);
                 FragmentListaAree.lvAdapter.notifyDataSetChanged();
-
+                nuovaOpera=false;
                 getSupportFragmentManager().popBackStack();
             }
         }
     }
+
+    public void creaVisita(View view) {
+        Intent intent = new Intent(this, CreaVisita.class);
+        startActivity(intent);
+    }
+
 }

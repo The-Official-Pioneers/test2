@@ -4,7 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import it.uniba.pioneers.testtool.R;
@@ -56,5 +61,27 @@ public class FragmentHomeVisitatore extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home_visitatore, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setTextEditText();
+    }
+
+    private void setTextEditText(){
+
+        Button visitePredef = (Button) getActivity().findViewById(R.id.btn_visite_predefinite);
+        Button tueVisite = (Button) getActivity().findViewById(R.id.btn_tuoi_percorsi);
+        Button creaVisita = (Button) getActivity().findViewById(R.id.btn_crea_visita);
+        TextView interagisciOpera = (TextView) getActivity().findViewById(R.id.text_interagisci);
+        EditText text_cerca = (EditText) getActivity().findViewById(R.id.text_cerca);
+
+        text_cerca.setHint(R.string.text_cerca);
+        visitePredef.setText(R.string.btn_visite_predefinite);
+        tueVisite.setText(R.string.btn_tue_visite);
+        creaVisita.setText(R.string.btn_crea_visita);
+        interagisciOpera.setText(R.string.text_interagisci);
+
     }
 }

@@ -55,7 +55,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void onClickButton(View view) {
-        Toast.makeText(this, "Ha funzionato", Toast.LENGTH_SHORT).show();
 
         FragmentManager fragmentManager = getFragmentManager();
         /*** INIZIO TRANSAZIONE ***/
@@ -74,14 +73,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void goMainActivity(View view) {
-        Toast.makeText(this, "aweo", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     public void AttachRegisterFragment(View view) {
-        Toast.makeText(this, "aweo", Toast.LENGTH_SHORT).show();
-
         /*** INIZIO TRANSAZIONE ***/
         RegisterFragment f = new RegisterFragment();
         androidx.fragment.app.FragmentManager supportFragmentManager;
@@ -122,7 +118,6 @@ public class HomeActivity extends AppCompatActivity {
         return getContentResolver().openInputStream(imageUri);
     }
     public void registerButton(View v){
-        System.out.println("SONO ENTRATO QUI");
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
         fragment.controllData(v);
     }

@@ -1,39 +1,39 @@
 <resources>
     <string name="app_name">TestTool</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Impostazioni</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="first_fragment_label">Primo Fragment</string>
+    <string name="second_fragment_label">Secondo Fragment</string>
+    <string name="next">Successivo</string>
+    <string name="previous">Precedente</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_first_fragment">Ciao primo fragment</string>
+    <string name="hello_second_fragment">Ciao secondo fragment. Arg: %1$s</string>
     <string name="title_activity_editor2">EditorActivity2</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">Notifiche</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="button">Button</string>
+    <string name="hello_blank_fragment">Ciao fragment vuoto</string>
+    <string name="button">Bottone</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="action_sign_in">Accedi o registrati</string>
+    <string name="action_sign_in_short">Accedi</string>
+    <string name="welcome">"Benvenuto!"</string>
+    <string name="invalid_username">Nome utente non valido</string>
+    <string name="invalid_password">La password deve avere 5+ caratteri</string>
+    <string name="login_failed">"Accesso non riuscito"</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <!-- Per persone con disabilità con un reader per spiegare cosa sta succedendo sullo schermo -->
     <string name="navigation_drawer_open">navigation drawer open</string>
     <string name="navigation_drawer_close">navigation drawer close</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-    <string name="app_widget_description">This is an app widget description</string>
+    <string name="appwidget_text">Esempio</string>
+    <string name="add_widget">Aggiungi widget</string>
+    <string name="app_widget_description">Questa è la descrizione di un widget dell\'app</string>
 
     <!-- FOR SPINNER DATE IN FORM -->
     <string-array name="days_array">
@@ -234,5 +234,145 @@
         <item>area archeologica</item>
         <item>mostra itinerante</item>
     </string-array>
+
+    <!-- ===============CRUD STUFF=============== -->
+    <string name="cambio_dati_no_validi" translatable="false">Non è avenuto nessun cambio dati,
+        verifica che i valori siano validi.</string>
+    <string name="server_no_risponde" translatable="false">Il server non risponde.</string>
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============LOGIN STUFF=============== -->
+    <string name="benvenuto_welcome" translatable="false">Benvenuto!</string>
+    <string name="cominciamo_welcome" translatable="false">Cominciamo</string>
+
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============LOGIN STUFF=============== -->
+    <string name="error_logging_in" translatable="false">Errore durante il login</string>
+    <string name="bentornato_login" translatable="false">Bentornato </string>
+    <string name="successo_result_login" translatable="false">Successo[data= </string>
+    <string name="errore_result_login" translatable="false">Errore[exception= </string>
+
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============PLACEHOLDER STUFF=============== -->
+    <string name="placeholder_item" translatable="false">Elemento </string>
+    <string name="placeholder_item_details" translatable="false">Informazioni dell\'elemento: </string>
+    <string name="placeholder_item_more_details" translatable="false">Ulteriori informazioni dell\'elemento:.</string>
+
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============PROFILE AREA=============== -->
+    <string name="nome_areap" translatable="false">Nome:</string>
+    <string name="cognome_areap" translatable="false">Cognome:</string>
+    <string name="datan_areap" translatable="false">Data di Nascita:</string>
+    <string name="email_areap" translatable="false">Email:</string>
+
+    <string name="aggiornamento_profilo_successo" translatable="false">Profilo aggiornato con successo!</string>
+    <string name="impossibile_procedere" translatable="false">Impossibile procedere.</string>
+    <string name="no_modifiche" translatable="false">Nessuna modifica effettuata.</string>
+
+    <string name="modifica_password" translatable="false">Modifica Password</string>
+    <string name="inserisci_nuova_password" translatable="false">Inserisci la nuova password</string>
+    <string name="mostra_pass" translatable="false">Mostra</string>
+    <string name="nascondi_pass" translatable="false">Nascondi</string>
+    <string name="pass_aggiornata_successo" translatable="false">Password aggiornata con successo!</string>
+    <string name="annulla" translatable="false">Annulla</string>
+
+    <string name="permessi_galleria" translatable="false">Permessi Galleria</string>
+    <string name="consentire_permessi_galleria" translatable="false">Consentire all\'app l\'accesso alla galleria, negando
+        l\'accesso non si potrà caricare una nuova foto.</string>
+
+    <string name="foto_aggiornata_successo" translatable="false">Foto caricata con successo!</string>
+
+    <string name="uscire" translatable="false"> Uscire?</string>
+    <string name="uscire_no_salvare" translatable="false"> Uscire senza salvare le modifiche?</string>
+    <!-- ====================================================================================== -->
+
+
+    <!-- CURATORE PROFILE AREA -->
+    <string name="zona_areap" translatable="false">Zona:</string>
+    <!-- GUIDA PROFILE AREA -->
+    <string name="specializz_areap" translatable="false">Specializzazione:</string>
+
+    <string name="modificap_areap" translatable="false">Modifica Dati Profilo</string>
+    <string name="nuovapass_areap" translatable="false">Modifica Password</string>
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============HOME PAGE=============== -->
+    <string name="btn_tue_visite" translatable="false">Le Tue Visite</string>
+    <string name="btn_gestisci_museo" translatable="false">Gestisci Museo</string>
+    <string name="btn_visite_effettuate" translatable="false">Visite Effettuate</string>
+    <string name="btn_crea_visita" translatable="false">Crea Visita</string>
+    <string name="btn_visite_predefinite" translatable="false">Visite Predefinite</string>
+    <string name="text_cerca" translatable="false">Cerca...</string>
+    <string name="text_interagisci" translatable="false">Interagisci con l\'opera..</string>
+    <string name="impossibile_leggere_dati" translatable="false">Non e\' stato possibile leggere i dati dal db</string>
+    <string name="uscire_sicuro_app" translatable="false">Sei sicuro di voler uscire dall\'app?</string>
+
+    <string name="permessi_camera" translatable="false">Permessi Camera</string>
+    <string name="permessi_camera_consenti" translatable="false">Consentire all\'app l\'accesso
+        alla camera per scansionare i QR delle opere, negando l\'accesso non ci si potrà interagire</string>
+    <string name="scan_qr_code" translatable="false">Scannerizzando QR...</string>
+
+    <string name="permesso_negato" translatable="false">Permesso negato</string>
+    <string name="permesso_negato_camera" translatable="false">Permesso di accesso alla camera non concesso</string>
+    <string name="permesso_negato_galleria" translatable="false">Permesso di accesso alla galleria non concesso</string>
+
+    <string name="nessun_risultato" translatable="false">Nessun risultato</string>
+    <string name="foto_impostata_successo" translatable="false">Foto aggiornata con successo!</string>
+
+    <string name="accedi" translatable="false">Accedi</string>
+    <string name="registrati_accedi_museo" translatable="false">Registrati/Accedi per poter gestire il tuo museo</string>
+
+    <string name="aggiungi_nuova_arae" translatable="false">Aggiungi una nuova area al tuo museo</string>
+    <string name="inserisci_nome_area" translatable="false">Inserisci il nome della nuova area</string>
+
+    <string name="eliminazione" translatable="false">Eliminazione</string>
+    <string name="conferma_eliminazione" translatable="false">Confermi l\'eliminazione?</string>
+    <string name="conferma_eliminazione_finale" translatable="false">Cosi facendo eliminerai tutte
+        le opere contenute nell\'area</string>
+
+    <string name="confermi" translatable="false">Confermi</string>
+    <string name="confermi_modifica" translatable="false">Confermi la modifica?</string>
+
+    <string name="modifica_campo" translatable="false">Modifica almeno un campo per salvare</string>
+    <string name="modifica_effettuata" translatable="false">Modifica effettuata</string>
+
+    <string name="conferma_modifica_opera" translatable="false">Confermare la modifica dell\'opera?</string>
+
+    <string name="aggiungi_campi_validi" translatable="false">Aggiungi foto, titolo e descrizione validi</string>
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============SINGOLA AREA=============== -->
+    <string name="nome_singola_area" translatable="false">Nome Area:</string>
+    <string name="btn_salva_singola" translatable="false">Salva</string>
+    <string name="btn_opere_area" translatable="false">Mostra Le Opere</string>
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============SINGOLA OPERA=============== -->
+    <string name="nome_singola_opera" translatable="false">Nome Opera:</string>
+    <string name="descrizione_singola_opera" translatable="false">Descrizione</string>
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============FRAGMENT LISTA AREE=============== -->
+    <string name="il_tuo_museo" translatable="false">Il Tuo Museo</string>
+    <string name="testtool" translatable="false">TestTool</string>
+    <!-- ====================================================================================== -->
+
+
+    <!-- ===============FRAGMENT LISTA OPERE=============== -->
+    <string name="no_opere_presenti" translatable="false">Nessuna opera presente</string>
+    <!-- ====================================================================================== -->
+
+
 
 </resources>

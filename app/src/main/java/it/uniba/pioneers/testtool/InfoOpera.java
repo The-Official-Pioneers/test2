@@ -10,11 +10,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -92,8 +94,11 @@ public class InfoOpera extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {         // controllo uscita senza salvare da barra
-        if (MainActivity.tipoUtente.equals("curatore")) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId()== R.id.action_save_opera) {
+            modificaAggiungiOpera(null);
+        } else if (MainActivity.tipoUtente.equals("curatore")) {  // controllo uscita senza salvare da barra
             if (checkExit()) {
                 new AlertDialog.Builder(this)
                         .setTitle("Uscire?")
@@ -119,11 +124,33 @@ public class InfoOpera extends AppCompatActivity {
         }
         return true;
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.action_delete_opera).setVisible(false);
+        menu.findItem(R.id.action_save_opera).setVisible(false);
+        menu.findItem(R.id.action_delete_area).setVisible(false);
+        menu.findItem(R.id.action_save_area).setVisible(false);
+
+        if(MainActivity.operaSelezionata != null && MainActivity.tipoUtente.equals("curatore")){
+            menu.findItem(R.id.action_delete_opera).setVisible(true);
+            menu.findItem(R.id.action_save_opera).setVisible(true);
+        }
+        return true;
+    }
 
     public void modificaAggiungiOpera(View view) {
         new AlertDialog.Builder(this)
-                .setTitle("Confermi")
-                .setMessage("Confermare la modifica dell'opera?")
+                .setTitle(R.string.confermi)
+                .setMessage(R.string.conferma_modifica_opera)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                         String titolo = (String) fso.editableTitolo.getText().toString();
@@ -138,7 +165,7 @@ public class InfoOpera extends AppCompatActivity {
                         System.out.print(MainActivity.operaSelezionata.getFoto());
                         if (titolo.equals(MainActivity.operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && !MainActivity.fotoModificata) {
                             new AlertDialog.Builder(InfoOpera.this)
-                                    .setMessage("Modifica almeno un campo per salvare")
+                                    .setMessage(R.string.modifica_campo)
                                     .setPositiveButton(android.R.string.yes, null)
                                     .show();
 
@@ -148,7 +175,7 @@ public class InfoOpera extends AppCompatActivity {
                             MainActivity.operaSelezionata.setFoto(encImage);
                             MainActivity.operaSelezionata.updateDataDb(InfoOpera.this);
                             new AlertDialog.Builder(InfoOpera.this)
-                                    .setMessage("Modifica effettuata")
+                                    .setMessage(R.string.modifica_effettuata)
                                     .setPositiveButton(android.R.string.yes, null)
                                     .show();
                             MainActivity.fotoModificata = false;
@@ -215,14 +242,13 @@ public class InfoOpera extends AppCompatActivity {
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                     oldPropic.setImageBitmap(bitmap);
-                    oldPropic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    Toast.makeText(getApplicationContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
 
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    /*ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
                     byte[] b = baos.toByteArray();
                     String encImage = Base64.encodeToString(b, Base64.DEFAULT);
-
-                    MainActivity.operaSelezionata.setFoto(encImage);
+                    MainActivity.operaSelezionata.setFoto(encImage);*/
                    // Toast.makeText(getApplicationContext(), encImage, Toast.LENGTH_SHORT).show();
 
                     Snackbar.make(getWindow().getDecorView().getRootView(), "Foto impostata con successo!",

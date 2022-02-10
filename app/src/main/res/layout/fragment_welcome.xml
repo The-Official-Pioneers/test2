@@ -18,7 +18,7 @@
         android:layout_height="100dp"
         android:gravity="center"
         android:keepScreenOn="true"
-        android:text="Benvenuto!"
+        android:text="@string/benvenuto_welcome"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="50dp"
@@ -46,8 +46,8 @@
         android:layout_marginEnd="48dp"
         android:layout_marginRight="48dp"
         android:enabled="true"
-        android:text="Cominciamo"
-        android:onClick="onClickButton"/>
+        android:onClick="onClickButton"
+        android:text="@string/cominciamo_welcome" />
 
     <TextView
         android:layout_width="match_parent"

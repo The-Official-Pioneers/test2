@@ -1,8 +1,11 @@
 package it.uniba.pioneers.testtool.data;
 
-import it.uniba.pioneers.testtool.data.model.LoggedInUser;
+import android.content.res.Resources;
 
 import java.io.IOException;
+
+import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.data.model.LoggedInUser;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
@@ -19,7 +22,7 @@ public class LoginDataSource {
                             "Jane Doe");
             return new Result.Success<>(fakeUser);
         } catch (Exception e) {
-            return new Result.Error(new IOException("Error logging in", e));
+            return new Result.Error(new IOException( Resources.getSystem().getString(R.string.error_logging_in), e));
         }
     }
 

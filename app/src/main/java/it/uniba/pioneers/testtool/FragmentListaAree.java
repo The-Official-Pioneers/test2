@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -94,11 +96,24 @@ public class FragmentListaAree extends Fragment{
                         .commit();
             }
         });
-        MainActivity.toggle.setDrawerIndicatorEnabled(false);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Il Tuo Museo");
+
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -110,6 +125,6 @@ public class FragmentListaAree extends Fragment{
         MainActivity.operaSelezionata=null;           // modifica della toolbar in base a dove si trova l'utente
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         MainActivity.toggle.setDrawerIndicatorEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("TestTool");
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.testtool);
     }
 }
