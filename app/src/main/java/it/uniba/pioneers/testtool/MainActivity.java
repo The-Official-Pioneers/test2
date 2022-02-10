@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,8 +80,9 @@ public class MainActivity extends AppCompatActivity {
     public static int currOpera=-1;
     public static String tipoUtente;
     public static boolean fotoModificata;
+    public static boolean nuovaOpera;
     public static int idUtente;
-
+    public static Bundle budleFragOpera;
     //AGGIUNTO DA IVAN
     public static Visitatore visitatore = new Visitatore();
     public static CuratoreMuseale curatore = new CuratoreMuseale();
@@ -102,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentListaOpere=null;
         fragmentSingolaOpera=null;
         fotoModificata=false;
+        nuovaOpera=false;
+        budleFragOpera=null;
 
         Intent intent = getIntent();
        // tipoUtente = intent.getStringExtra("typeUser");
@@ -207,6 +211,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
@@ -230,7 +239,10 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     MainActivity.super.onBackPressed();
                                     fotoModificata=false;
-                                    operaSelezionata.setFoto(oldFoto);
+                                    if(oldFoto!=null) {
+                                        operaSelezionata.setFoto(oldFoto);
+                                    }
+                                    oldFoto=null;
                                 }
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -345,7 +357,9 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.action_save_area).setVisible(false);
 
         if(fragmentSingolaOpera != null && tipoUtente.equals("curatore")){
-            menu.findItem(R.id.action_delete_opera).setVisible(true);
+            if(!qr){
+                menu.findItem(R.id.action_delete_opera).setVisible(true);
+            }
             menu.findItem(R.id.action_save_opera).setVisible(true);
         }
         if(fragmentSingolaArea != null  && tipoUtente.equals("curatore")){
@@ -483,6 +497,10 @@ public class MainActivity extends AppCompatActivity {
 
                                 }else{
                                     operaSelezionata=null;
+                                    qr=false;
+                                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                                    MainActivity.toggle.setDrawerIndicatorEnabled(true);
+
                                     new AlertDialog.Builder(MainActivity.this)
                                             .setMessage(R.string.nessun_risultato)
                                             .setPositiveButton(android.R.string.yes, null)
@@ -491,12 +509,18 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             } catch (JSONException | ParseException e) {
                                 operaSelezionata=null;
+                                qr=false;
+                                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                                MainActivity.toggle.setDrawerIndicatorEnabled(true);
                                 e.printStackTrace();
                             }
                         }
                     });
                 } else {
                     operaSelezionata=null;
+                    qr=false;
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    MainActivity.toggle.setDrawerIndicatorEnabled(true);
                     new AlertDialog.Builder(MainActivity.this)
                             .setMessage(R.string.nessun_risultato)
                             .setPositiveButton(android.R.string.yes, null)
@@ -584,8 +608,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void aggiungiArea(View view) {
         AlertDialog.Builder dialogInserimento = new AlertDialog.Builder(this);
-        dialogInserimento.setTitle(R.string.aggiungi_nuova_arae);
-        dialogInserimento.setMessage(R.string.inserisci_nome_area);
+        dialogInserimento.setTitle("Aggiungi una nuova area al tuo museo");
+        dialogInserimento.setMessage("Inserisci il nome della nuova area");
         final EditText nomeArea = new EditText(this);
         dialogInserimento.setView(nomeArea);
         dialogInserimento.setNegativeButton(android.R.string.cancel, null);
@@ -609,9 +633,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void eliminaArea(View view) {
         new AlertDialog.Builder(this)
-                .setTitle(R.string.eliminazione)
-                .setMessage(R.string.conferma_eliminazione + "\n"
-                        + R.string.conferma_eliminazione_finale)
+                .setTitle("Eliminazione")
+                .setMessage("Confermi l'eliminazione?\nCosi facendo eliminerai tutte le opere contenute nell'area")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         areeZona.remove(currArea);
@@ -631,21 +654,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void modificaNomeArea(View view){
           new AlertDialog.Builder(this)
-                    .setTitle(R.string.confermi)
-                    .setMessage(R.string.confermi_modifica)
+                    .setTitle("Confermi")
+                    .setMessage("Confermi la modifica?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                             String nome = fragmentSingolaArea.editableNome.getText().toString();
                             if(nome == "" || nome.equals(areaSelezionata.getNome())){
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage(R.string.modifica_campo)
+                                        .setMessage("Modifica almeno un campo per salvare")
                                         .setPositiveButton(android.R.string.yes,null)
                                         .show();
                             }else{
                                 areaSelezionata.setNome(nome);
                                 areaSelezionata.updateDataDb(MainActivity.this);
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage(R.string.modifica_effettuata)
+                                        .setMessage("Modifica effettuata")
                                         .setPositiveButton(android.R.string.yes,null)
                                         .show();
                             }
@@ -702,33 +725,34 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
     public void eliminaOpera(View view) {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.eliminazione)
-                .setMessage(R.string.conferma_eliminazione)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
-                        opereArea.remove(currOpera);
+        if(operaSelezionata!=null) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Eliminazione")
+                    .setMessage("Confermi l'eliminazione?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
+                            opereArea.remove(currOpera);
 
-                        FragmentListaOpere.lista.remove(operaSelezionata.getTitolo());
-                        opereArea.remove(operaSelezionata);
-                        FragmentListaOpere.lvAdapter.notifyDataSetChanged();  // aggiorno la listView
+                            FragmentListaOpere.lista.remove(operaSelezionata.getTitolo());
+                            opereArea.remove(operaSelezionata);
+                            FragmentListaOpere.lvAdapter.notifyDataSetChanged();  // aggiorno la listView
 
-                        operaSelezionata.deleteDataDb(getApplicationContext());  // aggiorno il db
-                        operaSelezionata=null;
-                        getSupportFragmentManager().popBackStack();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-
+                            operaSelezionata.deleteDataDb(getApplicationContext());  // aggiorno il db
+                            operaSelezionata = null;
+                            getSupportFragmentManager().popBackStack();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
     public void modificaAggiungiOpera(View view) {
         if(operaSelezionata!=null) {   // modifica opera gia esistente
             new AlertDialog.Builder(this)
-                    .setTitle(R.string.confermi)
-                    .setMessage(R.string.conferma_modifica_opera)
+                    .setTitle("Confermi")
+                    .setMessage("Confermare la modifica dell'opera?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
@@ -743,7 +767,7 @@ public class MainActivity extends AppCompatActivity {
                            System.out.print(MainActivity.operaSelezionata.getFoto());
                             if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && !fotoModificata) {
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage(R.string.modifica_campo)
+                                        .setMessage("Modifica almeno un campo per salvare")
                                         .setPositiveButton(android.R.string.yes, null)
                                         .show();
 
@@ -753,7 +777,7 @@ public class MainActivity extends AppCompatActivity {
                                 operaSelezionata.setFoto(encImage);
                                 operaSelezionata.updateDataDb(MainActivity.this);
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage(R.string.modifica_effettuata)
+                                        .setMessage("Modifica effettuata")
                                         .setPositiveButton(android.R.string.yes, null)
                                         .show();
                                 fotoModificata=false;
@@ -765,6 +789,8 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         }
         else{ // aggingi opera
+            nuovaOpera=true;
+            invalidateOptionsMenu();
             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
             String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
             String encImage="";
@@ -778,30 +804,25 @@ public class MainActivity extends AppCompatActivity {
             }
             if (titolo.equals("") || descrizione.equals("") || !fotoModificata) {
                 new AlertDialog.Builder(MainActivity.this)
-                        .setMessage(R.string.aggiungi_campi_validi)
+                        .setMessage("Aggiungi foto, titolo e descrizione validi")
                         .setPositiveButton(android.R.string.yes, null)
                         .show();
 
             } else {
-                Opera nuovaOpera = new Opera();
-                nuovaOpera.setTitolo(titolo);
-                nuovaOpera.setDescrizione(descrizione);
-                nuovaOpera.setFoto(encImage);
+                Opera nuova = new Opera();
+                nuova.setTitolo(titolo);
+                nuova.setDescrizione(descrizione);
+                nuova.setFoto(encImage);
 
-                nuovaOpera.setArea(areaSelezionata.getId());
-                nuovaOpera.createDataDb(MainActivity.this);
+                nuova.setArea(areaSelezionata.getId());
+                nuova.createDataDb(MainActivity.this);
 
-                FragmentListaOpere.lista.add(nuovaOpera.getTitolo());
-                opereArea.add(nuovaOpera);
+                FragmentListaOpere.lista.add(nuova.getTitolo());
+                opereArea.add(nuova);
                 FragmentListaAree.lvAdapter.notifyDataSetChanged();
-
+                nuovaOpera=false;
                 getSupportFragmentManager().popBackStack();
             }
         }
-    }
-
-    public void creaVisita(View view) {
-        Intent intent = new Intent(this, CreaVisita.class);
-        startActivity(intent);
     }
 }
