@@ -21,7 +21,7 @@ import java.sql.Time;
 import java.time.Instant;
 
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo.GrafoFragment;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoFragment;
 
 public class OptionsEditor extends LinearLayout {
 
@@ -66,10 +66,15 @@ public class OptionsEditor extends LinearLayout {
                 generateFilename(idVisita, filename);
 
                 File expFile = writeFileOnInternalStorage(filename.toString(), exportedString);
-                i.setType("text/*");
+
                 Uri contentUri = getUriForFile(getContext(), "it.uniba.pioneers.testtool", expFile);
+
+                i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_STREAM, contentUri);
-                GrafoFragment.grafoFragment.getActivity().startActivity(i);
+
+                Intent chooserIntent = Intent.createChooser(i, "CONDIVIDI LA TUA VISITA!");
+
+                GrafoFragment.grafoFragment.getActivity().startActivity(chooserIntent);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -86,7 +91,7 @@ public class OptionsEditor extends LinearLayout {
         filename.append(idVisita);
         filename.append("_");
         filename.append(Time.from(Instant.now()).getTime());
-        filename.append(".txt");
+        filename.append(".json");
     }
 
     public void init(Context context){

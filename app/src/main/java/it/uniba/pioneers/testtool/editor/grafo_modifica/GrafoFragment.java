@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.editor.grafo;
+package it.uniba.pioneers.testtool.editor.grafo_modifica;
 
 import android.os.Bundle;
 
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 import it.uniba.pioneers.testtool.editor.options.OptionsEditor;
 

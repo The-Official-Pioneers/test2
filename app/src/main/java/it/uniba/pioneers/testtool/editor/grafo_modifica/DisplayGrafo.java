@@ -1,17 +1,10 @@
-package it.uniba.pioneers.testtool.editor.grafo;
+package it.uniba.pioneers.testtool.editor.grafo_modifica;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.DragEvent;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo.node.ListNode;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 
 public class DisplayGrafo extends ConstraintLayout {

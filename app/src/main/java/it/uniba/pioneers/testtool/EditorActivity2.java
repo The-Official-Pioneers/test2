@@ -13,12 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
-import it.uniba.pioneers.testtool.editor.grafo.node.ListNode;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.node.ListNode;
 
 public class EditorActivity2 extends AppCompatActivity {
 
     private ActivityEditor2Binding binding;
-    private ArrayList<ListNode> opere;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +25,6 @@ public class EditorActivity2 extends AppCompatActivity {
 
      binding = ActivityEditor2Binding.inflate(getLayoutInflater());
      setContentView(binding.getRoot());
-
-
 
      ActionBar actionBar = getSupportActionBar(); // or getActionBar();
         getSupportActionBar().setTitle("My new title"); // set the top title

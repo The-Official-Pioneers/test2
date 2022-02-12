@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.editor.grafo.node;
+package it.uniba.pioneers.testtool.editor.grafo_modifica.node;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.NodeType;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 
 public class ListNode extends Node{

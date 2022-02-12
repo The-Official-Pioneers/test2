@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.editor.grafo.node;
+package it.uniba.pioneers.testtool.editor;
 
 public enum NodeType {
     VISITA,

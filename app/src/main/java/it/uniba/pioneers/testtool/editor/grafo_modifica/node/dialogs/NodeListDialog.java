@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.editor.grafo.node.dialogs;
+package it.uniba.pioneers.testtool.editor.grafo_modifica.node.dialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,8 +19,8 @@ import java.time.Instant;
 
 import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
-import it.uniba.pioneers.testtool.editor.grafo.node.GraphNode;
-import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.node.GraphNode;
+import it.uniba.pioneers.testtool.editor.NodeType;
 
 public class NodeListDialog {
 

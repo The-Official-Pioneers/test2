@@ -1,13 +1,9 @@
-package it.uniba.pioneers.testtool.editor.grafo.draw;
+package it.uniba.pioneers.testtool.editor.grafo_modifica.draw;
 
 import android.content.res.Resources;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.View;
 
-import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo.node.GraphNode;
-import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.node.GraphNode;
 
 public class Line {
 

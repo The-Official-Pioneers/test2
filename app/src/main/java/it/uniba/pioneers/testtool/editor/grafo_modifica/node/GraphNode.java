@@ -1,9 +1,8 @@
-package it.uniba.pioneers.testtool.editor.grafo.node;
+package it.uniba.pioneers.testtool.editor.grafo_modifica.node;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +26,10 @@ import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo.Grafo;
-import it.uniba.pioneers.testtool.editor.grafo.GrafoFragment;
-import it.uniba.pioneers.testtool.editor.grafo.node.dialogs.NodeDialog;
+import it.uniba.pioneers.testtool.editor.NodeType;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.Grafo;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoFragment;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.node.dialogs.NodeDialog;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 
 public class GraphNode extends Node {
@@ -57,6 +57,7 @@ public class GraphNode extends Node {
     public void deleteNode(){
         this.hide();
         this.hideAllChild();
+
         if(type == NodeType.ZONA){  
             graphParent.drawView.linesZona.removeIf(line -> line.endNode.equals(this));
         }else if(type == NodeType.AREA){
@@ -71,7 +72,6 @@ public class GraphNode extends Node {
     private Set<GraphNode> getPredecessors(Grafo graphParent, GraphNode self) {
         return graphParent.graph.predecessors(self);
     }
-
 
     public void addSuccessor(GraphNode dataNodeEnd){
         this.graph.addNode(dataNodeEnd);
@@ -204,118 +204,126 @@ public class GraphNode extends Node {
 
     public void initListNode() {
         if(self.type == NodeType.VISITA){
-            Visita tmpVisita = new Visita();
-
-            try {
-                tmpVisita.setId(data.getInt(DbContract.VisitaEntry.COLUMN_ID));
-
-                Visita.getAllPossibleChild(getContext(), tmpVisita,
-                        response -> {
-                            try {
-                                Log.v("RESPONSE", response.toString());
-                                if(response.getBoolean("status")){
-                                    ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.ZONA, self);
-
-                                    JSONArray arrayData = response.getJSONArray("data");
-
-                                    resetListaNodi(GrafoFragment.listaNodiLinearLayout);
-
-                                    GrafoFragment.listaNodiLinearLayout.addView(listaNodi);
-
-                                    for(int i = 0; i < arrayData.length(); ++i){
-                                        JSONObject child = arrayData.getJSONObject(i);
-                                        listaNodi.addNode(new ListNode(GrafoFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.ZONA));
-                                    }
-                                }else{
-
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        },
-                        error -> {
-
-                        });
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            //QUERY DA FARE
+            initListNodeVisita();
         }else if(type == NodeType.ZONA){
-            Zona tmpZona = new Zona();
-
-            try{
-                tmpZona.setId(data.getInt(DbContract.ZonaEntry.COLUMN_ID));
-
-                Zona.getAllPossibleChild(getContext(), tmpZona,
-                        response -> {
-                            Log.v("RESPONSE_ZONA", response.toString());
-                            try {
-                                if(response.getBoolean("status")){
-                                    ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.ZONA, self);
-
-                                    JSONArray arrayData = response.getJSONArray("data");
-
-                                    resetListaNodi(GrafoFragment.listaNodiLinearLayout);
-
-                                    GrafoFragment.listaNodiLinearLayout.addView(listaNodi);
-
-                                    for(int i = 0; i < arrayData.length(); ++i){
-                                        JSONObject child = arrayData.getJSONObject(i);
-                                        listaNodi.addNode(new ListNode(GrafoFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.AREA));
-                                    }
-                                }else{
-
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        },
-                        error -> {
-
-                        });
-
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
+            initListNodeZona();
 
         }else if(type == NodeType.AREA){
-            Area tmpArea = new Area();
+            initListNodeArea();
+        }
+    }
 
-            try{
-                tmpArea.setId(data.getInt(DbContract.AreaEntry.COLUMN_ID));
+    private void initListNodeArea() {
+        Area tmpArea = new Area();
 
-                Area.getAllPossibleChild(getContext(), tmpArea,
-                        response -> {
-                            Log.v("RESPONSE_AREA", response.toString());
-                            try {
-                                if(response.getBoolean("status")){
-                                    ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.AREA, self);
+        try{
+            tmpArea.setId(data.getInt(DbContract.AreaEntry.COLUMN_ID));
 
-                                    JSONArray arrayData = response.getJSONArray("data");
+            Area.getAllPossibleChild(getContext(), tmpArea,
+                    response -> {
+                        try {
+                            if(response.getBoolean("status")){
+                                ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.AREA, self);
 
-                                    resetListaNodi(GrafoFragment.listaNodiLinearLayout);
+                                JSONArray arrayData = response.getJSONArray("data");
 
-                                    GrafoFragment.listaNodiLinearLayout.addView(listaNodi);
+                                resetListaNodi(GrafoFragment.listaNodiLinearLayout);
 
-                                    for(int i = 0; i < arrayData.length(); ++i){
-                                        JSONObject child = arrayData.getJSONObject(i);
-                                        listaNodi.addNode(new ListNode(GrafoFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.OPERA));
-                                    }
-                                }else{
+                                GrafoFragment.listaNodiLinearLayout.addView(listaNodi);
 
+                                for(int i = 0; i < arrayData.length(); ++i){
+                                    JSONObject child = arrayData.getJSONObject(i);
+                                    listaNodi.addNode(new ListNode(GrafoFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.OPERA));
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            }else{
+
                             }
-                        },
-                        error -> {
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    },
+                    error -> {
 
-                        });
+                    });
 
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void initListNodeZona() {
+        Zona tmpZona = new Zona();
+
+        try{
+            tmpZona.setId(data.getInt(DbContract.ZonaEntry.COLUMN_ID));
+
+            Zona.getAllPossibleChild(getContext(), tmpZona,
+                    response -> {
+                        try {
+                            if(response.getBoolean("status")){
+                                ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.ZONA, self);
+
+                                JSONArray arrayData = response.getJSONArray("data");
+
+                                resetListaNodi(GrafoFragment.listaNodiLinearLayout);
+
+                                GrafoFragment.listaNodiLinearLayout.addView(listaNodi);
+
+                                for(int i = 0; i < arrayData.length(); ++i){
+                                    JSONObject child = arrayData.getJSONObject(i);
+                                    listaNodi.addNode(new ListNode(GrafoFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.AREA));
+                                }
+                            }else{
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    },
+                    error -> {
+
+                    });
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void initListNodeVisita() {
+        Visita tmpVisita = new Visita();
+
+        try {
+            tmpVisita.setId(data.getInt(DbContract.VisitaEntry.COLUMN_ID));
+
+            Visita.getAllPossibleChild(getContext(), tmpVisita,
+                    response -> {
+                        try {
+                            if(response.getBoolean("status")){
+                                ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.ZONA, self);
+
+                                JSONArray arrayData = response.getJSONArray("data");
+
+                                resetListaNodi(GrafoFragment.listaNodiLinearLayout);
+
+                                GrafoFragment.listaNodiLinearLayout.addView(listaNodi);
+
+                                for(int i = 0; i < arrayData.length(); ++i){
+                                    JSONObject child = arrayData.getJSONObject(i);
+                                    listaNodi.addNode(new ListNode(GrafoFragment.listaNodiLinearLayout.getContext(),
+                                            listaNodi, child, NodeType.ZONA));
+                                }
+                            }else{
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    },
+                    error -> {
+
+                    });
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -334,7 +342,6 @@ public class GraphNode extends Node {
                 graphParent.drawView.resetDrawView(graphParent, 2);
             }else if(type == NodeType.AREA){
                 graphParent.drawView.resetDrawView(graphParent, 3);
-            }else if(type == NodeType.OPERA){
             }
 
             hideAllChild();
@@ -494,13 +501,6 @@ public class GraphNode extends Node {
             setInizializated(true);
             clicked = false;
         }
-    }
-
-    public void onlyDraw(){
-        checkIfAlreadyInit();
-        findViewById(R.id.vistaProva)
-                .setLayoutParams(new LinearLayout.LayoutParams(size, size));
-        setVisibility(VISIBLE);
     }
 
     public void hide(){

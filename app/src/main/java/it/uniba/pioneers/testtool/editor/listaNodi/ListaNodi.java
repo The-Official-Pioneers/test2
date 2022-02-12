@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
-import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 
 import org.json.JSONException;
@@ -16,10 +15,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo.node.GraphNode;
-import it.uniba.pioneers.testtool.editor.grafo.node.ListNode;
-import it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo;
-import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.node.GraphNode;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.node.ListNode;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafo;
+import it.uniba.pioneers.testtool.editor.NodeType;
 
 @SuppressWarnings("ALL")
 public class ListaNodi extends HorizontalScrollView {

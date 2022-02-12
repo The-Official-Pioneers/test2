@@ -20,8 +20,8 @@ import it.uniba.pioneers.sqlite.DbHelper;
 import it.uniba.pioneers.testtool.DialogNodeInfo;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
-import it.uniba.pioneers.testtool.editor.grafo.node.ListNode;
-import it.uniba.pioneers.testtool.editor.grafo.GrafoFragment;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.node.ListNode;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoFragment;
 
 public class EditorActivity extends AppCompatActivity {
     public ArrayList<ListNode> opere;

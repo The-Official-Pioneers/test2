@@ -1,13 +1,12 @@
-package it.uniba.pioneers.testtool.editor.grafo.draw;
+package it.uniba.pioneers.testtool.editor.grafo_modifica.draw;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.CountDownTimer;
 import android.view.View;
 import java.util.ArrayList;
 
-import it.uniba.pioneers.testtool.editor.grafo.Grafo;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.Grafo;
 
 public class DrawView extends View{
     public Paint paint = new Paint();

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo android:id="@+id/displayGrafo"
+<it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafo android:id="@+id/displayGrafo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-</it.uniba.pioneers.testtool.editor.grafo.DisplayGrafo>
+</it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafo>

@@ -1,26 +1,17 @@
-package it.uniba.pioneers.testtool.editor.grafo.node;
+package it.uniba.pioneers.testtool.editor.grafo_modifica.node;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.util.Base64;
-import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo.node.dialogs.NodeDialog;
+import it.uniba.pioneers.testtool.editor.NodeType;
 
 public class Node extends ConstraintLayout {
     public NodeType type;

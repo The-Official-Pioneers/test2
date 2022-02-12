@@ -1,12 +1,8 @@
-package it.uniba.pioneers.testtool.editor.grafo;
+package it.uniba.pioneers.testtool.editor.grafo_modifica;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
@@ -14,11 +10,8 @@ import android.view.LayoutInflater;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.common.graph.GraphBuilder;
@@ -28,19 +21,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import it.uniba.pioneers.data.Visita;
-import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo.node.GraphNode;
-import it.uniba.pioneers.testtool.editor.grafo.node.Node;
-import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
-import it.uniba.pioneers.testtool.editor.grafo.draw.DrawView;
-import it.uniba.pioneers.testtool.editor.grafo.draw.Line;
-import it.uniba.pioneers.testtool.editor.grafo.node.NodeType;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.node.GraphNode;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.draw.DrawView;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.draw.Line;
+import it.uniba.pioneers.testtool.editor.NodeType;
 
 public class Grafo extends ConstraintLayout {
     public MutableGraph<GraphNode> graph = GraphBuilder.directed().build();
@@ -59,7 +45,6 @@ public class Grafo extends ConstraintLayout {
 
         try {
             JSONObject result = new JSONObject();
-
 
             JSONObject jsonVisita = new JSONObject();
             JSONArray jsonArrayZone = new JSONArray();
@@ -109,10 +94,6 @@ public class Grafo extends ConstraintLayout {
                 dip,
                 r.getDisplayMetrics()
         );
-    }
-
-    private float powOfTwo(int n) {
-        return 2 << (n - 1);
     }
 
     public void initDrawAttribute(Context context) {
@@ -221,7 +202,6 @@ public class Grafo extends ConstraintLayout {
         protected final Grafo self;
         protected final Context context;
 
-
         public GraphViewer(Grafo self, Context context, GraphNode startDataNode) {
             visita = startDataNode;
             this.self = self;
@@ -253,6 +233,4 @@ public class Grafo extends ConstraintLayout {
             }
         }
     }
-
-
 }
