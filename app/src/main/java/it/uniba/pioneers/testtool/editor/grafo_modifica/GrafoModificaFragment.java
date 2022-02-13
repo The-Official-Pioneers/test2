@@ -16,19 +16,19 @@ import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 import it.uniba.pioneers.testtool.editor.options.OptionsEditor;
 
-public class GrafoFragment extends Fragment {
+public class GrafoModificaFragment extends Fragment {
     public static LinearLayout layoutEditorGrafo = null;
     public static LinearLayout grafoManipulateLayout = null;
     public static LinearLayout listaNodiLinearLayout = null;
-    public static GrafoFragment grafoFragment = null;
+    public static GrafoModificaFragment grafoModificaFragment = null;
 
 
-    public DisplayGrafo displayGrafo = null;
+    public DisplayGrafoModifica displayGrafoModifica = null;
     public ListaNodi listaNodi = null;
     public OptionsEditor optionsEditor = null;
-    public Grafo graph = null;
+    public GrafoModifica graph = null;
 
-    public GrafoFragment() {
+    public GrafoModificaFragment() {
         // Required empty public constructor
     }
 
@@ -36,7 +36,7 @@ public class GrafoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        grafoFragment = this;
+        grafoModificaFragment = this;
     }
 
     @Override
@@ -54,30 +54,30 @@ public class GrafoFragment extends Fragment {
         grafoManipulateLayout = getView().findViewById(R.id.grafoManipulateLayout);
         listaNodiLinearLayout = getView().findViewById(R.id.listaNodiLinearLayout);
 
-        displayGrafo = getView().findViewById(R.id.displayGrafo);
+        this.displayGrafoModifica = getView().findViewById(R.id.displayGrafoModifica);
         listaNodi = getView().findViewById(R.id.listaNodi);
         optionsEditor = getView().findViewById(R.id.optionsGrafo);
 
         Log.v("grafoManipulateLayout", String.valueOf(grafoManipulateLayout));
 
-        DisplayGrafo displayGrafo = new DisplayGrafo(getContext());
+        DisplayGrafoModifica displayGrafoModifica = new DisplayGrafoModifica(getContext());
 
-        displayGrafo.setId(R.id.displayGrafo);
+        displayGrafoModifica.setId(R.id.displayGrafoModifica);
 
         LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 1.0f
         );
-        displayGrafo.setLayoutParams(param);
+        displayGrafoModifica.setLayoutParams(param);
 
 
         //ListaNodi listaNodi = new ListaNodi(getContext(), NodeType.OPERA);
         //listaNodi.setId(R.id.listaNodi);
 
-        grafoManipulateLayout.addView(displayGrafo);
+        grafoManipulateLayout.addView(displayGrafoModifica);
 
-        graph = displayGrafo.graph;
+        graph = displayGrafoModifica.graph;
 
         //listaNodi.setLayoutParams(param);
         //grafoManipulateLayout.addView(listaNodi);

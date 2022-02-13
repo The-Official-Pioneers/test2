@@ -1,8 +1,9 @@
-package it.uniba.pioneers.testtool.editor.grafo_modifica.node;
+package it.uniba.pioneers.testtool.editor.node;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,37 +15,27 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.common.graph.MutableGraph;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import it.uniba.pioneers.data.Area;
-import it.uniba.pioneers.data.Visita;
-import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.NodeType;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.Grafo;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoFragment;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.node.dialogs.NodeDialog;
-import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
+import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizza;
+import it.uniba.pioneers.testtool.editor.node.dialogs.NodeDialog;
 
-public class GraphNode extends Node {
-    public Grafo graphParent = null;
-    public NodeType type;
-    public MutableGraph<GraphNode> graph = null;
-    GraphNode self = null;
-    public JSONObject data = null;
+public class GraphNodeVisualizza extends Node {
+    public GrafoVisualizza graphParent = null;
+    public MutableGraph<GraphNodeVisualizza> graph = null;
+    GraphNodeVisualizza self = null;
 
     public int size = 0;
 
-    public boolean inizializated = false;
 
-    public void setInizializated(boolean flag){
-        this.inizializated = flag;
+    public GraphNodeVisualizza(@NonNull Context context) {
+        super(context);
     }
 
     public void init(Context context) {
@@ -58,34 +49,34 @@ public class GraphNode extends Node {
         this.hide();
         this.hideAllChild();
 
-        if(type == NodeType.ZONA){  
-            graphParent.drawView.linesZona.removeIf(line -> line.endNode.equals(this));
+        if(type == NodeType.ZONA){
+            graphParent.drawView.linesZona.removeIf(line -> line.endNodeView.equals(this));
         }else if(type == NodeType.AREA){
-            graphParent.drawView.linesArea.removeIf(line -> line.endNode.equals(this));
+            graphParent.drawView.linesArea.removeIf(line -> line.endNodeView.equals(this));
         }else if(type == NodeType.OPERA){
-            graphParent.drawView.linesOpera.removeIf(line -> line.endNode.equals(this));
+            graphParent.drawView.linesOpera.removeIf(line -> line.endNodeView.equals(this));
         }
         graphParent.graph.removeNode(this);
     }
 
     @NonNull
-    private Set<GraphNode> getPredecessors(Grafo graphParent, GraphNode self) {
+    private Set<GraphNodeVisualizza> getPredecessors(GrafoVisualizza graphParent, GraphNodeVisualizza self) {
         return graphParent.graph.predecessors(self);
     }
 
-    public void addSuccessor(GraphNode dataNodeEnd){
+    public void addSuccessor(GraphNodeVisualizza dataNodeEnd){
         this.graph.addNode(dataNodeEnd);
         this.graph.putEdge(this, dataNodeEnd);
     }
 
-    private void setFields(Grafo graphParent, NodeType type) {
+    private void setFields(GrafoVisualizza graphParent, NodeType type) {
         this.graph = graphParent.graph;
         this.self = this;
         this.type = type;
         this.graphParent = graphParent;
     }
 
-    private void setFields(Grafo graphParent, NodeType type, JSONObject data) {
+    private void setFields(GrafoVisualizza graphParent, NodeType type, JSONObject data) {
         this.data = data;
         setFields(graphParent, type);
     }
@@ -97,10 +88,10 @@ public class GraphNode extends Node {
             try {
                 state =  (
                         (self.type == NodeType.VISITA && listNode.type == NodeType.ZONA)
-                        || (self.type == NodeType.ZONA && listNode.type == NodeType.AREA
-                            && self.data.getInt(DbContract.ZonaEntry.COLUMN_ID) == listNode.data.getInt(DbContract.AreaEntry.COLUMN_ZONA))
-                        || (self.type == NodeType.AREA && listNode.type == NodeType.OPERA
-                            && self.data.getInt(DbContract.AreaEntry.COLUMN_ID) == listNode.data.getInt(DbContract.OperaEntry.COLUMN_AREA))
+                                || (self.type == NodeType.ZONA && listNode.type == NodeType.AREA
+                                && self.data.getInt(DbContract.ZonaEntry.COLUMN_ID) == listNode.data.getInt(DbContract.AreaEntry.COLUMN_ZONA))
+                                || (self.type == NodeType.AREA && listNode.type == NodeType.OPERA
+                                && self.data.getInt(DbContract.AreaEntry.COLUMN_ID) == listNode.data.getInt(DbContract.OperaEntry.COLUMN_AREA))
                 );
 
             } catch (JSONException e) {
@@ -113,7 +104,7 @@ public class GraphNode extends Node {
         private boolean checkIfPresent(ListNode listNode){
             boolean state = true;
 
-            for(GraphNode child : graphParent.graph.successors(self)){
+            for(GraphNodeVisualizza child : graphParent.graph.successors(self)){
                 try {
                     if(child.data.getInt("id") == listNode.data.getInt("id")){
                         state = false;
@@ -139,7 +130,7 @@ public class GraphNode extends Node {
             switch (action) {
                 case DragEvent.ACTION_DROP:
                     if(checkRelation(listNode) && checkIfPresent(listNode)){
-                        GraphNode graphNode = new GraphNode(graphParent.getContext(), graphParent, listNode.type, listNode.data);
+                        GraphNodeVisualizza graphNode = new GraphNodeVisualizza(graphParent.getContext(), graphParent, listNode.type, listNode.data);
                         self.hide();
                         self.hideAllNodeAtSameLevel();
                         self.hideAllChild();
@@ -177,7 +168,7 @@ public class GraphNode extends Node {
         setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                GraphNode node = ((GraphNode)view);
+                GraphNodeVisualizza node = ((GraphNodeVisualizza)view);
                 System.out.println(node.data.toString());
                 AlertDialog dialog1 = NodeDialog.NodeDialog(context, node);
                 dialog1.show();
@@ -186,148 +177,22 @@ public class GraphNode extends Node {
         });
     }
 
-    private void setOnClickListener(Grafo graphParent, NodeType type) {
+    private void setOnClickListener(GrafoVisualizza graphParent, NodeType type) {
         if(type != NodeType.VISITA && type != NodeType.OPERA){
             setOnClickListener(view -> {//THIS (View)
-                setNodeSize(graphParent, type, (GraphNode) view);
+                setNodeSize(graphParent, type, (GraphNodeVisualizza) view);
             });
         }
 
         if(type != NodeType.OPERA){
             setOnClickListener(view -> {
-                setNodeSize(graphParent, type, (GraphNode) view);
-
-                initListNode();
+                setNodeSize(graphParent, type, (GraphNodeVisualizza) view);
             });
         }
     }
 
-    public void initListNode() {
-        if(self.type == NodeType.VISITA){
-            initListNodeVisita();
-        }else if(type == NodeType.ZONA){
-            initListNodeZona();
 
-        }else if(type == NodeType.AREA){
-            initListNodeArea();
-        }
-    }
-
-    private void initListNodeArea() {
-        Area tmpArea = new Area();
-
-        try{
-            tmpArea.setId(data.getInt(DbContract.AreaEntry.COLUMN_ID));
-
-            Area.getAllPossibleChild(getContext(), tmpArea,
-                    response -> {
-                        try {
-                            if(response.getBoolean("status")){
-                                ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.AREA, self);
-
-                                JSONArray arrayData = response.getJSONArray("data");
-
-                                resetListaNodi(GrafoFragment.listaNodiLinearLayout);
-
-                                GrafoFragment.listaNodiLinearLayout.addView(listaNodi);
-
-                                for(int i = 0; i < arrayData.length(); ++i){
-                                    JSONObject child = arrayData.getJSONObject(i);
-                                    listaNodi.addNode(new ListNode(GrafoFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.OPERA));
-                                }
-                            }else{
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    },
-                    error -> {
-
-                    });
-
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void initListNodeZona() {
-        Zona tmpZona = new Zona();
-
-        try{
-            tmpZona.setId(data.getInt(DbContract.ZonaEntry.COLUMN_ID));
-
-            Zona.getAllPossibleChild(getContext(), tmpZona,
-                    response -> {
-                        try {
-                            if(response.getBoolean("status")){
-                                ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.ZONA, self);
-
-                                JSONArray arrayData = response.getJSONArray("data");
-
-                                resetListaNodi(GrafoFragment.listaNodiLinearLayout);
-
-                                GrafoFragment.listaNodiLinearLayout.addView(listaNodi);
-
-                                for(int i = 0; i < arrayData.length(); ++i){
-                                    JSONObject child = arrayData.getJSONObject(i);
-                                    listaNodi.addNode(new ListNode(GrafoFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.AREA));
-                                }
-                            }else{
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    },
-                    error -> {
-
-                    });
-
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void initListNodeVisita() {
-        Visita tmpVisita = new Visita();
-
-        try {
-            tmpVisita.setId(data.getInt(DbContract.VisitaEntry.COLUMN_ID));
-
-            Visita.getAllPossibleChild(getContext(), tmpVisita,
-                    response -> {
-                        try {
-                            if(response.getBoolean("status")){
-                                ListaNodi listaNodi = new ListaNodi( GrafoFragment.listaNodiLinearLayout.getContext(), NodeType.ZONA, self);
-
-                                JSONArray arrayData = response.getJSONArray("data");
-
-                                resetListaNodi(GrafoFragment.listaNodiLinearLayout);
-
-                                GrafoFragment.listaNodiLinearLayout.addView(listaNodi);
-
-                                for(int i = 0; i < arrayData.length(); ++i){
-                                    JSONObject child = arrayData.getJSONObject(i);
-                                    listaNodi.addNode(new ListNode(GrafoFragment.listaNodiLinearLayout.getContext(),
-                                            listaNodi, child, NodeType.ZONA));
-                                }
-                            }else{
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    },
-                    error -> {
-
-                    });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setNodeSize(Grafo graphParent, NodeType type, GraphNode view) {
+    private void setNodeSize(GrafoVisualizza graphParent, NodeType type, GraphNodeVisualizza view) {
         inizializated = true;
 
         if(clicked){
@@ -358,30 +223,22 @@ public class GraphNode extends Node {
     public void pick() {
         setColor(Color.RED);
         if(type != NodeType.VISITA){
-            ((GraphNode) graphParent.graph.predecessors(self).toArray()[0]).setColor(Color.YELLOW);
+            ((GraphNodeVisualizza) graphParent.graph.predecessors(self).toArray()[0]).setColor(Color.YELLOW);
         }
     }
 
-    private void resetListaNodi(LinearLayout listaNodiLinearLayout) {
-        for (int i = 0; i < listaNodiLinearLayout.getChildCount(); ++i) {
-            GrafoFragment.listaNodiLinearLayout.removeView(GrafoFragment.listaNodiLinearLayout.getChildAt(i));
-        }
-    }
-
-
-    public GraphNode(@NonNull Context context, Grafo graphParent, NodeType type, JSONObject data) {
+    public GraphNodeVisualizza(@NonNull Context context, GrafoVisualizza graphParent, NodeType type, JSONObject data) {
         super(context);
         setFields(graphParent, type, data);
         init(context);
 
         setOnClickListener(graphParent, type);
         setOnLongClickListener(context);
-
     }
 
     private void hideAllNodeAtSameLevel() {
         if(type != NodeType.VISITA){
-            for(GraphNode node : getSuccessors(graphParent, self)){
+            for(GraphNodeVisualizza node : getSuccessors(graphParent, self)){
                 if(node != self){
                     node.clicked = false;
                     node.setCircle(false);
@@ -392,8 +249,23 @@ public class GraphNode extends Node {
     }
 
     @NonNull
-    private Set<GraphNode> getSuccessors(Grafo graphParent, GraphNode view) {
-        return graphParent.graph.successors((GraphNode) getPredecessors(graphParent, view).toArray()[0]);
+    private Set<GraphNodeVisualizza> getSuccessors(GrafoVisualizza graphParent, GraphNodeVisualizza view) {
+        return graphParent.graph.successors((GraphNodeVisualizza) getPredecessors(graphParent, view).toArray()[0]);
+    }
+
+    public void draw(){
+        checkIfAlreadyInit();
+
+        if(type != NodeType.VISITA && type != NodeType.OPERA){
+            setCircle(false);
+        }else{
+            setCircle(true);
+        }
+
+        findViewById(R.id.vistaProva)
+                .setLayoutParams(new LinearLayout.LayoutParams(size, size));
+
+        setVisibility(VISIBLE);
     }
 
     public void drawAllChild(){
@@ -402,14 +274,14 @@ public class GraphNode extends Node {
         draw();
         AtomicInteger count = new AtomicInteger(1);
 
-        for(GraphNode nodeChild : graphParent.graph.successors(this)){
+        for(GraphNodeVisualizza nodeChild : graphParent.graph.successors(this)){
             setNodeSize(numSuccessors, nodeChild);
-
             float tmpX = getTmpX(numSuccessors, count, nodeChild);
 
             if(type == NodeType.VISITA){
                 nodeChild.setY(graphParent.r2);
                 nodeChild.setX(tmpX);
+
                 graphParent.drawView.linesZona.add(graphParent.buildLineGraph(this, nodeChild));
 
                 nodeChild.draw();
@@ -433,7 +305,7 @@ public class GraphNode extends Node {
         }
     }
 
-    private void setNodeSize(int numSuccessors, GraphNode nodeChild) {
+    private void setNodeSize(int numSuccessors, GraphNodeVisualizza nodeChild) {
 
         switch (numSuccessors){
             case 1:
@@ -465,26 +337,13 @@ public class GraphNode extends Node {
         }
     }
 
-    private float getTmpX(int numSuccessors, AtomicInteger count, GraphNode nodeChild) {
+    private float getTmpX(int numSuccessors, AtomicInteger count, GraphNodeVisualizza nodeChild) {
         //FORMULA DI CENTRATURA DEL NODO IN BASE AL NUMERO DI NODI DI QUEL LIVELLO
         return (count.getAndIncrement() * (((float)graphParent.size.x / (numSuccessors + 1)))) - (float)nodeChild.size/2;
     }
 
 
-    public void draw(){
-        checkIfAlreadyInit();
 
-        if(type != NodeType.VISITA && type != NodeType.OPERA){
-            setCircle(false);
-        }else{
-            setCircle(true);
-        }
-
-        findViewById(R.id.vistaProva)
-                .setLayoutParams(new LinearLayout.LayoutParams(size, size));
-
-        setVisibility(VISIBLE);
-    }
 
     private void checkIfAlreadyInit() {
         boolean flag = true;
@@ -511,15 +370,15 @@ public class GraphNode extends Node {
     }
 
     public void hideAllChild(){
-        for(GraphNode nodeChild : graphParent.graph.successors(this)){
+        for(GraphNodeVisualizza nodeChild : graphParent.graph.successors(this)){
             if(type == NodeType.VISITA){
-                graphParent.drawView.linesZona.removeIf(line -> line.startNode.equals(this));
+                graphParent.drawView.linesZona.removeIf(line -> line.startNodeView.equals(this));
                 nodeChild.hideAllChild();
             }else if(type == NodeType.ZONA){
-                graphParent.drawView.linesArea.removeIf(line -> line.startNode.equals(this));
+                graphParent.drawView.linesArea.removeIf(line -> line.startNodeView.equals(this));
                 nodeChild.hideAllChild();
             }else if(type == NodeType.AREA){
-                graphParent.drawView.linesOpera.removeIf(line -> line.startNode.equals(this));
+                graphParent.drawView.linesOpera.removeIf(line -> line.startNodeView.equals(this));
                 nodeChild.hideAllChild();
             }
             nodeChild.hide();

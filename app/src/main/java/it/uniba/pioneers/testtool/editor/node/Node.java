@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.editor.grafo_modifica.node;
+package it.uniba.pioneers.testtool.editor.node;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,8 +19,13 @@ public class Node extends ConstraintLayout {
     public boolean isDroppable = false;
     public boolean circle = false;
 
-    public JSONObject data;
+    public JSONObject data = null;
+    public int size = 0;
+    public boolean inizializated = false;
 
+    public void setInizializated(boolean flag){
+        this.inizializated = flag;
+    }
 
     public Node(@NonNull Context context) {
         super(context);

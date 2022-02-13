@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.editor.grafo_modifica;
+package it.uniba.pioneers.testtool.editor.grafo_visualizza;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -23,13 +23,13 @@ import org.json.JSONObject;
 
 import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.node.GraphNode;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.draw.DrawView;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.draw.Line;
+import it.uniba.pioneers.testtool.editor.draw.DrawView;
+import it.uniba.pioneers.testtool.editor.draw.Line;
 import it.uniba.pioneers.testtool.editor.NodeType;
+import it.uniba.pioneers.testtool.editor.node.GraphNodeVisualizza;
 
-public class Grafo extends ConstraintLayout {
-    public MutableGraph<GraphNode> graph = GraphBuilder.directed().build();
+public class GrafoVisualizza extends ConstraintLayout {
+    public MutableGraph<GraphNodeVisualizza> graph = GraphBuilder.directed().build();
 
     WindowManager wm = null;
     Display display = null;
@@ -37,7 +37,7 @@ public class Grafo extends ConstraintLayout {
 
     public DrawView drawView = null;
 
-    public GraphNode visita = null;
+    public GraphNodeVisualizza visita = null;
 
     Context context = null;
 
@@ -54,21 +54,21 @@ public class Grafo extends ConstraintLayout {
             jsonVisita.put("data", visita.data);
             jsonVisita.put("zone", jsonArrayZone);
 
-            for(GraphNode nodeZona : graph.successors(visita)){
+            for(GraphNodeVisualizza nodeZona : graph.successors(visita)){
                 JSONObject jsonZona = new JSONObject();
                 JSONArray jsonArrayAree = new JSONArray();
 
                 jsonZona.put("data", nodeZona.data);
                 jsonZona.put("aree", jsonArrayAree);
 
-                for(GraphNode nodeArea : graph.successors(nodeZona)){
+                for(GraphNodeVisualizza nodeArea : graph.successors(nodeZona)){
                     JSONObject jsonArea = new JSONObject();
                     JSONArray jsonArrayOpere = new JSONArray();
 
                     jsonArea.put("data", nodeArea.data);
                     jsonArea.put("opere", jsonArrayOpere);
 
-                    for(GraphNode nodeOpera : graph.successors(nodeArea)){
+                    for(GraphNodeVisualizza nodeOpera : graph.successors(nodeArea)){
                         JSONObject jsonOpera = new JSONObject();
                         jsonOpera.put("data", nodeOpera.data);
 
@@ -113,33 +113,33 @@ public class Grafo extends ConstraintLayout {
         Visita tmpVisita = new Visita();
         tmpVisita.setId(3);
 
-        Grafo self = this;
+        GrafoVisualizza self = this;
         Visita.getGraphData(context, tmpVisita,
                 response -> {
                     try {
-                        if (response.getBoolean("status") == true) {
+                        if (response.getBoolean("status")) {
                             Log.v("VISITE", response.getJSONObject("data").toString(4));
                             JSONObject data = response.getJSONObject("data");
 
-                            visita = new GraphNode(context, self, NodeType.VISITA, data.getJSONObject("visita"));
+                            visita = new GraphNodeVisualizza(context, self, NodeType.VISITA, data.getJSONObject("visita"));
                             JSONArray arrZona = data.getJSONArray("arrZona");
                             JSONArray arrArea = data.getJSONArray("arrArea");
                             JSONArray arrOpera = data.getJSONArray("arrOpera");
 
                             for (int i = 0; i < arrZona.length(); ++i) {
                                 JSONObject zonaJSON = arrZona.getJSONObject(i);
-                                GraphNode zona = new GraphNode(context, self, NodeType.ZONA, zonaJSON);
+                                GraphNodeVisualizza zona = new GraphNodeVisualizza(context, self, NodeType.ZONA, zonaJSON);
                                 visita.addSuccessor(zona);
                                 for (int j = 0; j < arrArea.length(); ++j) {
                                     JSONObject areaJSON = arrArea.getJSONObject(j);
                                     if (areaJSON.getInt("zona") == zonaJSON.getInt("id")) {
-                                        GraphNode area = new GraphNode(context, self, NodeType.AREA, areaJSON);
+                                        GraphNodeVisualizza area = new GraphNodeVisualizza(context, self, NodeType.AREA, areaJSON);
                                         zona.addSuccessor(area);
 
                                         for (int k = 0; k < arrOpera.length(); ++k) {
                                             JSONObject operaJSON = arrOpera.getJSONObject(k);
                                             if (operaJSON.getInt("area") == areaJSON.getInt("id")) {
-                                                GraphNode opera = new GraphNode(context, self, NodeType.OPERA, operaJSON);
+                                                GraphNodeVisualizza opera = new GraphNodeVisualizza(context, self, NodeType.OPERA, operaJSON);
                                                 area.addSuccessor(opera);
                                             }
                                         }
@@ -163,17 +163,17 @@ public class Grafo extends ConstraintLayout {
 
     }
 
-    public void addStartNode(GraphNode dataNode) {
+    public void addStartNode(GraphNodeVisualizza dataNode) {
         graph.addNode(dataNode);
         this.post(new GraphViewer(this, context, visita));
     }
 
-    public Grafo(@NonNull Context context) {
+    public GrafoVisualizza(@NonNull Context context) {
         super(context);
         init(context);
     }
 
-    public Line buildLineGraph(GraphNode start, GraphNode stop) {
+    public Line buildLineGraph(GraphNodeVisualizza start, GraphNodeVisualizza stop) {
         return new Line(start, stop);
     }
 
@@ -199,10 +199,10 @@ public class Grafo extends ConstraintLayout {
     }
 
     private class GraphViewer implements Runnable {
-        protected final Grafo self;
+        protected final GrafoVisualizza self;
         protected final Context context;
 
-        public GraphViewer(Grafo self, Context context, GraphNode startDataNode) {
+        public GraphViewer(GrafoVisualizza self, Context context, GraphNodeVisualizza startDataNode) {
             visita = startDataNode;
             this.self = self;
             this.context = context;
@@ -222,11 +222,11 @@ public class Grafo extends ConstraintLayout {
         }
 
         private void loadNode() {
-            for (GraphNode nodeZona : self.graph.successors(visita)) {
+            for (GraphNodeVisualizza nodeZona : self.graph.successors(visita)) {
                 visita.addSuccessor(nodeZona);
-                for (GraphNode nodeArea : self.graph.successors(nodeZona)) {
+                for (GraphNodeVisualizza nodeArea : self.graph.successors(nodeZona)) {
                     nodeZona.addSuccessor(nodeArea);
-                    for (GraphNode nodeOpera : self.graph.successors(nodeArea)) {
+                    for (GraphNodeVisualizza nodeOpera : self.graph.successors(nodeArea)) {
                         nodeArea.addSuccessor(nodeOpera);
                     }
                 }

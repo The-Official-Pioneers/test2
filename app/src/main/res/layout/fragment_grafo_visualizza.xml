@@ -12,31 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafoModifica
-            android:id="@+id/displayGrafoModifica"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-        </it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafoModifica>
-
-        <it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi
-            android:id="@+id/listaNodiManipulate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3">
-        </it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi>
     </LinearLayout>
 
     <it.uniba.pioneers.testtool.editor.options.OptionsEditor
         android:id="@+id/optionsGrafo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3">
+        android:layout_weight="4">
 
     </it.uniba.pioneers.testtool.editor.options.OptionsEditor>
-
-
 </LinearLayout>

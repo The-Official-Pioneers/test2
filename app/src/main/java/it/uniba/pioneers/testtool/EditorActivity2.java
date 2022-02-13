@@ -10,10 +10,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.node.ListNode;
 
 public class EditorActivity2 extends AppCompatActivity {
 

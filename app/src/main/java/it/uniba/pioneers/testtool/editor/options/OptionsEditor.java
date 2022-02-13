@@ -21,7 +21,7 @@ import java.sql.Time;
 import java.time.Instant;
 
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoFragment;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
 
 public class OptionsEditor extends LinearLayout {
 
@@ -59,7 +59,7 @@ public class OptionsEditor extends LinearLayout {
             Intent i = new Intent();
             i.setAction(Intent.ACTION_SEND);
             try {
-                JSONObject exportedJson = GrafoFragment.grafoFragment.graph.exportToJson();
+                JSONObject exportedJson = GrafoModificaFragment.grafoModificaFragment.graph.exportToJson();
                 int idVisita = exportedJson.getJSONObject("visita").getJSONObject("data").getInt("id");
                 String exportedString = exportedJson.toString(4);
                 StringBuilder filename = new StringBuilder();
@@ -74,7 +74,7 @@ public class OptionsEditor extends LinearLayout {
 
                 Intent chooserIntent = Intent.createChooser(i, "CONDIVIDI LA TUA VISITA!");
 
-                GrafoFragment.grafoFragment.getActivity().startActivity(chooserIntent);
+                GrafoModificaFragment.grafoModificaFragment.getActivity().startActivity(chooserIntent);
 
             } catch (JSONException e) {
                 e.printStackTrace();

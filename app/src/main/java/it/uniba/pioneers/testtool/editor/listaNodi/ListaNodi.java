@@ -15,9 +15,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.node.GraphNode;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.node.ListNode;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafo;
+import it.uniba.pioneers.testtool.editor.node.GraphNode;
+import it.uniba.pioneers.testtool.editor.node.ListNode;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafoModifica;
 import it.uniba.pioneers.testtool.editor.NodeType;
 
 @SuppressWarnings("ALL")
@@ -29,7 +29,7 @@ public class ListaNodi extends HorizontalScrollView {
 
     HorizontalScrollView scrollView;
     Button buttonAdd;
-    DisplayGrafo displayGrafo = null;
+    DisplayGrafoModifica displayGrafoModifica = null;
 
     public void init(){
         LayoutInflater layoutInflater = LayoutInflater.from(this.getContext());
@@ -45,7 +45,7 @@ public class ListaNodi extends HorizontalScrollView {
 
         hideDuplicate();
         try {
-            displayGrafo = getRootView().findViewById(R.id.displayGrafo);
+            displayGrafoModifica = getRootView().findViewById(R.id.displayGrafoModifica);
 
             JSONObject object = new JSONObject();
             hideDuplicate(); //TODO RISOLVERE PROBLEMA

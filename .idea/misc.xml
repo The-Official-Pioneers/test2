@@ -40,6 +40,7 @@
         <entry key="app/src/main/res/layout/fragment_editor_percorsi.xml" value="0.2767210144927536" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_grafo.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_grafo_visualizza.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/fragment_lista_nodi.xml" value="0.2767210144927536" />
         <entry key="app/src/main/res/layout/fragment_option.xml" value="0.33" />

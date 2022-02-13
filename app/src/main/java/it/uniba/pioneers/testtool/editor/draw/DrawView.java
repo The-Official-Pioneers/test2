@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.editor.grafo_modifica.draw;
+package it.uniba.pioneers.testtool.editor.draw;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -6,7 +6,8 @@ import android.graphics.Paint;
 import android.view.View;
 import java.util.ArrayList;
 
-import it.uniba.pioneers.testtool.editor.grafo_modifica.Grafo;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModifica;
+import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizza;
 
 public class DrawView extends View{
     public Paint paint = new Paint();
@@ -48,12 +49,23 @@ public class DrawView extends View{
 
     }
 
-    public void resetDrawView(Grafo graphWidget, int level){
+    public void resetDrawView(GrafoModifica graphWidget, int level){
         if(graphWidget.drawView != null)
             graphWidget.removeView(graphWidget.drawView);
+        selectUpdate(level);
+        graphWidget.addView(this);
+    }
 
+    public void resetDrawView(GrafoVisualizza graphWidget, int level){
+        if(graphWidget.drawView != null)
+            graphWidget.removeView(graphWidget.drawView);
+        selectUpdate(level);
+        graphWidget.addView(this);
 
-        switch (level){
+    }
+
+    private void selectUpdate(int level) {
+        switch (level) {
             case 0:
                 updateDrawLines(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
                 break;
@@ -67,9 +79,6 @@ public class DrawView extends View{
                 updateDrawLines(this.linesZona, this.linesArea, this.linesOpera);
                 break;
         }
-
-        graphWidget.addView(this);
-
     }
 
 }

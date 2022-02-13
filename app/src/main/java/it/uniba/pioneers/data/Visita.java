@@ -25,6 +25,7 @@ import it.uniba.pioneers.sqlite.DbHelper;
 public class Visita {
 
 
+
     public int getId() {
         return id;
     }
@@ -82,6 +83,7 @@ public class Visita {
     private int creatore_curatore;
     private long data;
     private int tipo_creatore;
+    private String luogo;
 
     //ONLINE STATE
     private boolean online;
@@ -523,7 +525,8 @@ public class Visita {
 
         JSONObject data = new JSONObject();
         try {
-            data.put(DbContract.VisitaEntry.COLUMN_ID, visita.getId());
+            data.put("id", visita.id);
+            data.put("luogo", visita.luogo);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -531,5 +534,9 @@ public class Visita {
         JsonObjectRequest jsonObjectRequest =
                 new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
         queue.add(jsonObjectRequest);
+    }
+
+    public void setLuogo(String luogo) {
+        this.luogo = luogo;
     }
 }

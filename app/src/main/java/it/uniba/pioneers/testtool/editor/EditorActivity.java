@@ -20,16 +20,17 @@ import it.uniba.pioneers.sqlite.DbHelper;
 import it.uniba.pioneers.testtool.DialogNodeInfo;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.node.ListNode;
-import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoFragment;
+import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizzaFragment;
+import it.uniba.pioneers.testtool.editor.node.ListNode;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
 
 public class EditorActivity extends AppCompatActivity {
     public ArrayList<ListNode> opere;
     private ActivityEditor2Binding binding;
 
-    GrafoFragment f = new GrafoFragment();
-    GrafoFragment s = new GrafoFragment();
-    GrafoFragment e = new GrafoFragment();
+    GrafoModificaFragment f = new GrafoModificaFragment();
+    GrafoVisualizzaFragment s = new GrafoVisualizzaFragment();
+    GrafoModificaFragment e = new GrafoModificaFragment();
 
     public DialogNodeInfo d = new DialogNodeInfo();
 

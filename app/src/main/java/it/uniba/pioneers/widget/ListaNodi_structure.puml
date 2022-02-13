@@ -165,7 +165,7 @@ GrafoFragment488073277[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)GrafoFragment</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >#   displayGrafo: DisplayGrafo [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   displayGrafoModifica: DisplayGrafo [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   grafoManipulateLayout: LinearLayout [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   layoutEditorGrafo: LinearLayout [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   listaNodi: ListaNodi [0..1]</TD></TR>
@@ -316,7 +316,7 @@ Grafo1934568056 -> ListaNodi214280681[label="listaNodi
 [0..1]"];
 Grafo1934568056 -> MyRunnableRefresh1156140057[label="rr
 [0..1]"];
-GrafoFragment488073277 -> DisplayGrafo1934568056[label="displayGrafo
+GrafoFragment488073277 -> DisplayGrafo1934568056[label="displayGrafoModifica
 [0..1]"];
 GrafoFragment488073277 -> ListaNodi214280681[label="listaNodi
 [0..1]"];

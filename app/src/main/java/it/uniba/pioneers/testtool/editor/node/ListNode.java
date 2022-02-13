@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.editor.grafo_modifica.node;
+package it.uniba.pioneers.testtool.editor.node;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
