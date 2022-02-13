@@ -70,58 +70,50 @@ public class FragmentSingolaOpera extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);    // salvataggio dello stato del fragment
         MainActivity.budleFragOpera=new Bundle();
         MainActivity.budleFragOpera.putString("titolo", editableTitolo.getText().toString());
         MainActivity.budleFragOpera.putString("descrizione", editableDescrizione.getText().toString());
     }
 
-    public void setDataOpera(){
+    public void setDataOpera(){   // metodo per mostrare le informazioni dell'opera in modalità diverse in base al tipo di utente(modalità: solo lettura oppure anche modifica)
         titolo = (TextView) getActivity().findViewById(R.id.txt_titolo);
         descrizione = (TextView) getActivity().findViewById(R.id.txt_descrizione);
         img = (ImageView) getActivity().findViewById(R.id.img_foto);
-        // modifica visibilità della UI in base al tipo di utente e se l'opera esiste o la si sta creando
-        if(MainActivity.tipoUtente.equals("curatore") && MainActivity.operaSelezionata!=null && !MainActivity.qr){
-        }
+        // modifica visibilità degli elementi della UI in base al tipo di utente e se l'opera esiste o la si sta creando
         if(!MainActivity.tipoUtente.equals("curatore")){
             FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
             modificaFoto.setVisibility(View.GONE);
         }
+        if(MainActivity.tipoUtente.equals("curatore")) {
+            editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
+            editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
 
-       // Intent info = getActivity().getIntent();
-        //if (info != null) {
-
-            if (MainActivity.tipoUtente.equals("curatore")) {
-                editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
-                editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
-
-                if(MainActivity.operaSelezionata!=null) {
-                    //Toast.makeText(getActivity(),MainActivity.operaSelezionata.getFoto(), Toast.LENGTH_SHORT).show();
-                    byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    img.setImageBitmap(decodedByte);
-                    editableTitolo.setText(MainActivity.operaSelezionata.getTitolo());
-                    editableDescrizione.setText(MainActivity.operaSelezionata.getDescrizione());
-                }
-                else{
-                    editableTitolo.setText("");
-                    editableDescrizione.setText("");
-                }
-
-            } else {   // se utente non è curatore, non può modificare nulla
-
+            if(MainActivity.operaSelezionata!=null) {     // campi popolati in base all'opera selezionata
                 byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 img.setImageBitmap(decodedByte);
-
-                editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
-                editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
-                editableTitolo.setVisibility(View.GONE);
-                editableDescrizione.setVisibility(View.GONE);
-                titolo.append('\n' + MainActivity.operaSelezionata.getTitolo());
-                descrizione.append('\n' + MainActivity.operaSelezionata.getDescrizione());
+                editableTitolo.setText(MainActivity.operaSelezionata.getTitolo());
+                editableDescrizione.setText(MainActivity.operaSelezionata.getDescrizione());
             }
-      //  }
+            else{
+                editableTitolo.setText("");
+                editableDescrizione.setText("");
+            }
+
+        } else {   // se utente non è curatore, non può modificare nulla
+
+            byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            img.setImageBitmap(decodedByte);
+
+            editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
+            editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
+            editableTitolo.setVisibility(View.GONE);
+            editableDescrizione.setVisibility(View.GONE);
+            titolo.append('\n' + MainActivity.operaSelezionata.getTitolo());
+            descrizione.append('\n' + MainActivity.operaSelezionata.getDescrizione());
+        }
         if(MainActivity.budleFragOpera!=null) {
             editableTitolo.setText(MainActivity.budleFragOpera.getString("titolo"));
             editableDescrizione.setText(MainActivity.budleFragOpera.getString("descrizione"));
@@ -132,7 +124,7 @@ public class FragmentSingolaOpera extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);    // abilitazione della navigazione all'indietro
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if(this.fragmentSingolaOpera != null){
             MainActivity.fragmentSingolaOpera = this.fragmentSingolaOpera;
@@ -159,7 +151,7 @@ public class FragmentSingolaOpera extends Fragment {
     @Override
     public void onViewCreated( View view, Bundle outState) {
         super.onViewCreated(view, outState);
-        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);   // abilitazione della navigazione all'indietro
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setDataOpera();
     }
@@ -169,7 +161,6 @@ public class FragmentSingolaOpera extends Fragment {
         super.onDestroy();
         MainActivity.operaSelezionata=null;
         MainActivity.fragmentSingolaOpera=null;
-        //MainActivity.qr=false;
         if(MainActivity.qr){
             ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             MainActivity.toggle.setDrawerIndicatorEnabled(true);

@@ -72,7 +72,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="5dp"
                 android:scrollbars="vertical"
-                android:text="@string/nome_singola_opera"
+                android:text="@string/descrizione_singola_opera"
                 android:textSize="25dp" />
 
 

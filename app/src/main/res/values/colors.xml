@@ -21,4 +21,11 @@
     <color name="shuttle_gary">#556267</color>
     <color name="burnt_sienna">#E58845</color>
     <color name="cranberry">#D75871</color>
+
+
+    <color name="colorOnPrimaryDemo">#FFF</color>color>
+    <color name="colorPrimaryDemo">#554911</color>color>
+    <color name="colorPrimaryLightDemo">#EEE3AB</color>color>
+    <color name="colorAccentDemo">#665815</color>color>
+
 </resources>
