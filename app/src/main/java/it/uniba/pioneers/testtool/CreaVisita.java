@@ -42,7 +42,6 @@ public class CreaVisita extends AppCompatActivity {
             Zona.getAllLuoghi(CreaVisita.this,
                     response -> {
                         try {
-
                             if(response.getBoolean("status")){
 
                                 List<String> listaLuoghi = new ArrayList<>();
@@ -52,7 +51,7 @@ public class CreaVisita extends AppCompatActivity {
 
                                 for(int i = 0; i < arrayData.length(); ++i){
                                     JSONObject luogo = arrayData.getJSONObject(i);
-                                    listaLuoghi.add(luogo.getString("luogo"));
+                                    listaLuoghi.add(luogo.getString("nome"));
                                 }
 
                                 ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,

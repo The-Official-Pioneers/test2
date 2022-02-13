@@ -56,6 +56,17 @@ public class VisiteCreateUtente extends AppCompatActivity {
 
     private void startFrag(){
 
+        if(MainActivity.tipoUtente.equals("curatore")){
+            startFragCuratore();
+        } else if(MainActivity.tipoUtente.equals("visitatore")){
+            startFragVisitatore();
+        }
+
+
+
+    }
+
+    private void startFragCuratore(){
         try{
             CuratoreMuseale.getAllVisiteSingolo(this, MainActivity.curatore,
                     response -> {
@@ -96,7 +107,51 @@ public class VisiteCreateUtente extends AppCompatActivity {
         } catch(Exception e){
 
         }
+    }
 
+    private void startFragVisitatore(){
+        /*
+        try{
+            CuratoreMuseale.getAllVisiteSingolo(this, MainActivity.curatore,
+                    response -> {
+                        try {
+                            System.out.println(response);
+                            if(response.getBoolean("status")){
+
+                                //Visita e ListaVisite necessarie per popolare la ListView
+                                Visita v;
+                                listaVisite = new ArrayList<>();
+
+                                JSONObject tmpObj = response.getJSONObject("data");
+                                JSONArray arrayData = tmpObj.getJSONArray("arrVisite");
+
+                                for(int i = 0; i < arrayData.length(); ++i){
+                                    JSONObject visita = arrayData.getJSONObject(i);
+                                    v = new Visita();
+                                    try {
+                                        v.setDataFromJSON(visita);
+                                        addItemToLista(v);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                startFragListaVisite();
+
+                            }else{
+                                System.out.println("Sium sium");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    },
+                    error -> {
+
+                    });
+        } catch(Exception e){
+
+        }
+         */
     }
 
     private void startFragListaVisite(){
