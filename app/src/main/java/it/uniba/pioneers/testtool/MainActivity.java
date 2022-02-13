@@ -388,6 +388,12 @@ public class MainActivity extends AppCompatActivity {
         return;
     }
 
+    //da implementare se necessario
+    public void goToSettingsFromDashboard(View view) {
+
+
+    }
+
     private class LeggiOpera extends Thread{
         private final int id;
         public LeggiOpera(int id){
@@ -460,6 +466,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //aggiunto da Giuseppe
+    public void goToPersonalAreaFromDashboard(View view) throws InterruptedException{ // controllo tipo utente
+        Intent intent = new Intent(this, AreaPersonale.class);
+        startActivity(intent);
+    }
+
     public void gestisciMuseo(View view) {
         if (tipoUtente.equals("ospite")) {   // controllo sul tipo di utente
             new AlertDialog.Builder(this)
@@ -507,12 +519,20 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder dialogInserimento = new AlertDialog.Builder(this);
         dialogInserimento.setTitle("Aggiungi una nuova area al tuo museo");
         dialogInserimento.setMessage("Inserisci il nome della nuova area");
-        final EditText nomeArea = new EditText(this);
-        dialogInserimento.setView(nomeArea);
+        final View customLayout
+                = getLayoutInflater()
+                .inflate(
+                        R.layout.custom_alert_diaolog,
+                        null);
+        dialogInserimento.setView(customLayout);
         dialogInserimento.setNegativeButton(android.R.string.cancel, null);
         dialogInserimento.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                EditText nomeArea;
+                nomeArea = customLayout
+                .findViewById(
+                        R.id.editText);
                 if(!nomeArea.getText().toString().equals("")) {
                     Area nuovaArea = new Area();
                     nuovaArea.setNome(nomeArea.getText().toString());

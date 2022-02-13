@@ -67,6 +67,7 @@ public class AreaPersonaleCuratore extends AppCompatActivity {
         zona.setText( String.valueOf(MainActivity.curatore.getZona()) );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     public void editProfile(View view){

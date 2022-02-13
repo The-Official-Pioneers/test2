@@ -52,7 +52,7 @@ public class AreaPersonale extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_personale);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override

@@ -64,6 +64,7 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_area_personale_visitatore, container, false);
+
     }
 
     @Override
