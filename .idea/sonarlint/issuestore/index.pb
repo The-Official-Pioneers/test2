@@ -1,8 +1,6 @@
 
 q
 Aapp/src/main/java/it/uniba/pioneers/testtool/EditorActivity2.java,3\8\38d6afef701554cdd4fe85484acd1b40937f9686
-p
-@app/src/main/java/it/uniba/pioneers/testtool/DialogNodeInfo.java,8\b\8b5de03bc1fad7dc19233a95c2a243ccfb474a37
 k
 ;app/src/main/java/it/uniba/pioneers/testtool/ListaNodi.java,f\d\fd3d0c63a18c3e78a13bd15c675e7d3bfa09c4fd
 h
@@ -19,3 +17,25 @@ e
 5app/src/main/java/it/uniba/pioneers/widget/Mappa.java,0\f\0f1dec7ec3f21f24f4a403537b0098b9a7f9dd25
 i
 9app/src/main/java/it/uniba/pioneers/data/users/Guida.java,c\3\c326631ea3ea344c024a88e42ea15fb7fc78ded8
+<
+build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
+v
+Fapp/src/main/java/it/uniba/pioneers/testtool/FragmentSingolaOpera.java,8\8\88598a1e4fd8ea74b6e1be998d2c57d972c32a62
+z
+Japp/src/main/java/it/uniba/pioneers/testtool/home/ui/RegisterFragment.java,b\5\b59aff982087590aa0c2699077641673c0551333
+}
+Mapp/src/main/java/it/uniba/pioneers/testtool/home/ui/login/LoginFragment.java,9\b\9bdebe92308e9770d133ca7d153773eb8c287c39
+{
+Kapp/src/main/java/it/uniba/pioneers/testtool/home/FragmentHomeCuratore.java,a\5\a5b037ee7ed27810101c01ff664bee32bbf48861
+x
+Happ/src/main/java/it/uniba/pioneers/testtool/home/FragmentHomeGuida.java,9\a\9a22e6c6c7dcfb1f91f310886d10ad790c540d2b
+y
+Iapp/src/main/java/it/uniba/pioneers/testtool/AreaPersonaleVisitatore.java,6\e\6e4651a0aedf0c04f43f96b612cb4ae88aa288ee
+w
+Gapp/src/main/java/it/uniba/pioneers/testtool/AreaPersonaleCuratore.java,4\2\42a8113f17e9f1c200c86917fe9531dbdaa6ab3f
+t
+Dapp/src/main/java/it/uniba/pioneers/testtool/AreaPersonaleGuida.java,b\f\bf2458ce14824dd4a8563db6f93fb15ff557a5fb
+k
+;app/src/main/java/it/uniba/pioneers/data/server/Server.java,2\f\2f6b034de62dbbb2cdf9a5f3d1c84fd6441fa08b
+|
+Lapp/src/main/java/it/uniba/pioneers/testtool/FragmentAreaPersonaleGuida.java,c\4\c4b0c347216518398d8d3e16f897b048089fcb54

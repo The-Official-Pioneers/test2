@@ -1,21 +1,21 @@
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@drawable/shape_login_panel"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
+    android:layout_width="350dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/nullImg"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="130dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
         android:onClick="addImage"
         android:src="@drawable/ic_baseline_add_a_photo_24" />
 
@@ -63,7 +63,7 @@
         android:selectAllOnFocus="true"
         android:textColor="@color/black"
         android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
+        android:textColorHint="#757575"
         android:textColorLink="@color/black" />
 
     <EditText
@@ -80,7 +80,7 @@
         android:selectAllOnFocus="true"
         android:textColor="@color/black"
         android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
+        android:textColorHint="#757575"
         android:textColorLink="@color/black" />
 
     <EditText
@@ -97,7 +97,7 @@
         android:selectAllOnFocus="true"
         android:textColor="@color/black"
         android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
+        android:textColorHint="#757575"
         android:textColorLink="@color/black" />
 
     <EditText
@@ -115,7 +115,7 @@
         android:selectAllOnFocus="true"
         android:textColor="@color/black"
         android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
+        android:textColorHint="#757575"
         android:textColorLink="@color/black" />
     <EditText
         android:id="@+id/specializzazione"
@@ -131,9 +131,9 @@
         android:selectAllOnFocus="true"
         android:textColor="@color/black"
         android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
+        android:textColorHint="#757575"
         android:textColorLink="@color/black"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -187,7 +187,8 @@
         android:layout_marginTop="15dp"
         android:background="@android:color/darker_gray"
         android:visibility="gone"
-        android:id="@+id/subFormCuratoreSeparator"/>
+        android:id="@+id/subFormCuratoreSeparator"
+        android:orientation="horizontal" />
 
 
     <LinearLayout
@@ -211,7 +212,7 @@
             android:selectAllOnFocus="true"
             android:textColor="@color/black"
             android:textColorHighlight="@color/black"
-            android:textColorHint="@color/black"
+            android:textColorHint="#757575"
             android:textColorLink="@color/black" />
 
         <EditText
@@ -228,7 +229,7 @@
             android:selectAllOnFocus="true"
             android:textColor="@color/black"
             android:textColorHighlight="@color/black"
-            android:textColorHint="@color/black"
+            android:textColorHint="#757575"
             android:textColorLink="@color/black" />
 
         <EditText
@@ -245,7 +246,7 @@
             android:selectAllOnFocus="true"
             android:textColor="@color/black"
             android:textColorHighlight="@color/black"
-            android:textColorHint="@color/black"
+            android:textColorHint="#757575"
             android:textColorLink="@color/black" />
 
     </LinearLayout>
@@ -258,14 +259,13 @@
         android:enabled="true"
         android:text="REGISTRATI"
         android:layout_marginTop="50dp"
-        android:shadowColor="@color/light_blue_900"
+        android:background="@drawable/login_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.359"
-        android:background="@color/design_default_color_primary"
         android:onClick="registerButton"
         android:textColor="@color/white"/>
 
