@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -47,6 +48,8 @@ public class AreaPersonale extends AppCompatActivity {
     private static FragmentAreaPersonaleCuratore fragAreaCurat;
 
     private static final int PICK_FROM_GALLERY = 1;
+
+    private String selectedSpecializ = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,7 @@ public class AreaPersonale extends AppCompatActivity {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.frame_areap, fragAreaGuida)
                 .commit();
+
     }
 
     private void startFragCuratore(){
@@ -137,15 +141,16 @@ public class AreaPersonale extends AppCompatActivity {
 
         } else if(MainActivity.tipoUtente.equals("guida")){
 
-            EditText specializzazione = (EditText) findViewById(R.id.txt_specializzazione);
+            Spinner spinner = (Spinner) this.findViewById(R.id.spinner_specializzazione);
+            selectedSpecializ = spinner.getSelectedItem().toString();
 
-            if(checkForChangesGuida(nome,cognome,datanascita,email,specializzazione)){
+            if(checkForChangesGuida(nome,cognome,datanascita,email,selectedSpecializ)){
 
                 String newNome = nome.getText().toString();
                 String newCognome = cognome.getText().toString();
                 String newDatan = datanascita.getText().toString();
                 String newEmail = email.getText().toString();
-                String newSpecializzazione = specializzazione.getText().toString();
+                String newSpecializzazione = selectedSpecializ;
 
                 try{
                     MainActivity.guida.setNome(newNome);
@@ -165,6 +170,7 @@ public class AreaPersonale extends AppCompatActivity {
                 }
 
             }
+
         } else if(MainActivity.tipoUtente.equals("curatore")){
 
             EditText zona = (EditText) findViewById(R.id.txt_zona);
@@ -212,12 +218,12 @@ public class AreaPersonale extends AppCompatActivity {
     }
 
     private boolean checkForChangesGuida(EditText nomeToCheck, EditText cognomeToCheck, EditText datanToCheck,
-                                    EditText emailToCheck, EditText specialToCheck){
+                                    EditText emailToCheck, String specialToCheck){
         if( !(nomeToCheck.getText().toString().equals(MainActivity.guida.getNome())) ||
                 !(cognomeToCheck.getText().toString().equals(MainActivity.guida.getCognome())) ||
                 !(datanToCheck.getText().toString().equals(MainActivity.guida.getShorterDataNascita())) ||
                 !(emailToCheck.getText().toString().equals(MainActivity.guida.getEmail())) ||
-                !(specialToCheck.getText().toString().equals(MainActivity.guida.getSpecializzazione()))){
+                !(specialToCheck.equals(MainActivity.guida.getSpecializzazione()))){
             return true;
         }
         Snackbar.make(getWindow().getDecorView().getRootView(), R.string.no_modifiche, Snackbar.LENGTH_LONG).show();
@@ -525,8 +531,10 @@ public class AreaPersonale extends AppCompatActivity {
             check3 = textDatan.equals(MainActivity.guida.getShorterDataNascita());
             check4 = textEmail.equals(MainActivity.guida.getEmail());
 
-            String textSpecializzazione = ((EditText) findViewById(R.id.txt_specializzazione)).getText().toString();
-            boolean check5 = textSpecializzazione.equals(MainActivity.guida.getSpecializzazione());
+            Spinner spinner = (Spinner) this.findViewById(R.id.spinner_specializzazione);
+            selectedSpecializ = spinner.getSelectedItem().toString();
+
+            boolean check5 = selectedSpecializ.equals(MainActivity.guida.getSpecializzazione());
 
             return (check1 && check2 && check3 && check4 && check5);
 
@@ -592,6 +600,10 @@ public class AreaPersonale extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public String getSelectedSpecializzazione() {
+        return selectedSpecializ;
     }
 
 }

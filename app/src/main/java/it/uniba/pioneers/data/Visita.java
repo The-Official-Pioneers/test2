@@ -76,6 +76,14 @@ public class Visita {
         this.tipo_creatore = tipo_creatore;
     }
 
+    public String getLuogo() {
+        return luogo;
+    }
+
+    public void setLuogo(String luogo) {
+        this.luogo = luogo;
+    }
+
     //ATTRIBUTES
     private int id;
     private int creatore_visitatore;
@@ -83,6 +91,7 @@ public class Visita {
     private int creatore_curatore;
     private long data;
     private int tipo_creatore;
+    private String luogo;
 
     //ONLINE STATE
     private boolean online;
@@ -94,7 +103,7 @@ public class Visita {
         this.setCreatore_curatore(0);
         this.setData(0);
         this.setTipo_creatore(-1);
-
+        this.setLuogo("");
         this.setOnline(true);
     }
 
@@ -116,7 +125,7 @@ public class Visita {
         tmp.put(DbContract.VisitaEntry.COLUMN_CREATORE_CURATORE, getCreatore_curatore());
         tmp.put(DbContract.VisitaEntry.COLUMN_DATA, getData());
         tmp.put(DbContract.VisitaEntry.COLUMN_TIPO_CREATORE, getTipo_creatore());
-
+        tmp.put(DbContract.VisitaEntry.COLUMN_LUOGO, getLuogo());
         return tmp;
     }
 
@@ -128,7 +137,7 @@ public class Visita {
         this.setCreatore_curatore(data.getInt(DbContract.VisitaEntry.COLUMN_CREATORE_CURATORE));
         this.setData(data.getLong(DbContract.VisitaEntry.COLUMN_DATA));
         this.setTipo_creatore(data.getInt(DbContract.VisitaEntry.COLUMN_TIPO_CREATORE));
-
+        this.setLuogo(data.getString(DbContract.VisitaEntry.COLUMN_LUOGO));
         this.setOnline(true);
     }
 
@@ -161,6 +170,7 @@ public class Visita {
 
         setData(data.getInt(DbContract.VisitaEntry.COLUMN_DATA));
         setTipo_creatore(data.getInt(DbContract.VisitaEntry.COLUMN_TIPO_CREATORE));
+        setLuogo(data.getString(DbContract.VisitaEntry.COLUMN_LUOGO));
 
     }
 
@@ -184,6 +194,7 @@ public class Visita {
                 }
                 data.put(DbContract.VisitaEntry.COLUMN_DATA, getData());
                 data.put(DbContract.VisitaEntry.COLUMN_TIPO_CREATORE, getTipo_creatore());
+                data.put(DbContract.VisitaEntry.COLUMN_LUOGO, getLuogo());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -228,6 +239,7 @@ public class Visita {
             values.put(DbContract.VisitaEntry.COLUMN_CREATORE_CURATORE, getCreatore_curatore());
             values.put(DbContract.VisitaEntry.COLUMN_DATA, getData());
             values.put(DbContract.VisitaEntry.COLUMN_TIPO_CREATORE, getTipo_creatore());
+            values.put(DbContract.VisitaEntry.COLUMN_LUOGO,getLuogo());
 
             //Inserisco i valori dell'istanza da creare all'interno del db
             long newRowId = db.insert(DbContract.ZonaEntry.TABLE_NAME, null, values);
@@ -288,7 +300,8 @@ public class Visita {
                 DbContract.VisitaEntry.COLUMN_GUIDA,
                 DbContract.VisitaEntry.COLUMN_CREATORE_CURATORE,
                 DbContract.VisitaEntry.COLUMN_DATA,
-                DbContract.VisitaEntry.COLUMN_TIPO_CREATORE
+                DbContract.VisitaEntry.COLUMN_TIPO_CREATORE,
+                DbContract.VisitaEntry.COLUMN_LUOGO
             };
 
             //Troviamo la riga all'interno del db e ricaviamo i valori
@@ -355,6 +368,13 @@ public class Visita {
             );
             setTipo_creatore(tipo_creatore);
 
+            String luogo = c.getString(
+                    c.getColumnIndexOrThrow(
+                            DbContract.VisitaEntry.COLUMN_LUOGO
+                    )
+            );
+            setLuogo(luogo);
+
             //Chiusura del Cursor c poichè non più necessario
             c.close();
 
@@ -382,6 +402,7 @@ public class Visita {
                 }
                 data.put(DbContract.VisitaEntry.COLUMN_DATA, getData());
                 data.put(DbContract.VisitaEntry.COLUMN_TIPO_CREATORE, getTipo_creatore());
+                data.put(DbContract.VisitaEntry.COLUMN_LUOGO, getLuogo());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -424,6 +445,7 @@ public class Visita {
             values.put(DbContract.VisitaEntry.COLUMN_CREATORE_CURATORE, getCreatore_curatore());
             values.put(DbContract.VisitaEntry.COLUMN_DATA, getData());
             values.put(DbContract.VisitaEntry.COLUMN_TIPO_CREATORE, getTipo_creatore());
+            values.put(DbContract.VisitaEntry.COLUMN_LUOGO,getLuogo());
 
             //Trovo la riga da aggiornare all'interno del db
             String selection = DbContract.VisitaEntry.COLUMN_ID + " = ?";
@@ -448,9 +470,7 @@ public class Visita {
 
             JSONObject data = new JSONObject();
             try {
-
                 data.put(DbContract.VisitaEntry.COLUMN_ID, getId());
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -464,7 +484,7 @@ public class Visita {
                             try {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.visita_eliminata_successo, Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                                 }

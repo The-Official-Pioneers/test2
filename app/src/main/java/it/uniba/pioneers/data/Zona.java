@@ -455,7 +455,7 @@ public class Zona {
                             try {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.zona_eliminata_successo, Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                                 }
@@ -480,5 +480,19 @@ public class Zona {
 
             int deletedRows = db.delete(DbContract.ZonaEntry.TABLE_NAME, selection, selectionArgs);
         }
+    }
+
+    public static void getAllLuoghi(Context context,
+                                    Response.Listener<JSONObject> responseListener,
+                                    Response.ErrorListener errorListener){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/zona/all-luoghi/";
+
+        JSONObject data = new JSONObject();
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
     }
 }

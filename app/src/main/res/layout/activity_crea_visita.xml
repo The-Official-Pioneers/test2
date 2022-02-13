@@ -41,6 +41,7 @@
             android:id="@+id/btn_conferma_luogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="goToEditorAfterLuogo"
             android:text="Conferma Luogo" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

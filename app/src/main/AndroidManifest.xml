@@ -23,9 +23,12 @@
         android:theme="@style/Theme.TestTool"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".VisiteCreateUtente"
+            android:exported="true" />
+        <activity
             android:name=".CreaVisita"
             android:exported="true"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
 
         <receiver
             android:name="it.uniba.pioneers.widget.WidgetCuratoreRegister"
@@ -72,16 +75,6 @@
         <activity
             android:name=".AreaPersonale"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".AreaPersonaleVisitatore"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".AreaPersonaleCuratore"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".AreaPersonaleGuida"
-            android:parentActivityName=".MainActivity" />
-
     </application>
 
 </manifest>
