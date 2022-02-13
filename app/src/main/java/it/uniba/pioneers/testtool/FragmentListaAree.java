@@ -69,6 +69,20 @@ public class FragmentListaAree extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_aree, container, false);
         setHasOptionsMenu(true);
+
+
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // abilitazione della navigazione all'indietro
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
+
+
         lista = new ArrayList<String>();  // creazione della lista con i nomi di tutte le aree del museo
         for(int i = 0; i<MainActivity.areeZona.size(); i++){
             lista.add(MainActivity.areeZona.get(i).getNome());
@@ -96,17 +110,6 @@ public class FragmentListaAree extends Fragment{
                         .commit();
             }
         });
-
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        MainActivity.toggle.setDrawerIndicatorEnabled(false);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // abilitazione della navigazione all'indietro
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
     }
 
     @Override

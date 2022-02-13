@@ -75,6 +75,19 @@ public class FragmentListaOpere extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_lista_opere, container, false);
 
+
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(MainActivity.areaSelezionata.getNome());   // sostituzione del titolo della toolbar con il nome dell'area selezionata
+        return view;
+    }
+    public void onViewCreated( View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(MainActivity.opereArea.size()!=0){    // se non ci sono opere nell'area selezionata, viene mostrata una textView
+            TextView txtNoOpere = (TextView) getActivity().findViewById(R.id.txt_no_opere);
+            txtNoOpere.setVisibility(View.GONE);
+        }
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // abilitazione della navigazione all'indietro
+
         lista = new ArrayList<String>();         // creazione della lista di nomi di tutte le opere di una determinata area
         for(int i = 0; i<MainActivity.opereArea.size(); i++){
             lista.add(MainActivity.opereArea.get(i).getTitolo());
@@ -102,17 +115,6 @@ public class FragmentListaOpere extends Fragment {
             }
 
         });
-        MainActivity.toggle.setDrawerIndicatorEnabled(false);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(MainActivity.areaSelezionata.getNome());   // sostituzione del titolo della toolbar con il nome dell'area selezionata
-        return view;
-    }
-    public void onViewCreated( View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if(MainActivity.opereArea.size()!=0){    // se non ci sono opere nell'area selezionata, viene mostrata una textView
-            TextView txtNoOpere = (TextView) getActivity().findViewById(R.id.txt_no_opere);
-            txtNoOpere.setVisibility(View.GONE);
-        }
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // abilitazione della navigazione all'indietro
     }
 
     @Override

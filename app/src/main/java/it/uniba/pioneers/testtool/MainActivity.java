@@ -651,7 +651,7 @@ public class MainActivity extends AppCompatActivity {
     public void eliminaArea(View view) {     // eliminazione area con richiesta di conferma
         new AlertDialog.Builder(this)
                 .setTitle(R.string.eliminazione)
-                .setMessage(R.string.conferma_eliminazione + "\n" + R.string.conferma_eliminazione_finale)
+                .setMessage(getString(R.string.conferma_eliminazione) + "\n" + getString(R.string.conferma_eliminazione_finale))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         areeZona.remove(currArea);
