@@ -69,25 +69,25 @@ public class FragmentListaAree extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_aree, container, false);
         setHasOptionsMenu(true);
-        lista = new ArrayList<String>();
+        lista = new ArrayList<String>();  // creazione della lista con i nomi di tutte le aree del museo
         for(int i = 0; i<MainActivity.areeZona.size(); i++){
             lista.add(MainActivity.areeZona.get(i).getNome());
         }
 
         ListView lv = (ListView) view.findViewById(R.id.listView);
-        lvAdapter = new ArrayAdapter<String>(
+        lvAdapter = new ArrayAdapter<String>(   // creazione dell'adapter per la llistView
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 lista
         );
         lv.setAdapter(lvAdapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){    // gestione del click su un'elemento della lista
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getActivity(),String.valueOf(MainActivity.areeZona.get(i).getId()), Toast.LENGTH_SHORT).show();
                 MainActivity.areaSelezionata = MainActivity.areeZona.get(i);
                 MainActivity.currArea=i;
-                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();  // caricamento del fragment che mostrerà i dettagli dell'area selezionata
                 MainActivity.fragmentSingolaArea = new FragmentSingolaArea();
                 fragmentManager.beginTransaction()    // caricamento del fragment che mostrera l'area selezionata
                         .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
@@ -105,7 +105,7 @@ public class FragmentListaAree extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // abilitazione della navigazione all'indietro
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
     }
 
@@ -120,7 +120,7 @@ public class FragmentListaAree extends Fragment{
     public void onDestroy() {
         super.onDestroy();
         MainActivity.areeZona=null;
-        MainActivity.areaSelezionata=null;
+        MainActivity.areaSelezionata=null;   // oggetti utili per la gestione delle operazioni disponibili
         MainActivity.opereArea=null;
         MainActivity.operaSelezionata=null;           // modifica della toolbar in base a dove si trova l'utente
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);

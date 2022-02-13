@@ -72,7 +72,7 @@ public class FragmentHomeVisitatore extends Fragment {
     private void setTextEditText(){
 
         Button visitePredef = (Button) getActivity().findViewById(R.id.btn_visite_predefinite);
-        Button tueVisite = (Button) getActivity().findViewById(R.id.btn_tuoi_percorsi);
+        Button tueVisite = (Button) getActivity().findViewById(R.id.btn_tue_visite);
         Button creaVisita = (Button) getActivity().findViewById(R.id.btn_crea_visita);
         TextView interagisciOpera = (TextView) getActivity().findViewById(R.id.text_interagisci);
         EditText text_cerca = (EditText) getActivity().findViewById(R.id.text_cerca);

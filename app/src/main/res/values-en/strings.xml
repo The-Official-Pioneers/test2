@@ -218,7 +218,7 @@
     <!-- ===============CRUD STUFF=============== -->
     <string name="cambio_dati_no_validi" translatable="false">No changes have been made,
         verify that the values are valid.</string>
-    <string name="server_no_risponde" translatable="false">Server not responding.</string>
+    <string name="server_no_risponde" translatable="false">Server not responding.\n check your internet connection</string>
     <!-- ====================================================================================== -->
 
 

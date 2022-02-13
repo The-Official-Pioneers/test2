@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -76,25 +75,24 @@ public class FragmentListaOpere extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_lista_opere, container, false);
 
-        lista = new ArrayList<String>();
+        lista = new ArrayList<String>();         // creazione della lista di nomi di tutte le opere di una determinata area
         for(int i = 0; i<MainActivity.opereArea.size(); i++){
             lista.add(MainActivity.opereArea.get(i).getTitolo());
         }
 
         ListView lv = (ListView) view.findViewById(R.id.listView);
-        lvAdapter = new ArrayAdapter<String>(
+        lvAdapter = new ArrayAdapter<String>(         // creazione dell'adapter per la listView
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 lista
         );
         lv.setAdapter(lvAdapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){   // gestione del click su un'elemento della lista
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(),String.valueOf(MainActivity.opereArea.get(i).getId()), Toast.LENGTH_SHORT).show();
                 MainActivity.operaSelezionata = MainActivity.opereArea.get(i);
                 MainActivity.currOpera=i;
-                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();     // caricamento del fragment che mostrerà i dettagli dell'opera selezionata
                 MainActivity.fragmentSingolaOpera = new FragmentSingolaOpera();
                 fragmentManager.beginTransaction()          // caricamento del fragment che mostrera l'opera selezionata
                         .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
@@ -105,16 +103,16 @@ public class FragmentListaOpere extends Fragment {
 
         });
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(MainActivity.areaSelezionata.getNome());
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(MainActivity.areaSelezionata.getNome());   // sostituzione del titolo della toolbar con il nome dell'area selezionata
         return view;
     }
     public void onViewCreated( View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(MainActivity.opereArea.size()!=0){
+        if(MainActivity.opereArea.size()!=0){    // se non ci sono opere nell'area selezionata, viene mostrata una textView
             TextView txtNoOpere = (TextView) getActivity().findViewById(R.id.txt_no_opere);
             txtNoOpere.setVisibility(View.GONE);
         }
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // abilitazione della navigazione all'indietro
     }
 
     @Override
@@ -125,7 +123,7 @@ public class FragmentListaOpere extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        MainActivity.opereArea=null;
+        MainActivity.opereArea=null;       // oggetti utili per la gestione delle operazioni disponibili
         MainActivity.operaSelezionata=null;
         MainActivity.fotoModificata=false;               // modifica della toolbar in base a dove si trova l'utente
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);

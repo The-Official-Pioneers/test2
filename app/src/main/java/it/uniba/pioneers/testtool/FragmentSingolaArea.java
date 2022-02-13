@@ -73,7 +73,7 @@ public class FragmentSingolaArea extends Fragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        super.onDestroy();     // oggetti utili per la gestione dei dati e delle operazioni disponibili all'utente
         MainActivity.areaSelezionata=null;
         MainActivity.opereArea=null;
         MainActivity.operaSelezionata=null;
