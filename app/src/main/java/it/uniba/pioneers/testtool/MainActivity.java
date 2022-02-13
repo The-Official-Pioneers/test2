@@ -116,10 +116,14 @@ public class MainActivity extends AppCompatActivity {
         budleFragOpera=null;
                                         // in base al tipo di utente cheha eseguito il login carico un fragmentHome differente
         Intent intent = getIntent();
-       //tipoUtente = intent.getStringExtra("typeUser");
-        tipoUtente="curatore";
+        //tipoUtente = intent.getStringExtra("typeUser");
         //idUtente = intent.getIntExtra("idUser");
-        idUtente=1;
+
+        tipoUtente = "curatore";
+        idUtente = 1; //curatore
+
+        //tipoUtente = "guida";
+        //idUtente = 1004; //guida
 
         switch(tipoUtente){    // caricamento della home corretta
             case "curatore":
@@ -845,6 +849,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void creaVisita(View view) {
         Intent intent = new Intent(this, CreaVisita.class);
+        startActivity(intent);
+    }
+
+    public void goToYourVisite(View view) {
+        Intent intent = new Intent(this, VisiteCreateUtente.class);
         startActivity(intent);
     }
 
