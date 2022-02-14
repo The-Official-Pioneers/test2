@@ -163,7 +163,6 @@ public class GraphNodeModifica extends Node {
 
                                         });
                             }else if(listNodeModifica.type == NodeType.AREA && self.type == NodeType.ZONA){
-
                                 Zona.addArea(self.getContext(), self.graphParent.visita.data.getInt("id"), listNodeModifica.data.getInt("id"),
                                         response -> {
 
@@ -172,7 +171,13 @@ public class GraphNodeModifica extends Node {
 
                                         });
                             }else if(listNodeModifica.type == NodeType.OPERA && self.type == NodeType.AREA){
+                                Area.addOpera(self.getContext(), self.graphParent.visita.data.getInt("id"), listNodeModifica.data.getInt("id"),
+                                        response -> {
 
+                                        },
+                                        error -> {
+
+                                        });
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
