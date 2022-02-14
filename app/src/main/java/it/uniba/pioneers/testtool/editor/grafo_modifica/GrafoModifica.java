@@ -26,8 +26,7 @@ import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.node.GraphNode;
 import it.uniba.pioneers.testtool.editor.draw.DrawView;
 import it.uniba.pioneers.testtool.editor.draw.Line;
-import it.uniba.pioneers.testtool.editor.NodeType;
-import it.uniba.pioneers.testtool.editor.node.GraphNodeVisualizza;
+import it.uniba.pioneers.testtool.editor.node.NodeType;
 
 public class GrafoModifica extends ConstraintLayout {
     public MutableGraph<GraphNode> graph = GraphBuilder.directed().build();

@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.editor;
+package it.uniba.pioneers.testtool.editor.node;
 
 public enum NodeType {
     VISITA,

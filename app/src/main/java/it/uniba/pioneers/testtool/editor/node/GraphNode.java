@@ -26,10 +26,8 @@ import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.NodeType;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModifica;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
-import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizza;
 import it.uniba.pioneers.testtool.editor.node.dialogs.NodeDialog;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 

@@ -18,7 +18,7 @@ import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.node.GraphNode;
 import it.uniba.pioneers.testtool.editor.node.ListNode;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafoModifica;
-import it.uniba.pioneers.testtool.editor.NodeType;
+import it.uniba.pioneers.testtool.editor.node.NodeType;
 
 @SuppressWarnings("ALL")
 public class ListaNodi extends HorizontalScrollView {

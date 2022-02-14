@@ -6,14 +6,14 @@ import android.content.Context;
 import it.uniba.pioneers.testtool.editor.node.GraphNode;
 import it.uniba.pioneers.testtool.editor.node.GraphNodeVisualizza;
 
-public class NodeDialog extends NodeListDialog{
+public class NodeDialog extends NodeModificaDialog {
     public static AlertDialog NodeDialog(Context context, GraphNode nodeObject) {
         AlertDialog tmpDialog = getDialog(context, nodeObject);
         return tmpDialog;
     }
 
     public static AlertDialog NodeDialog(Context context, GraphNodeVisualizza nodeObject) {
-        AlertDialog tmpDialog = getDialog(context, nodeObject);
+        AlertDialog tmpDialog = NodeVisualizzaDialog.getDialog(context, nodeObject);
         return tmpDialog;
     }
 }

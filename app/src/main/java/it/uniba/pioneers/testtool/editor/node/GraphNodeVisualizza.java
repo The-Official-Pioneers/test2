@@ -3,7 +3,6 @@ package it.uniba.pioneers.testtool.editor.node;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.NodeType;
 import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizza;
 import it.uniba.pioneers.testtool.editor.node.dialogs.NodeDialog;
 

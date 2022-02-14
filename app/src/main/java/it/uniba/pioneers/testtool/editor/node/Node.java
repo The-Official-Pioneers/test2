@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat;
 import org.json.JSONObject;
 
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.NodeType;
 
 public class Node extends ConstraintLayout {
     public NodeType type;

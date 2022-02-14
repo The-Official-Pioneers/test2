@@ -23,6 +23,7 @@ import java.time.Instant;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
 
+
 public class OptionsEditor extends LinearLayout {
 
     ImageButton dowloadVisita = null;
@@ -86,7 +87,7 @@ public class OptionsEditor extends LinearLayout {
         });
     }
 
-    private void generateFilename(int idVisita, StringBuilder filename) {
+    public void generateFilename(int idVisita, StringBuilder filename) {
         filename.append("visita");
         filename.append(idVisita);
         filename.append("_");
@@ -120,4 +121,5 @@ public class OptionsEditor extends LinearLayout {
         super(context, attrs, defStyleAttr);
         init(context);
     }
+
 }
