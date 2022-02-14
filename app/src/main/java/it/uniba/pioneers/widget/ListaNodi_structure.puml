@@ -56,7 +56,7 @@ config=StructureConfiguration;
     "hideDataStructures": false,
     "hidePrivateMethods": true,
     "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
-    "onlyShowApplicationEntryPoints": false // root listNode is included
+    "onlyShowApplicationEntryPoints": false // root listNodeModifica is included
   },
   "details": {
     "aggregation": "GroupByClass", // ByClass, GroupByClass, None
@@ -148,7 +148,7 @@ Grafo1934568056[
 <TR><TD ALIGN="LEFT" >#   visitaIniziale: Node [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   wm: WindowManager [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ addStartNode(listNode: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addStartNode(listNodeModifica: Node)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ addSuccessorToNode(parentDataNode: Node, childDataNode: Node)</TD></TR>
 <TR><TD ALIGN="LEFT" >- fromDpToPx(dip: int): float</TD></TR>
 <TR><TD ALIGN="LEFT" >+ init(context: Context)</TD></TR>
@@ -208,7 +208,7 @@ ListaNodi214280681[
 <TR><TD ALIGN="LEFT" >#   nodeArrayList: ArrayList&lt;Node&gt; [0..*]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   scrollView: ScrollView [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ addNode(listNode: Node)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addNode(listNodeModifica: Node)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ init()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ removeNode(id: int)</TD></TR>
 </TABLE>>

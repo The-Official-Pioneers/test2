@@ -15,16 +15,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.node.GraphNode;
-import it.uniba.pioneers.testtool.editor.node.ListNode;
+import it.uniba.pioneers.testtool.editor.node.GraphNodeModifica;
+import it.uniba.pioneers.testtool.editor.node.ListNodeModifica;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafoModifica;
-import it.uniba.pioneers.testtool.editor.node.NodeType;
+import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 
 @SuppressWarnings("ALL")
 public class ListaNodi extends HorizontalScrollView {
-    private final GraphNode parentNode;
+    private final GraphNodeModifica parentNode;
     public LinearLayout linearLayout;
-    public ArrayList<ListNode> listNodeArrayList = new ArrayList<>();
+    public ArrayList<ListNodeModifica> listNodeArrayListModifica = new ArrayList<>();
     public NodeType listType = null;
 
     HorizontalScrollView scrollView;
@@ -56,9 +56,9 @@ public class ListaNodi extends HorizontalScrollView {
                     buttonAdd.setBackgroundColor(Color.LTGRAY);
                     buttonAdd.setTextColor(Color.BLACK);
 
-                    for(ListNode listNode : listNodeArrayList){
-                        listNode.setCircle(false);
-                        listNode.setVisibility(VISIBLE);
+                    for(ListNodeModifica listNodeModifica : listNodeArrayListModifica){
+                        listNodeModifica.setCircle(false);
+                        listNodeModifica.setVisibility(VISIBLE);
                     }
                 }else{
                     buttonAdd.setText("Mostra tutti");
@@ -75,11 +75,11 @@ public class ListaNodi extends HorizontalScrollView {
     }
 
     private void hideDuplicate() {
-        for(GraphNode node : parentNode.graphParent.graph.successors(parentNode)){
-            for(ListNode listNode : listNodeArrayList){
+        for(GraphNodeModifica node : parentNode.graphParent.graph.successors(parentNode)){
+            for(ListNodeModifica listNodeModifica : listNodeArrayListModifica){
                 try {
-                    if(node.data.getInt("id") == listNode.data.getInt("id")){
-                        listNode.setVisibility(GONE);
+                    if(node.data.getInt("id") == listNodeModifica.data.getInt("id")){
+                        listNodeModifica.setVisibility(GONE);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -88,24 +88,24 @@ public class ListaNodi extends HorizontalScrollView {
         }
     }
 
-    public void addNode(ListNode listNode){
-        listNodeArrayList.add(listNode);
-        linearLayout.addView(listNode);
+    public void addNode(ListNodeModifica listNodeModifica){
+        listNodeArrayListModifica.add(listNodeModifica);
+        linearLayout.addView(listNodeModifica);
         hideDuplicate();
     }
 
     public void removeNode(int id){
-        for(int i = 0; i < this.listNodeArrayList.size(); ++i){
-            ListNode tmp = this.listNodeArrayList.get(i);
+        for(int i = 0; i < this.listNodeArrayListModifica.size(); ++i){
+            ListNodeModifica tmp = this.listNodeArrayListModifica.get(i);
             if(tmp.getId() == id){
                 tmp.setVisibility(GONE);
-                this.listNodeArrayList.remove(i);
+                this.listNodeArrayListModifica.remove(i);
                 break;
             }
         }
     }
 
-    public ListaNodi(@NonNull Context context, NodeType listType, GraphNode parentNode) {
+    public ListaNodi(@NonNull Context context, NodeType listType, GraphNodeModifica parentNode) {
         super(context);
         this.listType = listType;
         this.parentNode = parentNode;

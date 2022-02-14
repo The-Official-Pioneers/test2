@@ -19,10 +19,11 @@ import org.json.JSONObject;
 
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
+import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 
-public class ListNode extends Node{
+public class ListNodeModifica extends Node{
     LinearLayout linearLayout;
-    public ListNode self = null;
+    public ListNodeModifica self = null;
 
     ListaNodi listaNodi = null;
 
@@ -52,7 +53,7 @@ public class ListNode extends Node{
         }
     }
 
-    public ListNode(@NonNull Context context, ListaNodi listaNodi, JSONObject data, NodeType type) {
+    public ListNodeModifica(@NonNull Context context, ListaNodi listaNodi, JSONObject data, NodeType type) {
         super(context);
         try {
             System.out.println(data.toString());
@@ -81,7 +82,7 @@ public class ListNode extends Node{
         self = this;
         clicked = false;
         setOnClickListener(view -> {
-            for(ListNode node : listaNodi.listNodeArrayList){
+            for(ListNodeModifica node : listaNodi.listNodeArrayListModifica){
                 if(!view.equals(node)){
                     node.reset();
                 }else{

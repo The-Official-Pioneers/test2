@@ -1,19 +1,18 @@
 package it.uniba.pioneers.testtool.editor.draw;
 import android.util.Log;
 
-import it.uniba.pioneers.testtool.editor.node.GraphNode;
+import it.uniba.pioneers.testtool.editor.node.GraphNodeModifica;
 import it.uniba.pioneers.testtool.editor.node.GraphNodeVisualizza;
-import it.uniba.pioneers.testtool.editor.node.Node;
 
 public class Line {
     float startX, startY, stopX, stopY;
-    public GraphNode startNode;
-    public GraphNode endNode;
+    public GraphNodeModifica startNode;
+    public GraphNodeModifica endNode;
 
     public GraphNodeVisualizza startNodeView;
     public GraphNodeVisualizza endNodeView;
 
-    public Line(GraphNode startNode, GraphNode endNode) {
+    public Line(GraphNodeModifica startNode, GraphNodeModifica endNode) {
         this.startNode = startNode;
         this.endNode = endNode;
 

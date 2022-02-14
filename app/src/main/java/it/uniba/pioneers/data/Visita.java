@@ -539,4 +539,42 @@ public class Visita {
     public void setLuogo(String luogo) {
         this.luogo = luogo;
     }
+
+    public static void addZona(Context context,int visita_id, int zona_id,
+                                           Response.Listener<JSONObject> responseListener,
+                                           Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visita/add/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("visita_id", visita_id);
+            data.put("zona_id", zona_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void removeZona(Context context,int visita_id, int zona_id,
+                               Response.Listener<JSONObject> responseListener,
+                               Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visita/remove/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("visita_id", visita_id);
+            data.put("zona_id", zona_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
 }

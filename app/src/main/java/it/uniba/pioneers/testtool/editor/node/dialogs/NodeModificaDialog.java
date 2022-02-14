@@ -18,10 +18,11 @@ import org.json.JSONException;
 import java.sql.Date;
 import java.time.Instant;
 
+import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
-import it.uniba.pioneers.testtool.editor.node.GraphNode;
-import it.uniba.pioneers.testtool.editor.node.NodeType;
+import it.uniba.pioneers.testtool.editor.node.GraphNodeModifica;
+import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 import it.uniba.pioneers.testtool.editor.node.GraphNodeVisualizza;
 
 public class NodeModificaDialog {
@@ -50,7 +51,7 @@ public class NodeModificaDialog {
         return layout;
     }
 
-    protected static AlertDialog getDialog(Context context, GraphNode nodeObject) {
+    protected static AlertDialog getDialog(Context context, GraphNodeModifica nodeObject) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         try {
@@ -67,7 +68,7 @@ public class NodeModificaDialog {
                 });
 
                 builder.setNegativeButton("Elimina", (dialogInterface, i) -> {
-                    GraphNode parentNode = ((GraphNode)nodeObject.graphParent.graph.predecessors(nodeObject).toArray()[0]);
+                    GraphNodeModifica parentNode = ((GraphNodeModifica)nodeObject.graphParent.graph.predecessors(nodeObject).toArray()[0]);
 
                     nodeObject.deleteNode();
 
@@ -76,6 +77,25 @@ public class NodeModificaDialog {
                     parentNode.setCircle(true);
                     parentNode.pick();
                     parentNode.initListNode();
+
+                    try{
+                        if(parentNode.type == NodeType.VISITA && nodeObject.type == NodeType.ZONA){
+                            Visita.removeZona(parentNode.getContext(), parentNode.data.getInt("id"), nodeObject.data.getInt("id"),
+                                    response -> {
+
+                                    },
+                                    error -> {
+
+                                    });
+                        }else if(parentNode.type == NodeType.ZONA && nodeObject.type == NodeType.AREA){
+
+                        }else if(parentNode.type == NodeType.AREA && nodeObject.type == NodeType.OPERA){
+
+                        }
+
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
                 });
             }
 
@@ -89,7 +109,7 @@ public class NodeModificaDialog {
     }
 
 
-    private static void loadDataLayout(Context context, GraphNode nodeObject, AlertDialog tmpDialog) {
+    private static void loadDataLayout(Context context, GraphNodeModifica nodeObject, AlertDialog tmpDialog) {
         ConstraintLayout alertLayout = new ConstraintLayout(context);
 
         ScrollView scrollView = new ScrollView(context);
@@ -150,7 +170,7 @@ public class NodeModificaDialog {
         }
     }
 
-    private static void loadImage(Context context, GraphNode nodeObject, LinearLayout ln) throws JSONException {
+    private static void loadImage(Context context, GraphNodeModifica nodeObject, LinearLayout ln) throws JSONException {
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 2));
@@ -167,7 +187,7 @@ public class NodeModificaDialog {
         webView.loadUrl(Server.getUrl()+"/opera/image/"+ nodeObject.data.getInt(DbContract.OperaEntry.COLUMN_ID));
     }
 
-    public static void setDialogTitle(GraphNode nodeObject, AlertDialog.Builder builder, int id) {
+    public static void setDialogTitle(GraphNodeModifica nodeObject, AlertDialog.Builder builder, int id) {
         if(nodeObject.type == NodeType.VISITA){
             builder.setTitle("VISITA #"+ id);
         }else if(nodeObject.type == NodeType.ZONA){

@@ -25,7 +25,7 @@ import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.draw.DrawView;
 import it.uniba.pioneers.testtool.editor.draw.Line;
-import it.uniba.pioneers.testtool.editor.node.NodeType;
+import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 import it.uniba.pioneers.testtool.editor.node.GraphNodeVisualizza;
 
 public class GrafoVisualizza extends ConstraintLayout {

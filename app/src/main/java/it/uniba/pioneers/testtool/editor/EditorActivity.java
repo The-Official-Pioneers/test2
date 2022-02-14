@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,11 +21,11 @@ import it.uniba.pioneers.testtool.DialogNodeInfo;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
 import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizzaFragment;
-import it.uniba.pioneers.testtool.editor.node.ListNode;
+import it.uniba.pioneers.testtool.editor.node.ListNodeModifica;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
 
 public class EditorActivity extends AppCompatActivity {
-    public ArrayList<ListNode> opere;
+    public ArrayList<ListNodeModifica> opere;
     private ActivityEditor2Binding binding;
 
     GrafoModificaFragment f = new GrafoModificaFragment();

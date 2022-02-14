@@ -23,6 +23,7 @@ import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizza;
 import it.uniba.pioneers.testtool.editor.node.dialogs.NodeDialog;
+import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 
 public class GraphNodeVisualizza extends Node {
     public GrafoVisualizza graphParent = null;
@@ -31,7 +32,6 @@ public class GraphNodeVisualizza extends Node {
 
     public int size = 0;
 
-
     public GraphNodeVisualizza(@NonNull Context context) {
         super(context);
     }
@@ -39,22 +39,6 @@ public class GraphNodeVisualizza extends Node {
     public void init(Context context) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         layoutInflater.inflate(R.layout.sample_node, this);
-
-        setOnDragListener(new MyDragListener());
-    }
-
-    public void deleteNode(){
-        this.hide();
-        this.hideAllChild();
-
-        if(type == NodeType.ZONA){
-            graphParent.drawView.linesZona.removeIf(line -> line.endNodeView.equals(this));
-        }else if(type == NodeType.AREA){
-            graphParent.drawView.linesArea.removeIf(line -> line.endNodeView.equals(this));
-        }else if(type == NodeType.OPERA){
-            graphParent.drawView.linesOpera.removeIf(line -> line.endNodeView.equals(this));
-        }
-        graphParent.graph.removeNode(this);
     }
 
     @NonNull
@@ -79,99 +63,13 @@ public class GraphNodeVisualizza extends Node {
         setFields(graphParent, type);
     }
 
-    private class MyDragListener implements OnDragListener {
-        private boolean checkRelation(ListNode listNode){
-            boolean state = false;
-
-            try {
-                state =  (
-                        (self.type == NodeType.VISITA && listNode.type == NodeType.ZONA)
-                                || (self.type == NodeType.ZONA && listNode.type == NodeType.AREA
-                                && self.data.getInt(DbContract.ZonaEntry.COLUMN_ID) == listNode.data.getInt(DbContract.AreaEntry.COLUMN_ZONA))
-                                || (self.type == NodeType.AREA && listNode.type == NodeType.OPERA
-                                && self.data.getInt(DbContract.AreaEntry.COLUMN_ID) == listNode.data.getInt(DbContract.OperaEntry.COLUMN_AREA))
-                );
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            return state;
-        }
-
-        private boolean checkIfPresent(ListNode listNode){
-            boolean state = true;
-
-            for(GraphNodeVisualizza child : graphParent.graph.successors(self)){
-                try {
-                    if(child.data.getInt("id") == listNode.data.getInt("id")){
-                        state = false;
-                        break;
-                    }
-                } catch (JSONException e) {
-                    state = false;
-                    break;
-                }
-            }
-
-            if(!state){
-                Snackbar.make(self.getRootView(), "È già presente questo elemento nella visita", BaseTransientBottomBar.LENGTH_SHORT).show();
-            }
-
-            return state;
-        }
-
-        @Override
-        public boolean onDrag(View v, DragEvent event) {
-            int action = event.getAction();
-            ListNode listNode = ((ListNode)event.getLocalState());
-            switch (action) {
-                case DragEvent.ACTION_DROP:
-                    if(checkRelation(listNode) && checkIfPresent(listNode)){
-                        GraphNodeVisualizza graphNode = new GraphNodeVisualizza(graphParent.getContext(), graphParent, listNode.type, listNode.data);
-                        self.hide();
-                        self.hideAllNodeAtSameLevel();
-                        self.hideAllChild();
-
-                        self.draw();
-
-                        self.addSuccessor(graphNode);
-                        self.drawAllChild();
-                        listNode.setVisibility(GONE);
-
-                        self.setCircle(true);
-                        self.clicked = true;
-                        self.pick();
-                    }else{
-                        listNode.reset();
-                        listNode.setVisibility(VISIBLE);
-                    }
-                    break;
-                case DragEvent.ACTION_DRAG_STARTED:
-                    if(checkRelation(listNode) && checkIfPresent(listNode)){
-                        self.hideAllNodeAtSameLevel();
-                        self.hideAllChild();
-                        self.drawAllChild();
-                        self.setCircle(true);
-                        self.pick();
-                    }
-                default:
-                    break;
-            }
-            return true;
-        }
-    }
-
     protected void setOnLongClickListener(@NonNull Context context) {
-        setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                GraphNodeVisualizza node = ((GraphNodeVisualizza)view);
-                System.out.println(node.data.toString());
-                AlertDialog dialog1 = NodeDialog.NodeDialog(context, node);
-                dialog1.show();
-                return true;
-            }
+        setOnLongClickListener(view -> {
+            GraphNodeVisualizza node = ((GraphNodeVisualizza)view);
+            System.out.println(node.data.toString());
+            AlertDialog dialog1 = NodeDialog.NodeDialog(context, node);
+            dialog1.show();
+            return true;
         });
     }
 
@@ -339,9 +237,6 @@ public class GraphNodeVisualizza extends Node {
         //FORMULA DI CENTRATURA DEL NODO IN BASE AL NUMERO DI NODI DI QUEL LIVELLO
         return (count.getAndIncrement() * (((float)graphParent.size.x / (numSuccessors + 1)))) - (float)nodeChild.size/2;
     }
-
-
-
 
     private void checkIfAlreadyInit() {
         boolean flag = true;

@@ -7,6 +7,7 @@ import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -30,14 +31,12 @@ import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModifica;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
 import it.uniba.pioneers.testtool.editor.node.dialogs.NodeDialog;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
+import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 
-public class GraphNode extends Node {
+public class GraphNodeModifica extends Node {
     public GrafoModifica graphParent = null;
-    public MutableGraph<GraphNode> graph = null;
-    GraphNode self = null;
-
-
-
+    public MutableGraph<GraphNodeModifica> graph = null;
+    GraphNodeModifica self = null;
 
     public void init(Context context) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -50,7 +49,7 @@ public class GraphNode extends Node {
         this.hide();
         this.hideAllChild();
 
-        if(type == NodeType.ZONA){  
+        if(type == NodeType.ZONA){
             graphParent.drawView.linesZona.removeIf(line -> line.endNode.equals(this));
         }else if(type == NodeType.AREA){
             graphParent.drawView.linesArea.removeIf(line -> line.endNode.equals(this));
@@ -61,11 +60,11 @@ public class GraphNode extends Node {
     }
 
     @NonNull
-    private Set<GraphNode> getPredecessors(GrafoModifica graphParent, GraphNode self) {
+    private Set<GraphNodeModifica> getPredecessors(GrafoModifica graphParent, GraphNodeModifica self) {
         return graphParent.graph.predecessors(self);
     }
 
-    public void addSuccessor(GraphNode dataNodeEnd){
+    public void addSuccessor(GraphNodeModifica dataNodeEnd){
         this.graph.addNode(dataNodeEnd);
         this.graph.putEdge(this, dataNodeEnd);
     }
@@ -83,16 +82,16 @@ public class GraphNode extends Node {
     }
 
     private class MyDragListener implements OnDragListener {
-        private boolean checkRelation(ListNode listNode){
+        private boolean checkRelation(ListNodeModifica listNodeModifica){
             boolean state = false;
 
             try {
                 state =  (
-                        (self.type == NodeType.VISITA && listNode.type == NodeType.ZONA)
-                        || (self.type == NodeType.ZONA && listNode.type == NodeType.AREA
-                            && self.data.getInt(DbContract.ZonaEntry.COLUMN_ID) == listNode.data.getInt(DbContract.AreaEntry.COLUMN_ZONA))
-                        || (self.type == NodeType.AREA && listNode.type == NodeType.OPERA
-                            && self.data.getInt(DbContract.AreaEntry.COLUMN_ID) == listNode.data.getInt(DbContract.OperaEntry.COLUMN_AREA))
+                        (self.type == NodeType.VISITA && listNodeModifica.type == NodeType.ZONA)
+                        || (self.type == NodeType.ZONA && listNodeModifica.type == NodeType.AREA
+                            && self.data.getInt(DbContract.ZonaEntry.COLUMN_ID) == listNodeModifica.data.getInt(DbContract.AreaEntry.COLUMN_ZONA))
+                        || (self.type == NodeType.AREA && listNodeModifica.type == NodeType.OPERA
+                            && self.data.getInt(DbContract.AreaEntry.COLUMN_ID) == listNodeModifica.data.getInt(DbContract.OperaEntry.COLUMN_AREA))
                 );
 
             } catch (JSONException e) {
@@ -102,12 +101,12 @@ public class GraphNode extends Node {
             return state;
         }
 
-        private boolean checkIfPresent(ListNode listNode){
+        private boolean checkIfPresent(ListNodeModifica listNodeModifica){
             boolean state = true;
 
-            for(GraphNode child : graphParent.graph.successors(self)){
+            for(GraphNodeModifica child : graphParent.graph.successors(self)){
                 try {
-                    if(child.data.getInt("id") == listNode.data.getInt("id")){
+                    if(child.data.getInt("id") == listNodeModifica.data.getInt("id")){
                         state = false;
                         break;
                     }
@@ -127,31 +126,59 @@ public class GraphNode extends Node {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             int action = event.getAction();
-            ListNode listNode = ((ListNode)event.getLocalState());
+            ListNodeModifica listNodeModifica = ((ListNodeModifica)event.getLocalState());
             switch (action) {
                 case DragEvent.ACTION_DROP:
-                    if(checkRelation(listNode) && checkIfPresent(listNode)){
-                        GraphNode graphNode = new GraphNode(graphParent.getContext(), graphParent, listNode.type, listNode.data);
+                    if(checkRelation(listNodeModifica) && checkIfPresent(listNodeModifica)){
+                        GraphNodeModifica graphNodeModifica = new GraphNodeModifica(graphParent.getContext(), graphParent, listNodeModifica.type, listNodeModifica.data);
                         self.hide();
                         self.hideAllNodeAtSameLevel();
                         self.hideAllChild();
 
                         self.draw();
 
-                        self.addSuccessor(graphNode);
+                        self.addSuccessor(graphNodeModifica);
                         self.drawAllChild();
-                        listNode.setVisibility(GONE);
+                        listNodeModifica.setVisibility(GONE);
 
                         self.setCircle(true);
                         self.clicked = true;
                         self.pick();
+
+                        //AGGIORNAMENTO DEL DB
+
+                        try{
+                            if(listNodeModifica.type == NodeType.ZONA && self.type == NodeType.VISITA){
+                                Visita.addZona(self.getContext(), self.data.getInt("id"), listNodeModifica.data.getInt("id"),
+                                        response -> {
+                                            try {
+                                                if(response.getBoolean("status")){
+                                                    Toast.makeText(self.getContext(), "Zona aggiunta con successo alla visita #"+self.data.getInt("id"), Toast.LENGTH_SHORT).show();
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        },
+                                        error -> {
+
+                                        });
+                            }else if(listNodeModifica.type == NodeType.AREA && self.type == NodeType.ZONA){
+
+                            }else if(listNodeModifica.type == NodeType.OPERA && self.type == NodeType.AREA){
+
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+
                     }else{
-                        listNode.reset();
-                        listNode.setVisibility(VISIBLE);
+                        listNodeModifica.reset();
+                        listNodeModifica.setVisibility(VISIBLE);
                     }
                     break;
                 case DragEvent.ACTION_DRAG_STARTED:
-                    if(checkRelation(listNode) && checkIfPresent(listNode)){
+                    if(checkRelation(listNodeModifica) && checkIfPresent(listNodeModifica)){
                         self.hideAllNodeAtSameLevel();
                         self.hideAllChild();
                         self.drawAllChild();
@@ -169,7 +196,7 @@ public class GraphNode extends Node {
         setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                GraphNode node = ((GraphNode)view);
+                GraphNodeModifica node = ((GraphNodeModifica)view);
                 System.out.println(node.data.toString());
                 AlertDialog dialog1 = NodeDialog.NodeDialog(context, node);
                 dialog1.show();
@@ -181,13 +208,13 @@ public class GraphNode extends Node {
     private void setOnClickListener(GrafoModifica graphParent, NodeType type) {
         if(type != NodeType.VISITA && type != NodeType.OPERA){
             setOnClickListener(view -> {//THIS (View)
-                setNodeSize(graphParent, type, (GraphNode) view);
+                setNodeSize(graphParent, type, (GraphNodeModifica) view);
             });
         }
 
         if(type != NodeType.OPERA){
             setOnClickListener(view -> {
-                setNodeSize(graphParent, type, (GraphNode) view);
+                setNodeSize(graphParent, type, (GraphNodeModifica) view);
 
                 initListNode();
             });
@@ -224,7 +251,7 @@ public class GraphNode extends Node {
 
                                 for(int i = 0; i < arrayData.length(); ++i){
                                     JSONObject child = arrayData.getJSONObject(i);
-                                    listaNodi.addNode(new ListNode(GrafoModificaFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.OPERA));
+                                    listaNodi.addNode(new ListNodeModifica(GrafoModificaFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.OPERA));
                                 }
                             }else{
 
@@ -262,7 +289,7 @@ public class GraphNode extends Node {
 
                                 for(int i = 0; i < arrayData.length(); ++i){
                                     JSONObject child = arrayData.getJSONObject(i);
-                                    listaNodi.addNode(new ListNode(GrafoModificaFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.AREA));
+                                    listaNodi.addNode(new ListNodeModifica(GrafoModificaFragment.listaNodiLinearLayout.getContext(), listaNodi, child, NodeType.AREA));
                                 }
                             }else{
 
@@ -299,7 +326,7 @@ public class GraphNode extends Node {
 
                             for(int i = 0; i < arrayData.length(); ++i){
                                 JSONObject child = arrayData.getJSONObject(i);
-                                listaNodi.addNode(new ListNode(GrafoModificaFragment.listaNodiLinearLayout.getContext(),
+                                listaNodi.addNode(new ListNodeModifica(GrafoModificaFragment.listaNodiLinearLayout.getContext(),
                                         listaNodi, child, NodeType.ZONA));
                             }
                         }else{
@@ -314,7 +341,7 @@ public class GraphNode extends Node {
                 });
     }
 
-    private void setNodeSize(GrafoModifica graphParent, NodeType type, GraphNode view) {
+    private void setNodeSize(GrafoModifica graphParent, NodeType type, GraphNodeModifica view) {
         inizializated = true;
 
         if(clicked){
@@ -345,7 +372,7 @@ public class GraphNode extends Node {
     public void pick() {
         setColor(Color.RED);
         if(type != NodeType.VISITA){
-            ((GraphNode) graphParent.graph.predecessors(self).toArray()[0]).setColor(Color.YELLOW);
+            ((GraphNodeModifica) graphParent.graph.predecessors(self).toArray()[0]).setColor(Color.YELLOW);
         }
     }
 
@@ -356,7 +383,7 @@ public class GraphNode extends Node {
     }
 
 
-    public GraphNode(@NonNull Context context, GrafoModifica graphParent, NodeType type, JSONObject data) {
+    public GraphNodeModifica(@NonNull Context context, GrafoModifica graphParent, NodeType type, JSONObject data) {
         super(context);
         setFields(graphParent, type, data);
         init(context);
@@ -367,7 +394,7 @@ public class GraphNode extends Node {
 
     private void hideAllNodeAtSameLevel() {
         if(type != NodeType.VISITA){
-            for(GraphNode node : getSuccessors(graphParent, self)){
+            for(GraphNodeModifica node : getSuccessors(graphParent, self)){
                 if(node != self){
                     node.clicked = false;
                     node.setCircle(false);
@@ -378,8 +405,8 @@ public class GraphNode extends Node {
     }
 
     @NonNull
-    private Set<GraphNode> getSuccessors(GrafoModifica graphParent, GraphNode view) {
-        return graphParent.graph.successors((GraphNode) getPredecessors(graphParent, view).toArray()[0]);
+    private Set<GraphNodeModifica> getSuccessors(GrafoModifica graphParent, GraphNodeModifica view) {
+        return graphParent.graph.successors((GraphNodeModifica) getPredecessors(graphParent, view).toArray()[0]);
     }
 
     public void drawAllChild(){
@@ -388,7 +415,7 @@ public class GraphNode extends Node {
         draw();
         AtomicInteger count = new AtomicInteger(1);
 
-        for(GraphNode nodeChild : graphParent.graph.successors(this)){
+        for(GraphNodeModifica nodeChild : graphParent.graph.successors(this)){
             setNodeSize(numSuccessors, nodeChild);
 
             float tmpX = getTmpX(numSuccessors, count, nodeChild);
@@ -419,7 +446,7 @@ public class GraphNode extends Node {
         }
     }
 
-    private void setNodeSize(int numSuccessors, GraphNode nodeChild) {
+    private void setNodeSize(int numSuccessors, GraphNodeModifica nodeChild) {
 
         switch (numSuccessors){
             case 1:
@@ -451,7 +478,7 @@ public class GraphNode extends Node {
         }
     }
 
-    private float getTmpX(int numSuccessors, AtomicInteger count, GraphNode nodeChild) {
+    private float getTmpX(int numSuccessors, AtomicInteger count, GraphNodeModifica nodeChild) {
         //FORMULA DI CENTRATURA DEL NODO IN BASE AL NUMERO DI NODI DI QUEL LIVELLO
         return (count.getAndIncrement() * (((float)graphParent.size.x / (numSuccessors + 1)))) - (float)nodeChild.size/2;
     }
@@ -497,7 +524,7 @@ public class GraphNode extends Node {
     }
 
     public void hideAllChild(){
-        for(GraphNode nodeChild : graphParent.graph.successors(this)){
+        for(GraphNodeModifica nodeChild : graphParent.graph.successors(this)){
             if(type == NodeType.VISITA){
                 graphParent.drawView.linesZona.removeIf(line -> line.startNode.equals(this));
                 nodeChild.hideAllChild();

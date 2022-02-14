@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import org.json.JSONObject;
 
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 
 public class Node extends ConstraintLayout {
     public NodeType type;
@@ -29,6 +30,8 @@ public class Node extends ConstraintLayout {
     public Node(@NonNull Context context) {
         super(context);
     }
+
+
 
     public void setColor(int color){
         GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this.getRootView().getContext(),

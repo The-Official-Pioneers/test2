@@ -20,7 +20,7 @@ import java.time.Instant;
 
 import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
-import it.uniba.pioneers.testtool.editor.node.NodeType;
+import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 import it.uniba.pioneers.testtool.editor.node.GraphNodeVisualizza;
 
 public class NodeVisualizzaDialog{
