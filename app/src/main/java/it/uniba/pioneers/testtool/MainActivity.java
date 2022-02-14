@@ -53,7 +53,10 @@ import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
-import it.uniba.pioneers.testtool.home.CaptureAct;
+import it.uniba.pioneers.testtool.gestioneMuseo.FragmentListaAree;
+import it.uniba.pioneers.testtool.gestioneMuseo.FragmentListaOpere;
+import it.uniba.pioneers.testtool.gestioneMuseo.FragmentSingolaArea;
+import it.uniba.pioneers.testtool.gestioneMuseo.FragmentSingolaOpera;
 import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
 import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
 import it.uniba.pioneers.testtool.home.FragmentHomeVisitatore;
@@ -93,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
     public static Guida guida = new Guida();
 
     NetworkChangeListener networkChangeListener= new NetworkChangeListener();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -755,7 +757,7 @@ public class MainActivity extends AppCompatActivity {
                             opereArea.remove(currOpera);
 
                             FragmentListaOpere.lista.remove(operaSelezionata.getTitolo());
-                            opereArea.remove(operaSelezionata);
+                           // opereArea.remove(operaSelezionata);
                             FragmentListaOpere.lvAdapter.notifyDataSetChanged();  // aggiorno la listView
 
                             operaSelezionata.deleteDataDb(getApplicationContext());  // aggiorno il db
