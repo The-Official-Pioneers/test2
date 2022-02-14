@@ -479,4 +479,42 @@ public class Zona {
                 new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
         queue.add(jsonObjectRequest);
     }
+
+    public static void addArea(Context context,int visita_id, int area_id,
+                               Response.Listener<JSONObject> responseListener,
+                               Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/zona/add/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("visita_id", visita_id);
+            data.put("area_id", area_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void removeArea(Context context,int visita_id, int area_id,
+                                  Response.Listener<JSONObject> responseListener,
+                                  Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/zona/remove/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("visita_id", visita_id);
+            data.put("area_id", area_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
 }

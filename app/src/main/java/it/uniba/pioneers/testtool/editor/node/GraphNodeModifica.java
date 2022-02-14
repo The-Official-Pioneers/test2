@@ -164,6 +164,13 @@ public class GraphNodeModifica extends Node {
                                         });
                             }else if(listNodeModifica.type == NodeType.AREA && self.type == NodeType.ZONA){
 
+                                Zona.addArea(self.getContext(), self.graphParent.visita.data.getInt("id"), listNodeModifica.data.getInt("id"),
+                                        response -> {
+
+                                        },
+                                        error -> {
+
+                                        });
                             }else if(listNodeModifica.type == NodeType.OPERA && self.type == NodeType.AREA){
 
                             }

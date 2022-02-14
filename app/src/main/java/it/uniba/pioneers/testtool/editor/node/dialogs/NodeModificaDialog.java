@@ -19,6 +19,7 @@ import java.sql.Date;
 import java.time.Instant;
 
 import it.uniba.pioneers.data.Visita;
+import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.testtool.editor.node.GraphNodeModifica;
@@ -88,7 +89,13 @@ public class NodeModificaDialog {
 
                                     });
                         }else if(parentNode.type == NodeType.ZONA && nodeObject.type == NodeType.AREA){
+                            Zona.removeArea(parentNode.getContext(), parentNode.graphParent.visita.data.getInt("id"), nodeObject.data.getInt("id"),
+                                    response -> {
 
+                                    },
+                                    error -> {
+
+                                    });
                         }else if(parentNode.type == NodeType.AREA && nodeObject.type == NodeType.OPERA){
 
                         }
