@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     super.onBackPressed();
                 }
-            }else if(areeZona==null && !qr){   // uscita dall'app
+            }else if(areeZona==null && !qr){   // uscita dall'app, viene premuto il tasto back quando ci si trova nella home
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.uscire)
                         .setMessage(R.string.uscire_sicuro_app)
@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 super.onBackPressed();
             }
-        }else if(!qr){
+        }else if(!qr){  // uscita dall'app, viene premuto il tasto back quando ci si trova nella home
             new AlertDialog.Builder(this)
                     .setTitle(R.string.uscire)
                     .setMessage(R.string.uscire_sicuro_app)
@@ -497,7 +497,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode != PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+        if (requestCode != PICK_FROM_GALLERY && resultCode == RESULT_OK) {   // scansione del qr
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result != null) {
                 if (result.getContents() != null) {
@@ -554,7 +554,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 super.onActivityResult(requestCode, resultCode, data);
             }
-        } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+        } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {  // selezione di una foto dalla galleria
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             Uri targetUri = data.getData();
             Bitmap bitmap;
@@ -817,7 +817,7 @@ public class MainActivity extends AppCompatActivity {
             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
             String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
             String encImage="";
-           if(fotoModificata){
+            if(fotoModificata){
                 Bitmap image = ((BitmapDrawable)fragmentSingolaOpera.img.getDrawable()).getBitmap();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 image.compress(Bitmap.CompressFormat.JPEG,50,baos);
