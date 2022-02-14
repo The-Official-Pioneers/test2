@@ -144,6 +144,7 @@ public class GraphNodeModifica extends Node {
                         self.setCircle(true);
                         self.clicked = true;
                         self.pick();
+                        graphNodeModifica.setCircle(true);
 
                         //AGGIORNAMENTO DEL DB
 
