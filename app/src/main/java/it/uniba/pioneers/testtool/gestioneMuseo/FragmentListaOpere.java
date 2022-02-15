@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool;
+package it.uniba.pioneers.testtool.gestioneMuseo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
+
+import it.uniba.pioneers.testtool.MainActivity;
+import it.uniba.pioneers.testtool.R;
 
 /**
  * A simple {@link Fragment} subclass.

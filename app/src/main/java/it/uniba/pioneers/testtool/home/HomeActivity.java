@@ -25,9 +25,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         FragmentManager fragmentManager = getFragmentManager();
         /*** INIZIO TRANSAZIONE ***/
-
         WelcomeFragment f = new WelcomeFragment();
-
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
@@ -82,10 +80,6 @@ public class HomeActivity extends AppCompatActivity {
         RegisterFragment f = new RegisterFragment();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
-        //setCustomAnimations (int enter, int exit, int popEnter int popExit) => primo parametro è l'animazione del fragment che sto attaccando
-        //                                                                    => secondo parametro è l'animazione di quando stacco un fragment dal backstack
-        //                                                                    => terzo parametro bho
-        //                                                                    => quarto parametro è l'animazione di quando faccio un pop dal backsteck ma senza rimuovere il fragment'
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentContainerView4, f, "tag")
@@ -119,10 +113,48 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void registerButton(View v){
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
-       /* if(fragment.controllData(v)){
+        fragment.controllData(v);
+    }
 
-        } */
-        fragment.registerComputation(v);
+    public void alphaVersionTest(View view){
+        switch(view.getId()){
+            case R.id.curatoreDefault:
+                launchIntentForCuratore(view);
+            break;
+            case R.id.visitatoreDefault:
+                launchIntentForVisitatore(view);
+            break;
+            case R.id.guidaDefault:
+                launchIntentForGuida(view);
+            break;
+        }
+
+
+    }
+
+    private void launchIntentForVisitatore(View view) {
+        Toast.makeText(view.getContext(), R.string.bentornato_login + " Andrea", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(view.getContext(), MainActivity.class);
+        intent.putExtra("typeUser", "visitatore");
+        intent.putExtra("idUser", 2);
+        view.getContext().startActivity(intent);
+    }
+
+    private void launchIntentForCuratore(View view) {
+        Toast.makeText(view.getContext(), R.string.bentornato_login + " Luca", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(view.getContext(), MainActivity.class);
+        intent.putExtra("typeUser", "curatore");
+        intent.putExtra("idUser", 1);
+        view.getContext().startActivity(intent);
+
+    }
+
+    private void launchIntentForGuida(View view) {
+        Toast.makeText(view.getContext(), R.string.bentornato_login + " Antonio", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(view.getContext(), MainActivity.class);
+        intent.putExtra("typeUser", "guida");
+        intent.putExtra("idUser", 1001);
+        view.getContext().startActivity(intent);
     }
 
     @Override

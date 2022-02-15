@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.home;
+package it.uniba.pioneers.testtool;
 
 import com.journeyapps.barcodescanner.CaptureActivity;
 

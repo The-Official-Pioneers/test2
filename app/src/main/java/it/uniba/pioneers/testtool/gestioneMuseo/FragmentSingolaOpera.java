@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool;
+package it.uniba.pioneers.testtool.gestioneMuseo;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +14,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import it.uniba.pioneers.testtool.MainActivity;
+import it.uniba.pioneers.testtool.R;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -53,7 +53,10 @@ import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
-import it.uniba.pioneers.testtool.home.CaptureAct;
+import it.uniba.pioneers.testtool.gestioneMuseo.FragmentListaAree;
+import it.uniba.pioneers.testtool.gestioneMuseo.FragmentListaOpere;
+import it.uniba.pioneers.testtool.gestioneMuseo.FragmentSingolaArea;
+import it.uniba.pioneers.testtool.gestioneMuseo.FragmentSingolaOpera;
 import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
 import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
 import it.uniba.pioneers.testtool.home.FragmentHomeVisitatore;
@@ -92,12 +95,7 @@ public class MainActivity extends AppCompatActivity {
     public static CuratoreMuseale curatore = new CuratoreMuseale();
     public static Guida guida = new Guida();
 
-    //Flag usato per capire se il visitatore vuole vedere le sue visite o quelle predefinite
-    //1 = visite predef, 0 = sue visite
-    public static int flagVisite;
-
     NetworkChangeListener networkChangeListener= new NetworkChangeListener();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,14 +118,13 @@ public class MainActivity extends AppCompatActivity {
         budleFragOpera=null;
                                         // in base al tipo di utente cheha eseguito il login carico un fragmentHome differente
         Intent intent = getIntent();
-        // tipoUtente = intent.getStringExtra("typeUser");
-        //idUtente = intent.getIntExtra("idUser");
+        if(intent.getStringExtra("typeUser")!=null) {
+            tipoUtente = intent.getStringExtra("typeUser");
+            idUtente = intent.getIntExtra("idUser", 1);
+        }
 
-        //tipoUtente = "curatore";
-        //idUtente = 1; //curatore
-
-        tipoUtente = "visitatore";
-        idUtente = 2; //visitatore
+       // tipoUtente = "curatore";
+       //idUtente = 1; //curatore
 
         //tipoUtente = "guida";
         //idUtente = 1004; //guida
@@ -307,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     super.onBackPressed();
                 }
-            }else if(areeZona==null && !qr){   // uscita dall'app
+            }else if(areeZona==null && !qr){   // uscita dall'app, viene premuto il tasto back quando ci si trova nella home
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.uscire)
                         .setMessage(R.string.uscire_sicuro_app)
@@ -328,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 super.onBackPressed();
             }
-        }else if(!qr){
+        }else if(!qr){  // uscita dall'app, viene premuto il tasto back quando ci si trova nella home
             new AlertDialog.Builder(this)
                     .setTitle(R.string.uscire)
                     .setMessage(R.string.uscire_sicuro_app)
@@ -502,7 +499,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode != PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+        if (requestCode != PICK_FROM_GALLERY && resultCode == RESULT_OK) {   // scansione del qr
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result != null) {
                 if (result.getContents() != null) {
@@ -559,7 +556,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 super.onActivityResult(requestCode, resultCode, data);
             }
-        } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+        } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {  // selezione di una foto dalla galleria
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             Uri targetUri = data.getData();
             Bitmap bitmap;
@@ -762,7 +759,7 @@ public class MainActivity extends AppCompatActivity {
                             opereArea.remove(currOpera);
 
                             FragmentListaOpere.lista.remove(operaSelezionata.getTitolo());
-                            opereArea.remove(operaSelezionata);
+                           // opereArea.remove(operaSelezionata);
                             FragmentListaOpere.lvAdapter.notifyDataSetChanged();  // aggiorno la listView
 
                             operaSelezionata.deleteDataDb(getApplicationContext());  // aggiorno il db
@@ -822,7 +819,7 @@ public class MainActivity extends AppCompatActivity {
             String titolo = (String) fragmentSingolaOpera.editableTitolo.getText().toString();
             String descrizione = (String) fragmentSingolaOpera.editableDescrizione.getText().toString();
             String encImage="";
-           if(fotoModificata){
+            if(fotoModificata){
                 Bitmap image = ((BitmapDrawable)fragmentSingolaOpera.img.getDrawable()).getBitmap();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 image.compress(Bitmap.CompressFormat.JPEG,50,baos);
@@ -860,14 +857,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToYourVisite(View view) {
-        flagVisite = 0;
         Intent intent = new Intent(this, VisiteCreateUtente.class);
         startActivity(intent);
     }
 
-    public void goToVisitePredefinite(View view) {
-        flagVisite = 1;
-        Intent intent = new Intent(this, VisiteCreateUtente.class);
-        startActivity(intent);
-    }
 }
