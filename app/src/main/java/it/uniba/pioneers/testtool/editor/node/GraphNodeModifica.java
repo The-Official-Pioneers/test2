@@ -166,7 +166,11 @@ public class GraphNodeModifica extends Node {
                             }else if(listNodeModifica.type == NodeType.AREA && self.type == NodeType.ZONA){
                                 Zona.addArea(self.getContext(), self.graphParent.visita.data.getInt("id"), listNodeModifica.data.getInt("id"),
                                         response -> {
-
+                                            try {
+                                                Toast.makeText(self.getContext(), "Area aggiunta con successo alla zona #"+self.data.getInt("id"), Toast.LENGTH_SHORT).show();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
                                         },
                                         error -> {
 
@@ -174,7 +178,11 @@ public class GraphNodeModifica extends Node {
                             }else if(listNodeModifica.type == NodeType.OPERA && self.type == NodeType.AREA){
                                 Area.addOpera(self.getContext(), self.graphParent.visita.data.getInt("id"), listNodeModifica.data.getInt("id"),
                                         response -> {
-
+                                            try {
+                                                Toast.makeText(self.getContext(), "Opera aggiunta con successo all'area #"+self.data.getInt("id"), Toast.LENGTH_SHORT).show();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
                                         },
                                         error -> {
 
