@@ -19,10 +19,16 @@ import it.uniba.pioneers.testtool.home.ui.login.LoginFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
+    /*****************************************************************************
+     * In onCrate, viene creata l'activity; in tale metodo viene aggiunto in modo
+     * programmatico il fragment relativo al welcome con una transazione
+     * @param savedInstanceState oggetto per gestire il ripristino dello stato
+     ****************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         FragmentManager fragmentManager = getFragmentManager();
         /*** INIZIO TRANSAZIONE ***/
         WelcomeFragment f = new WelcomeFragment();
@@ -33,36 +39,24 @@ public class HomeActivity extends AppCompatActivity {
                 .commit();
         /*** FINE TRANSAZIONE ***/
     }
-    //@Override
-   /* public void onBackPressed() {
-        this.finishAffinity();
-    }*/
 
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-        }
     }
 
-
+    /*********************************************************************************
+     * Metodo associato al button di inizio; con tale metodo viene aggiunto in modo
+     * programmatico il fragment relativo al login con una transazione
+     * @param view view associata
+     *********************************************************************************/
     public void onClickButton(View view) {
-
         FragmentManager fragmentManager = getFragmentManager();
         /*** INIZIO TRANSAZIONE ***/
         LoginFragment f = new LoginFragment();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
-        //setCustomAnimations (int enter, int exit, int popEnter int popExit) => primo parametro è l'animazione del fragment che sto attaccando
-        //                                                                    => secondo parametro è l'animazione di quando stacco un fragment dal backstack
-        //                                                                    => terzo parametro bho
-        //                                                                    => quarto parametro è l'animazione di quando faccio un pop dal backsteck ma senza rimuovere il fragment'
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentContainerView4, f).addToBackStack(null)
@@ -70,11 +64,11 @@ public class HomeActivity extends AppCompatActivity {
         /*** FINE TRANSAZIONE ***/
     }
 
-    public void goMainActivity(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
+    /*********************************************************************************
+     * Metodo associato al button di registrazione; con tale metodo viene aggiunto in
+     * modo programmatico il fragment relativo alla registrazione con una transazione
+     * @param view view associata
+     *********************************************************************************/
     public void AttachRegisterFragment(View view) {
         /*** INIZIO TRANSAZIONE ***/
         RegisterFragment f = new RegisterFragment();
@@ -88,34 +82,71 @@ public class HomeActivity extends AppCompatActivity {
         /*** FINE TRANSAZIONE ***/
 
     }
+
+    /*********************************************************************************
+     * Metodo che ci consente di impostare l'attore che è stato scelto dall'utente
+     * durante la fase di registrazione. In questo modo riusciamo a caricare il form
+     * di registrazione corretto in base all'attore
+     * @param view view associata
+     *********************************************************************************/
     public void clickedButton(View view){
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
         switch (view.getId()){
             case R.id.curatore:
+                /******************************************************
+                 * E' stato selezionato il curatore
+                 ******************************************************/
                 fragment.callBackHandler(view, "curatore");
             break;
             case R.id.visitatore:
+                /******************************************************
+                 * E' stato selezionato il visitatore
+                 ******************************************************/
                 fragment.callBackHandler(view, "visitatore");
             break;
             case R.id.guida:
+                /******************************************************
+                 * E' stata selezionata la guida
+                 ******************************************************/
                 fragment.callBackHandler(view, "guida");
             break;
         }
     }
 
-    public void addImage(View v){
+    /*********************************************************************************
+     * Metodo che ci consente di impostare l'immagine di profilo, invocando un metodo
+     * definito nel fragment di registrazione
+     * @param view view associata
+     *********************************************************************************/
+    public void addImage(View view){
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
-        fragment.addImageToForm(v);
+        fragment.addImageToForm(view);
     }
 
+    /*********************************************************************************
+     * Metodo che ci restituisce un inputStream al chiamante in base all'uri passato
+     * come parametro
+     * @param imageUri imageUri associato
+     *********************************************************************************/
     public InputStream getContentResolverAct(Uri imageUri) throws Exception{
         return getContentResolver().openInputStream(imageUri);
     }
+
+    /*********************************************************************************
+     * Metodo che ci consente di impostare registrare l'attore nel db, invocando un
+     * metodo definito nel fragment di registrazione
+     * @param v view associata
+     *********************************************************************************/
     public void registerButton(View v){
         RegisterFragment fragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
         fragment.controllData(v);
     }
 
+    /*********************************************************************************
+     * Metodo che ci consente di accedere con un account di default senza dover
+     * effettuare una registrazione o passare dal login
+     * @param view view associata
+     *********************************************************************************/
     public void alphaVersionTest(View view){
         switch(view.getId()){
             case R.id.curatoreDefault:
@@ -128,10 +159,12 @@ public class HomeActivity extends AppCompatActivity {
                 launchIntentForGuida(view);
             break;
         }
-
-
     }
 
+    /*********************************************************************************
+     * Metodo che ci consente di accedere con un account di default di un visitatore
+     * @param view view associata
+     *********************************************************************************/
     private void launchIntentForVisitatore(View view) {
         Toast.makeText(view.getContext(), R.string.bentornato_login + " Andrea", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), MainActivity.class);
@@ -140,6 +173,10 @@ public class HomeActivity extends AppCompatActivity {
         view.getContext().startActivity(intent);
     }
 
+    /*********************************************************************************
+     * Metodo che ci consente di accedere con un account di default di un curatore
+     * @param view view associata
+     *********************************************************************************/
     private void launchIntentForCuratore(View view) {
         Toast.makeText(view.getContext(), R.string.bentornato_login + " Luca", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), MainActivity.class);
@@ -149,6 +186,10 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    /*********************************************************************************
+     * Metodo che ci consente di accedere con un account di default di un guida
+     * @param view view associata
+     *********************************************************************************/
     private void launchIntentForGuida(View view) {
         Toast.makeText(view.getContext(), R.string.bentornato_login + " Antonio", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), MainActivity.class);
@@ -160,6 +201,5 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
     }
 }
