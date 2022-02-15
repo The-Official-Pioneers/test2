@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public class FragmentListaAree extends Fragment{
     private static final String ARG_PARAM2 = "param2";
     public static ArrayAdapter<String> lvAdapter;
     public static ArrayList<String> lista;
+    public TextView noAree;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -72,15 +74,18 @@ public class FragmentListaAree extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_aree, container, false);
         setHasOptionsMenu(true);
-
-
-
         return view;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(MainActivity.areeZona.size()!=0){    // se non ci sono opere nell'area selezionata, viene mostrata una textView
+            noAree = (TextView) getActivity().findViewById(R.id.txt_no_aree);
+            noAree.setVisibility(View.GONE);
+        }
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // abilitazione della navigazione all'indietro
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
@@ -118,6 +123,10 @@ public class FragmentListaAree extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
+        if(MainActivity.areeZona.size()!=0){    // se non ci sono opere nell'area selezionata, viene mostrata una textView
+            TextView noAree = (TextView) getActivity().findViewById(R.id.txt_no_aree);
+            noAree.setVisibility(View.GONE);
+        }
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

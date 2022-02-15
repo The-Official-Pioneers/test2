@@ -646,6 +646,7 @@ public class MainActivity extends AppCompatActivity {
                                 tmp.setDataFromJSON(resultAree.getJSONObject(i));
                                 areeZona.add(tmp);
                             }
+                        }
                             FragmentListaAree fls = new FragmentListaAree();   // carico il fragment per mostrare la lista delle aree
                             androidx.fragment.app.FragmentManager supportFragmentManager;
                             supportFragmentManager = getSupportFragmentManager();
@@ -654,10 +655,7 @@ public class MainActivity extends AppCompatActivity {
                                     .replace(R.id.fragment_container_list, fls)
                                     .addToBackStack(null)
                                     .commit();
-                        } else {
-                            Toast.makeText(getApplicationContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
-                            areeZona=null;
-                        }
+
                     } catch (JSONException | ParseException e) {
                         e.printStackTrace();
                     }
@@ -679,9 +677,8 @@ public class MainActivity extends AppCompatActivity {
                 if(!nomeArea.getText().toString().equals("")) {
                     Area nuovaArea = new Area();    // inserimento nuva area nel db
                     nuovaArea.setNome(nomeArea.getText().toString());
-                    nuovaArea.setZona(10);
+                    nuovaArea.setZona((int) curatore.getZona());
                     nuovaArea.createDataDb(getApplicationContext());
-
                     FragmentListaAree.lista.add(nuovaArea.getNome());
                     areeZona.add(nuovaArea);
                     FragmentListaAree.lvAdapter.notifyDataSetChanged();   // aggiorno la listView
