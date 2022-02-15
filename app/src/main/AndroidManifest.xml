@@ -24,8 +24,9 @@
         android:theme="@style/Theme.TestTool"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".VisiteCreateUtente"
-            android:exported="true" />
+            android:name=".VisualizzaVisite.VisiteCreateUtente"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".CreaVisita"
             android:exported="true"
@@ -74,7 +75,7 @@
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".AreaPersonale"
+            android:name=".AreaPersonale.AreaPersonale"
             android:parentActivityName=".MainActivity" />
     </application>
 

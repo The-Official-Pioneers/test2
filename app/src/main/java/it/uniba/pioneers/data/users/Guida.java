@@ -577,4 +577,23 @@ public class Guida {
                 new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
         queue.add(jsonObjectRequest);
     }
+
+    public static void getAllVisiteGuida(Context context,Guida guida,
+                                           Response.Listener<JSONObject> responseListener,
+                                           Response.ErrorListener errorListener){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/guida/all-visite-guida/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.VisitatoreEntry.COLUMN_ID, guida.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
 }

@@ -194,7 +194,7 @@ public class HomeActivity extends AppCompatActivity {
         Toast.makeText(view.getContext(), R.string.bentornato_login + " Antonio", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         intent.putExtra("typeUser", "guida");
-        intent.putExtra("idUser", 1001);
+        intent.putExtra("idUser", 1004);
         view.getContext().startActivity(intent);
     }
 

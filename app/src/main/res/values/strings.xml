@@ -247,9 +247,7 @@
     <string name="visitatore_eliminato_successo" translatable="false">Visitatore eliminato con successo!</string>
     <string name="curatore_eliminato_successo" translatable="false">Curatore eliminato con successo!</string>
     <string name="guida_eliminata_successo" translatable="false">Guida eliminata con successo!</string>
-
     <!-- ====================================================================================== -->
-
 
     <!-- ===============LOGIN STUFF=============== -->
     <string name="benvenuto_welcome" translatable="false">Benvenuto!</string>
@@ -259,17 +257,13 @@
     <string name="bentornato_login" translatable="false">Bentornato </string>
     <string name="successo_result_login" translatable="false">Successo[data= </string>
     <string name="errore_result_login" translatable="false">Errore[exception= </string>
-
     <!-- ====================================================================================== -->
-
 
     <!-- ===============PLACEHOLDER STUFF=============== -->
     <string name="placeholder_item" translatable="false">Elemento </string>
     <string name="placeholder_item_details" translatable="false">Informazioni dell\'elemento: </string>
     <string name="placeholder_item_more_details" translatable="false">Ulteriori informazioni dell\'elemento:.</string>
-
     <!-- ====================================================================================== -->
-
 
     <!-- ===============PROFILE AREA=============== -->
     <string name="nome_areap" translatable="false">Nome:</string>
@@ -298,7 +292,6 @@
     <string name="uscire_no_salvare" translatable="false"> Uscire senza salvare le modifiche?</string>
     <!-- ====================================================================================== -->
 
-
     <!-- CURATORE PROFILE AREA -->
     <string name="zona_areap" translatable="false">Zona:</string>
     <!-- GUIDA PROFILE AREA -->
@@ -307,7 +300,6 @@
     <string name="modificap_areap" translatable="false">Modifica Dati Profilo</string>
     <string name="nuovapass_areap" translatable="false">Modifica Password</string>
     <!-- ====================================================================================== -->
-
 
     <!-- ===============HOME PAGE=============== -->
     <string name="btn_tue_visite" translatable="false">Le Tue Visite</string>
@@ -354,25 +346,21 @@
     <string name="aggiungi_campi_validi" translatable="false">Aggiungi foto, titolo e descrizione validi</string>
     <!-- ====================================================================================== -->
 
-
     <!-- ===============SINGOLA AREA=============== -->
     <string name="nome_singola_area" translatable="false">Nome Area:</string>
     <string name="btn_salva_singola" translatable="false">Salva</string>
     <string name="btn_opere_area" translatable="false">Mostra Le Opere</string>
     <!-- ====================================================================================== -->
 
-
     <!-- ===============SINGOLA OPERA=============== -->
     <string name="nome_singola_opera" translatable="false">Nome Opera:</string>
     <string name="descrizione_singola_opera" translatable="false">Descrizione</string>
     <!-- ====================================================================================== -->
 
-
     <!-- ===============FRAGMENT LISTA AREE=============== -->
     <string name="il_tuo_museo" translatable="false">Il Tuo Museo</string>
     <string name="testtool" translatable="false">TestTool</string>
     <!-- ====================================================================================== -->
-
 
     <!-- ===============FRAGMENT LISTA OPERE=============== -->
     <string name="no_opere_presenti" translatable="false">Nessuna opera presente</string>
@@ -383,6 +371,7 @@
 
     <string name="id_visita" translatable="false">ID Visita:</string>
     <string name="data" translatable="false">Data:</string>
+    <string name="zona_visita" translatable="false">Zona:</string>
     <string name="id_guida" translatable="false">ID Guida:</string>
     <string name="nome_guida" translatable="false">Nome Guida:</string>
     <string name="luogo" translatable="false">Luogo:</string>
@@ -390,7 +379,8 @@
 
     <string name="grafo_visita" translatable="false">Visualizza Grafo</string>
     <string name="elimina_visita" translatable="false">Elimina Visita</string>
-    <!-- ====================================================================================== -->
 
+    <string name="dati_visita" translatable="false">Dati Visita</string>
+    <!-- ====================================================================================== -->
 
 </resources>

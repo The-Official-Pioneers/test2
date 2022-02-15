@@ -518,4 +518,43 @@ public class Visitatore {
         } catch (Exception e) {
         }
     }
+
+    public static void getAllVisiteSingolo(Context context,Visitatore visitatore,
+                                           Response.Listener<JSONObject> responseListener,
+                                           Response.ErrorListener errorListener){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visitatore/all-visite-singolo-visitatore/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.VisitatoreEntry.COLUMN_ID, visitatore.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void getAllVisitePredefinite(Context context,Visitatore visitatore,
+                                           Response.Listener<JSONObject> responseListener,
+                                           Response.ErrorListener errorListener){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visitatore/all-visite-predefinite/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.VisitatoreEntry.COLUMN_ID, visitatore.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
 }
