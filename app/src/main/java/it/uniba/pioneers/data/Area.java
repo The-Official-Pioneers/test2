@@ -362,7 +362,7 @@ public class Area {
                             try {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.area_eliminata_successo, Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                                 }

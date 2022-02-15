@@ -30,7 +30,6 @@ import it.uniba.pioneers.testtool.R;
 
 public class Guida {
 
-    //public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ITALY);
     public static SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -60,7 +59,7 @@ public class Guida {
 
     //MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = Guida.output.parse(dataNascita);
+        this.dataNascita = Guida.format.parse(dataNascita);
     }
 
     public Date getDataNascita() {
@@ -164,15 +163,15 @@ public class Guida {
     }
 
     public Guida(JSONObject data) throws JSONException, ParseException {
-        setId(data.getInt(DbContract.GuidaEntry.COLUMN_ID));
-        setNome(data.getString(DbContract.GuidaEntry.COLUMN_NOME));
-        setCognome(data.getString(DbContract.GuidaEntry.COLUMN_COGNOME));
-        setDataNascita(data.getString(DbContract.GuidaEntry.COLUMN_DATA_NASCITA));
-        setEmail(data.getString(DbContract.GuidaEntry.COLUMN_EMAIL));
-        setPassword(data.getString(DbContract.GuidaEntry.COLUMN_PASSWORD));
-        setPropic(data.getString(DbContract.GuidaEntry.COLUMN_PROPIC));
-        setSpecializzazione(data.getString(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE));
-        setOnline(true);
+        this.setId(data.getInt(DbContract.GuidaEntry.COLUMN_ID));
+        this.setNome(data.getString(DbContract.GuidaEntry.COLUMN_NOME));
+        this.setDataNascita(data.getString(DbContract.GuidaEntry.COLUMN_COGNOME));
+        this.setDataNascita(data.getString(DbContract.GuidaEntry.COLUMN_DATA_NASCITA));
+        this.setEmail(data.getString(DbContract.GuidaEntry.COLUMN_EMAIL));
+        this.setPassword(data.getString(DbContract.GuidaEntry.COLUMN_PASSWORD));
+        this.setPropic(data.getString(DbContract.GuidaEntry.COLUMN_PROPIC));
+        this.setSpecializzazione(data.getString(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE));
+        this.setOnline(true);
     }
 
     //CREATE JSON OBJECT
@@ -192,14 +191,14 @@ public class Guida {
     }
 
     public void setDataFromJSON(JSONObject data) throws JSONException, ParseException {
-        setId(data.getInt(DbContract.GuidaEntry.COLUMN_ID));
-        setNome(data.getString(DbContract.GuidaEntry.COLUMN_NOME));
-        setCognome(data.getString(DbContract.GuidaEntry.COLUMN_COGNOME));
-        setDataNascita(data.getString(DbContract.GuidaEntry.COLUMN_DATA_NASCITA));
-        setEmail(data.getString(DbContract.GuidaEntry.COLUMN_EMAIL));
-        setPassword(data.getString(DbContract.GuidaEntry.COLUMN_PASSWORD));
-        setPropic(data.getString(DbContract.GuidaEntry.COLUMN_PROPIC));
-        setSpecializzazione(data.getString(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE));
+        this.setId(data.getInt(DbContract.GuidaEntry.COLUMN_ID));
+        this.setNome(data.getString(DbContract.GuidaEntry.COLUMN_NOME));
+        this.setCognome(data.getString(DbContract.GuidaEntry.COLUMN_COGNOME));
+        this.setDataNascita(data.getString(DbContract.GuidaEntry.COLUMN_DATA_NASCITA));
+        this.setEmail(data.getString(DbContract.GuidaEntry.COLUMN_EMAIL));
+        this.setPassword(data.getString(DbContract.GuidaEntry.COLUMN_PASSWORD));
+        this.setPropic(data.getString(DbContract.GuidaEntry.COLUMN_PROPIC));
+        this.setSpecializzazione(data.getString(DbContract.GuidaEntry.COLUMN_SPECIALIZZAZIONE));
     }
 
     //DB METHOD
@@ -477,7 +476,7 @@ public class Guida {
                             try {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.guida_eliminata_successo, Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                                 }
@@ -555,7 +554,7 @@ public class Guida {
                     responseListener, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
                     System.out.println(error.toString());
                 }
             });
@@ -563,5 +562,19 @@ public class Guida {
 
         } catch (Exception e) {
         }
+    }
+
+    public static void getAllSpecializzazioni(Context context,
+                                    Response.Listener<JSONObject> responseListener,
+                                    Response.ErrorListener errorListener){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/guida/all-specializzazioni/";
+
+        JSONObject data = new JSONObject();
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
     }
 }

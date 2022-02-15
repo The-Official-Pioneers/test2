@@ -215,30 +215,19 @@
         <item>2021</item>
     </string-array>
 
-    <!-- FOR SPINNER SPECIALIZATION IN FORM -->
-    <string-array name="specialization_guida">
-        <item>Specialization</item>
-        <item>eta moderna</item>
-        <item>eta contemporanea</item>
-        <item>medioevo</item>
-        <item>eta antica</item>
-        <item>architettura contemporanea</item>
-        <item>oriente</item>
-        <item>egitto</item>
-    </string-array>
-
-    <!-- FOR SPINNER TIPOZONA IN FORM -->
-    <string-array name="tipo_zona_curatore">
-        <item>Tipo zona</item>
-        <item>museo</item>
-        <item>area archeologica</item>
-        <item>mostra itinerante</item>
-    </string-array>
-
     <!-- ===============CRUD STUFF=============== -->
     <string name="cambio_dati_no_validi" translatable="false">Non è avenuto nessun cambio dati,
         verifica che i valori siano validi.</string>
     <string name="server_no_risponde" translatable="false">Il server non risponde.</string>
+
+    <string name="visita_eliminata_successo" translatable="false">Visita eliminata con successo!</string>
+    <string name="zona_eliminata_successo" translatable="false">Zona eliminata con successo!</string>
+    <string name="opera_eliminata_successo" translatable="false">Opera eliminata con successo!</string>
+    <string name="area_eliminata_successo" translatable="false">Area eliminata con successo!</string>
+    <string name="visitatore_eliminato_successo" translatable="false">Visitatore eliminato con successo!</string>
+    <string name="curatore_eliminato_successo" translatable="false">Curatore eliminato con successo!</string>
+    <string name="guida_eliminata_successo" translatable="false">Guida eliminata con successo!</string>
+
     <!-- ====================================================================================== -->
 
 
@@ -246,10 +235,6 @@
     <string name="benvenuto_welcome" translatable="false">Benvenuto!</string>
     <string name="cominciamo_welcome" translatable="false">Cominciamo</string>
 
-    <!-- ====================================================================================== -->
-
-
-    <!-- ===============LOGIN STUFF=============== -->
     <string name="error_logging_in" translatable="false">Errore durante il login</string>
     <string name="bentornato_login" translatable="false">Bentornato </string>
     <string name="successo_result_login" translatable="false">Successo[data= </string>
@@ -373,6 +358,19 @@
     <string name="no_opere_presenti" translatable="false">Nessuna opera presente</string>
     <!-- ====================================================================================== -->
 
+    <!-- ===============ACTIVITY & FRAGMENT VISITE CREATE UTENTE=============== -->
+    <string name="le_tue_visite" translatable="false">Le Tue Visite</string>
+
+    <string name="id_visita" translatable="false">ID Visita:</string>
+    <string name="data" translatable="false">Data:</string>
+    <string name="id_guida" translatable="false">ID Guida:</string>
+    <string name="nome_guida" translatable="false">Nome Guida:</string>
+    <string name="luogo" translatable="false">Luogo:</string>
+    <string name="descrizione" translatable="false">Descrizione:</string>
+
+    <string name="grafo_visita" translatable="false">Visualizza Grafo</string>
+    <string name="elimina_visita" translatable="false">Elimina Visita</string>
+    <!-- ====================================================================================== -->
 
 
 </resources>

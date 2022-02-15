@@ -52,7 +52,7 @@ public class CuratoreMuseale {
 
     //MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = CuratoreMuseale.output.parse(dataNascita);
+        this.dataNascita = CuratoreMuseale.format.parse(dataNascita);
     }
 
     public Date getDataNascita() {
@@ -476,7 +476,7 @@ public class CuratoreMuseale {
                             try {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
-                                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.curatore_eliminato_successo, Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                                 }
@@ -562,5 +562,26 @@ public class CuratoreMuseale {
         } catch (Exception e) {
         }
     }
+
+    public static void getAllVisiteSingolo(Context context,CuratoreMuseale curatore,
+                                    Response.Listener<JSONObject> responseListener,
+                                    Response.ErrorListener errorListener){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/curatore-museale/all-visite-singolo/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.CuratoreMusealeEntry.COLUMN_ID, curatore.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+
 
 }

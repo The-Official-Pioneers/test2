@@ -219,6 +219,14 @@
     <string name="cambio_dati_no_validi" translatable="false">No changes have been made,
         verify that the values are valid.</string>
     <string name="server_no_risponde" translatable="false">Server not responding.</string>
+
+    <string name="visita_eliminata_successo" translatable="false">Visit deleted with success!</string>
+    <string name="zona_eliminata_successo" translatable="false">Area deleted with success!</string>
+    <string name="opera_eliminata_successo" translatable="false">Work deleted with success!</string>
+    <string name="area_eliminata_successo" translatable="false">Zone deleted with success!</string>
+    <string name="visitatore_eliminato_successo" translatable="false">Visitor deleted with success!</string>
+    <string name="curatore_eliminato_successo" translatable="false">Curator deleted with success!</string>
+    <string name="guida_eliminata_successo" translatable="false">Guide deleted with success!</string>
     <!-- ====================================================================================== -->
 
 
@@ -226,10 +234,6 @@
     <string name="benvenuto_welcome" translatable="false">Welcome!</string>
     <string name="cominciamo_welcome" translatable="false">Let\'s Start</string>
 
-    <!-- ====================================================================================== -->
-
-
-    <!-- ===============LOGIN STUFF=============== -->
     <string name="error_logging_in" translatable="false">Error logging in</string>
     <string name="bentornato_login" translatable="false">Welcome Back </string>
     <string name="successo_result_login" translatable="false">Success[data= </string>
@@ -346,6 +350,20 @@
 
     <!-- ===============FRAGMENT LISTA OPERE=============== -->
     <string name="no_opere_presenti" translatable="false">No work present</string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============ACTIVITY & FRAGMENT VISITE CREATE UTENTE=============== -->
+    <string name="le_tue_visite" translatable="false">Your Visits</string>
+
+    <string name="id_visita" translatable="false">Visit ID:</string>
+    <string name="data" translatable="false">Date:</string>
+    <string name="id_guida" translatable="false">Guide ID:</string>
+    <string name="nome_guida" translatable="false">Guide\'s Name:</string>
+    <string name="luogo" translatable="false">Place:</string>
+    <string name="descrizione" translatable="false">Description:</string>
+
+    <string name="grafo_visita" translatable="false">View Graph</string>
+    <string name="elimina_visita" translatable="false">Delete Visit</string>
     <!-- ====================================================================================== -->
 
 </resources>
