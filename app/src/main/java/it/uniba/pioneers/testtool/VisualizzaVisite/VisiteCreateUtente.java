@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool;
+package it.uniba.pioneers.testtool.VisualizzaVisite;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -16,11 +16,15 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
+import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
+import it.uniba.pioneers.testtool.MainActivity;
+import it.uniba.pioneers.testtool.R;
 
 public class VisiteCreateUtente extends AppCompatActivity {
 
@@ -28,10 +32,22 @@ public class VisiteCreateUtente extends AppCompatActivity {
     public static List<Visita> listaVisite;
 
     private void addItemToLista(Visita vis){
+        if(MainActivity.tipoUtente.equals("guida")){
+            Date tempDate = new Date(vis.getData() * 1000);
+            //Guida vuole le visite passate
+            if(MainActivity.flagVisiteGuida == 0 && tempDate.before(new Date()) ){
+                listaVisite.add(vis);
+                return;
+            //Guida vuole le visite da fare
+            } else if (MainActivity.flagVisiteGuida == 1 && tempDate.after(new Date()) ){
+                listaVisite.add(vis);
+                return;
+            } else {
+                return;
+            }
+        }
         listaVisite.add(vis);
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +74,49 @@ public class VisiteCreateUtente extends AppCompatActivity {
             startFragCuratore();
         } else if(MainActivity.tipoUtente.equals("visitatore")){
             startFragVisitatore();
+        } else if(MainActivity.tipoUtente.equals("guida")){
+            startFragGuida();
+        }
+    }
+
+    private void startFragGuida(){
+        System.out.println(MainActivity.guida.getId());
+        try{
+            Guida.getAllVisiteGuida(this, MainActivity.guida,
+                    response -> {
+                        try {
+                            System.out.println(response);
+                            if(response.getBoolean("status")){
+                                //Visita e ListaVisite necessarie per popolare la ListView
+                                Visita v;
+                                listaVisite = new ArrayList<>();
+                                JSONObject tmpObj = response.getJSONObject("data");
+                                JSONArray arrayData = tmpObj.getJSONArray("arrVisiteGuida");
+
+                                for(int i = 0; i < arrayData.length(); ++i){
+                                    JSONObject visita = arrayData.getJSONObject(i);
+                                    v = new Visita();
+                                    try {
+                                        v.setDataFromJSON(visita);
+                                        addItemToLista(v);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                startFragListaVisite();
+
+                            }else{
+                                System.out.println("Sium sium");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    },
+                    error -> {
+
+                    });
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
 

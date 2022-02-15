@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool;
+package it.uniba.pioneers.testtool.VisualizzaVisite;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import java.util.Date;
 
 import it.uniba.pioneers.data.Visita;
+import it.uniba.pioneers.testtool.MainActivity;
+import it.uniba.pioneers.testtool.R;
 
 /**
  * A simple {@link Fragment} subclass.

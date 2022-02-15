@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool;
+package it.uniba.pioneers.testtool.AreaPersonale;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.pioneers.data.users.Guida;
+import it.uniba.pioneers.testtool.MainActivity;
+import it.uniba.pioneers.testtool.R;
 
 /**
  * A simple {@link Fragment} subclass.

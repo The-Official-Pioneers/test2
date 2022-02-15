@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool;
+package it.uniba.pioneers.testtool.AreaPersonale;
 
 import android.Manifest;
 import android.content.Context;
@@ -40,6 +40,8 @@ import java.text.ParseException;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
+import it.uniba.pioneers.testtool.MainActivity;
+import it.uniba.pioneers.testtool.R;
 
 public class AreaPersonale extends AppCompatActivity {
 

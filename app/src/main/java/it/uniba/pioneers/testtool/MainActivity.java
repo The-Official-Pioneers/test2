@@ -52,6 +52,8 @@ import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
+import it.uniba.pioneers.testtool.AreaPersonale.AreaPersonale;
+import it.uniba.pioneers.testtool.VisualizzaVisite.VisiteCreateUtente;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
 import it.uniba.pioneers.testtool.gestioneMuseo.FragmentListaAree;
 import it.uniba.pioneers.testtool.gestioneMuseo.FragmentListaOpere;
@@ -95,6 +97,14 @@ public class MainActivity extends AppCompatActivity {
     public static CuratoreMuseale curatore = new CuratoreMuseale();
     public static Guida guida = new Guida();
 
+    //Flag usato per capire se il visitatore vuole vedere le sue visite o quelle predefinite
+    //1 = visite predef, 0 = sue visite
+    public static int flagVisite;
+
+    //Flag usato per capire se la guida vuole vedere le visite da fare o quelle già fatte
+    //1 = visite da fare, 0 = già fatte
+    public static int flagVisiteGuida;
+
     NetworkChangeListener networkChangeListener= new NetworkChangeListener();
 
     @Override
@@ -123,8 +133,11 @@ public class MainActivity extends AppCompatActivity {
             idUtente = intent.getIntExtra("idUser", 1);
         }
 
-       // tipoUtente = "curatore";
+       //tipoUtente = "curatore";
        //idUtente = 1; //curatore
+
+        //tipoUtente = "visitatore";
+        //IdUtente = 2; //visitatore
 
         //tipoUtente = "guida";
         //idUtente = 1004; //guida
@@ -857,8 +870,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToYourVisite(View view) {
+        flagVisite = 0;
+        flagVisiteGuida = 1;
         Intent intent = new Intent(this, VisiteCreateUtente.class);
         startActivity(intent);
     }
 
+    public void goToVisitePredefinite(View view) {
+        flagVisite = 1;
+        Intent intent = new Intent(this, VisiteCreateUtente.class);
+        startActivity(intent);
+    }
+
+    public void goToPastVisit(View view) {
+        flagVisiteGuida = 0;
+        Intent intent = new Intent(this, VisiteCreateUtente.class);
+        startActivity(intent);
+    }
 }

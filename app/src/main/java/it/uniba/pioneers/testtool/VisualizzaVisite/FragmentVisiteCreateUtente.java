@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool;
+package it.uniba.pioneers.testtool.VisualizzaVisite;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +20,7 @@ import java.util.List;
 import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.users.Guida;
+import it.uniba.pioneers.testtool.R;
 
 /**
  * A simple {@link Fragment} subclass.
