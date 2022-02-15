@@ -647,18 +647,15 @@ public class MainActivity extends AppCompatActivity {
                                 tmp.setDataFromJSON(resultAree.getJSONObject(i));
                                 areeZona.add(tmp);
                             }
-                            FragmentListaAree fls = new FragmentListaAree();   // carico il fragment per mostrare la lista delle aree
-                            androidx.fragment.app.FragmentManager supportFragmentManager;
-                            supportFragmentManager = getSupportFragmentManager();
-                            supportFragmentManager.beginTransaction()
-                                    .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                                    .replace(R.id.fragment_container_list, fls)
-                                    .addToBackStack(null)
-                                    .commit();
-                        } else {
-                            Toast.makeText(getApplicationContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
-                            areeZona=null;
                         }
+                        FragmentListaAree fls = new FragmentListaAree();   // carico il fragment per mostrare la lista delle aree
+                        androidx.fragment.app.FragmentManager supportFragmentManager;
+                        supportFragmentManager = getSupportFragmentManager();
+                        supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                                .replace(R.id.fragment_container_list, fls)
+                                .addToBackStack(null)
+                                .commit();
                     } catch (JSONException | ParseException e) {
                         e.printStackTrace();
                     }
@@ -680,7 +677,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!nomeArea.getText().toString().equals("")) {
                     Area nuovaArea = new Area();    // inserimento nuva area nel db
                     nuovaArea.setNome(nomeArea.getText().toString());
-                    nuovaArea.setZona(10);
+                    nuovaArea.setZona((int) curatore.getZona());
                     nuovaArea.createDataDb(getApplicationContext(), response -> {
 
                     });
