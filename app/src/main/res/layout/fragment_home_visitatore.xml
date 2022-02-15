@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="5dp"
-
+            android:onClick="goToYourVisite"
             android:textColor="#212121" />
 
         <Button
@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="5dp"
+            android:onClick="goToVisitePredefinite"
             android:text="@string/btn_visite_predefinite"
             android:textColor="#212121" />
 

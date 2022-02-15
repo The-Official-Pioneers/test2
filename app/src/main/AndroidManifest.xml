@@ -25,7 +25,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".VisiteCreateUtente"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".CreaVisita"
             android:exported="true"

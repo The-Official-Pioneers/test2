@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
     public static CuratoreMuseale curatore = new CuratoreMuseale();
     public static Guida guida = new Guida();
 
+    //Flag usato per capire se il visitatore vuole vedere le sue visite o quelle predefinite
+    //1 = visite predef, 0 = sue visite
+    public static int flagVisite;
+
     NetworkChangeListener networkChangeListener= new NetworkChangeListener();
 
 
@@ -116,11 +120,14 @@ public class MainActivity extends AppCompatActivity {
         budleFragOpera=null;
                                         // in base al tipo di utente cheha eseguito il login carico un fragmentHome differente
         Intent intent = getIntent();
-        //tipoUtente = intent.getStringExtra("typeUser");
+        // tipoUtente = intent.getStringExtra("typeUser");
         //idUtente = intent.getIntExtra("idUser");
 
-        tipoUtente = "curatore";
-        idUtente = 1; //curatore
+        //tipoUtente = "curatore";
+        //idUtente = 1; //curatore
+
+        tipoUtente = "visitatore";
+        idUtente = 2; //visitatore
 
         //tipoUtente = "guida";
         //idUtente = 1004; //guida
@@ -853,8 +860,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToYourVisite(View view) {
+        flagVisite = 0;
         Intent intent = new Intent(this, VisiteCreateUtente.class);
         startActivity(intent);
     }
 
+    public void goToVisitePredefinite(View view) {
+        flagVisite = 1;
+        Intent intent = new Intent(this, VisiteCreateUtente.class);
+        startActivity(intent);
+    }
 }

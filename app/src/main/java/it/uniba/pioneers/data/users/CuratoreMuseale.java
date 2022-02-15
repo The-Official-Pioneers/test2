@@ -582,6 +582,4 @@ public class CuratoreMuseale {
         queue.add(jsonObjectRequest);
     }
 
-
-
 }
