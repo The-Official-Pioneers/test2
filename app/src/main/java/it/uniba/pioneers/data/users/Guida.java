@@ -165,7 +165,7 @@ public class Guida {
     public Guida(JSONObject data) throws JSONException, ParseException {
         this.setId(data.getInt(DbContract.GuidaEntry.COLUMN_ID));
         this.setNome(data.getString(DbContract.GuidaEntry.COLUMN_NOME));
-        this.setDataNascita(data.getString(DbContract.GuidaEntry.COLUMN_COGNOME));
+        this.setCognome(data.getString(DbContract.GuidaEntry.COLUMN_COGNOME));
         this.setDataNascita(data.getString(DbContract.GuidaEntry.COLUMN_DATA_NASCITA));
         this.setEmail(data.getString(DbContract.GuidaEntry.COLUMN_EMAIL));
         this.setPassword(data.getString(DbContract.GuidaEntry.COLUMN_PASSWORD));

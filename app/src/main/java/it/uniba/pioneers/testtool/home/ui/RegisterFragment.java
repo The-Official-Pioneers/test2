@@ -486,7 +486,7 @@ public class RegisterFragment extends Fragment {
         Spinner specializzazione =  v.findViewById(R.id.specializzazione);
         Spinner zonaForm =  v.findViewById(R.id.tipoZona);
         EditText nomeZonaForm =  v.findViewById(R.id.nomeZona);
-        EditText cittaZonaForm =  v.findViewById(R.id.cittaZona);
+        Spinner cittaZonaForm =  v.findViewById(R.id.cittaZona);
         /***************************************************************/
 
 
@@ -507,8 +507,8 @@ public class RegisterFragment extends Fragment {
         /***************************************************************
          * Creo la data in base ai valori degli spinner
          ***************************************************************/
-        String date = dayText + "/" + mounthtext + "/" + yearText;
-        Date expiredDate = stringToDate(date, "dd/MM/yyyy");
+        String date = yearText + "-" + mounthtext + "-" + dayText +"T02:50:12.208Z";
+        Date expiredDate = stringToDate(date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
         TextView imgText = v.findViewById(R.id.Base64ImgString);
         String img = imgText.getText().toString();
@@ -528,7 +528,7 @@ public class RegisterFragment extends Fragment {
             if(userType == "curatore"){
                 data.put("tipoZona", zonaForm.getSelectedItem().toString());
                 data.put("nomeZona", nomeZonaForm.getText().toString());
-                data.put("cittaZona", cittaZonaForm.getText().toString());
+                data.put("cittaZona", cittaZonaForm.getSelectedItem().toString());
             }
             if(userType == "guida"){
                 data.put("specializzazione", specializzazione.getSelectedItem().toString());
@@ -686,6 +686,8 @@ public class RegisterFragment extends Fragment {
     private void saveDataInDbCuratore(JSONObject data) {
         try {
             Zona zona = new Zona();
+            System.out.println(data.getString("tipoZona"));
+
             zona.setDenominazione(data.getString("nomeZona"));
             zona.setTipo(data.getString("tipoZona"));
             zona.setLuogo(data.getString("cittaZona"));
