@@ -9,6 +9,7 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
+        android:theme="@style/Theme.AppCompat.Light"
         android:layout_height="match_parent">
     </ListView>
 
@@ -24,4 +25,5 @@
         android:elevation="16dp"
         android:onClick="aggiungiArea"
         tools:ignore="SpeakableTextPresentCheck" />
+
 </FrameLayout>

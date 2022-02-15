@@ -90,7 +90,7 @@ public class FragmentSingolaOpera extends Fragment {
             elimina.setVisibility(View.VISIBLE);
         }
        if(!MainActivity.tipoUtente.equals("curatore")){
-           FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
+           FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_change_propic);
            modificaFoto.setVisibility(View.GONE);
        }
 

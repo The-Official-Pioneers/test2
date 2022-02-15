@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/alto"
     tools:context=".FragmentSingolaArea">
 
     <ScrollView
@@ -13,30 +14,37 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/shape_login_panel"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:scrollbars="vertical"
+                android:textColor="@color/shuttle_gray"
                 android:text="Nome Area: "
-                android:textSize="25dp" />
+                android:textSize="25sp" />
 
             <EditText
                 android:id="@+id/txt_edit_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:backgroundTint="@color/cranberry"
                 android:minHeight="48dp"
                 android:text="NomeArea"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
 
             <LinearLayout
@@ -62,14 +70,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:background="@drawable/login_btn"
+                android:backgroundTint="@color/cranberry"
                 android:onClick="mostraOpereArea"
+                android:textColor="@color/white"
                 android:text="mostra le opere" />
 
         </LinearLayout>
     </ScrollView>
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_del"
+        android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
@@ -77,8 +89,9 @@
         android:clickable="true"
         android:elevation="16dp"
         android:onClick="eliminaArea"
-        android:visibility="visible"
         android:src="@android:drawable/ic_delete"
+        android:backgroundTint="@color/cranberry"
         tools:ignore="SpeakableTextPresentCheck" />
+
 
 </FrameLayout>
