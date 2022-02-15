@@ -116,7 +116,7 @@ public class HomeActivity extends AppCompatActivity {
        /* if(fragment.controllData(v)){
 
         } */
-        fragment.registerComputation(v);
+        fragment.controllData(v);
     }
 
     @Override

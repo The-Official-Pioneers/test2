@@ -118,11 +118,13 @@ public class MainActivity extends AppCompatActivity {
         budleFragOpera=null;
                                         // in base al tipo di utente cheha eseguito il login carico un fragmentHome differente
         Intent intent = getIntent();
-        //tipoUtente = intent.getStringExtra("typeUser");
-        //idUtente = intent.getIntExtra("idUser");
+        if(intent.getStringExtra("typeUser")!=null) {
+            tipoUtente = intent.getStringExtra("typeUser");
+            idUtente = intent.getIntExtra("idUser", 1);
+        }
 
-        tipoUtente = "curatore";
-        idUtente = 1; //curatore
+       // tipoUtente = "curatore";
+       //idUtente = 1; //curatore
 
         //tipoUtente = "guida";
         //idUtente = 1004; //guida

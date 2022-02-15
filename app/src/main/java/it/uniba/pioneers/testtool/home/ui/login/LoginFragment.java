@@ -133,10 +133,13 @@ public class LoginFragment extends Fragment {
                          * Esiste un account Curatore associato all'email e la password inseriti dall'utente
                          ************************************************************************************/
                         curatore.setId(response.getJSONObject("data").getInt("id"));
+                        System.out.println("sono nel login: "+curatore.getId());
                         Toast.makeText(context, R.string.bentornato_login + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context, MainActivity.class);
                         intent.putExtra("typeUser", "curatore");
-                        intent.putExtra("idUser", curatore.getId());
+                        int idU = (int) curatore.getId();
+                        intent.putExtra("idUser",(int) curatore.getId() );
+
 
                         /************************************************************************************
                          * Faccio accedere il curatore e lo reindirizzo alla MainActivity
