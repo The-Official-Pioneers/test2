@@ -55,6 +55,7 @@ import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.AreaPersonale.AreaPersonale;
 import it.uniba.pioneers.testtool.VisualizzaVisite.VisiteCreateUtente;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
+import it.uniba.pioneers.testtool.editor.EditorActivity;
 import it.uniba.pioneers.testtool.gestioneMuseo.FragmentListaAree;
 import it.uniba.pioneers.testtool.gestioneMuseo.FragmentListaOpere;
 import it.uniba.pioneers.testtool.gestioneMuseo.FragmentSingolaArea;
@@ -680,7 +681,9 @@ public class MainActivity extends AppCompatActivity {
                     Area nuovaArea = new Area();    // inserimento nuva area nel db
                     nuovaArea.setNome(nomeArea.getText().toString());
                     nuovaArea.setZona(10);
-                    nuovaArea.createDataDb(getApplicationContext());
+                    nuovaArea.createDataDb(getApplicationContext(), response -> {
+
+                    });
 
                     FragmentListaAree.lista.add(nuovaArea.getNome());
                     areeZona.add(nuovaArea);

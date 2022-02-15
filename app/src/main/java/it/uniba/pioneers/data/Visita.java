@@ -553,10 +553,6 @@ public class Visita {
         queue.add(jsonObjectRequest);
     }
 
-    public void setLuogo(String luogo) {
-        this.luogo = luogo;
-    }
-
     public static void addZona(Context context,int visita_id, int zona_id,
                                            Response.Listener<JSONObject> responseListener,
                                            Response.ErrorListener errorListener){
