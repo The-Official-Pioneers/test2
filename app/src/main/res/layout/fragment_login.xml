@@ -79,24 +79,6 @@
             android:text="REGISTER"
              />
 
-        <Button
-            android:id="@+id/GoMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="25dp"
-            android:enabled="true"
-            android:onClick="goMainActivity"
-            android:text="ENTRA COME OSPITE"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password"
-            app:layout_constraintVertical_bias="0.359" />
-
             <Button
                 android:id="@+id/curatoreDefault"
                 android:layout_width="match_parent"
@@ -104,6 +86,7 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="48dp"
                 android:layout_marginEnd="48dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginBottom="10dp"
                 android:enabled="true"
                 android:onClick="alphaVersionTest"
