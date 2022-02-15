@@ -26,6 +26,7 @@ import it.uniba.pioneers.testtool.R;
 public class Visita {
 
 
+
     public int getId() {
         return id;
     }
@@ -514,6 +515,83 @@ public class Visita {
 
         }
     }
-    
 
+    public static void getGraphData(Context context,Visita visita,
+                                    Response.Listener<JSONObject> responseListener,
+                                    Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visita/all-data/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.VisitaEntry.COLUMN_ID, visita.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void getAllPossibleChild(Context context,Visita visita,
+                                           Response.Listener<JSONObject> responseListener,
+                                           Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visita/child/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("id", visita.id);
+            data.put("luogo", visita.luogo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+    public void setLuogo(String luogo) {
+        this.luogo = luogo;
+    }
+
+    public static void addZona(Context context,int visita_id, int zona_id,
+                                           Response.Listener<JSONObject> responseListener,
+                                           Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visita/add/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("visita_id", visita_id);
+            data.put("zona_id", zona_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void removeZona(Context context,int visita_id, int zona_id,
+                               Response.Listener<JSONObject> responseListener,
+                               Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visita/remove/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("visita_id", visita_id);
+            data.put("zona_id", zona_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
 }

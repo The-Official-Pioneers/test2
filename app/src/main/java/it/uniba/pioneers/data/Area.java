@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.ResponseCache;
 import java.text.ParseException;
 
 import it.uniba.pioneers.data.server.Server;
@@ -224,7 +225,7 @@ public class Area {
         }
     }
 
-    public void createDataDb(Context context){
+    public void createDataDb(Context context, Response.Listener<JSONObject> response){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
             String url = Server.getUrl() + "/area/create/";
@@ -387,6 +388,62 @@ public class Area {
 
             int deletedRows = db.delete(DbContract.AreaEntry.TABLE_NAME, selection, selectionArgs);
         }
+    }
+
+    public static void getAllPossibleChild(Context context,Area area,
+                                           Response.Listener<JSONObject> responseListener,
+                                           Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/area/child/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.VisitaEntry.COLUMN_ID, area.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void addOpera(Context context,int visita_id, int opera_id,
+                               Response.Listener<JSONObject> responseListener,
+                               Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/area/add/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("visita_id", visita_id);
+            data.put("opera_id", opera_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void removeOpera(Context context,int visita_id, int opera_id,
+                                  Response.Listener<JSONObject> responseListener,
+                                  Response.ErrorListener errorListener){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/area/remove/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("visita_id", visita_id);
+            data.put("opera_id", opera_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
     }
 
 }

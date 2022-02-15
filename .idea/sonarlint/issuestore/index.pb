@@ -1,21 +1,13 @@
 
-q
-Aapp/src/main/java/it/uniba/pioneers/testtool/EditorActivity2.java,3\8\38d6afef701554cdd4fe85484acd1b40937f9686
 p
 @app/src/main/java/it/uniba/pioneers/testtool/DialogNodeInfo.java,8\b\8b5de03bc1fad7dc19233a95c2a243ccfb474a37
-k
-;app/src/main/java/it/uniba/pioneers/testtool/ListaNodi.java,f\d\fd3d0c63a18c3e78a13bd15c675e7d3bfa09c4fd
-h
-8app/src/main/java/it/uniba/pioneers/widget/NodeType.java,d\e\de8cc0b635516aacefebd05409118672fdcb461f
 v
 Fapp/src/main/java/it/uniba/pioneers/testtool/home/WelcomeFragment.java,a\2\a2af2ceae4c171fa327a51199066a305ad5a6e6d
-d
-4app/src/main/java/it/uniba/pioneers/widget/Node.java,2\9\29ee86610cfca04e57269bc96f7458ba4a4aa5f6
-p
-@app/src/main/java/it/uniba/pioneers/testtool/EditorPercorsi.java,c\7\c7bf0ffb91233d7d24230c59d32e23bc1c379aa9
-i
-9app/src/main/java/it/uniba/pioneers/widget/ListaNodi.java,9\2\92865c6c923fa786d9236e70cba7895d2cded138
-e
-5app/src/main/java/it/uniba/pioneers/widget/Mappa.java,0\f\0f1dec7ec3f21f24f4a403537b0098b9a7f9dd25
 i
 9app/src/main/java/it/uniba/pioneers/data/users/Guida.java,c\3\c326631ea3ea344c024a88e42ea15fb7fc78ded8
+w
+Gapp/src/main/java/it/uniba/pioneers/testtool/editor/EditorActivity.java,9/b/9bd29e086ed36e72e37bdc87a03fc778fc3089c1
+o
+?app/src/main/java/it/uniba/pioneers/testtool/editor/Editor.java,7/d/7db1fd1dfda3569262f911d806504dbb96721234
+p
+@app/src/main/java/it/uniba/pioneers/testtool/EditorPercorsi.java,c/7/c7bf0ffb91233d7d24230c59d32e23bc1c379aa9
