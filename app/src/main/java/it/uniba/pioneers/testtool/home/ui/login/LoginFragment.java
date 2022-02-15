@@ -136,7 +136,7 @@ public class LoginFragment extends Fragment {
                         Toast.makeText(context, R.string.bentornato_login + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context, MainActivity.class);
                         intent.putExtra("typeUser", "curatore");
-                        intent.putExtra("idUser", curatore.getId());
+                        intent.putExtra("idUser", (int)curatore.getId());
 
                         /************************************************************************************
                          * Faccio accedere il curatore e lo reindirizzo alla MainActivity
@@ -186,7 +186,7 @@ public class LoginFragment extends Fragment {
                         Toast.makeText(context, R.string.bentornato_login + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context, MainActivity.class);
                         intent.putExtra("typeUser", "visitatore");
-                        intent.putExtra("idUser", visitatore.getId());
+                        intent.putExtra("idUser", (int)visitatore.getId());
 
                         /************************************************************************************
                          * Faccio accedere il visitatore e lo reindirizzo alla MainActivity
@@ -235,7 +235,7 @@ public class LoginFragment extends Fragment {
                         guida.setId(response.getJSONObject("data").getInt("id"));
                         Intent intent = new Intent(context, MainActivity.class);
                         intent.putExtra("typeUser", "guida");
-                        intent.putExtra("idUser", guida.getId());
+                        intent.putExtra("idUser", (int)guida.getId());
                         /************************************************************************************
                          * Faccio accedere la Guida e lo reindirizzo alla MainActivity
                          ************************************************************************************/

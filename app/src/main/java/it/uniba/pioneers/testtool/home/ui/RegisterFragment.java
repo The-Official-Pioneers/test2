@@ -608,8 +608,8 @@ public class RegisterFragment extends Fragment {
                              ********************************************************************************************************/
                             Toast.makeText(getView().getContext(), "Registrazione avvenuta con successo! Benvenuto", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), MainActivity.class);
-                            intent.putExtra("user", userType);
-                            intent.putExtra("idUser", guida.getId());
+                            intent.putExtra("typeUser", userType);
+                            intent.putExtra("idUser", (int)guida.getId());
                             startActivity(intent);
                         } else {
                             /*********************************************************************************************************
@@ -654,8 +654,8 @@ public class RegisterFragment extends Fragment {
                              ********************************************************************************************************/
                             Toast.makeText(getView().getContext(), "Registrazione avvenuta con successo! Benvenuto", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), MainActivity.class);
-                            intent.putExtra("user", userType);
-                            intent.putExtra("idUser", visitatore.getId());
+                            intent.putExtra("typeUser", userType);
+                            intent.putExtra("idUser", (int)visitatore.getId());
                             startActivity(intent);
                         } else {
                             /*********************************************************************************************************
@@ -730,8 +730,8 @@ public class RegisterFragment extends Fragment {
                                              ********************************************************************************************************/
                                             Toast.makeText(getView().getContext(), "Registrazione avvenuta con successo! Benvenuto", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getView().getContext(), MainActivity.class);
-                                            intent.putExtra("user", userType);
-                                            intent.putExtra("idUser", curatore.getId());
+                                            intent.putExtra("typeUser", userType);
+                                            intent.putExtra("idUser", (int)curatore.getId());
                                             startActivity(intent);
                                         } else {
                                             /*********************************************************************************************************
