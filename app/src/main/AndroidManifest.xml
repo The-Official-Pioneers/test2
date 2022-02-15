@@ -31,20 +31,6 @@
             android:name=".CreaVisita"
             android:exported="true"
             android:parentActivityName=".MainActivity" />
-
-        <receiver
-            android:name="it.uniba.pioneers.widget.WidgetCuratoreRegister"
-            android:exported="true"
-            tools:ignore="MissingClass">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_curatore_register_info" />
-        </receiver>
-
         <activity
             android:name=".home.HomeActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
