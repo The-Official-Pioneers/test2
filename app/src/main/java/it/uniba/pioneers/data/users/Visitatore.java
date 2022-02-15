@@ -58,7 +58,7 @@ public class Visitatore {
 
     //MODIFICATO DA IVAN
     public void setDataNascita(String dataNascita) throws ParseException {
-        this.dataNascita = Visitatore.format.parse(dataNascita);
+        this.dataNascita = Visitatore.output.parse(dataNascita);
     }
 
     public Date getDataNascita() {

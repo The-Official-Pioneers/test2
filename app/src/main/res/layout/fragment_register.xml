@@ -13,68 +13,75 @@
     tools:context=".home.ui.RegisterFragment"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="Chi sei?"
-        android:textAlignment="center"
-        android:textColor="@color/black_overlay"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        android:layout_marginTop="30dp"
-        android:animateLayoutChanges="true"
-        android:id="@+id/who"/>
-
-    <Button
-        android:id="@+id/curatore"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:enabled="true"
-        android:text="CURATORE"
-        android:layout_marginTop="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.2"
-        android:onClick="clickedButton" />
+        android:id="@+id/presentation"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:text="Chi sei?"
+            android:textAlignment="center"
+            android:textColor="@color/black_overlay"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:animateLayoutChanges="true"
+            android:id="@+id/who"/>
 
-    <Button
-        android:id="@+id/visitatore"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:enabled="true"
-        android:text="VISITATORE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.346"
-        android:onClick="clickedButton" />
+        <Button
+            android:id="@+id/curatore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:enabled="true"
+            android:text="CURATORE"
+            android:layout_marginTop="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintVertical_bias="0.2"
+            android:onClick="clickedButton" />
 
-    <Button
-        android:id="@+id/guida"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:enabled="true"
-        android:text="GUIDA"
-        android:shadowColor="@color/light_blue_900"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.359"
-        android:onClick="clickedButton" />
+        <Button
+            android:id="@+id/visitatore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:enabled="true"
+            android:text="VISITATORE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintVertical_bias="0.346"
+            android:onClick="clickedButton" />
+
+        <Button
+            android:id="@+id/guida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:enabled="true"
+            android:text="GUIDA"
+            android:shadowColor="@color/light_blue_900"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintVertical_bias="0.359"
+            android:onClick="clickedButton" />
+    </LinearLayout>
+
 
     <it.uniba.pioneers.widget.WidgetRegister
-        android:id="@+id/curatoreForm"
+        android:id="@+id/formForRegistration"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2">

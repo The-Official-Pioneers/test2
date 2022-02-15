@@ -25,9 +25,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         FragmentManager fragmentManager = getFragmentManager();
         /*** INIZIO TRANSAZIONE ***/
-
         WelcomeFragment f = new WelcomeFragment();
-
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
@@ -82,10 +80,6 @@ public class HomeActivity extends AppCompatActivity {
         RegisterFragment f = new RegisterFragment();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
-        //setCustomAnimations (int enter, int exit, int popEnter int popExit) => primo parametro è l'animazione del fragment che sto attaccando
-        //                                                                    => secondo parametro è l'animazione di quando stacco un fragment dal backstack
-        //                                                                    => terzo parametro bho
-        //                                                                    => quarto parametro è l'animazione di quando faccio un pop dal backsteck ma senza rimuovere il fragment'
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentContainerView4, f, "tag")
