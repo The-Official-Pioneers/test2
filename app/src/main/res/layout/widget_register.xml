@@ -218,6 +218,26 @@
             android:dropDownWidth="300dp"
             android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight" />
 
+        <Spinner
+            android:id="@+id/cittaZona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="24dp"
+            android:autofillHints="@string/prompt_email"
+            android:hint="Citta"
+            android:background="#f5f5f5"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/black"
+            android:textColorHint="@color/black"
+            android:textColorLink="@color/black"
+            android:dropDownWidth="300dp"
+            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight" />
+
         <EditText
             android:id="@+id/nomeZona"
             android:layout_width="match_parent"
@@ -235,22 +255,6 @@
             android:textColorHint="@color/black"
             android:textColorLink="@color/black" />
 
-        <EditText
-            android:id="@+id/cittaZona"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="24dp"
-            android:autofillHints="@string/prompt_email"
-            android:hint="Città"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="true"
-            android:textColor="@color/black"
-            android:textColorHighlight="@color/black"
-            android:textColorHint="@color/black"
-            android:textColorLink="@color/black" />
 
     </LinearLayout>
 

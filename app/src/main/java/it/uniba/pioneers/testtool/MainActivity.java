@@ -60,6 +60,7 @@ import it.uniba.pioneers.testtool.gestioneMuseo.FragmentSingolaOpera;
 import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
 import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
 import it.uniba.pioneers.testtool.home.FragmentHomeVisitatore;
+import it.uniba.pioneers.testtool.home.HomeActivity;
 import it.uniba.pioneers.testtool.network.NetworkChangeListener;
 
 
@@ -245,6 +246,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);   // gestione del cambio di configurazione cosi da non riavviare l'activity
+    }
+
+    public void logOutMethod(MenuItem item){
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.uscire)
+                .setMessage(R.string.uscire_no_salvare)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
     }
 
     @Override
