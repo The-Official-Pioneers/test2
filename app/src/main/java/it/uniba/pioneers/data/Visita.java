@@ -176,7 +176,7 @@ public class Visita {
     }
 
     //Crea record dal DB in base ai dati forniti
-    public void createDataDb(Context context){
+    public void createDataDb(Context context, Response.Listener<JSONObject> response){
         if(isOnline()){
             RequestQueue queue = Volley.newRequestQueue(context);
             String url = Server.getUrl() + "/visita/create/";
@@ -204,21 +204,7 @@ public class Visita {
             Visita self = this;
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                Boolean status =  response.getBoolean("status");
-                                if(status){
-                                    self.setDataFromJSON(response.getJSONObject("data"));
-                                }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException | ParseException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
+                    response, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();

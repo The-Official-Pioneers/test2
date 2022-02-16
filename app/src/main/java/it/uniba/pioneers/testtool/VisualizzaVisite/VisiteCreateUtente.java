@@ -25,6 +25,8 @@ import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
+import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizzaFragment;
 
 public class VisiteCreateUtente extends AppCompatActivity {
 
@@ -32,6 +34,7 @@ public class VisiteCreateUtente extends AppCompatActivity {
     public static List<Visita> listaVisite;
 
     private void addItemToLista(Visita vis){
+
         if(MainActivity.tipoUtente.equals("guida")){
             Date tempDate = new Date(vis.getData() * 1000);
             //Guida vuole le visite passate
@@ -46,6 +49,7 @@ public class VisiteCreateUtente extends AppCompatActivity {
                 return;
             }
         }
+
         listaVisite.add(vis);
     }
 
@@ -164,6 +168,8 @@ public class VisiteCreateUtente extends AppCompatActivity {
             visitePredefinite();
         } else if(MainActivity.flagVisite == 0){
             visiteVisitatore();
+        } else if(MainActivity.flagVisite == 2){
+            tutteVisiteVisitatore();
         }
     }
 
@@ -211,13 +217,52 @@ public class VisiteCreateUtente extends AppCompatActivity {
             Visitatore.getAllVisiteSingolo(this, MainActivity.visitatore,
                     response -> {
                         try {
-                            System.out.println(response);
                             if(response.getBoolean("status")){
                                 //Visita e ListaVisite necessarie per popolare la ListView
                                 Visita v;
                                 listaVisite = new ArrayList<>();
                                 JSONObject tmpObj = response.getJSONObject("data");
                                 JSONArray arrayData = tmpObj.getJSONArray("arrVisite");
+
+                                for(int i = 0; i < arrayData.length(); ++i){
+                                    JSONObject visita = arrayData.getJSONObject(i);
+                                    v = new Visita();
+                                    try {
+                                        v.setDataFromJSON(visita);
+                                        addItemToLista(v);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                startFragListaVisite();
+
+                            }else{
+                                System.out.println("Sium sium");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    },
+                    error -> {
+
+                    });
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void tutteVisiteVisitatore(){
+        try{
+            Visitatore.getAllVisiteByLuogo(this, MainActivity.visitatore, MainActivity.luogoToSearch,
+                    response -> {
+                        try {
+                            System.out.println(response);
+                            if(response.getBoolean("status")){
+                                //Visita e ListaVisite necessarie per popolare la ListView
+                                Visita v;
+                                listaVisite = new ArrayList<>();
+                                JSONObject tmpObj = response.getJSONObject("data");
+                                JSONArray arrayData = tmpObj.getJSONArray("arrVisiteByLuogo");
 
                                 for(int i = 0; i < arrayData.length(); ++i){
                                     JSONObject visita = arrayData.getJSONObject(i);
@@ -291,5 +336,17 @@ public class VisiteCreateUtente extends AppCompatActivity {
             super.onBackPressed();
         }
         return true;
+    }
+
+    public void avviaGrafoVisualizza(View view) {
+        GrafoVisualizzaFragment grafoVisualizzaFragment = new GrafoVisualizzaFragment(VisiteCreateUtente.visitaSelezionata);
+        androidx.fragment.app.FragmentManager supportFragmentManager;
+
+        findViewById(R.id.scroll_singola_visita).setVisibility(View.GONE);
+
+        supportFragmentManager = getSupportFragmentManager();
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.frameVIsualizzaGrafo, grafoVisualizzaFragment)
+                .commit();
     }
 }

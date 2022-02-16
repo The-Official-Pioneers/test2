@@ -16,6 +16,7 @@ import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -100,8 +101,10 @@ public class MainActivity extends AppCompatActivity {
     public static Guida guida = new Guida();
 
     //Flag usato per capire se il visitatore vuole vedere le sue visite o quelle predefinite
-    //1 = visite predef, 0 = sue visite
+    //2 = visite in base al luogo, 1 = visite predef, 0 = sue visite
     public static int flagVisite;
+
+    public static String luogoToSearch;
 
     //Flag usato per capire se la guida vuole vedere le visite da fare o quelle già fatte
     //1 = visite da fare, 0 = già fatte
@@ -227,6 +230,18 @@ public class MainActivity extends AppCompatActivity {
                 curatore.setId(idUtente);
                 curatore.readDataDb(this);
                 break;
+        }
+
+        if(tipoUtente.equals("visitatore")){
+            EditText searchBar = (EditText) findViewById(R.id.text_cerca);
+            searchBar.setOnEditorActionListener((v, actionId, event) -> {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    luogoToSearch = searchBar.getText().toString();
+                    goToVisiteByLuogo(getCurrentFocus());
+                    return true;
+                }
+                return false;
+            });
         }
 
     }
@@ -920,9 +935,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToVisiteByLuogo(View view) {
+        flagVisite = 2;
+        Intent intent = new Intent(this, VisiteCreateUtente.class);
+        startActivity(intent);
+    }
+
     public void goToPastVisit(View view) {
         flagVisiteGuida = 0;
         Intent intent = new Intent(this, VisiteCreateUtente.class);
         startActivity(intent);
     }
+
 }

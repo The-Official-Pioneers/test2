@@ -5,11 +5,14 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import it.uniba.pioneers.data.Visita;
+
 public class DisplayGrafoVisualizza extends ConstraintLayout {
     public GrafoVisualizza graph = null;
 
     DisplayGrafoVisualizza self = null;
     Context context = null;
+    public static Visita visita = null;
 
     public void init(){
         self = this;
@@ -20,8 +23,9 @@ public class DisplayGrafoVisualizza extends ConstraintLayout {
     }
 
 
-    public DisplayGrafoVisualizza(@NonNull Context context) {
+    public DisplayGrafoVisualizza(@NonNull Context context, Visita visita) {
         super(context);
+        this.visita = visita;
         this.context = context;
         init();
     }

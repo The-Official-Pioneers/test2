@@ -294,6 +294,8 @@
 
     <!-- CURATORE PROFILE AREA -->
     <string name="zona_areap" translatable="false">Zona:</string>
+    <!-- ====================================================================================== -->
+
     <!-- GUIDA PROFILE AREA -->
     <string name="specializz_areap" translatable="false">Specializzazione:</string>
 
@@ -307,7 +309,7 @@
     <string name="btn_visite_effettuate" translatable="false">Visite Effettuate</string>
     <string name="btn_crea_visita" translatable="false">Crea Visita</string>
     <string name="btn_visite_predefinite" translatable="false">Visite Predefinite</string>
-    <string name="text_cerca" translatable="false">Cerca...</string>
+    <string name="text_cerca" translatable="false">Cerca visite per luogo..</string>
     <string name="text_interagisci" translatable="false">Interagisci con l\'opera..</string>
     <string name="impossibile_leggere_dati" translatable="false">Non e\' stato possibile leggere i dati dal db</string>
     <string name="uscire_sicuro_app" translatable="false">Sei sicuro di voler uscire dall\'app?</string>

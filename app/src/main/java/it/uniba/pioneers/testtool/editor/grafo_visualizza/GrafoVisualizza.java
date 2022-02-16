@@ -110,11 +110,8 @@ public class GrafoVisualizza extends ConstraintLayout {
         this.context = context;
         initDrawAttribute(context);
 
-        Visita tmpVisita = new Visita();
-        tmpVisita.setId(3);
-
         GrafoVisualizza self = this;
-        Visita.getGraphData(context, tmpVisita,
+        Visita.getGraphData(context, DisplayGrafoVisualizza.visita,
                 response -> {
                     try {
                         if (response.getBoolean("status")) {

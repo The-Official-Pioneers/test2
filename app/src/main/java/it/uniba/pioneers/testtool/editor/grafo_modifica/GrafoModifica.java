@@ -103,15 +103,12 @@ public class GrafoModifica extends ConstraintLayout {
         drawView = new DrawView(context);
     }
 
-    public void init(Context context) {
+    public void init(Context context, Visita tmpVisita) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         layoutInflater.inflate(R.layout.widget_grafo, this);
 
         this.context = context;
         initDrawAttribute(context);
-
-        Visita tmpVisita = new Visita();
-        tmpVisita.setId(3);
 
         GrafoModifica self = this;
         Visita.getGraphData(context, tmpVisita,
@@ -168,9 +165,9 @@ public class GrafoModifica extends ConstraintLayout {
         this.post(new GraphViewer(this, context, visita));
     }
 
-    public GrafoModifica(@NonNull Context context) {
+    public GrafoModifica(@NonNull Context context, Visita visita) {
         super(context);
-        init(context);
+        init(context, visita);
     }
 
     public Line buildLineGraph(GraphNodeModifica start, GraphNodeModifica stop) {

@@ -557,4 +557,25 @@ public class Visitatore {
         queue.add(jsonObjectRequest);
     }
 
+    public static void getAllVisiteByLuogo(Context context,Visitatore visitatore, String luogo,
+                                               Response.Listener<JSONObject> responseListener,
+                                               Response.ErrorListener errorListener){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/visitatore/all-visite-by-luogo/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.VisitatoreEntry.COLUMN_ID, visitatore.getId());
+            data.put("luogo", luogo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+
 }
