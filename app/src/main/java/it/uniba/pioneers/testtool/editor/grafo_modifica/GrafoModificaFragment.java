@@ -28,9 +28,11 @@ public class GrafoModificaFragment extends Fragment {
     public ListaNodi listaNodi = null;
     public OptionsEditor optionsEditor = null;
     public GrafoModifica graph = null;
+    public Visita visita = null;
 
-    public GrafoModificaFragment() {
+    public GrafoModificaFragment(Visita visita) {
         // Required empty public constructor
+        this.visita = visita;
     }
 
     @Override
@@ -63,7 +65,7 @@ public class GrafoModificaFragment extends Fragment {
 
         Visita tmpVisita = CreaVisita.visita;
 
-        DisplayGrafoModifica displayGrafoModifica = new DisplayGrafoModifica(getContext(), tmpVisita);
+        DisplayGrafoModifica displayGrafoModifica = new DisplayGrafoModifica(getContext(), visita);
 
         displayGrafoModifica.setId(R.id.displayGrafoModifica);
 
