@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,8 +86,6 @@ public class FragmentSingolaVisita extends Fragment {
         data_visita.setText(FragmentVisiteCreateUtente.outputFormat.format(visitDate));
         //ID Guida Visita
         guida_visita.setText(String.valueOf(VisiteCreateUtente.visitaSelezionata.getGuida()));
-        //Nome Guida Visita
-        setNomeGuida();
 
         setVisibEliminaVisita();
     }
@@ -108,12 +105,6 @@ public class FragmentSingolaVisita extends Fragment {
         } else {
             return false;
         }
-    }
-
-    private void setNomeGuida(){
-        //Nome Guida Visita
-        TextView nome_guida_visita = (TextView) getActivity().findViewById(R.id.txt_nome_guida_visita);
-        nome_guida_visita.setText(FragmentVisiteCreateUtente.nomeCompletoGuida);
     }
 
     @Override

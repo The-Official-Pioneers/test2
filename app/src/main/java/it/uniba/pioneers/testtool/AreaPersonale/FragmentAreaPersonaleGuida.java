@@ -28,37 +28,19 @@ import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentAreaPersonaleGuida#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentAreaPersonaleGuida extends Fragment {
     List<String> listaSpecializz = new ArrayList<>();
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public FragmentAreaPersonaleGuida() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentAreaPersonaleGuida.
-     */
-    // TODO: Rename and change types and number of parameters
     public static FragmentAreaPersonaleGuida newInstance(String param1, String param2) {
         FragmentAreaPersonaleGuida fragment = new FragmentAreaPersonaleGuida();
         Bundle args = new Bundle();
@@ -80,7 +62,6 @@ public class FragmentAreaPersonaleGuida extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_area_personale_guida, container, false);
     }
 
@@ -96,10 +77,8 @@ public class FragmentAreaPersonaleGuida extends Fragment {
     }
 
     private void setDataGuida(){
-
         //Imposto testo in italiano/inglese in base alla lingua del sistema
         setTextEditText();
-
         //Imposto i valori dello spinner
         setSpecializzazioniGuida(getContext());
 
@@ -109,21 +88,20 @@ public class FragmentAreaPersonaleGuida extends Fragment {
         EditText datanascita = (EditText) getActivity().findViewById(R.id.txt_datan);
         EditText email = (EditText) getActivity().findViewById(R.id.txt_email);
 
-        byte[] bytes = Base64.decode(MainActivity.guida.getPropic(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        propic.setImageBitmap(decodedByte);
-        propic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        if(MainActivity.guida.getPropic() != null){
+            byte[] bytes = Base64.decode(MainActivity.guida.getPropic(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            propic.setImageBitmap(decodedByte);
+            propic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
 
         nome.setText(MainActivity.guida.getNome());
         cognome.setText(MainActivity.guida.getCognome());
         email.setText(MainActivity.guida.getEmail());
         datanascita.setText(MainActivity.guida.getShorterDataNascita());
-
-
     }
 
     private void setTextEditText(){
-
         TextView nome = (TextView) getActivity().findViewById(R.id.nome_areap);
         TextView cognome = (TextView) getActivity().findViewById(R.id.cognome_areap);
         TextView datanascita = (TextView) getActivity().findViewById(R.id.datan_areap);
