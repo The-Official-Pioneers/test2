@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.VisualizzaVisite.VisiteCreateUtente;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 import it.uniba.pioneers.testtool.editor.options.OptionsEditor;
 
@@ -28,8 +30,10 @@ public class GrafoVisualizzaFragment extends Fragment {
     public OptionsEditor optionsEditor = null;
     public GrafoVisualizza graph = null;
 
-    public GrafoVisualizzaFragment() {
+    public Visita visita = null;
+    public GrafoVisualizzaFragment(Visita visita) {
         // Required empty public constructor
+        this.visita = visita;
     }
 
     @Override
@@ -60,7 +64,7 @@ public class GrafoVisualizzaFragment extends Fragment {
 
         Log.v("grafoManipulateLayout", String.valueOf(grafoManipulateLayout));
 
-        DisplayGrafoVisualizza displayGrafoVisualizza = new DisplayGrafoVisualizza(getContext());
+        DisplayGrafoVisualizza displayGrafoVisualizza = new DisplayGrafoVisualizza(getContext(), visita);
 
         displayGrafoVisualizza.setId(R.id.displayGrafoModifica);
 

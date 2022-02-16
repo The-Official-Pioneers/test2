@@ -27,6 +27,7 @@ import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafoModifica;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModifica;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
 import it.uniba.pioneers.testtool.editor.node.dialogs.NodeDialog;
@@ -329,11 +330,7 @@ public class GraphNodeModifica extends Node {
     }
 
     private void initListNodeVisita() {
-        Visita visita = new Visita();
-        visita.setId(3);
-        visita.setLuogo("Roma");
-
-        Visita.getAllPossibleChild(getContext(), visita,
+        Visita.getAllPossibleChild(getContext(), DisplayGrafoModifica.visita,
                 response -> {
                     try {
                         if(response.getBoolean("status")){

@@ -13,7 +13,7 @@ public class DisplayGrafoModifica extends ConstraintLayout {
 
     DisplayGrafoModifica self = null;
     Context context = null;
-    Visita visita = null;
+    public static Visita visita = null;
 
     public void init(){
         self = this;

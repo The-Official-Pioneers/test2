@@ -23,6 +23,7 @@ import java.util.List;
 
 import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.Zona;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
 
 public class CreaVisita extends AppCompatActivity {
 
@@ -92,6 +93,8 @@ public class CreaVisita extends AppCompatActivity {
             Spinner spinner = (Spinner) this.findViewById(R.id.spinner_scegli_luogo);
             selectedItem = spinner.getSelectedItem().toString();
 
+            CreaVisita self = this;
+
             visita.setTipo_creatore(1);
             visita.setCreatore_visitatore(Math.toIntExact(MainActivity.visitatore.getId()));
             Date tmpDate = Date.from(Instant.now());
@@ -106,6 +109,17 @@ public class CreaVisita extends AppCompatActivity {
                         if(status){
                             visita.setDataFromJSON(response.getJSONObject("data"));
                             System.out.println("ID VISITA" + visita.getId());
+
+                            GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment();
+                            androidx.fragment.app.FragmentManager supportFragmentManager;
+
+                            findViewById(R.id.linear_crea_visita).setVisibility(View.GONE);
+
+                            supportFragmentManager = getSupportFragmentManager();
+                            supportFragmentManager.beginTransaction()
+                                    .replace(R.id.frameCreaVisita, grafoModificaFragment)
+                                    .commit();
+
                         }else{
                             Toast.makeText(getApplicationContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
                         }

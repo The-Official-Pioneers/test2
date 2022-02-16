@@ -25,6 +25,8 @@ import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
+import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizzaFragment;
 
 public class VisiteCreateUtente extends AppCompatActivity {
 
@@ -334,5 +336,17 @@ public class VisiteCreateUtente extends AppCompatActivity {
             super.onBackPressed();
         }
         return true;
+    }
+
+    public void avviaGrafoVisualizza(View view) {
+        GrafoVisualizzaFragment grafoVisualizzaFragment = new GrafoVisualizzaFragment(VisiteCreateUtente.visitaSelezionata);
+        androidx.fragment.app.FragmentManager supportFragmentManager;
+
+        findViewById(R.id.scroll_singola_visita).setVisibility(View.GONE);
+
+        supportFragmentManager = getSupportFragmentManager();
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.frameVIsualizzaGrafo, grafoVisualizzaFragment)
+                .commit();
     }
 }

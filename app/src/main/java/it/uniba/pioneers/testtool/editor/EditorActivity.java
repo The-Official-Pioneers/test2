@@ -29,7 +29,6 @@ public class EditorActivity extends AppCompatActivity {
     private ActivityEditor2Binding binding;
 
     GrafoModificaFragment f = new GrafoModificaFragment();
-    GrafoVisualizzaFragment s = new GrafoVisualizzaFragment();
     GrafoModificaFragment e = new GrafoModificaFragment();
 
     public DialogNodeInfo d = new DialogNodeInfo();
@@ -64,29 +63,14 @@ public class EditorActivity extends AppCompatActivity {
                     indietro.setVisibility(View.INVISIBLE);
                     avanti.setVisibility(View.VISIBLE);
                     break;
-                case 2:
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.slade_out, R.anim.fade_in, R.anim.slade_out)
-                            .replace(containerView.getId(), s)
-                            .commit();
-                    state = 1;
-                    indietro.setVisibility(View.VISIBLE);
-                    avanti.setVisibility(View.VISIBLE);
-                    break;
+
             }
         });
 
         avanti.setOnClickListener(view2 -> {
             switch (state) {
                 case 0:
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.slade_out, R.anim.fade_in, R.anim.slade_out)
-                            .replace(containerView.getId(), s)
-                            .commit();
-                    state = 1;
-                    indietro.setVisibility(View.VISIBLE);
-                    avanti.setVisibility(View.VISIBLE);
-                    break;
+
                 case 1:
                     supportFragmentManager.beginTransaction()
                             .setCustomAnimations(R.anim.fade_in, R.anim.slade_out, R.anim.fade_in, R.anim.slade_out)
