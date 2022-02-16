@@ -96,7 +96,7 @@
                         android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Nome:" />
+                        android:text="@string/nome_areap" />
 
                     <TextView
                         android:id="@+id/cognome"

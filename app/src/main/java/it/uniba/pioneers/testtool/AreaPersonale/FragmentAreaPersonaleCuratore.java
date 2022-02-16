@@ -66,10 +66,10 @@ public class FragmentAreaPersonaleCuratore extends Fragment {
     }
 
     private void setDataCuratore(){
-        setTextEditText();
+       // setTextEditText();
 
         ImageView propic = (ImageView) getActivity().findViewById(R.id.img_propic);
-        EditText nome = (EditText) getActivity().findViewById(R.id.txt_nome_opera);
+        EditText nome = (EditText) getActivity().findViewById(R.id.txt_nome);
         EditText cognome = (EditText) getActivity().findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) getActivity().findViewById(R.id.txt_datan);
         EditText email = (EditText) getActivity().findViewById(R.id.txt_email);
@@ -89,7 +89,7 @@ public class FragmentAreaPersonaleCuratore extends Fragment {
         zona.setText( String.valueOf(MainActivity.curatore.getZona()) );
     }
 
-    private void setTextEditText(){
+    /*private void setTextEditText(){
         TextView nome = (TextView) getActivity().findViewById(R.id.nome_areap);
         TextView cognome = (TextView) getActivity().findViewById(R.id.cognome_areap);
         TextView datanascita = (TextView) getActivity().findViewById(R.id.datan_areap);
@@ -105,7 +105,7 @@ public class FragmentAreaPersonaleCuratore extends Fragment {
         zona.setText(R.string.zona_areap);
         modificaProfilo.setText(R.string.modificap_areap);
         newPass.setText(R.string.nuovapass_areap);
-    }
+    }*/
 
     @Override
     public void onDestroy() {

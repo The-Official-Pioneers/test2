@@ -67,7 +67,7 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
     }
 
     private void setDataVisitatore(){
-        setTextEditText();
+       // setTextEditText();
 
         ImageView propic = (ImageView) getActivity().findViewById(R.id.img_propic);
         EditText nome = (EditText) getActivity().findViewById(R.id.txt_nome);
@@ -88,7 +88,7 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
         datanascita.setText(MainActivity.visitatore.getShorterDataNascita());
     }
 
-    private void setTextEditText(){
+    /*private void setTextEditText(){
         TextView nome = (TextView) getActivity().findViewById(R.id.nome);
         TextView cognome = (TextView) getActivity().findViewById(R.id.cognome);
         TextView datanascita = (TextView) getActivity().findViewById(R.id.datan);
@@ -104,7 +104,7 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
 
         modificaProfilo.setText(R.string.modificap_areap);
         newPass.setText(R.string.nuovapass_areap);
-    }
+    }*/
 
     @Override
     public void onDestroy() {
