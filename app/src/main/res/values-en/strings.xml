@@ -289,7 +289,7 @@
     <string name="btn_visite_effettuate" translatable="false">Past Visits</string>
     <string name="btn_crea_visita" translatable="false">Create Visit</string>
     <string name="btn_visite_predefinite" translatable="false">Default Visits</string>
-    <string name="text_cerca" translatable="false">Search...</string>
+    <string name="text_cerca" translatable="false">Search visits by location..</string>
     <string name="text_interagisci" translatable="false">Interact with the work..</string>
     <string name="impossibile_leggere_dati" translatable="false">Could not read data from database.</string>
     <string name="uscire_sicuro_app" translatable="false">Are you sure you want to quit the app?</string>

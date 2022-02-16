@@ -94,11 +94,19 @@ public class FragmentSingolaVisita extends Fragment {
     }
 
     private void setVisibEliminaVisita(){
-        if(MainActivity.flagVisite == 1){
+        if(MainActivity.flagVisite == 1 || checkCuratoreCreatoreVisita()){
             Button btn_elimina_visita = (Button) getActivity().findViewById(R.id.btn_elimina_visita);
             btn_elimina_visita.setVisibility(View.GONE);
         } else {
             return;
+        }
+    }
+
+    private boolean checkCuratoreCreatoreVisita(){
+        if(VisiteCreateUtente.visitaSelezionata.getTipo_creatore() == 0){
+            return true;
+        } else {
+            return false;
         }
     }
 
