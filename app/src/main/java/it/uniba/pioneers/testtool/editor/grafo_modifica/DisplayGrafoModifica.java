@@ -10,7 +10,6 @@ import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 public class DisplayGrafoModifica extends ConstraintLayout {
     public GrafoModifica graph = null;
 
-    ListaNodi listaNodi = null;
     DisplayGrafoModifica self = null;
     Context context = null;
 
