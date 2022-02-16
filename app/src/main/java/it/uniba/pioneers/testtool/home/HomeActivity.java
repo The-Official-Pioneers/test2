@@ -198,8 +198,16 @@ public class HomeActivity extends AppCompatActivity {
         view.getContext().startActivity(intent);
     }
 
+
     @Override
     protected void onStop() {
         super.onStop();
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
