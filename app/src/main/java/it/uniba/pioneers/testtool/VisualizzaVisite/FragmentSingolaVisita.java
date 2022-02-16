@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,14 +86,12 @@ public class FragmentSingolaVisita extends Fragment {
         data_visita.setText(FragmentVisiteCreateUtente.outputFormat.format(visitDate));
         //ID Guida Visita
         guida_visita.setText(String.valueOf(VisiteCreateUtente.visitaSelezionata.getGuida()));
-        //Nome Guida Visita
-        setNomeGuida();
 
         setVisibEliminaVisita();
     }
 
     private void setVisibEliminaVisita(){
-        if(MainActivity.flagVisite == 1){
+        if(MainActivity.flagVisite == 1 || checkCuratoreCreatoreVisita()){
             Button btn_elimina_visita = (Button) getActivity().findViewById(R.id.btn_elimina_visita);
             btn_elimina_visita.setVisibility(View.GONE);
         } else {
@@ -102,10 +99,12 @@ public class FragmentSingolaVisita extends Fragment {
         }
     }
 
-    private void setNomeGuida(){
-        //Nome Guida Visita
-        TextView nome_guida_visita = (TextView) getActivity().findViewById(R.id.txt_nome_guida_visita);
-        nome_guida_visita.setText(FragmentVisiteCreateUtente.nomeCompletoGuida);
+    private boolean checkCuratoreCreatoreVisita(){
+        if(VisiteCreateUtente.visitaSelezionata.getTipo_creatore() == 0){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

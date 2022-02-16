@@ -20,9 +20,10 @@
             android:background="@drawable/login_edittext"
             android:drawableLeft="@drawable/ic_baseline_search_24"
             android:gravity="center"
+            android:imeOptions="actionSearch"
             android:inputType="text"
+            android:textColorHint="@color/gray_600"
             tools:ignore="TextContrastCheck" />
-
 
         <Button
             android:id="@+id/btn_crea_visita"

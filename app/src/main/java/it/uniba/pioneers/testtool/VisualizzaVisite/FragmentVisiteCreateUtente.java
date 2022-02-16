@@ -33,7 +33,6 @@ public class FragmentVisiteCreateUtente extends Fragment {
     public static ArrayAdapter<String> arrayAdapter;
     public static Guida g;
     public static Zona z;
-    public static String nomeCompletoGuida = "";
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -90,27 +89,9 @@ public class FragmentVisiteCreateUtente extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 VisiteCreateUtente.visitaSelezionata = VisiteCreateUtente.listaVisite.get(position);
-                getGuidaVisita();
                 startFragSingolaVisita();
             }
         });
-    }
-
-    //NON FUNZIONA, NON STAMPA NOME COMPLETO
-    private void getGuidaVisita(){
-        g = new Guida();
-        g.setId(VisiteCreateUtente.visitaSelezionata.getGuida());
-        g.readDataDb(getContext());
-
-        System.out.println("ID GUIDA:" + g.getId());
-        System.out.println("COGNOME GUIDA:" + g.getCognome());
-
-        StringBuilder nomeGuida = new StringBuilder();
-        nomeGuida.append(FragmentVisiteCreateUtente.g.getNome());
-        nomeGuida.append(" ");
-        nomeGuida.append(FragmentVisiteCreateUtente.g.getCognome());
-
-        System.out.println("NOME COMPLETO GUIDA:" + nomeGuida.toString());
     }
 
     private void setAdapterForList(List<Visita> lista, ListView listView){
