@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 import it.uniba.pioneers.testtool.editor.options.OptionsEditor;
@@ -60,7 +61,10 @@ public class GrafoModificaFragment extends Fragment {
 
         Log.v("grafoManipulateLayout", String.valueOf(grafoManipulateLayout));
 
-        DisplayGrafoModifica displayGrafoModifica = new DisplayGrafoModifica(getContext());
+        Visita tmpVisita = new Visita();
+        tmpVisita.setId(3);
+
+        DisplayGrafoModifica displayGrafoModifica = new DisplayGrafoModifica(getContext(), tmpVisita);
 
         displayGrafoModifica.setId(R.id.displayGrafoModifica);
 
