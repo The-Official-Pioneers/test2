@@ -104,7 +104,7 @@ public class FragmentAreaPersonaleGuida extends Fragment {
         setSpecializzazioniGuida(getContext());
 
         ImageView propic = (ImageView) getActivity().findViewById(R.id.img_propic);
-        EditText nome = (EditText) getActivity().findViewById(R.id.txt_nome_opera);
+        EditText nome = (EditText) getActivity().findViewById(R.id.txt_nome);
         EditText cognome = (EditText) getActivity().findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) getActivity().findViewById(R.id.txt_datan);
         EditText email = (EditText) getActivity().findViewById(R.id.txt_email);
@@ -124,11 +124,11 @@ public class FragmentAreaPersonaleGuida extends Fragment {
 
     private void setTextEditText(){
 
-        TextView nome = (TextView) getActivity().findViewById(R.id.nome_areap);
-        TextView cognome = (TextView) getActivity().findViewById(R.id.cognome_areap);
-        TextView datanascita = (TextView) getActivity().findViewById(R.id.datan_areap);
-        TextView email = (TextView) getActivity().findViewById(R.id.email_areap);
-        TextView specializzazione = (TextView) getActivity().findViewById(R.id.specializz_areap);
+        TextView nome = (TextView) getActivity().findViewById(R.id.nome);
+        TextView cognome = (TextView) getActivity().findViewById(R.id.cognome);
+        TextView datanascita = (TextView) getActivity().findViewById(R.id.datan);
+        TextView email = (TextView) getActivity().findViewById(R.id.email);
+        TextView specializzazione = (TextView) getActivity().findViewById(R.id.specializz);
         Button modificaProfilo = (Button) getActivity().findViewById(R.id.btn_edit_profile);
         Button newPass = (Button) getActivity().findViewById(R.id.btn_edit_password);
 
@@ -176,9 +176,7 @@ public class FragmentAreaPersonaleGuida extends Fragment {
                             e.printStackTrace();
                         }
                     },
-                    error -> {
-
-                    });
+                    error -> { });
         } catch (Exception e) {
             e.printStackTrace();
         }

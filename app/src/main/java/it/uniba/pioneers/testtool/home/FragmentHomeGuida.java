@@ -76,19 +76,19 @@ public class FragmentHomeGuida extends Fragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setTextEditText();
+        //setTextEditText();
     }
 
-    private void setTextEditText(){
+    /*private void setTextEditText(){
 
-        Button tueVisite = (Button) getActivity().findViewById(R.id.btn_tue_visite);
-        Button visiteEffettuate = (Button) getActivity().findViewById(R.id.btn_visite_effettuate);
-        TextView interagisciOpera = (TextView) getActivity().findViewById(R.id.text_interagisci);
+        TextView tueVisite =  getActivity().findViewById(R.id.le_tue_visite);
+        TextView visiteEffettuate = getActivity().findViewById(R.id.visite_effettuate);
+        TextView interagisciOpera = getActivity().findViewById(R.id.scanner_qr);
 
         tueVisite.setText(R.string.btn_tue_visite);
         visiteEffettuate.setText(R.string.btn_visite_effettuate);
         interagisciOpera.setText(R.string.text_interagisci);
 
-    }
+    }*/
 
 }

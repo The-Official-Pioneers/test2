@@ -144,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
         //tipoUtente = "guida";
         //idUtente = 1004; //guida
 
+        gestioneToolBar();
+
         switch(tipoUtente){    // caricamento della home corretta
             case "curatore":
                 FragmentHomeCuratore fragC = new FragmentHomeCuratore();
@@ -178,6 +180,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    private void gestioneToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolBarHome);
+        toolbar.setTitle("E-culture Tool");
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+        toolbar.setLogo(R.mipmap.ic_launcher_menu);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -621,6 +632,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToPersonalArea(MenuItem item) throws InterruptedException { // controllo tipo utente
+        Intent intent = new Intent(this, AreaPersonale.class);
+        startActivity(intent);
+    }
+
+    public void goToPersonalAreaFromDashboard(View view)throws InterruptedException{ // controllo tipo utente
         Intent intent = new Intent(this, AreaPersonale.class);
         startActivity(intent);
     }

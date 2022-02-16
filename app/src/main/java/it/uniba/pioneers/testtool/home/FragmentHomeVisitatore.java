@@ -66,15 +66,15 @@ public class FragmentHomeVisitatore extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setTextEditText();
+       // setTextEditText();
     }
 
-    private void setTextEditText(){
+   /* private void setTextEditText(){
 
-        Button visitePredef = (Button) getActivity().findViewById(R.id.btn_visite_predefinite);
-        Button tueVisite = (Button) getActivity().findViewById(R.id.btn_tue_visite);
-        Button creaVisita = (Button) getActivity().findViewById(R.id.btn_crea_visita);
-        TextView interagisciOpera = (TextView) getActivity().findViewById(R.id.text_interagisci);
+        TextView visitePredef = getActivity().findViewById(R.id.visite_predefinite);
+        TextView tueVisite =  getActivity().findViewById(R.id.le_tue_visite);
+        TextView creaVisita = getActivity().findViewById(R.id.crea_visita);
+        TextView interagisciOpera =  getActivity().findViewById(R.id.scanner_qr);
         EditText text_cerca = (EditText) getActivity().findViewById(R.id.text_cerca);
 
         text_cerca.setHint(R.string.text_cerca);
@@ -83,5 +83,5 @@ public class FragmentHomeVisitatore extends Fragment {
         creaVisita.setText(R.string.btn_crea_visita);
         interagisciOpera.setText(R.string.text_interagisci);
 
-    }
+    }*/
 }
