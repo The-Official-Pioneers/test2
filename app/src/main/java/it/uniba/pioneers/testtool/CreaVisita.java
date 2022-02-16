@@ -93,8 +93,6 @@ public class CreaVisita extends AppCompatActivity {
             Spinner spinner = (Spinner) this.findViewById(R.id.spinner_scegli_luogo);
             selectedItem = spinner.getSelectedItem().toString();
 
-            CreaVisita self = this;
-
             visita.setTipo_creatore(1);
             visita.setCreatore_visitatore(Math.toIntExact(MainActivity.visitatore.getId()));
             Date tmpDate = Date.from(Instant.now());
@@ -110,7 +108,7 @@ public class CreaVisita extends AppCompatActivity {
                             visita.setDataFromJSON(response.getJSONObject("data"));
                             System.out.println("ID VISITA" + visita.getId());
 
-                            GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment();
+                            GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(CreaVisita.visita);
                             androidx.fragment.app.FragmentManager supportFragmentManager;
 
                             findViewById(R.id.linear_crea_visita).setVisibility(View.GONE);

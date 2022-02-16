@@ -28,9 +28,6 @@ public class EditorActivity extends AppCompatActivity {
     public ArrayList<ListNodeModifica> opere;
     private ActivityEditor2Binding binding;
 
-    GrafoModificaFragment f = new GrafoModificaFragment();
-    GrafoModificaFragment e = new GrafoModificaFragment();
-
     public DialogNodeInfo d = new DialogNodeInfo();
 
     Integer state = 0;
@@ -45,26 +42,7 @@ public class EditorActivity extends AppCompatActivity {
 
         Button test = findViewById(R.id.tst_info);
 
-        containerView = findViewById(R.id.fragmentContainerView3);
-        supportFragmentManager = getSupportFragmentManager();
-
-        supportFragmentManager.beginTransaction()
-                .replace(containerView.getId(), f)
-                .commit();
-
         indietro.setOnClickListener(view -> {
-            switch (state) {
-                case 1:
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.slade_out, R.anim.fade_in, R.anim.slade_out)
-                            .replace(containerView.getId(), f)
-                            .commit();
-                    state = 0;
-                    indietro.setVisibility(View.INVISIBLE);
-                    avanti.setVisibility(View.VISIBLE);
-                    break;
-
-            }
         });
 
         avanti.setOnClickListener(view2 -> {
@@ -72,15 +50,6 @@ public class EditorActivity extends AppCompatActivity {
                 case 0:
 
                 case 1:
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.slade_out, R.anim.fade_in, R.anim.slade_out)
-                            .replace(containerView.getId(), e)
-                            .commit();
-                    state = 2;
-
-                    indietro.setVisibility(View.VISIBLE);
-                    avanti.setVisibility(View.INVISIBLE);
-                    break;
 
             }
         });
