@@ -45,9 +45,12 @@ public class ListaNodi extends HorizontalScrollView {
         //buttonAdd.setBackgroundColor(Color.DKGRAY);
 
         setOnDragListener((view, dragEvent) -> {
+            ListNodeModifica listNodeModifica = ((ListNodeModifica)dragEvent.getLocalState());
+
             switch (dragEvent.getAction()){
                 case DragEvent.ACTION_DROP:
-                    view.setVisibility(VISIBLE);
+                    listNodeModifica.reset();
+                    listNodeModifica.setVisibility(VISIBLE);
             }
             return true;
         });
