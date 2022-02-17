@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
     public static boolean fotoModificata;
     public static boolean nuovaOpera;
     public static int idUtente;
-    public static Bundle budleFragOpera;
 
     public static Visitatore visitatore = new Visitatore();
     public static CuratoreMuseale curatore = new CuratoreMuseale();
@@ -130,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentSingolaOpera=null;
         fotoModificata=false;
         nuovaOpera=false;
-        budleFragOpera=null;
                                         // in base al tipo di utente cheha eseguito il login carico un fragmentHome differente
         Intent intent = getIntent();
         if(intent.getStringExtra("typeUser")!=null) {

@@ -52,6 +52,7 @@ public class FragmentSingolaArea extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         if(this.fragmentSingolaArea != null){
             MainActivity.fragmentSingolaArea = this.fragmentSingolaArea;
         }

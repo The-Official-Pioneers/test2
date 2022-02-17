@@ -65,7 +65,6 @@
             android:name=".editor.EditorActivity"
             android:exported="true" >
 
-
         </activity>
         <activity
             android:name=".MainActivity"

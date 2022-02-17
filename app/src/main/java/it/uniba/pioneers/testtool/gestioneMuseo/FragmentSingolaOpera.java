@@ -63,77 +63,64 @@ public class FragmentSingolaOpera extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle b) {
-        super.onCreate(b);
+    public void onCreate(Bundle outState) {
+        setRetainInstance(true);
+        super.onCreate(outState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);    // salvataggio dello stato del fragment
-        MainActivity.budleFragOpera=new Bundle();
-        MainActivity.budleFragOpera.putString("titolo", editableTitolo.getText().toString());
-        MainActivity.budleFragOpera.putString("descrizione", editableDescrizione.getText().toString());
-    }
-
     public void setDataOpera(){   // metodo per mostrare le informazioni dell'opera in modalità diverse in base al tipo di utente(modalità: solo lettura oppure anche modifica)
-        titolo = (TextView) getActivity().findViewById(R.id.txt_titolo);
-        descrizione = (TextView) getActivity().findViewById(R.id.txt_descrizione);
-        img = (ImageView) getActivity().findViewById(R.id.img_foto);
-        // modifica visibilità degli elementi della UI in base al tipo di utente e se l'opera esiste o la si sta creando
-        if(!MainActivity.tipoUtente.equals("curatore")){
-            FloatingActionButton modificaFoto =(FloatingActionButton)getActivity().findViewById(R.id.btn_modifica_img);
-            modificaFoto.setVisibility(View.GONE);
-        }
-        if(MainActivity.tipoUtente.equals("curatore")) {
-            editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
-            editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
+        if(MainActivity.fotoModificata==false) {
+            titolo = (TextView) getActivity().findViewById(R.id.txt_titolo);
+            descrizione = (TextView) getActivity().findViewById(R.id.txt_descrizione);
+            img = (ImageView) getActivity().findViewById(R.id.img_foto);
+            // modifica visibilità degli elementi della UI in base al tipo di utente e se l'opera esiste o la si sta creando
+            if (!MainActivity.tipoUtente.equals("curatore")) {
+                FloatingActionButton modificaFoto = (FloatingActionButton) getActivity().findViewById(R.id.btn_modifica_img);
+                modificaFoto.setVisibility(View.GONE);
+            }
+            if (MainActivity.tipoUtente.equals("curatore")) {
+                editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
+                editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
 
-            if(MainActivity.operaSelezionata!=null) {     // campi popolati in base all'opera selezionata
+                if (MainActivity.operaSelezionata != null) {     // campi popolati in base all'opera selezionata
+                    byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    img.setImageBitmap(decodedByte);
+                    editableTitolo.setText(MainActivity.operaSelezionata.getTitolo());
+                    editableDescrizione.setText(MainActivity.operaSelezionata.getDescrizione());
+                } else {
+                    editableTitolo.setText("");
+                    editableDescrizione.setText("");
+                }
+
+            } else {   // se utente non è curatore, non può modificare nulla
+
                 byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 img.setImageBitmap(decodedByte);
-                editableTitolo.setText(MainActivity.operaSelezionata.getTitolo());
-                editableDescrizione.setText(MainActivity.operaSelezionata.getDescrizione());
+
+                editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
+                editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
+                editableTitolo.setVisibility(View.GONE);
+                editableDescrizione.setVisibility(View.GONE);
+                titolo.append('\n' + MainActivity.operaSelezionata.getTitolo());
+                descrizione.append('\n' + MainActivity.operaSelezionata.getDescrizione());
             }
-            else{
-                editableTitolo.setText("");
-                editableDescrizione.setText("");
-            }
-
-        } else {   // se utente non è curatore, non può modificare nulla
-
-            byte[] bytes = Base64.decode(MainActivity.operaSelezionata.getFoto(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            img.setImageBitmap(decodedByte);
-
-            editableTitolo = (EditText) getActivity().findViewById(R.id.txt_edit_titolo);
-            editableDescrizione = (EditText) getActivity().findViewById(R.id.txt_edit_descrizione);
-            editableTitolo.setVisibility(View.GONE);
-            editableDescrizione.setVisibility(View.GONE);
-            titolo.append('\n' + MainActivity.operaSelezionata.getTitolo());
-            descrizione.append('\n' + MainActivity.operaSelezionata.getDescrizione());
-        }
-        if(MainActivity.budleFragOpera!=null) {
-            editableTitolo.setText(MainActivity.budleFragOpera.getString("titolo"));
-            editableDescrizione.setText(MainActivity.budleFragOpera.getString("descrizione"));
         }
 
     }
 
-    @Override
+   @Override
     public void onResume() {
         super.onResume();
         MainActivity.toggle.setDrawerIndicatorEnabled(false);    // abilitazione della navigazione all'indietro
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if(this.fragmentSingolaOpera != null){
             MainActivity.fragmentSingolaOpera = this.fragmentSingolaOpera;
-        }
-        if(MainActivity.tipoUtente.equals("curatore")){
-            setDataOpera();
         }
     }
 
@@ -162,8 +149,8 @@ public class FragmentSingolaOpera extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        MainActivity.operaSelezionata=null;
-        MainActivity.fragmentSingolaOpera=null;
+       MainActivity.operaSelezionata=null;
+       MainActivity.fragmentSingolaOpera=null;
         if(MainActivity.qr){
             ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             MainActivity.toggle.setDrawerIndicatorEnabled(true);
@@ -171,6 +158,5 @@ public class FragmentSingolaOpera extends Fragment {
             MainActivity.operaSelezionata=null;
             MainActivity.qr=false;
         }
-       MainActivity.budleFragOpera=null;
     }
 }
