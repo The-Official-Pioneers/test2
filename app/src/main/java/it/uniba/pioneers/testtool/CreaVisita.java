@@ -8,6 +8,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.Response;
 
@@ -35,7 +37,7 @@ public class CreaVisita extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crea_visita);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        gestioneToolBar();
 
         switch(MainActivity.tipoUtente){
             case "visitatore":
@@ -45,6 +47,16 @@ public class CreaVisita extends AppCompatActivity {
                 findViewById(R.id.linear_crea_visita).setVisibility(View.GONE);
                 startEditorCuratore();
         }
+    }
+
+    private void gestioneToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolBarCreaVisita);
+        toolbar.setTitle("E-culture Tool");
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+        toolbar.setLogo(R.mipmap.ic_launcher_menu);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

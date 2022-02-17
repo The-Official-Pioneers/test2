@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".CreaVisita">
 
+    <LinearLayout
+        android:id="@+id/linear_crea_visita_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBarCreaVisita"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/design_default_color_primary"
+            android:elevation="4dp"
+            />
+
     <FrameLayout
         android:id="@+id/frameCreaVisita"
         android:layout_width="match_parent"
@@ -47,8 +61,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="goToEditorAfterLuogo"
-                android:text="@string/conferma_luogo" />
+                android:text="@string/conferma_luogo"
+                android:background="@drawable/login_btn"
+                android:textColor="@color/white"/>
         </LinearLayout>
     </FrameLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
