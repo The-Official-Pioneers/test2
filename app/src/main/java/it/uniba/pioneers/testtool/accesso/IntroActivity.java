@@ -2,6 +2,7 @@ package it.uniba.pioneers.testtool.accesso;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
