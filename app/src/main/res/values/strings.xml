@@ -452,7 +452,7 @@
     <string name="conferma_luogo" translatable="false">Conferma Luogo</string>
     <string name="creazione_visita_testo" translatable="false">Una volta selezionato il luogo per la
         visita, clicca sul bottone seguente per crearla: una volta cliccato il bottone, la visita viene creata
-        all'interno del database senza dover cliccare ulteriori bottoni.</string>
+        all\'interno del database senza dover cliccare ulteriori bottoni.</string>
 
 
     <!-- ====================================================================================== -->
