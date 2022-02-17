@@ -71,6 +71,8 @@ public class FragmentSingolaVisita extends Fragment {
         setDataVisita();
     }
 
+    //Metodo necessario per impostare i dati della visita selezionata dalla lista
+    //popolata precedentemente
     private void setDataVisita(){
         EditText num_visita = (EditText) getActivity().findViewById(R.id.txt_numero_visita);
         EditText luogo_visita = (EditText) getActivity().findViewById(R.id.txt_luogo_visita);
@@ -90,6 +92,9 @@ public class FragmentSingolaVisita extends Fragment {
         setVisibEliminaVisita();
     }
 
+    //Metodo necessario per impostare la visibilità del bottone Elimina Visita nel caso in cui
+    //un visitatore sceglie Visite Predefinite o cerca tutte le visite in un luogo
+    //Il bottone è necessario solo se visitatore/curatore museale visualizza una sua visita
     private void setVisibEliminaVisita(){
         if(MainActivity.flagVisite == 1 || checkCuratoreCreatoreVisita()){
             Button btn_elimina_visita = (Button) getActivity().findViewById(R.id.btn_elimina_visita);
@@ -99,6 +104,7 @@ public class FragmentSingolaVisita extends Fragment {
         }
     }
 
+    //Metodo necessario per controllare se la visita scelta dal visitatore è di un curatore o meno
     private boolean checkCuratoreCreatoreVisita(){
         if(VisiteCreateUtente.visitaSelezionata.getTipo_creatore() == 0){
             return true;

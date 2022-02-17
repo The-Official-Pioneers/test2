@@ -23,7 +23,8 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:textColorHint="@color/gray_600"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            android:hint="@string/text_cerca"/>
 
         <Button
             android:id="@+id/btn_crea_visita"
@@ -34,6 +35,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
             android:onClick="creaVisita"
+            android:text="@string/btn_crea_visita"
             android:textColor="#212121" />
 
         <Button
@@ -42,6 +44,7 @@
             android:layout_height="100dp"
             android:layout_margin="5dp"
             android:onClick="goToYourVisite"
+            android:text="@string/btn_tue_visite"
             android:textColor="#212121" />
 
         <Button
@@ -78,7 +81,7 @@
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="interagisci con l'opera"
                 android:gravity="center_horizontal"
-
+                android:text="@string/text_interagisci"
                 android:textColor="#212121"
                 android:textSize="14sp" />
 

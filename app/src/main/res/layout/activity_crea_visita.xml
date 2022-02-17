@@ -22,14 +22,14 @@
                 android:id="@+id/text_titolo_crea_visita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Crea la tua visita"
+                android:text="@string/crea_visita"
                 android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/text_scegli_luogo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Scegli il luogo dove effettuare la visita"
+                android:text="@string/scegli_luogo_visita"
                 android:textSize="18dp" />
 
             <Spinner
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="goToEditorAfterLuogo"
-                android:text="Conferma Luogo" />
+                android:text="@string/conferma_luogo" />
         </LinearLayout>
     </FrameLayout>
 

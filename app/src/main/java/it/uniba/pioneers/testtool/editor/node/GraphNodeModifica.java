@@ -118,7 +118,7 @@ public class GraphNodeModifica extends Node {
             }
 
             if(!state){
-                Snackbar.make(self.getRootView(), "È già presente questo elemento nella visita", BaseTransientBottomBar.LENGTH_SHORT).show();
+                Snackbar.make(self.getRootView(), R.string.elem_presente, BaseTransientBottomBar.LENGTH_SHORT).show();
             }
 
             return state;
@@ -155,7 +155,7 @@ public class GraphNodeModifica extends Node {
                                         response -> {
                                             try {
                                                 if(response.getBoolean("status")){
-                                                    Toast.makeText(self.getContext(), "Zona aggiunta con successo alla visita #"+self.data.getInt("id"), Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(self.getContext(), R.string.zona_aggiunta_visita + self.data.getInt("id"), Toast.LENGTH_SHORT).show();
                                                 }
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
@@ -168,7 +168,7 @@ public class GraphNodeModifica extends Node {
                                 Zona.addArea(self.getContext(), self.graphParent.visita.data.getInt("id"), listNodeModifica.data.getInt("id"),
                                         response -> {
                                             try {
-                                                Toast.makeText(self.getContext(), "Area aggiunta con successo alla zona #"+self.data.getInt("id"), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(self.getContext(), R.string.area_aggiunta_visita + self.data.getInt("id"), Toast.LENGTH_SHORT).show();
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -180,7 +180,7 @@ public class GraphNodeModifica extends Node {
                                 Area.addOpera(self.getContext(), self.graphParent.visita.data.getInt("id"), listNodeModifica.data.getInt("id"),
                                         response -> {
                                             try {
-                                                Toast.makeText(self.getContext(), "Opera aggiunta con successo all'area #"+self.data.getInt("id"), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(self.getContext(), R.string.opera_aggiunta_visita + self.data.getInt("id"), Toast.LENGTH_SHORT).show();
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -219,7 +219,7 @@ public class GraphNodeModifica extends Node {
             @Override
             public boolean onLongClick(View view) {
                 GraphNodeModifica node = ((GraphNodeModifica)view);
-                System.out.println(node.data.toString());
+
                 AlertDialog dialog1 = NodeDialog.NodeDialog(context, node);
                 dialog1.show();
                 return true;

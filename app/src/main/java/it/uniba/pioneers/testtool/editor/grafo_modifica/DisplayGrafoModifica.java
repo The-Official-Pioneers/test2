@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import it.uniba.pioneers.data.Visita;
-import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 
 public class DisplayGrafoModifica extends ConstraintLayout {
     public GrafoModifica graph = null;
@@ -20,7 +19,8 @@ public class DisplayGrafoModifica extends ConstraintLayout {
         graph = new GrafoModifica(context, visita);
         graph.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        addView(graph); //AGGIUNTA DEL GRAFO AL DISPLAYGRAFO
+        //AGGIUNTA DEL GRAFO AL DISPLAYGRAFO
+        addView(graph);
     }
 
 

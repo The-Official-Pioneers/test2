@@ -79,6 +79,9 @@ public class FragmentVisiteCreateUtente extends Fragment {
         setLista();
     }
 
+    //Metodo necessario per impostare i valori all'interno della lista in base alle visite
+    //precedentemente caricate
+    //Inoltre vi è un Listener necessario per gestire il click su un elemento della lista
     private void setLista(){
         //ListView presente nel file activity_visite_create_utente.xml
         ListView lista_visite = (ListView) getActivity().findViewById(R.id.lista_visite_utente);
@@ -94,6 +97,9 @@ public class FragmentVisiteCreateUtente extends Fragment {
         });
     }
 
+    //Metodo necessario per impostare l'adapter della listView e fornire una stringa descrittiva
+    //agli elementi della lista.
+    //Formato stringa: Visita #id_visita - #luogo_visita - #data_visita
     private void setAdapterForList(List<Visita> lista, ListView listView){
         List<String> stringVisite = new ArrayList<>();
         Visita visitaToAdd;
@@ -118,6 +124,7 @@ public class FragmentVisiteCreateUtente extends Fragment {
         listView.setAdapter(arrayAdapter);
     }
 
+    //Metodo necessario per far partire fragment per mostrare informazioni di una singola visita
     private void startFragSingolaVisita(){
         // carico il fragment per mostrare la lista delle visite
         FragmentSingolaVisita fsv = new FragmentSingolaVisita();

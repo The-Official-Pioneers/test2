@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     public static Guida guida = new Guida();
 
     //Flag usato per capire se il visitatore vuole vedere le sue visite o quelle predefinite
-    //2 = visite in base al luogo, 1 = visite predef, 0 = sue visite
+    //2 = ricerca visite in base al luogo, 1 = visite predef, 0 = sue visite
     public static int flagVisite;
 
     public static String luogoToSearch;
@@ -118,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        // inizializzazione degli oggetti di supporto per gestionde dei dati e delle operazioni disponibili all'utente
+
+        //Inizializzazione degli oggetti di supporto per gestionde dei dati e delle operazioni disponibili all'utente
         qr=false;
         areeZona=null;
         areaSelezionata=null;
@@ -131,23 +132,16 @@ public class MainActivity extends AppCompatActivity {
         fotoModificata=false;
         nuovaOpera=false;
         budleFragOpera=null;
-                                        // in base al tipo di utente cheha eseguito il login carico un fragmentHome differente
+
+        //In base al tipo di utente che effettua il login carico un fragmentHome differente
         Intent intent = getIntent();
         if(intent.getStringExtra("typeUser")!=null) {
             tipoUtente = intent.getStringExtra("typeUser");
             idUtente = intent.getIntExtra("idUser", 1);
         }
 
-       //tipoUtente = "curatore";
-       //idUtente = 1; //curatore
-
-        //tipoUtente = "visitatore";
-        //IdUtente = 2; //visitatore
-
-        //tipoUtente = "guida";
-        //idUtente = 1004; //guida
-
-        switch(tipoUtente){    // caricamento della home corretta
+        //Caricamento della home corretta in base al tipo di utente
+        switch(tipoUtente){
             case "curatore":
                 FragmentHomeCuratore fragC = new FragmentHomeCuratore();
                 supportFragmentManager = getSupportFragmentManager();
@@ -192,7 +186,8 @@ public class MainActivity extends AppCompatActivity {
         // creazione della toolbar
         creaToolbar();
 
-        switch(tipoUtente){ // lettura dati utente da db per popolare l'area personales
+        //Lettura dati dell'utente attuale da db per popolare i dati nell'area personale
+        switch(tipoUtente){
             case "visitatore":
                 visitatore.setId(idUtente);
                 visitatore.readDataDb(this, new Response.Listener<JSONObject>() {
@@ -221,6 +216,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+        //Gestione della ricerca di visite in base al luogo da parte di un visitatore
+        //utilizzando la search bar (Gestito l'evento IME_ACTION_SEARCH, ovvero
+        //quando l'utente clicca sul bottone per cercare effettuo la ricerca)
         if(tipoUtente.equals("visitatore")){
             EditText searchBar = (EditText) findViewById(R.id.text_cerca);
             searchBar.setOnEditorActionListener((v, actionId, event) -> {
@@ -401,7 +399,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
@@ -428,7 +425,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);  // modifica della visibilità degli action button in base alla posizion dell'utente(curatore)
+        super.onPrepareOptionsMenu(menu);
+        //Modifica della visibilità degli action button in base alla posizion dell'utente(curatore)
         menu.findItem(R.id.action_delete_opera).setVisible(false);
         menu.findItem(R.id.action_save_opera).setVisible(false);
         menu.findItem(R.id.action_delete_area).setVisible(false);
@@ -629,13 +627,14 @@ public class MainActivity extends AppCompatActivity {
                 fotoModificata = true;
 
             } catch (FileNotFoundException e) {
-                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
+                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.foto_impostata_fail,
                         Snackbar.LENGTH_LONG).show();
             }
         }
     }
 
-    public void goToPersonalArea(MenuItem item) throws InterruptedException { // controllo tipo utente
+    //Metodo necessario per far partire l'activity dell'area personale
+    public void goToPersonalArea(MenuItem item) throws InterruptedException {
         Intent intent = new Intent(this, AreaPersonale.class);
         startActivity(intent);
     }
@@ -901,11 +900,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Metodo necessario per far partire l'activity per la creazione di una visita
     public void creaVisita(View view) {
         Intent intent = new Intent(this, CreaVisita.class);
         startActivity(intent);
     }
 
+    //Metodo necessario per far partire l'activity necessaria per visualizzare le visite
+    //create da un utente
     public void goToYourVisite(View view) {
         flagVisite = 0;
         flagVisiteGuida = 1;
@@ -913,18 +915,25 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Metodo necessario per far partire l'activity necessaria per visualizzare le visite
+    //predefinite, ovvero create dai curatori museali
+    //(usato solo dai visitatori)
     public void goToVisitePredefinite(View view) {
         flagVisite = 1;
         Intent intent = new Intent(this, VisiteCreateUtente.class);
         startActivity(intent);
     }
 
+    //Metodo necessario per far partire l'activity necessaria per visualizzare le visite
+    //che un visitatore cerca in base al luogo attraverso la search bar
     public void goToVisiteByLuogo(View view) {
         flagVisite = 2;
         Intent intent = new Intent(this, VisiteCreateUtente.class);
         startActivity(intent);
     }
 
+    //Metodo necessario per far partire l'activity necessaria per visualizzare le visite
+    //già effettuate da una guida
     public void goToPastVisit(View view) {
         flagVisiteGuida = 0;
         Intent intent = new Intent(this, VisiteCreateUtente.class);

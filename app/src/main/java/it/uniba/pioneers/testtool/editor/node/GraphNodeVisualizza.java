@@ -66,7 +66,7 @@ public class GraphNodeVisualizza extends Node {
     protected void setOnLongClickListener(@NonNull Context context) {
         setOnLongClickListener(view -> {
             GraphNodeVisualizza node = ((GraphNodeVisualizza)view);
-            System.out.println(node.data.toString());
+
             AlertDialog dialog1 = NodeDialog.NodeDialog(context, node);
             dialog1.show();
             return true;

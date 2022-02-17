@@ -236,6 +236,12 @@
     </string-array>
 
     <!-- ===============CRUD STUFF=============== -->
+    <string name="creazione_non_riuscita" translatable="false">Errore: Impossibile creare dati.</string>
+    <string name="lettura_dati_non_riuscita" translatable="false">Errore: Impossibile leggere dati.</string>
+    <string name="aggiornamento_non_riuscito" translatable="false">Errore: Impossibile aggiornare dati.</string>
+    <string name="eliminazione_non_riuscita" translatable="false">Errore: Impossibile eliminare dati.</string>
+
+
     <string name="cambio_dati_no_validi" translatable="false">Non è avenuto nessun cambio dati,
         verifica che i valori siano validi.</string>
     <string name="server_no_risponde" translatable="false">Il server non risponde.</string>
@@ -247,6 +253,8 @@
     <string name="visitatore_eliminato_successo" translatable="false">Visitatore eliminato con successo!</string>
     <string name="curatore_eliminato_successo" translatable="false">Curatore eliminato con successo!</string>
     <string name="guida_eliminata_successo" translatable="false">Guida eliminata con successo!</string>
+
+    <string name="impossibile_ottenere_luogo" translatable="false">Errore: Impossibile ottenere luogo.</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============LOGIN STUFF=============== -->
@@ -257,6 +265,30 @@
     <string name="bentornato_login" translatable="false">Bentornato </string>
     <string name="successo_result_login" translatable="false">Successo[data= </string>
     <string name="errore_result_login" translatable="false">Errore[exception= </string>
+
+    <string name="account_inesistente" translatable="false">Errore: Account inesistente.</string>
+
+    <string name="accedi" translatable="false">Accedi</string>
+    <string name="registrati" translatable="false">Registrati</string>
+
+    <string name="curatore_default" translatable="false">ACCOUNT CURATORE - PER TEST</string>
+    <string name="visitatore_default" translatable="false">ACCOUNT VISITATORE - PER TEST</string>
+    <string name="guida_default" translatable="false">ACCOUNT GUIDA - PER TEST</string>
+
+    <string name="chi_sei" translatable="false">Chi sei?</string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============REGISTER STUFF=============== -->
+    <string name="immagine_profilo" translatable="false">Immagine di Profilo</string>
+    <string name="nome" translatable="false">Nome</string>
+    <string name="cognome" translatable="false">Cognome</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="password" translatable="false">Password</string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============HOME MENU STUFF=============== -->
+    <string name="profilo" translatable="false">Profilo</string>
+    <string name="logout" translatable="false">Logout</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============PLACEHOLDER STUFF=============== -->
@@ -272,6 +304,7 @@
     <string name="email_areap" translatable="false">Email:</string>
 
     <string name="aggiornamento_profilo_successo" translatable="false">Profilo aggiornato con successo!</string>
+    <string name="impossibile_aggiornare_profilo" translatable="false">Errore: Impossibile aggiornare profilo.</string>
     <string name="impossibile_procedere" translatable="false">Impossibile procedere.</string>
     <string name="no_modifiche" translatable="false">Nessuna modifica effettuata.</string>
 
@@ -280,6 +313,7 @@
     <string name="mostra_pass" translatable="false">Mostra</string>
     <string name="nascondi_pass" translatable="false">Nascondi</string>
     <string name="pass_aggiornata_successo" translatable="false">Password aggiornata con successo!</string>
+    <string name="impossibile_aggiornare_password" translatable="false">Errore: Impossibile aggiornare password.</string>
     <string name="annulla" translatable="false">Annulla</string>
 
     <string name="permessi_galleria" translatable="false">Permessi Galleria</string>
@@ -287,6 +321,7 @@
         l\'accesso non si potrà caricare una nuova foto.</string>
 
     <string name="foto_aggiornata_successo" translatable="false">Foto caricata con successo!</string>
+    <string name="impossibile_aggiornare_propic" translatable="false">Errore: Impossibile aggiornare immagine di profilo.</string>
 
     <string name="uscire" translatable="false"> Uscire?</string>
     <string name="uscire_no_salvare" translatable="false"> Uscire senza salvare le modifiche?</string>
@@ -306,7 +341,7 @@
     <!-- ===============HOME PAGE=============== -->
     <string name="btn_tue_visite" translatable="false">Le Tue Visite</string>
     <string name="btn_gestisci_museo" translatable="false">Gestisci Museo</string>
-    <string name="btn_visite_effettuate" translatable="false">Visite Effettuate</string>
+    <string name="btn_visite_effettuate" translatable="false">Visite Passate</string>
     <string name="btn_crea_visita" translatable="false">Crea Visita</string>
     <string name="btn_visite_predefinite" translatable="false">Visite Predefinite</string>
     <string name="text_cerca" translatable="false">Cerca visite per luogo..</string>
@@ -325,8 +360,8 @@
 
     <string name="nessun_risultato" translatable="false">Nessun risultato</string>
     <string name="foto_impostata_successo" translatable="false">Foto aggiornata con successo!</string>
+    <string name="foto_impostata_fail" translatable="false">Errore: Impossibile aggiornare foto.</string>
 
-    <string name="accedi" translatable="false">Accedi</string>
     <string name="registrati_accedi_museo" translatable="false">Registrati/Accedi per poter gestire il tuo museo</string>
 
     <string name="aggiungi_nuova_arae" translatable="false">Aggiungi una nuova area al tuo museo</string>
@@ -383,6 +418,37 @@
     <string name="elimina_visita" translatable="false">Elimina Visita</string>
 
     <string name="dati_visita" translatable="false">Dati Visita</string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============EDITOR=============== -->
+    <string name="elem_presente" translatable="false">Elemento già presente nella visita.</string>
+    <string name="zona_aggiunta_visita" translatable="false">Zona aggiunta con successo alla visita #</string>
+    <string name="area_aggiunta_visita" translatable="false">Area aggiunta con successo alla zona #</string>
+    <string name="opera_aggiunta_visita" translatable="false">Opera aggiunta con successo all\'area #</string>
+
+    <string name="mostra_tutti_editor" translatable="false">Mostra tutti</string>
+    <string name="nascondi_duplicati_editor" translatable="false">Nascondi Duplicati</string>
+
+    <string name="impossibile_comunicare_server" translatable="false">Non è stato possibile comunicare con il server</string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============EDITOR=============== -->
+    <string name="crea_visita" translatable="false">Crea una visita</string>
+    <string name="scegli_luogo_visita" translatable="false">Scegli il luogo dove effettuare la visita:</string>
+    <string name="conferma_luogo" translatable="false">Conferma Luogo</string>
+
+
+
+    <!-- ====================================================================================== -->
+
+    <!-- ===============CHECK INTERNET DIALOG=============== -->
+    <string name="oops" translatable="false">OOPS!</string>
+    <string name="no_internet" translatable="false">Nessuna connessione ad Internet!</string>
+    <string name="controlla_connessione" translatable="false">Controlla la tua connessione</string>
+    <string name="riprova" translatable="false">Riprova</string>
+
+
+
     <!-- ====================================================================================== -->
 
 </resources>

@@ -216,17 +216,24 @@
     </string-array>
 
     <!-- ===============CRUD STUFF=============== -->
+    <string name="creazione_non_riuscita" translatable="false">Error: could not create data.</string>
+    <string name="lettura_dati_non_riuscita" translatable="false">Error: could not read data.</string>
+    <string name="aggiornamento_non_riuscito" translatable="false">Error: could not update data.</string>
+    <string name="eliminazione_non_riuscita" translatable="false">Error: could not delete data.</string>
+
     <string name="cambio_dati_no_validi" translatable="false">No changes have been made,
         verify that the values are valid.</string>
     <string name="server_no_risponde" translatable="false">Server not responding.</string>
 
     <string name="visita_eliminata_successo" translatable="false">Visit deleted with success!</string>
-    <string name="zona_eliminata_successo" translatable="false">Area deleted with success!</string>
+    <string name="zona_eliminata_successo" translatable="false">Site deleted with success!</string>
     <string name="opera_eliminata_successo" translatable="false">Work deleted with success!</string>
     <string name="area_eliminata_successo" translatable="false">Zone deleted with success!</string>
     <string name="visitatore_eliminato_successo" translatable="false">Visitor deleted with success!</string>
     <string name="curatore_eliminato_successo" translatable="false">Curator deleted with success!</string>
     <string name="guida_eliminata_successo" translatable="false">Guide deleted with success!</string>
+
+    <string name="impossibile_ottenere_luogo" translatable="false">Error: could not get place.</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============LOGIN STUFF=============== -->
@@ -237,6 +244,30 @@
     <string name="bentornato_login" translatable="false">Welcome Back </string>
     <string name="successo_result_login" translatable="false">Success[data= </string>
     <string name="errore_result_login" translatable="false">Error[exception= </string>
+
+    <string name="account_inesistente" translatable="false">Error: account does not exist.</string>
+
+    <string name="accedi" translatable="false">Sign in</string>
+    <string name="registrati" translatable="false">Register</string>
+
+    <string name="curatore_default" translatable="false">ACCOUNT CURATORE - TEST ONLY</string>
+    <string name="visitatore_default" translatable="false">ACCOUNT VISITATORE - TEST ONLY</string>
+    <string name="guida_default" translatable="false">ACCOUNT GUIDA - TEST ONLY</string>
+
+    <string name="chi_sei" translatable="false">Who are you?</string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============REGISTER STUFF=============== -->
+    <string name="immagine_profilo" translatable="false">Profile Picture</string>
+    <string name="nome" translatable="false">Name</string>
+    <string name="cognome" translatable="false">Surname</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="password" translatable="false">Password</string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============HOME MENU STUFF=============== -->
+    <string name="profilo" translatable="false">Profile</string>
+    <string name="logout" translatable="false">Logout</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============PLACEHOLDER STUFF=============== -->
@@ -252,6 +283,7 @@
     <string name="email_areap" translatable="false">Email:</string>
 
     <string name="aggiornamento_profilo_successo" translatable="false">Profile updated successfully!</string>
+    <string name="impossibile_aggiornare_profilo" translatable="false">Error: could not update profile.</string>
     <string name="impossibile_procedere" translatable="false">Could not proceed.</string>
     <string name="no_modifiche" translatable="false">No changes made.</string>
 
@@ -260,6 +292,7 @@
     <string name="mostra_pass" translatable="false">Show</string>
     <string name="nascondi_pass" translatable="false">Hide</string>
     <string name="pass_aggiornata_successo" translatable="false">Password updated successfully!</string>
+    <string name="impossibile_aggiornare_password" translatable="false">Error: could not update password.</string>
     <string name="annulla" translatable="false">Undo</string>
 
     <string name="permessi_galleria" translatable="false">Gallery Permission</string>
@@ -267,13 +300,14 @@
         denying the access you will not be able to upload a new picture.</string>
 
     <string name="foto_aggiornata_successo" translatable="false">Picture updated successfully!</string>
+    <string name="impossibile_aggiornare_propic" translatable="false">Error: could not update profile picture.</string>
 
     <string name="uscire" translatable="false"> Exit?</string>
     <string name="uscire_no_salvare" translatable="false"> Exit without saving the changes?</string>
     <!-- ====================================================================================== -->
 
     <!-- CURATORE PROFILE AREA -->
-    <string name="zona_areap" translatable="false">Area:</string>
+    <string name="zona_areap" translatable="false">Site:</string>
     <!-- ====================================================================================== -->
 
     <!-- GUIDA PROFILE AREA -->
@@ -305,8 +339,8 @@
 
     <string name="nessun_risultato" translatable="false">No result</string>
     <string name="foto_impostata_successo" translatable="false">Photo updated with success!</string>
+    <string name="foto_impostata_fail" translatable="false">Error: could not update photo.</string>
 
-    <string name="accedi" translatable="false">Sign in</string>
     <string name="registrati_accedi_museo" translatable="false">Register/Sign in to manage your museum</string>
 
     <string name="aggiungi_nuova_arae" translatable="false">Add a new area to your museum</string>
@@ -352,7 +386,7 @@
 
     <string name="id_visita" translatable="false">Visit ID:</string>
     <string name="data" translatable="false">Date:</string>
-    <string name="zona_visita" translatable="false">Area:</string>
+    <string name="zona_visita" translatable="false">Site:</string>
     <string name="id_guida" translatable="false">Guide ID:</string>
     <string name="nome_guida" translatable="false">Guide\'s Name:</string>
     <string name="luogo" translatable="false">Place:</string>
@@ -362,6 +396,37 @@
     <string name="elimina_visita" translatable="false">Delete Visit</string>
 
     <string name="dati_visita" translatable="false">Visit Data</string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============EDITOR=============== -->
+    <string name="elem_presente" translatable="false">Item already in the visit.</string>
+    <string name="zona_aggiunta_visita" translatable="false">Site added to the visit #</string>
+    <string name="area_aggiunta_visita" translatable="false">Area added to the visit #</string>
+    <string name="opera_aggiunta_visita" translatable="false">Work added to the area #</string>
+
+    <string name="mostra_tutti_editor" translatable="false">Show all</string>
+    <string name="nascondi_duplicati_editor" translatable="false">Hide duplicates</string>
+
+    <string name="impossibile_comunicare_server" translatable="false">Could not communicate with server</string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============EDITOR=============== -->
+    <string name="crea_visita" translatable="false">Create a visit</string>
+    <string name="scegli_luogo_visita" translatable="false">Choose the place where to take the visit:</string>
+    <string name="conferma_luogo" translatable="false">Confirm Place</string>
+
+
+
+    <!-- ====================================================================================== -->
+
+    <!-- ===============CHECK INTERNET DIALOG=============== -->
+    <string name="oops" translatable="false">OOPS!</string>
+    <string name="no_internet" translatable="false">No internet connection!</string>
+    <string name="controlla_connessione" translatable="false">Please check your connection</string>
+    <string name="riprova" translatable="false">Retry</string>
+
+
+
     <!-- ====================================================================================== -->
 
 </resources>

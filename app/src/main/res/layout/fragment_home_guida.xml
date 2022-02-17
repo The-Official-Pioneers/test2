@@ -20,6 +20,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
             android:onClick="goToYourVisite"
+            android:text="@string/btn_tue_visite"
             android:textColor="#212121" />
 
         <Button
@@ -28,6 +29,7 @@
             android:layout_height="100dp"
             android:layout_margin="5dp"
             android:onClick="goToPastVisit"
+            android:text="@string/btn_visite_effettuate"
             android:textColor="#212121" />
 
         <androidx.cardview.widget.CardView
@@ -54,6 +56,7 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="interagisci con l'opera"
             android:gravity="center_horizontal"
+            android:text="@string/text_interagisci"
             android:textColor="#212121"
             android:textSize="14sp" />
 

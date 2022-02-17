@@ -16,7 +16,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.ResponseCache;
 import java.text.ParseException;
 
 import it.uniba.pioneers.data.server.Server;
@@ -152,7 +151,7 @@ public class Area {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.lettura_dati_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -251,7 +250,7 @@ public class Area {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.creazione_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -305,7 +304,7 @@ public class Area {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.aggiornamento_non_riuscito, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -365,7 +364,7 @@ public class Area {
                                 if(status){
                                     Toast.makeText(context, R.string.area_eliminata_successo, Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.eliminazione_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

@@ -20,7 +20,7 @@
             android:background="@drawable/login_edittext"
             android:drawableLeft="@drawable/ic_baseline_search_24"
             android:gravity="center"
-
+            android:hint="@string/text_cerca"
             android:inputType="text"
             tools:ignore="TextContrastCheck" />
 
@@ -34,7 +34,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
             android:onClick="gestisciMuseo"
-
+            android:text="@string/btn_gestisci_museo"
             android:textColor="#212121" />
 
         <Button
@@ -43,6 +43,7 @@
             android:layout_height="100dp"
             android:layout_margin="5dp"
             android:onClick="goToYourVisite"
+            android:text="@string/btn_tue_visite"
             android:textColor="#212121" />
 
         <Button
@@ -51,6 +52,7 @@
             android:layout_height="100dp"
             android:layout_margin="5dp"
             android:onClick="creaVisita"
+            android:text="@string/btn_crea_visita"
             android:textColor="#212121" />
 
         <androidx.cardview.widget.CardView
@@ -77,6 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
+                android:text="@string/text_interagisci"
                 android:contentDescription="interagisci con l'opera"
                 android:gravity="center_horizontal"
 

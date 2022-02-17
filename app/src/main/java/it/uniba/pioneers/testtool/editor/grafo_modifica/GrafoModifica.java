@@ -3,7 +3,6 @@ package it.uniba.pioneers.testtool.editor.grafo_modifica;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -23,9 +22,9 @@ import org.json.JSONObject;
 
 import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.editor.node.GraphNodeModifica;
 import it.uniba.pioneers.testtool.editor.draw.DrawView;
 import it.uniba.pioneers.testtool.editor.draw.Line;
+import it.uniba.pioneers.testtool.editor.node.GraphNodeModifica;
 import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 
 public class GrafoModifica extends ConstraintLayout {
@@ -115,7 +114,7 @@ public class GrafoModifica extends ConstraintLayout {
                 response -> {
                     try {
                         if (response.getBoolean("status") == true) {
-                            Log.v("VISITE", response.getJSONObject("data").toString(4));
+
                             JSONObject data = response.getJSONObject("data");
 
                             visita = new GraphNodeModifica(context, self, NodeType.VISITA, data.getJSONObject("visita"));
@@ -153,7 +152,7 @@ public class GrafoModifica extends ConstraintLayout {
                 },
                 error -> Snackbar.make(
                         self.getRootView(),
-                        "Non è stato possibile comunicare con il server",
+                        R.string.impossibile_comunicare_server,
                         BaseTransientBottomBar.LENGTH_LONG
                 ).show()
         );

@@ -19,36 +19,20 @@ import java.util.ArrayList;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentListaAree#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentListaAree extends Fragment{
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public static ArrayAdapter<String> lvAdapter;
     public static ArrayList<String> lista;
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
     public FragmentListaAree() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentListaAree.
-     */
-    // TODO: Rename and change types and number of parameters
     public static FragmentListaAree newInstance(String param1, String param2) {
         FragmentListaAree fragment = new FragmentListaAree();
         Bundle args = new Bundle();
@@ -72,9 +56,6 @@ public class FragmentListaAree extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_aree, container, false);
         setHasOptionsMenu(true);
-
-
-
         return view;
     }
 
@@ -82,31 +63,36 @@ public class FragmentListaAree extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // abilitazione della navigazione all'indietro
+        //Abilitazione della navigazione all'indietro
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
 
-
-        lista = new ArrayList<String>();  // creazione della lista con i nomi di tutte le aree del museo
+        //Creazione della lista con i nomi di tutte le aree del museo
+        lista = new ArrayList<String>();
         for(int i = 0; i<MainActivity.areeZona.size(); i++){
             lista.add(MainActivity.areeZona.get(i).getNome());
         }
 
         ListView lv = (ListView) view.findViewById(R.id.listView);
-        lvAdapter = new ArrayAdapter<String>(   // creazione dell'adapter per la llistView
+        //Creazione dell'adapter per la listView
+        lvAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 lista
         );
         lv.setAdapter(lvAdapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){    // gestione del click su un'elemento della lista
+        //Gestione del click su un'elemento della lista
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getActivity(),String.valueOf(MainActivity.areeZona.get(i).getId()), Toast.LENGTH_SHORT).show();
                 MainActivity.areaSelezionata = MainActivity.areeZona.get(i);
                 MainActivity.currArea=i;
-                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();  // caricamento del fragment che mostrerà i dettagli dell'area selezionata
+                //Caricamento del fragment che mostrerà i dettagli dell'area selezionata
+                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 MainActivity.fragmentSingolaArea = new FragmentSingolaArea();
-                fragmentManager.beginTransaction()    // caricamento del fragment che mostrera l'area selezionata
+                //Caricamento del fragment che mostrera l'area selezionata
+                fragmentManager.beginTransaction()
                         .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, MainActivity.fragmentSingolaArea)
                         .addToBackStack(null)
@@ -125,10 +111,12 @@ public class FragmentListaAree extends Fragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //Oggetti utili per la gestione delle operazioni disponibili
         MainActivity.areeZona=null;
-        MainActivity.areaSelezionata=null;   // oggetti utili per la gestione delle operazioni disponibili
+        MainActivity.areaSelezionata=null;
         MainActivity.opereArea=null;
-        MainActivity.operaSelezionata=null;           // modifica della toolbar in base a dove si trova l'utente
+        MainActivity.operaSelezionata=null;
+        //Modifica della toolbar in base a dove si trova l'utente
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         MainActivity.toggle.setDrawerIndicatorEnabled(true);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.testtool);
