@@ -52,6 +52,10 @@ public class FragmentSingolaArea extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_singola_area, container, false);
     }
+
+    /*
+    * impostato il contenuto della edit text con il nome dell'area, modificabile
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -62,7 +66,7 @@ public class FragmentSingolaArea extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //Oggetti utili per la gestione dei dati e delle operazioni disponibili all'utente
+        //Oggetti utili per la gestione dei dati e delle operazioni disponibili all'utente nella toolbar
         MainActivity.areaSelezionata=null;
         MainActivity.opereArea=null;
         MainActivity.operaSelezionata=null;

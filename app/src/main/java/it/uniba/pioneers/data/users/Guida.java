@@ -235,7 +235,7 @@ public class Guida {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -360,7 +360,7 @@ public class Guida {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -425,7 +425,7 @@ public class Guida {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -488,7 +488,7 @@ public class Guida {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -507,7 +507,7 @@ public class Guida {
 
         if (isOnline()) {
             try {
-                System.out.println("Sono arrivato");
+
                 RequestQueue queue = Volley.newRequestQueue(context);
                 String url = Server.getUrl() + "/guida/login/";
 
@@ -526,7 +526,7 @@ public class Guida {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                        System.out.println(error.toString());
+                        
                     }
                 });
                 queue.add(jsonObjectRequest);
@@ -555,7 +555,7 @@ public class Guida {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);

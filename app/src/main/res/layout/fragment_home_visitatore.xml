@@ -11,7 +11,9 @@
         android:layout_height="match_parent"
         tools:context=".home.FragmentHomeVisitatore"
         android:background="@color/alto"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusableInTouchMode="true"
+        android:focusable="true">
 
         <EditText
             android:id="@+id/text_cerca"
@@ -24,7 +26,8 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:textColorHint="@color/gray_600"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            />
 
         <LinearLayout
             android:clipToPadding="false"

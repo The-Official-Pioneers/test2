@@ -201,7 +201,7 @@ public class Zona {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -341,7 +341,7 @@ public class Zona {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -404,7 +404,7 @@ public class Zona {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -467,7 +467,7 @@ public class Zona {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
