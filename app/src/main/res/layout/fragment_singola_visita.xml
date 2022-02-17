@@ -206,7 +206,7 @@
                         android:text="@string/modifica_grafo_visita" />
 
                     <Button
-                        android:id="@+id/scegli_visita"
+                        android:id="@+id/btn_scegli_guida"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
