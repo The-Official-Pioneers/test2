@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/alto">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="16dp"
@@ -61,11 +61,11 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="400dp"
-                android:textColor="@color/white"
                 android:background="@drawable/login_btn"
                 android:enabled="true"
                 android:onClick="onClickButton"
-                android:text="Cominciamo" />
+                android:text="@string/cominciamo_welcome"
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </LinearLayout>

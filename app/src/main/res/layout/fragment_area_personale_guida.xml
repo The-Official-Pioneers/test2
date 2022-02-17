@@ -137,7 +137,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:gravity="center"
-                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
                         android:paddingTop="5dp"
                         android:text="Zona:" />
 
@@ -187,13 +187,14 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:inputType="text"
-                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
                         android:textSize="14sp" />
 
                     <Spinner
                         android:id="@+id/spinner_specializzazione"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="6dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:paddingLeft="10dp"
