@@ -106,6 +106,7 @@ public class AreaPersonale extends AppCompatActivity {
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.frame_areap, fragAreaVisit)
                 .commit();
     }
@@ -116,6 +117,7 @@ public class AreaPersonale extends AppCompatActivity {
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.frame_areap, fragAreaGuida)
                 .commit();
 
@@ -127,6 +129,7 @@ public class AreaPersonale extends AppCompatActivity {
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.frame_areap, fragAreaCurat)
                 .commit();
     }

@@ -383,7 +383,7 @@
     <string name="confermi" translatable="false">Confermi</string>
     <string name="confermi_modifica" translatable="false">Confermi la modifica?</string>
 
-    <string name="modifica_campo" translatable="false">Modifica almeno un campo per salvare</string>
+    <string name="modifica_campo" translatable="false">Modifica almeno un campo, con valori validi per salvare</string>
     <string name="modifica_effettuata" translatable="false">Modifica effettuata</string>
 
     <string name="conferma_modifica_opera" translatable="false">Confermare la modifica dell\'opera?</string>
