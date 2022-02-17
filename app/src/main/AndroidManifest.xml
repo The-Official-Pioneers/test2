@@ -27,12 +27,11 @@
             android:name=".VisualizzaVisite.VisiteCreateUtente"
             android:exported="true"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.TestTool.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".CreaVisita"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:parentActivityName=".MainActivity" />
 
         <activity
             android:name=".home.HomeActivity"
