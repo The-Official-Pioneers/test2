@@ -1,279 +1,284 @@
 <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/shape_login_panel"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
-
-    <ImageView
-        android:id="@+id/nullImg"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="130dp"
-        android:onClick="addImage"
-        android:src="@drawable/ic_baseline_add_a_photo_24" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_marginRight="130dp"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="20dp"
-        android:onClick="addImage"
-        android:id="@+id/imgToSet"
-        android:visibility="gone"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="2dp"
-        android:text="@string/immagine_profilo"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <TextView
-        android:id="@+id/Base64ImgString"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="2dp"
-        android:text=""
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:visibility="gone"/>
-
-    <EditText
-        android:id="@+id/nomeFormRef"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="24dp"
-        android:autofillHints="@string/prompt_email"
-        android:hint="@string/nome"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:selectAllOnFocus="true"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
-        android:textColorLink="@color/black" />
-
-    <EditText
-        android:id="@+id/cognomeFormRef"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="24dp"
-        android:autofillHints="@string/prompt_email"
-        android:hint="@string/cognome"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:selectAllOnFocus="true"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
-        android:textColorLink="@color/black" />
-
-    <EditText
-        android:id="@+id/emailFormRef"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="24dp"
-        android:autofillHints="@string/prompt_email"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:selectAllOnFocus="true"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
-        android:textColorLink="@color/black" />
-
-    <EditText
-        android:id="@+id/passwordFormRef"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="24dp"
-        android:autofillHints="@string/prompt_password"
-        android:hint="@string/password"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:minHeight="48dp"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
-        android:textColorLink="@color/black" />
-    <Spinner
-        android:id="@+id/specializzazione"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="24dp"
-        android:background="#f5f5f5"
-        android:autofillHints="@string/prompt_email"
-        android:hint="Specializzazione"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:selectAllOnFocus="true"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
-        android:textColorLink="@color/black"
-        android:visibility="gone"
-        android:dropDownWidth="300dp"
-        android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"/>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginTop="10dp">
-
-    <Spinner
-        android:id="@+id/day_spinner"
-        style="@style/Widget.AppCompat.Spinner"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="350dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="25dp"
-        android:layout_weight="1"
-        android:background="#f5f5f5"
-        android:dropDownWidth="300dp"
-        android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-        android:popupBackground="@android:color/white" />
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/mounth_spinner"
-        style="@style/Widget.AppCompat.Spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/dropdownListPreferredItemHeight"
-        android:layout_weight="1"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#f5f5f5"
-        android:dropDownWidth="300dp"
-        android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight" />
+        <ImageView
+            android:id="@+id/nullImg"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:onClick="addImage"
+            android:src="@drawable/ic_baseline_add_a_photo_24" />
 
-    <Spinner
-        android:id="@+id/years_spinner"
-        style="@style/Widget.AppCompat.Spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/dropdownListPreferredItemHeight"
-        android:layout_weight="1"
-        android:background="#f5f5f5"
-        android:dropDownWidth="300dp"
-        android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-        android:layout_marginRight="25dp"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginRight="130dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="20dp"
+            android:onClick="addImage"
+            android:id="@+id/imgToSet"
+            android:visibility="gone"/>
 
-</LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="15dp"
-        android:background="@android:color/darker_gray"
-        android:visibility="gone"
-        android:id="@+id/subFormCuratoreSeparator"
-        android:orientation="vertical"/>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:id="@+id/subFormCuratore">
-
-        <Spinner
-            android:id="@+id/tipoZona"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="24dp"
-            android:autofillHints="@string/prompt_email"
-            android:hint="Tipo di zona"
-            android:background="#f5f5f5"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="true"
-            android:textColor="@color/black"
-            android:textColorHighlight="@color/black"
-            android:textColorHint="@color/black"
-            android:textColorLink="@color/black"
-            android:dropDownWidth="300dp"
-            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight" />
+            android:paddingTop="2dp"
+            android:text="Profile Image"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-        <Spinner
-            android:id="@+id/cittaZona"
+        <TextView
+            android:id="@+id/Base64ImgString"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="24dp"
-            android:autofillHints="@string/prompt_email"
-            android:hint="Citta"
-            android:background="#f5f5f5"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="true"
-            android:textColor="@color/black"
-            android:textColorHighlight="@color/black"
-            android:textColorHint="@color/black"
-            android:textColorLink="@color/black"
-            android:dropDownWidth="300dp"
-            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight" />
+            android:paddingTop="2dp"
+            android:text=""
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:visibility="gone"/>
 
         <EditText
-            android:id="@+id/nomeZona"
+            android:id="@+id/nomeFormRef"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="24dp"
+            android:autofillHints="@string/prompt_email"
+            android:hint="Nome"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/black"
+            android:textColorHint="#757575"
+            android:textColorLink="@color/black" />
+
+        <EditText
+            android:id="@+id/cognomeFormRef"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="24dp"
             android:autofillHints="@string/prompt_email"
-            android:hint="Nome zona"
+            android:hint="Cognome"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/black"
+            android:textColorHint="#757575"
+            android:textColorLink="@color/black" />
+
+        <EditText
+            android:id="@+id/emailFormRef"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="24dp"
+            android:autofillHints="@string/prompt_email"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/black"
+            android:textColorHint="#757575"
+            android:textColorLink="@color/black" />
+
+        <EditText
+            android:id="@+id/passwordFormRef"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="24dp"
+            android:autofillHints="@string/prompt_password"
+            android:hint="@string/prompt_password"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:minHeight="48dp"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/black"
+            android:textColorHint="#757575"
+            android:textColorLink="@color/black" />
+        <Spinner
+            android:id="@+id/specializzazione"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="24dp"
+            android:background="#f5f5f5"
+            android:autofillHints="@string/prompt_email"
+            android:hint="Specializzazione"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:selectAllOnFocus="true"
             android:textColor="@color/black"
             android:textColorHighlight="@color/black"
             android:textColorHint="@color/black"
-            android:textColorLink="@color/black" />
+            android:textColorLink="@color/black"
+            android:visibility="gone"
+            android:dropDownWidth="300dp"
+            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/day_spinner"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="89dp"
+                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="15dp"
+                android:background="#f5f5f5"
+                android:dropDownWidth="300dp"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+                android:paddingRight="0dp"
+                android:popupBackground="@android:color/white" />
+
+            <Spinner
+                android:id="@+id/mounth_spinner"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_width="89dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="15dp"
+                android:background="#f5f5f5"
+                android:dropDownWidth="300dp"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+                android:paddingRight="14dp"
+                />
+
+            <Spinner
+                android:id="@+id/years_spinner"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_width="89dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="15dp"
+                android:background="#f5f5f5"
+                android:dropDownWidth="300dp"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+                android:paddingRight="14dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@android:color/darker_gray"
+            android:visibility="gone"
+            android:id="@+id/subFormCuratoreSeparator"
+            android:orientation="horizontal" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:id="@+id/subFormCuratore">
+
+            <Spinner
+                android:id="@+id/tipoZona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="24dp"
+                android:autofillHints="@string/prompt_email"
+                android:hint="Tipo di zona"
+                android:background="#f5f5f5"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/black"
+                android:textColorHint="@color/black"
+                android:textColorLink="@color/black"
+                android:dropDownWidth="300dp"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight" />
+
+            <Spinner
+                android:id="@+id/cittaZona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="24dp"
+                android:autofillHints="@string/prompt_email"
+                android:hint="Citta"
+                android:background="#f5f5f5"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/black"
+                android:textColorHint="@color/black"
+                android:textColorLink="@color/black"
+                android:dropDownWidth="300dp"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight" />
+
+            <EditText
+                android:id="@+id/nomeZona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="24dp"
+                android:autofillHints="@string/prompt_email"
+                android:hint="Nome zona"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/black"
+                android:textColorHint="#757575"
+                android:textColorLink="@color/black" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/registerForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:enabled="true"
+            android:text="REGISTRATI"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/login_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintVertical_bias="0.359"
+            android:onClick="registerButton"
+            android:textColor="@color/white"/>
 
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/registerForm"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:layout_marginTop="30dp"
-        android:enabled="false"
-        android:onClick="registerButton"
-        android:text="@string/registrati"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.359" />
-
-
-</LinearLayout>
 </ScrollView>

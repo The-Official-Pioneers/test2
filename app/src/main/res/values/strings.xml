@@ -418,6 +418,8 @@
     <string name="elimina_visita" translatable="false">Elimina Visita</string>
 
     <string name="dati_visita" translatable="false">Dati Visita</string>
+    <string name="Accesso">Accesso</string>
+    <string name="AreaPersonale">Area Personale</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============EDITOR=============== -->

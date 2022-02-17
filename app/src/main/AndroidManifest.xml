@@ -80,7 +80,8 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".AreaPersonale.AreaPersonale"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light"/>
     </application>
 
 </manifest>

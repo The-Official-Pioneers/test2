@@ -199,7 +199,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    @Override
+   /* @Override
     protected void onStop() {
         super.onStop();
         finish();
@@ -209,5 +209,5 @@ public class HomeActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-    }
+    }*/
 }

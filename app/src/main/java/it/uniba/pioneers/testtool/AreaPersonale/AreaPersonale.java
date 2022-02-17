@@ -57,8 +57,9 @@ public class AreaPersonale extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_personale);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
+
 
     @Override
     protected void onStart() {
@@ -117,7 +118,7 @@ public class AreaPersonale extends AppCompatActivity {
     //Se si tratta di un curatore museale modifica anche il campo zona
     public void editProfile(View view){
 
-        EditText nome = (EditText) findViewById(R.id.txt_nome_opera);
+        EditText nome = (EditText) findViewById(R.id.txt_nome);
         EditText cognome = (EditText) findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
@@ -229,7 +230,7 @@ public class AreaPersonale extends AppCompatActivity {
 
     //Metodo necessario per controllare che siano state effettuate modifiche ai campi del guida
     private boolean checkForChangesGuida(EditText nomeToCheck, EditText cognomeToCheck, EditText datanToCheck,
-                                    EditText emailToCheck, String specialToCheck){
+                                         EditText emailToCheck, String specialToCheck){
         if( !(nomeToCheck.getText().toString().equals(MainActivity.guida.getNome())) ||
                 !(cognomeToCheck.getText().toString().equals(MainActivity.guida.getCognome())) ||
                 !(datanToCheck.getText().toString().equals(MainActivity.guida.getShorterDataNascita())) ||
@@ -243,7 +244,7 @@ public class AreaPersonale extends AppCompatActivity {
 
     //Metodo necessario per controllare che siano state effettuate modifiche ai campi del curatore
     private boolean checkForChangesCuratore(EditText nomeToCheck, EditText cognomeToCheck, EditText datanToCheck,
-                                    EditText emailToCheck, EditText zonaToCheck){
+                                            EditText emailToCheck, EditText zonaToCheck){
 
         if( !(nomeToCheck.getText().toString().equals(MainActivity.curatore.getNome())) ||
                 !(cognomeToCheck.getText().toString().equals(MainActivity.curatore.getCognome())) ||
@@ -536,7 +537,7 @@ public class AreaPersonale extends AppCompatActivity {
 
     //Metodo che controlla se ci sono state modifiche non ancora salvate
     private boolean checkFieldsBeforeLeaving(){
-        String textNome = ((EditText) findViewById(R.id.txt_nome_opera)).getText().toString();
+        String textNome = ((EditText) findViewById(R.id.txt_nome)).getText().toString();
         String textCognome = ((EditText) findViewById(R.id.txt_cognome)).getText().toString();
         String textDatan = ((EditText) findViewById(R.id.txt_datan)).getText().toString();
         String textEmail = ((EditText) findViewById(R.id.txt_email)).getText().toString();

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,6 +12,7 @@
     android:paddingRight="@dimen/fragment_horizontal_margin"
     android:paddingBottom="@dimen/fragment_vertical_margin"
     tools:context=".home.ui.RegisterFragment"
+    android:background="@color/alto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -37,47 +39,51 @@
             android:id="@+id/curatore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/login_btn"
             android:enabled="true"
+            android:onClick="clickedButton"
             android:text="CURATORE"
-            android:layout_marginTop="70dp"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password"
-            app:layout_constraintVertical_bias="0.2"
-            android:onClick="clickedButton" />
+            app:layout_constraintVertical_bias="0.2" />
 
         <Button
             android:id="@+id/visitatore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/login_btn"
             android:enabled="true"
+            android:onClick="clickedButton"
             android:text="VISITATORE"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password"
-            app:layout_constraintVertical_bias="0.346"
-            android:onClick="clickedButton" />
+            app:layout_constraintVertical_bias="0.346" />
 
         <Button
             android:id="@+id/guida"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/login_btn"
             android:enabled="true"
+            android:onClick="clickedButton"
             android:text="GUIDA"
-            android:shadowColor="@color/light_blue_900"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password"
-            app:layout_constraintVertical_bias="0.359"
-            android:onClick="clickedButton" />
+            app:layout_constraintVertical_bias="0.359" />
     </LinearLayout>
 
 
