@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/alto"
     tools:context=".gestioneMuseo.FragmentSingolaArea">
 
     <ScrollView
@@ -13,39 +14,59 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/shape_login_panel"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:scrollbars="vertical"
-                android:text="@string/nome_singola_area"
-                android:textSize="25dp" />
+                android:textColor="@color/shuttle_gray"
+                android:text="Nome Area: "
+                android:textSize="25sp" />
 
             <EditText
                 android:id="@+id/txt_edit_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:backgroundTint="@color/cranberry"
                 android:minHeight="48dp"
                 android:text="NomeArea"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center|fill_vertical"
+                android:orientation="horizontal">
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_opereArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:background="@drawable/login_btn"
+                android:backgroundTint="@color/cranberry"
                 android:onClick="mostraOpereArea"
-                android:text="@string/btn_opere_area" />
+                android:textColor="@color/white"
+                android:text="mostra le opere" />
 
         </LinearLayout>
     </ScrollView>
+
 </FrameLayout>

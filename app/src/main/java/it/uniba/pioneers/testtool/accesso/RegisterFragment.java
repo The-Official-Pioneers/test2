@@ -1,9 +1,7 @@
-package it.uniba.pioneers.testtool.home.ui;
+package it.uniba.pioneers.testtool.accesso;
 
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.GONE;
-
-import static java.lang.Thread.sleep;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -16,14 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +27,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.Response;
 
@@ -46,6 +43,10 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
@@ -53,19 +54,8 @@ import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.home.HomeActivity;
 import it.uniba.pioneers.widget.WidgetRegister;
 
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RegisterFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RegisterFragment extends Fragment {
     //FOR PHOTO REQUEST
     private static final int PICK_FROM_GALLERY = 1; //Verrà utilizzato per la richiesta dei permessi
@@ -78,30 +68,18 @@ public class RegisterFragment extends Fragment {
     boolean c3;
     /****************************************************/
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private WidgetRegister ln; //Riferimento che conterrà il widget presente nel layout del fragment
     private String userType = null; //Attore scelto dall'utente
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public RegisterFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RegisterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static RegisterFragment newInstance(String param1, String param2) {
         RegisterFragment fragment = new RegisterFragment();
         Bundle args = new Bundle();
@@ -124,7 +102,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
@@ -424,7 +401,7 @@ public class RegisterFragment extends Fragment {
                 final Uri imageUri = data.getData();
 
                 //Apro un inputStream nel quale risiede l'immagine
-                final InputStream inputStream = ((HomeActivity)getActivity()).getContentResolverAct(imageUri);
+                final InputStream inputStream = ((IntroActivity)getActivity()).getContentResolverAct(imageUri);
 
                 //Decodifico l'immagine presente nello stream in una bitmap
                 final Bitmap selectedImage = BitmapFactory.decodeStream(inputStream);
@@ -616,7 +593,7 @@ public class RegisterFragment extends Fragment {
                              * Registrazione non andata a buon fine
                              ********************************************************************************************************/
                             Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                            Intent intent = new Intent(getView().getContext(), IntroActivity.class);
                             startActivity(intent);
                         }
                     } catch (Exception e) {
@@ -662,7 +639,7 @@ public class RegisterFragment extends Fragment {
                              * Registrazione non andata a buon fine
                              ********************************************************************************************************/
                             Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                            Intent intent = new Intent(getView().getContext(), IntroActivity.class);
                             startActivity(intent);
                         }
                     } catch (Exception e) {
@@ -686,7 +663,6 @@ public class RegisterFragment extends Fragment {
     private void saveDataInDbCuratore(JSONObject data) {
         try {
             Zona zona = new Zona();
-            System.out.println(data.getString("tipoZona"));
 
             zona.setDenominazione(data.getString("nomeZona"));
             zona.setTipo(data.getString("tipoZona"));
@@ -740,7 +716,7 @@ public class RegisterFragment extends Fragment {
                                              * Registrazione non andata a buon fine
                                              ********************************************************************************************************/
                                             Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                                            Intent intent = new Intent(getView().getContext(), IntroActivity.class);
                                             startActivity(intent);
                                         }
                                     } catch (Exception e) {
@@ -753,7 +729,7 @@ public class RegisterFragment extends Fragment {
                              * Registrazione non andata a buon fine
                              ********************************************************************************************************/
                             Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                            Intent intent = new Intent(getView().getContext(), IntroActivity.class);
                             startActivity(intent);
                         }
                     } catch (Exception e) {
@@ -789,7 +765,6 @@ public class RegisterFragment extends Fragment {
      * stata utilizzata da uno dei tre attori
      *************************************************************************/
     public void finalResultControll() throws JSONException {
-        System.out.println("c1: "+c1+ "\nc2: "+c2+"\nc3: "+c3);
         if(!c1 && !c2 && !c3){
             /****************************************************************
              * La mail non è mai stata utilizzata, procedi alla registrazione

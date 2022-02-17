@@ -1,13 +1,17 @@
 package it.uniba.pioneers.testtool;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.Response;
 
@@ -23,6 +27,7 @@ import java.util.List;
 
 import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.Zona;
+import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
 
 public class CreaVisita extends AppCompatActivity {
@@ -34,19 +39,36 @@ public class CreaVisita extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crea_visita);
+        gestioneToolBar();
+
+        switch(MainActivity.tipoUtente){
+            case "visitatore":
+                setLuoghiVisite(this);
+                break;
+            case "curatore":
+                findViewById(R.id.linear_crea_visita).setVisibility(View.GONE);
+                startEditorCuratore();
+        }
+    }
+
+    private void gestioneToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolBarCreaVisita);
+        toolbar.setTitle("E-culture Tool");
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+        toolbar.setLogo(R.mipmap.ic_launcher_menu);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        setLuoghiVisite(this);
     }
 
     //Gestione Spinner con Luoghi presenti nel DB
     public void setLuoghiVisite(Context context){
         Spinner spinner = (Spinner) this.findViewById(R.id.spinner_scegli_luogo);
-
         try{
             Zona.getAllLuoghi(CreaVisita.this,
                     response -> {
@@ -69,7 +91,7 @@ public class CreaVisita extends AppCompatActivity {
                                 spinner.setAdapter(spinnerAdapter);
 
                             }else{
-                                System.out.println("Sium sium");
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -83,78 +105,117 @@ public class CreaVisita extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 
+    //Avvia editor dopo aver selezionato il luogo dove effettuare la visita
     public void goToEditorAfterLuogo(View view) {
-
+        //Creo una nuova visita
         visita = new Visita();
 
-        if(MainActivity.tipoUtente.equals("visitatore")){
+        //Riempi la visita appena creata con i dati necessari
+        Spinner spinner = (Spinner) this.findViewById(R.id.spinner_scegli_luogo);
+        selectedItem = spinner.getSelectedItem().toString();
 
-            Spinner spinner = (Spinner) this.findViewById(R.id.spinner_scegli_luogo);
-            selectedItem = spinner.getSelectedItem().toString();
+        visita.setTipo_creatore(1);
+        visita.setCreatore_visitatore(Math.toIntExact(MainActivity.visitatore.getId()));
 
-            visita.setTipo_creatore(1);
-            visita.setCreatore_visitatore(Math.toIntExact(MainActivity.visitatore.getId()));
-            Date tmpDate = Date.from(Instant.now());
-            Long tmpLong = tmpDate.getTime();
-            visita.setData(tmpLong);
-            visita.setLuogo(selectedItem);
-            visita.createDataDb(this, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        Boolean status =  response.getBoolean("status");
-                        if(status){
-                            visita.setDataFromJSON(response.getJSONObject("data"));
-                            System.out.println("ID VISITA" + visita.getId());
+        Date tmpDate = Date.from(Instant.now());
+        Long tmpLong = tmpDate.getTime();
+        visita.setData(tmpLong);
+        visita.setLuogo(selectedItem);
 
-                            GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(CreaVisita.visita);
-                            androidx.fragment.app.FragmentManager supportFragmentManager;
+        //Una volta inseriti i dati nella visita, la inserisco sul db per poi passare
+        //alla sua composizione nell'editor
+        visita.createDataDb(this, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Boolean status =  response.getBoolean("status");
+                    if(status){
+                        visita.setDataFromJSON(response.getJSONObject("data"));
 
-                            findViewById(R.id.linear_crea_visita).setVisibility(View.GONE);
+                        GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(visita);
+                        androidx.fragment.app.FragmentManager supportFragmentManager;
 
-                            supportFragmentManager = getSupportFragmentManager();
-                            supportFragmentManager.beginTransaction()
-                                    .replace(R.id.frameCreaVisita, grafoModificaFragment)
-                                    .commit();
+                        findViewById(R.id.linear_crea_visita).setVisibility(View.GONE);
 
-                        }else{
-                            Toast.makeText(getApplicationContext(), R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException | ParseException e) {
-                        e.printStackTrace();
+                        supportFragmentManager = getSupportFragmentManager();
+                        supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                                .replace(R.id.frameCreaVisita, grafoModificaFragment)
+                                .commit();
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), R.string.creazione_non_riuscita, Toast.LENGTH_SHORT).show();
                     }
+                } catch (JSONException | ParseException e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
+    }
 
-        } else if(MainActivity.tipoUtente.equals("curatore")){
+    //Se è un curatore a creare la visita allora avvia editor con luogo quello della zona
+    //del curatore attuale
+    public void startEditorCuratore(){
 
+        visita = new Visita();
+        visita.setTipo_creatore(0);
+        visita.setCreatore_curatore(Math.toIntExact(MainActivity.curatore.getId()));
+        Date tmpDate = Date.from(Instant.now());
+        Long tmpLong = tmpDate.getTime();
+        visita.setData(tmpLong);
+
+        try{
+            CuratoreMuseale.getLuogoCuratore(this, MainActivity.curatore,
+                    response -> {
+                        try {
+                            if(response.getBoolean("status")){
+                                JSONObject tmpObj = response.getJSONObject("data");
+                                JSONArray arrayData = tmpObj.getJSONArray("luogoCuratore");
+                                JSONObject tmpObj2 = arrayData.getJSONObject(0);
+                                visita.setLuogo(tmpObj2.getString("luogo"));
+
+                                visita.createDataDb(this, new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        try {
+                                            Boolean status =  response.getBoolean("status");
+                                            if(status){
+                                                visita.setDataFromJSON(response.getJSONObject("data"));
+
+                                                GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(visita);
+                                                androidx.fragment.app.FragmentManager supportFragmentManager;
+                                                supportFragmentManager = getSupportFragmentManager();
+                                                supportFragmentManager.beginTransaction()
+                                                        .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                                                        .replace(R.id.frameCreaVisita, grafoModificaFragment)
+                                                        .commit();
+                                            }else{
+                                                Toast.makeText(getApplicationContext(), R.string.impossibile_ottenere_luogo, Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (JSONException | ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+
+                            }else{
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    },
+                    error -> {
+
+                    });
+        } catch(Exception e){
+            e.printStackTrace();
         }
-
-        /* PER ANTONIO
-        * da dichiarare come variabile nella classe
-        * private static FragmentEditor frag;
-        *
-        * CODICE NECESSARIO NELL'ACTIVITY PER SOSTITUIRE FRAME NEL LAYOUT DELL'ACTIVITY
-        * CON QUELLO DEL FRAGMENT
-        *
-        frag = new FragmentEditor();
-        androidx.fragment.app.FragmentManager supportFragmentManager;
-        supportFragmentManager = getSupportFragmentManager();
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.frame_activity, frag)
-                .commit();
-        *
-        *
-        * ===============================================================
-        * DA AGGIUNGERE NEL FRAGMENT PER POTER CHIAMARE getSelectedItem()
-        * CreaVisita act = (CreaVisita) getActivity();
-        * String selectedItemFromAct = act.getSelectedItem();
-        * ===============================================================
-        */
     }
 
-    public String getSelectedItem() {
-        return selectedItem;
-    }
 }

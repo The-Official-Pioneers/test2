@@ -9,14 +9,14 @@
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_baseline_person_24"
                 android:onClick="goToPersonalArea"
-                android:title="Profile"
+                android:title="@string/profilo"
                 app:showAsAction="always" />
 
             <item
                 android:id="@+id/nav_logOut"
                 android:icon="@drawable/ic_baseline_logout_24"
                 android:onClick="logOutMethod"
-                android:title="Logout"
+                android:title="@string/logout"
                 app:showAsAction="always" />
         </menu>
     </item>

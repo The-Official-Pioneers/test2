@@ -1,16 +1,15 @@
 package it.uniba.pioneers.testtool.editor;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
-
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
@@ -20,9 +19,8 @@ import it.uniba.pioneers.sqlite.DbHelper;
 import it.uniba.pioneers.testtool.DialogNodeInfo;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.databinding.ActivityEditor2Binding;
-import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizzaFragment;
-import it.uniba.pioneers.testtool.editor.node.ListNodeModifica;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
+import it.uniba.pioneers.testtool.editor.node.ListNodeModifica;
 
 public class EditorActivity extends AppCompatActivity {
     public ArrayList<ListNodeModifica> opere;
@@ -64,9 +62,7 @@ public class EditorActivity extends AppCompatActivity {
             g.setPassword("dadasdsadasdsasadsad");
             g.setPassword("museo");
             g.setOnline(false);
-
             g.readDataDb(view3.getRootView().getContext());
-            Toast.makeText(this, g.getEmail(), Toast.LENGTH_LONG).show();
         });
 
     }

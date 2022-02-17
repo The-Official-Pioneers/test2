@@ -188,7 +188,6 @@ public class Opera {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                System.out.println(error.toString());
             }
         });
         queue.add(jsonObjectRequest);
@@ -214,7 +213,6 @@ public class Opera {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
                 }
             });
             queue.add(jsonObjectRequest);
@@ -345,7 +343,7 @@ public class Opera {
             }
 
             Opera self = this;
-            Toast.makeText(context, data.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, data.toString(), Toast.LENGTH_SHORT).show();
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -355,7 +353,7 @@ public class Opera {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.creazione_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -365,7 +363,6 @@ public class Opera {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
                 }
             });
             queue.add(jsonObjectRequest);
@@ -431,7 +428,7 @@ public class Opera {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.aggiornamento_non_riuscito, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -441,7 +438,6 @@ public class Opera {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
                 }
             });
             queue.add(jsonObjectRequest);
@@ -497,7 +493,7 @@ public class Opera {
                                 if(status){
                                     Toast.makeText(context, R.string.opera_eliminata_successo, Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.eliminazione_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -507,7 +503,6 @@ public class Opera {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
                 }
             });
             queue.add(jsonObjectRequest);

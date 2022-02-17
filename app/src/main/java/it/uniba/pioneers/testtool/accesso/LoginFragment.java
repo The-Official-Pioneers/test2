@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.home.ui.login;
+package it.uniba.pioneers.testtool.accesso;
 
 import android.content.Context;
 import android.content.Intent;
@@ -101,7 +101,7 @@ public class LoginFragment extends Fragment {
                      **********************************************************************************/
                     tryLoginCuratore(email, password, context);
                 } catch (Exception e){
-                    System.out.println(e);
+
                 }
             }
         });
@@ -133,7 +133,7 @@ public class LoginFragment extends Fragment {
                          * Esiste un account Curatore associato all'email e la password inseriti dall'utente
                          ************************************************************************************/
                         curatore.setId(response.getJSONObject("data").getInt("id"));
-                        Toast.makeText(context, R.string.bentornato_login + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, getResources().getString(R.string.bentornato_login) + " " + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context, MainActivity.class);
                         intent.putExtra("typeUser", "curatore");
                         intent.putExtra("idUser", (int)curatore.getId());
@@ -183,7 +183,7 @@ public class LoginFragment extends Fragment {
                          * Esiste un account Visitatore associato all'email e la password inseriti dall'utente
                          ************************************************************************************/
                         visitatore.setId(response.getJSONObject("data").getInt("id"));
-                        Toast.makeText(context, R.string.bentornato_login + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, getResources().getString(R.string.bentornato_login) + " " + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context, MainActivity.class);
                         intent.putExtra("typeUser", "visitatore");
                         intent.putExtra("idUser", (int)visitatore.getId());
@@ -240,12 +240,12 @@ public class LoginFragment extends Fragment {
                          * Faccio accedere la Guida e lo reindirizzo alla MainActivity
                          ************************************************************************************/
                         context.startActivity(intent);
-                        Toast.makeText(context, R.string.bentornato_login + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, getResources().getString(R.string.bentornato_login) + " " + response.getJSONObject("data").getString("nome"), Toast.LENGTH_SHORT).show();
                     } else {
                         /*******************************************************************************
                          * NON Esiste un account associato all'email e la password inseriti dall'utente
                          *******************************************************************************/
-                        Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.account_inesistente, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

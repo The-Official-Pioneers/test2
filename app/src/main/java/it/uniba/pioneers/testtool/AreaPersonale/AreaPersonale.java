@@ -4,9 +4,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
@@ -26,7 +28,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -42,6 +46,7 @@ import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.network.NetworkChangeListener;
 
 public class AreaPersonale extends AppCompatActivity {
 
@@ -53,19 +58,34 @@ public class AreaPersonale extends AppCompatActivity {
 
     private String selectedSpecializ = "";
 
+    NetworkChangeListener networkChangeListener= new NetworkChangeListener();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_personale);
+        gestioneToolBar();
+    }
+    //Metodo necessario per il caricamento della barra nell'area personale
+    private void gestioneToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolBarAreaPersonale);
+        toolbar.setTitle(R.string.area_personale);
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+        toolbar.setLogo(R.mipmap.ic_launcher_menu);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener, filter);
         super.onStart();
         startFrag();
     }
 
+    //Metodo necessario per caricare il fragment di Area Personale corretto in base al tipoUtente
     private void startFrag(){
         switch(MainActivity.tipoUtente){
             case "visitatore":
@@ -80,37 +100,46 @@ public class AreaPersonale extends AppCompatActivity {
         }
     }
 
+    //Metodo necessario per caricare il fragment di Area Personale del Visitatore
     private void startFragVisitatore(){
         fragAreaVisit = new FragmentAreaPersonaleVisitatore();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.frame_areap, fragAreaVisit)
                 .commit();
     }
 
+    //Metodo necessario per caricare il fragment di Area Personale della Guida
     private void startFragGuida(){
         fragAreaGuida = new FragmentAreaPersonaleGuida();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.frame_areap, fragAreaGuida)
                 .commit();
 
     }
 
+    //Metodo necessario per caricare il fragment di Area Personale del Curatore Museale
     private void startFragCuratore(){
         fragAreaCurat = new FragmentAreaPersonaleCuratore();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.frame_areap, fragAreaCurat)
                 .commit();
     }
 
+    //Metodo necessario per modificare i dati del profilo dell'utente
+    //Se si tratta di una guida allora modifico anche il campo specializzazione
+    //Se si tratta di un curatore museale modifica anche il campo zona
     public void editProfile(View view){
 
-        EditText nome = (EditText) findViewById(R.id.txt_nome_opera);
+        EditText nome = (EditText) findViewById(R.id.txt_nome);
         EditText cognome = (EditText) findViewById(R.id.txt_cognome);
         EditText datanascita = (EditText) findViewById(R.id.txt_datan);
         EditText email = (EditText) findViewById(R.id.txt_email);
@@ -135,7 +164,7 @@ public class AreaPersonale extends AppCompatActivity {
                     Snackbar.make(getWindow().getDecorView().getRootView(), R.string.aggiornamento_profilo_successo,
                             Snackbar.LENGTH_LONG).show();
                 } catch(ParseException e){
-                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_aggiornare_profilo,
                             Snackbar.LENGTH_LONG).show();
                 }
 
@@ -167,7 +196,7 @@ public class AreaPersonale extends AppCompatActivity {
                             Snackbar.LENGTH_LONG).show();
 
                 } catch(ParseException e){
-                    Snackbar.make(view, R.string.impossibile_procedere,
+                    Snackbar.make(view, R.string.impossibile_aggiornare_profilo,
                             Snackbar.LENGTH_LONG).show();
                 }
 
@@ -197,7 +226,7 @@ public class AreaPersonale extends AppCompatActivity {
                     Snackbar.make(getWindow().getDecorView().getRootView(), R.string.aggiornamento_profilo_successo,
                             Snackbar.LENGTH_LONG).show();
                 } catch(ParseException e){
-                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_aggiornare_profilo,
                             Snackbar.LENGTH_LONG).show();
                 }
 
@@ -207,6 +236,7 @@ public class AreaPersonale extends AppCompatActivity {
 
     }
 
+    //Metodo necessario per controllare che siano state effettuate modifiche ai campi del visitatore
     private boolean checkForChangesVisitatore(EditText nomeToCheck, EditText cognomeToCheck,
                                               EditText datanToCheck, EditText emailToCheck){
         if( !(nomeToCheck.getText().toString().equals(MainActivity.visitatore.getNome())) ||
@@ -219,8 +249,9 @@ public class AreaPersonale extends AppCompatActivity {
         return false;
     }
 
+    //Metodo necessario per controllare che siano state effettuate modifiche ai campi del guida
     private boolean checkForChangesGuida(EditText nomeToCheck, EditText cognomeToCheck, EditText datanToCheck,
-                                    EditText emailToCheck, String specialToCheck){
+                                         EditText emailToCheck, String specialToCheck){
         if( !(nomeToCheck.getText().toString().equals(MainActivity.guida.getNome())) ||
                 !(cognomeToCheck.getText().toString().equals(MainActivity.guida.getCognome())) ||
                 !(datanToCheck.getText().toString().equals(MainActivity.guida.getShorterDataNascita())) ||
@@ -232,8 +263,9 @@ public class AreaPersonale extends AppCompatActivity {
         return false;
     }
 
+    //Metodo necessario per controllare che siano state effettuate modifiche ai campi del curatore
     private boolean checkForChangesCuratore(EditText nomeToCheck, EditText cognomeToCheck, EditText datanToCheck,
-                                    EditText emailToCheck, EditText zonaToCheck){
+                                            EditText emailToCheck, EditText zonaToCheck){
 
         if( !(nomeToCheck.getText().toString().equals(MainActivity.curatore.getNome())) ||
                 !(cognomeToCheck.getText().toString().equals(MainActivity.curatore.getCognome())) ||
@@ -246,6 +278,8 @@ public class AreaPersonale extends AppCompatActivity {
         return false;
     }
 
+    //Metodo necessario per controllare che la data inserita sia valida rispetto ad un formato:
+    //Formato data: dd/MM/yyyy
     private boolean validateDate(String dateToValid){
         //output is SimpleDateFormat of this type ("dd/MM/yyyy")
         try {
@@ -261,6 +295,7 @@ public class AreaPersonale extends AppCompatActivity {
         return true;
     }
 
+    //Metodo necessario per contare il numero di / presenti all'interno della data inserita
     private boolean countSlashes(String s){
         int slashes = 0;
         for(int i = 0; i < s.length()-1; i++) {
@@ -271,6 +306,7 @@ public class AreaPersonale extends AppCompatActivity {
         return (slashes == 2);
     }
 
+    //Metodo necessario per modificare la password dell'utente attuale
     public void editPassword(View view) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(view.getContext());
@@ -344,7 +380,7 @@ public class AreaPersonale extends AppCompatActivity {
                             Snackbar.LENGTH_LONG).show();
 
                 } catch (NoSuchAlgorithmException e) {
-                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_aggiornare_password,
                             Snackbar.LENGTH_LONG).show();
                 }
 
@@ -363,6 +399,8 @@ public class AreaPersonale extends AppCompatActivity {
 
     }
 
+    //Metodo necessario per chiudere la tastiera senza che l'utente debba chiuderla manualmente
+    //(viene aperta nel momento in cui inserisco la nuova password)
     private void chiudiTastiera(EditText textToClose){
         //Necessario per chiudere la tastiera dopo aver premuto OK
         InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -370,26 +408,30 @@ public class AreaPersonale extends AppCompatActivity {
     }
 
     //Metodi necessari per l'aggiornamento della password nel metodo editPassword
+    //Metodo che aggiorna password del Visitatore
     private void updatePasswordVisitatore(String pass){
         MainActivity.visitatore.setPassword(pass);
         MainActivity.visitatore.updateDataDb(AreaPersonale.fragAreaVisit.getContext());
     }
+    //Metodo che aggiorna password della Guida
     private void updatePasswordGuida(String pass){
         MainActivity.guida.setPassword(pass);
         MainActivity.guida.updateDataDb(AreaPersonale.fragAreaGuida.getContext());
     }
+    //Metodo che aggiorna password del Curatore Museale
     private void updatePasswordCuratore(String pass){
         MainActivity.curatore.setPassword(pass);
         MainActivity.curatore.updateDataDb(AreaPersonale.fragAreaCurat.getContext());
     }
     //=============================================================================
 
+    //Metodo necessario per crittografare secondo lo SHA-256 la nuova password dell'utente
     public String digest(String value) throws NoSuchAlgorithmException {
         MessageDigest digester = MessageDigest.getInstance("SHA-256");
         byte[] hash = digester.digest(value.getBytes(StandardCharsets.UTF_8));
         return bytesToHex(hash);
     }
-
+    //Metodo necessario per crittografare la nuova password dell'utente
     public static String bytesToHex(byte[] bytes) {
         final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
@@ -402,6 +444,8 @@ public class AreaPersonale extends AppCompatActivity {
         return new String(hexChars);
     }
 
+    //Metodo necessario per modificare l'immagine di profilo dell'utente
+    //Richiedo permessi per accedere alla galleria del device
     public void changePropic(View view) {
         try {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -449,6 +493,9 @@ public class AreaPersonale extends AppCompatActivity {
         }
     }
 
+    //In base all'esito della richiesta:
+    //Se esito positivo: prendo l'immagine scelta e la vado a impostare all'interno dell'Image View
+    //e la salvo all'interno del database (previa codifica in Base64)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -485,29 +532,33 @@ public class AreaPersonale extends AppCompatActivity {
                         Snackbar.LENGTH_LONG).show();
 
             } catch (FileNotFoundException e) {
-                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_procedere,
+                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_aggiornare_propic,
                         Snackbar.LENGTH_LONG).show();
             }
         }
     }
 
     //Metodi necessari per l'aggiornamento della propic nel metodo changePropic
+    //Metodo che aggiorna immagine del profilo del Visitatore
     private void updatePropicVisitatore(String newImage){
         MainActivity.visitatore.setPropic(newImage);
         MainActivity.visitatore.updateDataDb(this);
     }
+    //Metodo che aggiorna immagine del profilo della Guida
     private void updatePropicGuida(String newImage){
         MainActivity.guida.setPropic(newImage);
         MainActivity.guida.updateDataDb(this);
     }
+    //Metodo che aggiorna immagine del profilo del Curatore Museale
     private void updatePropicCuratore(String newImage){
         MainActivity.curatore.setPropic(newImage);
         MainActivity.curatore.updateDataDb(this);
     }
     //=============================================================================
 
+    //Metodo che controlla se ci sono state modifiche non ancora salvate
     private boolean checkFieldsBeforeLeaving(){
-        String textNome = ((EditText) findViewById(R.id.txt_nome_opera)).getText().toString();
+        String textNome = ((EditText) findViewById(R.id.txt_nome)).getText().toString();
         String textCognome = ((EditText) findViewById(R.id.txt_cognome)).getText().toString();
         String textDatan = ((EditText) findViewById(R.id.txt_datan)).getText().toString();
         String textEmail = ((EditText) findViewById(R.id.txt_email)).getText().toString();
@@ -555,8 +606,8 @@ public class AreaPersonale extends AppCompatActivity {
         return false;
     }
 
+    //Metodo che controlla l'uscita senza salvare da barra
     @Override
-    //Controllo l'uscita senza salvare da barra
     public boolean onOptionsItemSelected(MenuItem item) {
         if(!checkFieldsBeforeLeaving()) {
             new AlertDialog.Builder(this)
@@ -580,8 +631,9 @@ public class AreaPersonale extends AppCompatActivity {
         return true;
     }
 
+    //Metodo che controlla l'uscita senza salvare da tasto indietro
+    //(tasto sulla barra inferiore del telefono)
     @Override
-    //Controllo l'uscita senza salvare da tasto indietro (tasto sulla barra inferiore del telefono)
     public void onBackPressed(){
         if(!checkFieldsBeforeLeaving()) {
             new AlertDialog.Builder(this)
@@ -604,8 +656,9 @@ public class AreaPersonale extends AppCompatActivity {
         }
     }
 
-    public String getSelectedSpecializzazione() {
-        return selectedSpecializ;
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
-
 }

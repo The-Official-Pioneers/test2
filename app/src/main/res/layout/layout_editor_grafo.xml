@@ -33,7 +33,7 @@
     <it.uniba.pioneers.testtool.editor.options.OptionsEditor
         android:id="@+id/optionsGrafo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         android:layout_weight="3">
 
     </it.uniba.pioneers.testtool.editor.options.OptionsEditor>

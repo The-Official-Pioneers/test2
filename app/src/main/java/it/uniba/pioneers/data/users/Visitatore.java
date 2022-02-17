@@ -203,7 +203,7 @@ public class Visitatore {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -320,7 +320,7 @@ public class Visitatore {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -370,7 +370,7 @@ public class Visitatore {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.aggiornamento_non_riuscito, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -380,7 +380,7 @@ public class Visitatore {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -433,7 +433,7 @@ public class Visitatore {
                                 if(status){
                                     Toast.makeText(context, R.string.visitatore_eliminato_successo, Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.eliminazione_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -443,7 +443,7 @@ public class Visitatore {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -462,7 +462,7 @@ public class Visitatore {
 
         if (isOnline()) {
             try {
-                System.out.println("Sono arrivato");
+
                 RequestQueue queue = Volley.newRequestQueue(context);
                 String url = Server.getUrl() + "/visitatore/login/";
 
@@ -481,7 +481,7 @@ public class Visitatore {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                        System.out.println(error.toString());
+                        
                     }
                 });
                 queue.add(jsonObjectRequest);
@@ -510,7 +510,7 @@ public class Visitatore {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);

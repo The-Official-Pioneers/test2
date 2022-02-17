@@ -225,7 +225,7 @@ public class Guida {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.lettura_dati_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -235,7 +235,7 @@ public class Guida {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -360,7 +360,7 @@ public class Guida {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -415,7 +415,7 @@ public class Guida {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.aggiornamento_non_riuscito, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -425,7 +425,7 @@ public class Guida {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -478,7 +478,7 @@ public class Guida {
                                 if(status){
                                     Toast.makeText(context, R.string.guida_eliminata_successo, Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.eliminazione_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -488,7 +488,7 @@ public class Guida {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -507,7 +507,7 @@ public class Guida {
 
         if (isOnline()) {
             try {
-                System.out.println("Sono arrivato");
+
                 RequestQueue queue = Volley.newRequestQueue(context);
                 String url = Server.getUrl() + "/guida/login/";
 
@@ -526,7 +526,7 @@ public class Guida {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                        System.out.println(error.toString());
+                        
                     }
                 });
                 queue.add(jsonObjectRequest);
@@ -555,7 +555,7 @@ public class Guida {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, "Il server non risponde", Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -591,6 +591,20 @@ public class Guida {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void getAllGuideDB(Context context,
+                                         Response.Listener<JSONObject> responseListener,
+                                         Response.ErrorListener errorListener){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/guida/get-all-guide-db/";
+
+        JSONObject data = new JSONObject();
 
         JsonObjectRequest jsonObjectRequest =
                 new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);

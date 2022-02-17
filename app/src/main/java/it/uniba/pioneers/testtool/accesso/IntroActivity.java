@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.home;
+package it.uniba.pioneers.testtool.accesso;
 
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,10 +13,9 @@ import java.io.InputStream;
 
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.home.ui.RegisterFragment;
-import it.uniba.pioneers.testtool.home.ui.login.LoginFragment;
 
-public class HomeActivity extends AppCompatActivity {
+public class IntroActivity extends AppCompatActivity {
+    WelcomeFragment f = new WelcomeFragment();
 
     /*****************************************************************************
      * In onCrate, viene creata l'activity; in tale metodo viene aggiunto in modo
@@ -31,7 +29,6 @@ public class HomeActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getFragmentManager();
         /*** INIZIO TRANSAZIONE ***/
-        WelcomeFragment f = new WelcomeFragment();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
@@ -166,7 +163,6 @@ public class HomeActivity extends AppCompatActivity {
      * @param view view associata
      *********************************************************************************/
     private void launchIntentForVisitatore(View view) {
-        Toast.makeText(view.getContext(), R.string.bentornato_login + " Andrea", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         intent.putExtra("typeUser", "visitatore");
         intent.putExtra("idUser", 2);
@@ -178,7 +174,6 @@ public class HomeActivity extends AppCompatActivity {
      * @param view view associata
      *********************************************************************************/
     private void launchIntentForCuratore(View view) {
-        Toast.makeText(view.getContext(), R.string.bentornato_login + " Luca", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         intent.putExtra("typeUser", "curatore");
         intent.putExtra("idUser", 1);
@@ -191,7 +186,6 @@ public class HomeActivity extends AppCompatActivity {
      * @param view view associata
      *********************************************************************************/
     private void launchIntentForGuida(View view) {
-        Toast.makeText(view.getContext(), R.string.bentornato_login + " Antonio", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         intent.putExtra("typeUser", "guida");
         intent.putExtra("idUser", 1004);
@@ -199,15 +193,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
-    }
-
+    /*********************************************************************************
+     * Metodo che ci consente di chiudere l'app se ci troviamo in Welcome
+     *********************************************************************************/
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        if(getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4).equals(f)){
+            finish();
+            System.exit(0);
+        }else{
+            super.onBackPressed();
+        }
     }
 }

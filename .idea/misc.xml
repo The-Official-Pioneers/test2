@@ -4,6 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.22708333333333333" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/check_internet_dialog.xml" value="0.1762917933130699" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_first.xml" value="0.3625" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_home_curatore.xml" value="0.3625" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_home_visitatore.xml" value="0.196875" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_lista_aree.xml" value="0.1762917933130699" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_singola_opera.xml" value="0.3625" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_singola_visita.xml" value="0.3625" />
+        <entry key="..\:/0-My_Files/1-UNIVERSITA'/Terzo Anno/Primo Semestre/Sviluppo di mobile software/4-Progetto/test2/app/src/main/res/layout/fragment_visite_create_utente.xml" value="0.3625" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3769230769230769" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.3769230769230769" />
         <entry key="..\:/Users/rino9/AndroidStudioProjects/test2/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.3769230769230769" />
@@ -29,7 +37,6 @@
         <entry key="app/src/main/res/drawable/my_rect.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/shape.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/shape_circle.xml" value="0.215625" />
-        <entry key="app/src/main/res/layout/activity_crea_visita.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_editor.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/layout/activity_editor2.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35833333333333334" />
@@ -41,26 +48,30 @@
         <entry key="app/src/main/res/layout/fragment_editor_percorsi.xml" value="0.2767210144927536" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_grafo.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_grafo_visualizza.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.21422101449275363" />
+        <entry key="app/src/main/res/layout/fragment_lista_aree.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_lista_nodi.xml" value="0.2767210144927536" />
         <entry key="app/src/main/res/layout/fragment_option.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_singola_visita.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_editor_grafo.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_grafo_manipulate_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_lista_nodi.xml" value="0.23052536231884058" />
         <entry key="app/src/main/res/layout/layout_mappa.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/lista_nodi.xml" value="0.17426545086119555" />
+        <entry key="app/src/main/res/layout/nav_header.xml" value="0.1" />
         <entry key="app/src/main/res/layout/sample_node.xml" value="0.33" />
         <entry key="app/src/main/res/layout/widget_curatore_register.xml" value="0.23777173913043478" />
         <entry key="app/src/main/res/layout/widget_display_grafo.xml" value="0.23777173913043478" />
         <entry key="app/src/main/res/layout/widget_grafo.xml" value="0.23777173913043478" />
         <entry key="app/src/main/res/layout/widget_lista_nodi.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/widget_node_dialog.xml" value="0.3374094202898551" />
         <entry key="app/src/main/res/layout/widget_options_grafo.xml" value="0.23777173913043478" />
         <entry key="app/src/main/res/layout/widget_point_connector.xml" value="0.23777173913043478" />
         <entry key="app/src/main/res/layouts/activity/layout/fragment_second.xml" value="0.196875" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/menu/menu_editor.xml" value="0.2657407407407407" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.2657407407407407" />
+        <entry key="app/src/main/res/xml/root_preferences.xml" value="0.1" />
       </map>
     </option>
   </component>

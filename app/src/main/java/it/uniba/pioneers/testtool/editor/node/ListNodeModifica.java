@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -29,7 +28,7 @@ public class ListNodeModifica extends Node{
 
     private final class MyTouchListener implements OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            Toast.makeText(view.getContext(), String.valueOf(motionEvent.getAction()), Toast.LENGTH_LONG).show();
+
 
             switch (motionEvent.getAction()){
                 case MotionEvent.ACTION_UP:
@@ -56,7 +55,7 @@ public class ListNodeModifica extends Node{
     public ListNodeModifica(@NonNull Context context, ListaNodi listaNodi, JSONObject data, NodeType type) {
         super(context);
         try {
-            System.out.println(data.toString());
+
 
             this.data = data;
             this.listaNodi = listaNodi;

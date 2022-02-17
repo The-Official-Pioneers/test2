@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/alto"
     tools:context=".AreaPersonale.FragmentAreaPersonaleCuratore">
 
     <ScrollView
@@ -12,44 +13,59 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/linear_areapc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:background="@drawable/shape_login_panel"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="250dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/img_propic"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="40dp"
-                    android:maxWidth="300dp"
-                    android:maxHeight="300dp"
-                    android:background="@drawable/propic_placeholder" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btn_change_propic"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/img_propic"
-                    android:layout_alignBottom="@id/img_propic"
-                    android:clickable="true"
-                    android:onClick="changePropic"
-                    android:src="@drawable/ic_baseline_add_a_photo_24" />
+                    android:layout_height="280dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_propic"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="45dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="40dp"
+
+                        android:maxWidth="300dp"
+                        android:maxHeight="300dp"
+                        android:background="@drawable/propic_placeholder" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/btn_change_propic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="230dp"
+                        android:layout_marginTop="-90dp"
+                        android:clickable="true"
+                        android:onClick="changePropic"
+                        android:src="@drawable/ic_baseline_add_a_photo_white_24"
+                        app:backgroundTint="@color/cranberry" />
+
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 
@@ -57,80 +73,88 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="70dp"
+                android:baselineAligned="false"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="330dp"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="2"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/nome_areap"
+                        android:id="@+id/nome"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
+                        android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        />
+                        android:text="@string/nome_areap" />
 
                     <TextView
-                        android:id="@+id/cognome_areap"
+                        android:id="@+id/cognome"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
+                        android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        />
+                        android:text="Cognome:" />
 
                     <TextView
-                        android:id="@+id/datan_areap"
+                        android:id="@+id/datan"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
+                        android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        />
+                        android:text="Data di Nascita:" />
 
                     <TextView
-                        android:id="@+id/email_areap"
+                        android:id="@+id/email"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
+                        android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        />
+                        android:text="Email:" />
 
                     <TextView
                         android:id="@+id/zona_areap"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
+                        android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        />
+                        android:text="Zona:" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="15dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/txt_nome_opera"
+                        android:id="@+id/txt_nome"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:inputType="text"
@@ -140,7 +164,7 @@
                     <EditText
                         android:id="@+id/txt_cognome"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:inputType="text"
@@ -150,7 +174,7 @@
                     <EditText
                         android:id="@+id/txt_datan"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:inputType="text"
@@ -160,7 +184,7 @@
                     <EditText
                         android:id="@+id/txt_email"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:inputType="text"
@@ -170,7 +194,7 @@
                     <EditText
                         android:id="@+id/txt_zona"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:inputType="text"
@@ -183,40 +207,41 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1.3"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/btn_edit_profile"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_width="300dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_modificaprofilo"
+                        android:background="@drawable/login_btn"
                         android:onClick="editProfile"
-                        />
+                        android:text="Modifica il tuo profilo"
+                        android:textColor="@color/white" />
 
                     <Button
                         android:id="@+id/btn_edit_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_width="300dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="15dp"
                         android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_password"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/login_btn"
                         android:onClick="editPassword"
-                        />
+                        android:text="Modifica password"
+                        android:textColor="@color/white" />
+
                 </LinearLayout>
 
             </LinearLayout>

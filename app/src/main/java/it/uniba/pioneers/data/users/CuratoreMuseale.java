@@ -220,7 +220,7 @@ public class CuratoreMuseale {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.lettura_dati_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -230,7 +230,7 @@ public class CuratoreMuseale {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -333,7 +333,7 @@ public class CuratoreMuseale {
 
         if(isOnline()){
             try{
-                System.out.println("Sono arrivato");
+
                 RequestQueue queue = Volley.newRequestQueue(context);
                 String url = Server.getUrl() + "/curatore-museale/create/";
 
@@ -347,7 +347,6 @@ public class CuratoreMuseale {
                     data.put(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC, getPropic().toString());
                     data.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
 
-                    System.out.println(data.toString());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -360,7 +359,7 @@ public class CuratoreMuseale {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                        System.out.println(error.toString());
+                        
                     }
                 });
                 queue.add(jsonObjectRequest);
@@ -415,7 +414,7 @@ public class CuratoreMuseale {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.aggiornamento_non_riuscito, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -425,7 +424,7 @@ public class CuratoreMuseale {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -478,7 +477,7 @@ public class CuratoreMuseale {
                                 if(status){
                                     Toast.makeText(context, R.string.curatore_eliminato_successo, Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.eliminazione_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -488,7 +487,7 @@ public class CuratoreMuseale {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -525,7 +524,7 @@ public class CuratoreMuseale {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                        System.out.println(error.toString());
+                        
                     }
                 });
                 queue.add(jsonObjectRequest);
@@ -554,7 +553,7 @@ public class CuratoreMuseale {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -569,6 +568,25 @@ public class CuratoreMuseale {
 
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = Server.getUrl() + "/curatore-museale/all-visite-singolo/";
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put(DbContract.CuratoreMusealeEntry.COLUMN_ID, curatore.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void getLuogoCuratore(Context context,CuratoreMuseale curatore,
+                                           Response.Listener<JSONObject> responseListener,
+                                           Response.ErrorListener errorListener){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/curatore-museale/get-luogo-curatore/";
 
         JSONObject data = new JSONObject();
         try {

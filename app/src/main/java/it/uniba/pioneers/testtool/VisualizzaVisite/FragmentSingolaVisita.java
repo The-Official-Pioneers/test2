@@ -48,10 +48,16 @@ public class FragmentSingolaVisita extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle bd) {
+        super.onActivityCreated(bd);
     }
 
     @Override
@@ -63,6 +69,9 @@ public class FragmentSingolaVisita extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((VisiteCreateUtente)getActivity()).getSupportActionBar().setTitle(
+                getString(R.string.visita) + " " + String.valueOf(VisiteCreateUtente.visitaSelezionata.getId()) +
+                        " - " + VisiteCreateUtente.visitaSelezionata.getLuogo());
     }
 
     @Override
@@ -71,6 +80,8 @@ public class FragmentSingolaVisita extends Fragment {
         setDataVisita();
     }
 
+    //Metodo necessario per impostare i dati della visita selezionata dalla lista
+    //popolata precedentemente
     private void setDataVisita(){
         EditText num_visita = (EditText) getActivity().findViewById(R.id.txt_numero_visita);
         EditText luogo_visita = (EditText) getActivity().findViewById(R.id.txt_luogo_visita);
@@ -88,17 +99,59 @@ public class FragmentSingolaVisita extends Fragment {
         guida_visita.setText(String.valueOf(VisiteCreateUtente.visitaSelezionata.getGuida()));
 
         setVisibEliminaVisita();
+        setVisibModificaGrafo();
+        setVisSelezGuida();
     }
 
+    //Metodo necessario per impostare la visibilità del bottone Modifica Grafo nel caso in cui
+    //un visitatore sceglie Visite Predefinite o cerca tutte le visite in un luogo
+    //Il bottone è necessario solo se visitatore/curatore museale visualizza una sua visita
+    private void setVisibModificaGrafo(){
+
+        if(MainActivity.tipoUtente.equals("visitatore")){
+            if(MainActivity.flagVisite == 1 || checkCuratoreCreatoreVisita()){
+                Button btn_mod_grafo = (Button) getActivity().findViewById(R.id.modifica_visita);
+                btn_mod_grafo.setVisibility(View.GONE);
+            } else {
+                return;
+            }
+        } else if(MainActivity.tipoUtente.equals("guida")){
+            Button btn_mod_grafo = (Button) getActivity().findViewById(R.id.modifica_visita);
+            btn_mod_grafo.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    //Metodo necessario per impostare la visibilità del bottone Elimina Visita nel caso in cui
+    //un visitatore sceglie Visite Predefinite o cerca tutte le visite in un luogo
+    //Il bottone è necessario solo se visitatore/curatore museale visualizza una sua visita
     private void setVisibEliminaVisita(){
-        if(MainActivity.flagVisite == 1 || checkCuratoreCreatoreVisita()){
+        if(MainActivity.tipoUtente.equals("visitatore")) {
+            if (MainActivity.flagVisite == 1 || checkCuratoreCreatoreVisita()) {
+                Button btn_elimina_visita = (Button) getActivity().findViewById(R.id.btn_elimina_visita);
+                btn_elimina_visita.setVisibility(View.GONE);
+            } else {
+                return;
+            }
+        } else if(MainActivity.tipoUtente.equals("guida")){
             Button btn_elimina_visita = (Button) getActivity().findViewById(R.id.btn_elimina_visita);
             btn_elimina_visita.setVisibility(View.GONE);
-        } else {
-            return;
         }
     }
 
+    //Metodo necessario per impostare la visibilità del bottone Seleziona Guida nel caso in cui
+    //una guida sta vedendo le sue visite
+    //Tale bottone deve essere disponibile solo per visitatore/curatore nel momento in cui
+    //visualizzano le loro visite
+    private void setVisSelezGuida(){
+        if(MainActivity.tipoUtente.equals("guida")){
+            Button btn_sel_guida = (Button) getActivity().findViewById(R.id.scegli_guida);
+            btn_sel_guida.setVisibility(View.GONE);
+        }
+    }
+
+    //Metodo necessario per controllare se la visita scelta dal visitatore è di un curatore o meno
     private boolean checkCuratoreCreatoreVisita(){
         if(VisiteCreateUtente.visitaSelezionata.getTipo_creatore() == 0){
             return true;

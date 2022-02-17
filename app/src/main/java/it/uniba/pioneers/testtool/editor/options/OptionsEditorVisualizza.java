@@ -54,7 +54,9 @@ public class OptionsEditorVisualizza extends OptionsEditor {
 
                 Intent chooserIntent = Intent.createChooser(i, "CONDIVIDI LA TUA VISITA!");
 
-                GrafoVisualizzaFragment.grafoVisualizzaFragment.getActivity().startActivity(chooserIntent);
+                if(i.resolveActivity(getContext().getPackageManager()) != null){
+                    GrafoVisualizzaFragment.grafoVisualizzaFragment.getActivity().startActivity(chooserIntent);
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();

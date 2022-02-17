@@ -125,7 +125,7 @@ public class NodeVisualizzaDialog{
                 ln.addView(getRow(context, "DESCRIZIONE", descrizione));
             }
             tmpDialog.setView(alertLayout);
-            //Toast.makeText(context, nodeObject.data.toString(4), Toast.LENGTH_LONG).show();
+
 
         } catch (JSONException e) {
             e.printStackTrace();

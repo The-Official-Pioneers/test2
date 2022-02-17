@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,13 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.pioneers.data.Zona;
-import it.uniba.pioneers.testtool.CreaVisita;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.home.HomeActivity;
 
-/**
- * Implementation of App Widget functionality.
- */
 public class WidgetRegister extends LinearLayout {
 
     public void init() {
@@ -61,10 +57,9 @@ public class WidgetRegister extends LinearLayout {
         spinner.setAdapter(adapter);
     }
 
-    //Gestine Spinner con Luoghi presenti nel DB
+    //Gestione Spinner con Luoghi presenti nel DB
     public void setLuoghiVisite(Context context){
         Spinner spinner = (Spinner) this.findViewById(R.id.cittaZona);
-
         try{
             Zona.getAllLuoghi(context,
                     response -> {
@@ -72,7 +67,6 @@ public class WidgetRegister extends LinearLayout {
                             if(response.getBoolean("status")){
 
                                 List<String> listaLuoghi = new ArrayList<>();
-
                                 JSONObject tmpObj = response.getJSONObject("data");
                                 JSONArray arrayData = tmpObj.getJSONArray("arrLuoghi");
 
@@ -87,7 +81,7 @@ public class WidgetRegister extends LinearLayout {
                                 spinner.setAdapter(spinnerAdapter);
 
                             }else{
-                                System.out.println("Sium sium");
+                                Toast.makeText(context, R.string.impossibile_procedere, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -160,7 +154,5 @@ public class WidgetRegister extends LinearLayout {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
-
-
 
 }

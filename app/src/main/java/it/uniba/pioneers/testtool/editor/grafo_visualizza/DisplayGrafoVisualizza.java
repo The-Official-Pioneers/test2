@@ -19,7 +19,8 @@ public class DisplayGrafoVisualizza extends ConstraintLayout {
         graph = new GrafoVisualizza(context);
         graph.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        addView(graph); //AGGIUNTA DEL GRAFO AL DISPLAYGRAFO
+        //AGGIUNTA DEL GRAFO AL DISPLAYGRAFO
+        addView(graph);
     }
 
 
