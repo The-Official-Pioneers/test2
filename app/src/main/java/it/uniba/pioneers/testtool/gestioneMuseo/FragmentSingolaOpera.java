@@ -56,7 +56,6 @@ public class FragmentSingolaOpera extends Fragment {
     }
 
     public void setDataOpera(){   // metodo per mostrare le informazioni dell'opera in modalità diverse in base al tipo di utente(modalità: solo lettura oppure anche modifica)
-        if(MainActivity.fotoModificata==false) {
             titolo = (TextView) getActivity().findViewById(R.id.txt_titolo);
             descrizione = (TextView) getActivity().findViewById(R.id.txt_descrizione);
             img = (ImageView) getActivity().findViewById(R.id.img_foto);
@@ -92,7 +91,6 @@ public class FragmentSingolaOpera extends Fragment {
                 editableDescrizione.setVisibility(View.GONE);
                 titolo.append('\n' + MainActivity.operaSelezionata.getTitolo());
                 descrizione.append('\n' + MainActivity.operaSelezionata.getDescrizione());
-            }
         }
 
     }
