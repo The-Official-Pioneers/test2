@@ -30,8 +30,8 @@ import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.DisplayGrafoModifica;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModifica;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
-import it.uniba.pioneers.testtool.editor.node.dialogs.NodeDialog;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
+import it.uniba.pioneers.testtool.editor.node.dialogs.NodeDialog;
 import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 
 public class GraphNodeModifica extends Node {
@@ -155,7 +155,9 @@ public class GraphNodeModifica extends Node {
                                         response -> {
                                             try {
                                                 if(response.getBoolean("status")){
-                                                    Toast.makeText(self.getContext(), R.string.zona_aggiunta_visita + self.data.getInt("id"), Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(self.getContext(),
+                                                            getResources().getString(R.string.zona_aggiunta_visita)
+                                                                    + self.data.getInt("id"), Toast.LENGTH_SHORT).show();
                                                 }
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
@@ -168,7 +170,9 @@ public class GraphNodeModifica extends Node {
                                 Zona.addArea(self.getContext(), self.graphParent.visita.data.getInt("id"), listNodeModifica.data.getInt("id"),
                                         response -> {
                                             try {
-                                                Toast.makeText(self.getContext(), R.string.area_aggiunta_visita + self.data.getInt("id"), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(self.getContext(),
+                                                        getResources().getString(R.string.area_aggiunta_visita)
+                                                        + self.data.getInt("id"), Toast.LENGTH_SHORT).show();
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -180,7 +184,9 @@ public class GraphNodeModifica extends Node {
                                 Area.addOpera(self.getContext(), self.graphParent.visita.data.getInt("id"), listNodeModifica.data.getInt("id"),
                                         response -> {
                                             try {
-                                                Toast.makeText(self.getContext(), R.string.opera_aggiunta_visita + self.data.getInt("id"), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(self.getContext(),
+                                                        getResources().getString(R.string.opera_aggiunta_visita)
+                                                        + self.data.getInt("id"), Toast.LENGTH_SHORT).show();
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }

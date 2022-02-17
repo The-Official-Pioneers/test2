@@ -118,7 +118,7 @@ public class CreaVisita extends AppCompatActivity {
                     if(status){
                         visita.setDataFromJSON(response.getJSONObject("data"));
 
-                        GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment();
+                        GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(visita);
                         androidx.fragment.app.FragmentManager supportFragmentManager;
 
                         findViewById(R.id.linear_crea_visita).setVisibility(View.GONE);
@@ -167,7 +167,7 @@ public class CreaVisita extends AppCompatActivity {
                                             if(status){
                                                 visita.setDataFromJSON(response.getJSONObject("data"));
 
-                                                GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment();
+                                                GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(visita);
                                                 androidx.fragment.app.FragmentManager supportFragmentManager;
                                                 supportFragmentManager = getSupportFragmentManager();
                                                 supportFragmentManager.beginTransaction()

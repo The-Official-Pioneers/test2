@@ -153,7 +153,7 @@
                         android:clickable="true"
                         android:foreground="?selectableItemBackground"
                         android:gravity="center"
-                        android:onClick="goEditorActivity"
+                        android:onClick="creaVisita"
                         android:orientation="vertical">
 
                         <ImageView
@@ -207,7 +207,7 @@
                         android:clickable="true"
                         android:foreground="?selectableItemBackground"
                         android:gravity="center"
-                        android:onClick="iTuoiPercorsi"
+                        android:onClick="goToYourVisite"
                         android:orientation="vertical">
 
                         <ImageView

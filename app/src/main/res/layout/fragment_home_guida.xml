@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/alto">
     <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".home.FragmentHomeGuida"
@@ -29,7 +29,7 @@
                     android:gravity="center"
                     android:clickable="true"
                     android:foreground="?selectableItemBackground"
-                    android:onClick="leTueVisite"
+                    android:onClick="goToYourVisite"
                     android:orientation="vertical">
 
                     <ImageView
@@ -138,9 +138,10 @@
                     android:id="@+id/visite_effettuate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:clickable="true"
                     android:foreground="?selectableItemBackground"
+                    android:gravity="center"
+                    android:onClick="goToPastVisit"
                     android:orientation="vertical">
 
                     <ImageView
@@ -156,8 +157,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Visite effettuate"
                         android:onClick="goEditorActivity"
+                        android:text="Visite effettuate"
                         android:textStyle="bold">
 
                     </TextView>

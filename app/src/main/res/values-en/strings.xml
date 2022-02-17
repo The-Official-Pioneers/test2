@@ -383,6 +383,11 @@
 
     <!-- ===============ACTIVITY & FRAGMENT VISITE CREATE UTENTE=============== -->
     <string name="le_tue_visite" translatable="false">Your Visits</string>
+    <string name="visite_predefinite" translatable="false">Default Visits</string>
+    <string name="ricerca_visite_testo" translatable="false">Result of the visit research</string>
+
+    <string name="visite_effettuare" translatable="false">Visits To Do </string>
+    <string name="visite_passate" translatable="false">Past Visits</string>
 
     <string name="id_visita" translatable="false">Visit ID:</string>
     <string name="data" translatable="false">Date:</string>

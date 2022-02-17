@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,13 +21,9 @@ import java.util.List;
 import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.users.Guida;
+import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentVisiteCreateUtente#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentVisiteCreateUtente extends Fragment {
 
     public static SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -83,6 +80,9 @@ public class FragmentVisiteCreateUtente extends Fragment {
     //precedentemente caricate
     //Inoltre vi è un Listener necessario per gestire il click su un elemento della lista
     private void setLista(){
+
+        setTitolo();
+
         //ListView presente nel file activity_visite_create_utente.xml
         ListView lista_visite = (ListView) getActivity().findViewById(R.id.lista_visite_utente);
         //Adapter ListView
@@ -95,6 +95,35 @@ public class FragmentVisiteCreateUtente extends Fragment {
                 startFragSingolaVisita();
             }
         });
+    }
+
+    private void setTitolo(){
+
+        TextView titoloVisite = (TextView) getActivity().findViewById(R.id.le_tue_visite);
+        if(MainActivity.tipoUtente.equals("visitatore")){
+
+            //2 = ricerca visite in base al luogo, 1 = visite predef, 0 = sue visite
+            if(MainActivity.flagVisite == 2){
+                titoloVisite.setText(R.string.ricerca_visite_testo);
+            } else if(MainActivity.flagVisite == 1){
+                titoloVisite.setText(R.string.visite_predefinite);
+            } else {
+                titoloVisite.setText(R.string.le_tue_visite);
+            }
+
+        } else if(MainActivity.tipoUtente.equals("curatore")){
+            titoloVisite.setText(R.string.le_tue_visite);
+        } else if(MainActivity.tipoUtente.equals("guida")){
+
+            //1 = visite da fare, 0 = già fatte
+            if(MainActivity.flagVisiteGuida == 1 ){
+                titoloVisite.setText(R.string.visite_effettuare);
+            } else {
+                titoloVisite.setText(R.string.visite_passate);
+            }
+
+        }
+
     }
 
     //Metodo necessario per impostare l'adapter della listView e fornire una stringa descrittiva

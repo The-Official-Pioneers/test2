@@ -17,9 +17,8 @@
             android:id="@+id/le_tue_visite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/le_tue_visite"
-            android:textSize="30dp"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:textSize="30dp" />
 
         <ListView
             android:id="@+id/lista_visite_utente"

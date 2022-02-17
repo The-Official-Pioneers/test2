@@ -405,6 +405,11 @@
 
     <!-- ===============ACTIVITY & FRAGMENT VISITE CREATE UTENTE=============== -->
     <string name="le_tue_visite" translatable="false">Le Tue Visite</string>
+    <string name="visite_predefinite" translatable="false">Visite Predefinite</string>
+    <string name="ricerca_visite_testo" translatable="false">Risultato della ricerca visite</string>
+
+    <string name="visite_effettuare" translatable="false">Visite da Effettuare</string>
+    <string name="visite_passate" translatable="false">Visite Passate</string>
 
     <string name="id_visita" translatable="false">ID Visita:</string>
     <string name="data" translatable="false">Data:</string>
@@ -418,8 +423,6 @@
     <string name="elimina_visita" translatable="false">Elimina Visita</string>
 
     <string name="dati_visita" translatable="false">Dati Visita</string>
-    <string name="Accesso">Accesso</string>
-    <string name="AreaPersonale">Area Personale</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============EDITOR=============== -->
