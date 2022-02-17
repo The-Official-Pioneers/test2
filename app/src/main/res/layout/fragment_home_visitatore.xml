@@ -228,7 +228,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="I tuoi percorsi"
+                        android:text="Le tue visite"
                         android:textStyle="bold">
 
                     </TextView>
@@ -245,7 +245,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Mostra tutti i tuoi percorsi"
+                        android:text="Mostra le tue visite"
                         android:textColor="@android:color/darker_gray" />
 
                 </LinearLayout>
