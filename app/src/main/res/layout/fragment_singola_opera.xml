@@ -109,30 +109,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:scrollbars="vertical"
+                android:inputType="textMultiLine"
                 android:text="Descrizione"
                 android:textSize="18sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom|center|fill_vertical"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_modifica"
-                    android:layout_width="110dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:layout_margin="15dp"
-                    android:onClick="modificaAggiungiOpera"
-                    android:text="Salva"
-                    android:textColor="@color/white"
-                    android:background="@drawable/login_btn"
-                    android:visibility="visible" />
-            </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_del"
