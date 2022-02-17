@@ -12,6 +12,11 @@
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="AGGIUNGI PALLING" />
+            android:text="AGGIUNGI PALLING"
+            android:background="@color/shuttle_gray"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:layout_marginLeft="5dp"
+            />
     </LinearLayout>
 </HorizontalScrollView>
