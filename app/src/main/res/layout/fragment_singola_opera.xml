@@ -78,6 +78,7 @@
                 android:layout_marginRight="15dp"
                 android:scrollbars="vertical"
                 android:text="Nome: "
+                android:textColor="@color/black"
                 android:textSize="25sp" />
 
             <EditText
@@ -100,6 +101,7 @@
                 android:layout_marginRight="15dp"
                 android:scrollbars="vertical"
                 android:text="Descrizione: "
+                android:textColor="@color/black"
                 android:textSize="25sp" />
 
 
