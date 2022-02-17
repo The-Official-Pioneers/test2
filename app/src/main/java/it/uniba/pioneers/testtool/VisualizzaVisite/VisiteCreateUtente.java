@@ -1,6 +1,7 @@
 package it.uniba.pioneers.testtool.VisualizzaVisite;
 
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -60,6 +61,11 @@ public class VisiteCreateUtente extends AppCompatActivity {
         }
 
         listaVisite.add(vis);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration c){
+        super.onConfigurationChanged(c);
     }
 
     @Override
