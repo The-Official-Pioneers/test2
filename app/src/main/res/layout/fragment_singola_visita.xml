@@ -206,18 +206,19 @@
                         android:text="@string/modifica_grafo_visita" />
 
                     <Button
-                        android:id="@+id/btn_elimina_visita"
+                        android:id="@+id/scegli_visita"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
-                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
-                        android:textColor="@color/white"
                         android:background="@drawable/login_btn"
-                        android:drawableTop="@drawable/ic_baseline_delete_forever_24"
-                        android:onClick="eliminaVisitaSingola"
-                        android:text="@string/elimina_visita" />
+                        android:drawableTop="@drawable/ic_baseline_account_tree_24"
+                        android:onClick="scegliGuida"
+                        android:text="@string/scegli_guida"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
@@ -229,7 +230,7 @@
 
                     <Button
                         android:id="@+id/btn_visualiz_grafo"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
@@ -240,6 +241,20 @@
                         android:background="@drawable/login_btn"
                         android:drawableTop="@drawable/ic_baseline_account_tree_24"
                         android:text="@string/grafo_visita" />
+
+                    <Button
+                        android:id="@+id/btn_elimina_visita"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/login_btn"
+                        android:drawableTop="@drawable/ic_baseline_delete_forever_24"
+                        android:onClick="eliminaVisitaSingola"
+                        android:text="@string/elimina_visita"
+                        android:textColor="@color/white" />
 
 
                 </LinearLayout>

@@ -84,6 +84,7 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
         datanascita.setText(MainActivity.visitatore.getShorterDataNascita());
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();

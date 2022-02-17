@@ -430,8 +430,16 @@
     <string name="grafo_visita" translatable="false">Visualizza Grafo</string>
     <string name="modifica_grafo_visita" translatable="false">Modifica Grafo</string>
     <string name="elimina_visita" translatable="false">Elimina Visita</string>
+    <string name="scegli_guida" translatable="false">Scegli Guida</string>
 
     <string name="dati_visita" translatable="false">Dati Visita</string>
+
+    <string name="scegli_guida_testo" translatable="false">Scegli una guida per la tua visita</string>
+    <string name="testo_dopo_guida" translatable="false">Una volta scelta la guida, clicca su Ok
+    per confermare la tua scelta. Potrai modificarla premendo nuovamente
+        sul bottone "Scegli Guida".</string>
+    <string name="guida_inserita_successo" translatable="false">Guida inserita con successo!</string>
+
     <!-- ====================================================================================== -->
 
     <!-- ===============FILE EDITOR=============== -->
@@ -452,7 +460,7 @@
     <string name="conferma_luogo" translatable="false">Conferma Luogo</string>
     <string name="creazione_visita_testo" translatable="false">Una volta selezionato il luogo per la
         visita, clicca sul bottone seguente per crearla: una volta cliccato il bottone, la visita viene creata
-        all'interno del database senza dover cliccare ulteriori bottoni.</string>
+        all\'interno del database senza dover cliccare ulteriori bottoni.</string>
 
 
     <!-- ====================================================================================== -->
