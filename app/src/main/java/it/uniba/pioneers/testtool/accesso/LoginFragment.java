@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.home.ui.login;
+package it.uniba.pioneers.testtool.accesso;
 
 import android.content.Context;
 import android.content.Intent;
