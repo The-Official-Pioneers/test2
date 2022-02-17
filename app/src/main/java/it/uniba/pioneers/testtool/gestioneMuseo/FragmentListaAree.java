@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,11 +50,16 @@ public class FragmentListaAree extends Fragment{
         }
     }
 
+    /*
+    * Quando viene richiamato, andiamo ad invalidare la toolbar per gestirne la
+    * corretta visualizzazione degli action button che in questa particolare schermata
+    * devono essere nascosti
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_aree, container, false);
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true);   // richiesta di invalidazione della toolbar per forzarne l'aggiornamento
         return view;
     }
 
@@ -63,7 +67,7 @@ public class FragmentListaAree extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
-        //Abilitazione della navigazione all'indietro
+        //Abilitazione della freccia sulla toolbar per la navigazione all'indietro
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
 
@@ -74,19 +78,18 @@ public class FragmentListaAree extends Fragment{
         }
 
         ListView lv = (ListView) view.findViewById(R.id.listView);
-        //Creazione dell'adapter per la listView
+        //Creazione di un'array adapter per la listView
         lvAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 lista
         );
-        lv.setAdapter(lvAdapter);
-        //Gestione del click su un'elemento della lista
+        lv.setAdapter(lvAdapter);  // imposto l'adapter per la list view
+        //Gestione del click di un singolo un'elemento della lista
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(),String.valueOf(MainActivity.areeZona.get(i).getId()), Toast.LENGTH_SHORT).show();
-                MainActivity.areaSelezionata = MainActivity.areeZona.get(i);
+                MainActivity.areaSelezionata = MainActivity.areeZona.get(i);  // valorizzo l'oggetto contenente le informazioni dell'opera selezionata
                 MainActivity.currArea=i;
                 //Caricamento del fragment che mostrerà i dettagli dell'area selezionata
                 FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
@@ -101,6 +104,10 @@ public class FragmentListaAree extends Fragment{
         });
     }
 
+    /*
+    * Quando richiamto sostituisce, nella toolbar, il menu con la freccetta per tornare
+    * indietro
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -111,14 +118,14 @@ public class FragmentListaAree extends Fragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //Oggetti utili per la gestione delle operazioni disponibili
+        //Oggetti utili per la gestione delle operazioni disponibili sulla toolbar
         MainActivity.areeZona=null;
         MainActivity.areaSelezionata=null;
         MainActivity.opereArea=null;
         MainActivity.operaSelezionata=null;
-        //Modifica della toolbar in base a dove si trova l'utente
+        //sostituisce, nella toolbar, freccetta per tornare indietro con il menu
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         MainActivity.toggle.setDrawerIndicatorEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.testtool);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("E-Culture Tool");
     }
 }

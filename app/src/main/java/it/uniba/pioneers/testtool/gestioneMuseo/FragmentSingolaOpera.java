@@ -92,13 +92,12 @@ public class FragmentSingolaOpera extends Fragment {
                 titolo.append('\n' + MainActivity.operaSelezionata.getTitolo());
                 descrizione.append('\n' + MainActivity.operaSelezionata.getDescrizione());
         }
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        MainActivity.toggle.setDrawerIndicatorEnabled(false);    // abilitazione della navigazione all'indietro
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);    // abilitazione della navigazione all'indietro dalla toolbar
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if(this.fragmentSingolaOpera != null){
             MainActivity.fragmentSingolaOpera = this.fragmentSingolaOpera;
@@ -115,7 +114,7 @@ public class FragmentSingolaOpera extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true); // invalidazione della toolbar
         return inflater.inflate(R.layout.fragment_singola_opera, container, false);
     }
 
@@ -132,10 +131,10 @@ public class FragmentSingolaOpera extends Fragment {
         super.onDestroy();
         MainActivity.operaSelezionata=null;
         MainActivity.fragmentSingolaOpera=null;
-        if(MainActivity.qr){
+        if(MainActivity.qr){  // modifica della UI se questo fragment viene utilizzato per interagire con un opera attraverso il suo QR-code
             ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             MainActivity.toggle.setDrawerIndicatorEnabled(true);
-            ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.testtool);
+            ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
             MainActivity.operaSelezionata=null;
             MainActivity.qr=false;
         }
