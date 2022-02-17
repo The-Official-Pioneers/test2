@@ -2,6 +2,7 @@ package it.uniba.pioneers.testtool.editor.listaNodi;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -39,9 +40,20 @@ public class ListaNodi extends HorizontalScrollView {
         linearLayout = (LinearLayout) this.scrollView.getChildAt(0);
         buttonAdd = (Button) this.linearLayout.getChildAt(0);
         buttonAdd.setText(R.string.mostra_tutti_editor);
-        buttonAdd.setWidth(200);
-        buttonAdd.setTextSize(8);
-        buttonAdd.setBackgroundColor(Color.DKGRAY);
+        //buttonAdd.setWidth(200);
+        buttonAdd.setTextSize(11);
+        //buttonAdd.setBackgroundColor(Color.DKGRAY);
+
+        setOnDragListener((view, dragEvent) -> {
+            ListNodeModifica listNodeModifica = ((ListNodeModifica)dragEvent.getLocalState());
+
+            switch (dragEvent.getAction()){
+                case DragEvent.ACTION_DROP:
+                    listNodeModifica.reset();
+                    listNodeModifica.setVisibility(VISIBLE);
+            }
+            return true;
+        });
 
         hideDuplicate();
         try {

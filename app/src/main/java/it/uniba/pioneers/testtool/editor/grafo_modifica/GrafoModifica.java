@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 
@@ -25,6 +26,7 @@ import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.draw.DrawView;
 import it.uniba.pioneers.testtool.editor.draw.Line;
 import it.uniba.pioneers.testtool.editor.node.GraphNodeModifica;
+import it.uniba.pioneers.testtool.editor.node.ListNodeModifica;
 import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 
 public class GrafoModifica extends ConstraintLayout {
@@ -110,6 +112,18 @@ public class GrafoModifica extends ConstraintLayout {
         initDrawAttribute(context);
 
         GrafoModifica self = this;
+
+        setOnDragListener((view, dragEvent) -> {
+            ListNodeModifica listNodeModifica = ((ListNodeModifica)dragEvent.getLocalState());
+
+            switch (dragEvent.getAction()){
+                case DragEvent.ACTION_DROP:
+                    listNodeModifica.reset();
+                    listNodeModifica.setVisibility(VISIBLE);
+            }
+            return true;
+        });
+
         Visita.getGraphData(context, tmpVisita,
                 response -> {
                     try {

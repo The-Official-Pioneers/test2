@@ -1,12 +1,14 @@
 package it.uniba.pioneers.testtool;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -103,6 +105,11 @@ public class CreaVisita extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
     //Avvia editor dopo aver selezionato il luogo dove effettuare la visita
     public void goToEditorAfterLuogo(View view) {
         //Creo una nuova visita
@@ -137,6 +144,7 @@ public class CreaVisita extends AppCompatActivity {
 
                         supportFragmentManager = getSupportFragmentManager();
                         supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                                 .replace(R.id.frameCreaVisita, grafoModificaFragment)
                                 .commit();
 
@@ -183,6 +191,7 @@ public class CreaVisita extends AppCompatActivity {
                                                 androidx.fragment.app.FragmentManager supportFragmentManager;
                                                 supportFragmentManager = getSupportFragmentManager();
                                                 supportFragmentManager.beginTransaction()
+                                                        .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                                                         .replace(R.id.frameCreaVisita, grafoModificaFragment)
                                                         .commit();
                                             }else{

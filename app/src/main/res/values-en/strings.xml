@@ -360,7 +360,7 @@
     <string name="confermi" translatable="false">Confirmation</string>
     <string name="confermi_modifica" translatable="false">Confirm the change?</string>
 
-    <string name="modifica_campo" translatable="false">Edit at least one field to save</string>
+    <string name="modifica_campo" translatable="false">Edit at least one field, with valid values to save</string>
     <string name="modifica_effettuata" translatable="false">Change made</string>
 
     <string name="conferma_modifica_opera" translatable="false">Confirm the change to the work?</string>

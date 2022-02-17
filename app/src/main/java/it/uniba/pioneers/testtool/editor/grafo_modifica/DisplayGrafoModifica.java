@@ -1,11 +1,14 @@
 package it.uniba.pioneers.testtool.editor.grafo_modifica;
 
 import android.content.Context;
+import android.view.DragEvent;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import it.uniba.pioneers.data.Visita;
+import it.uniba.pioneers.testtool.editor.node.ListNodeModifica;
+
 
 public class DisplayGrafoModifica extends ConstraintLayout {
     public GrafoModifica graph = null;
@@ -21,6 +24,17 @@ public class DisplayGrafoModifica extends ConstraintLayout {
 
         //AGGIUNTA DEL GRAFO AL DISPLAYGRAFO
         addView(graph);
+
+        setOnDragListener((view, dragEvent) -> {
+            ListNodeModifica listNodeModifica = ((ListNodeModifica)dragEvent.getLocalState());
+
+            switch (dragEvent.getAction()){
+                case DragEvent.ACTION_DROP:
+                    listNodeModifica.reset();
+                    listNodeModifica.setVisibility(VISIBLE);
+            }
+            return true;
+        });
     }
 
 
