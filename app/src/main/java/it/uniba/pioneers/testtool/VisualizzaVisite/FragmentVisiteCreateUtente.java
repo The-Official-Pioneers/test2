@@ -73,6 +73,7 @@ public class FragmentVisiteCreateUtente extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        ((VisiteCreateUtente)getActivity()).getSupportActionBar().setTitle("E-culture Tool");
         setLista();
     }
 

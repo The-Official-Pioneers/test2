@@ -26,7 +26,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -57,9 +59,18 @@ public class AreaPersonale extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_personale);
-
+        gestioneToolBar();
     }
-
+    //Metodo necessario per il caricamento della barra nell'activity principale
+    private void gestioneToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolBarAreaPersonale);
+        toolbar.setTitle("Area Personale");
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+        toolbar.setLogo(R.mipmap.ic_launcher_menu);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
     @Override
     protected void onStart() {

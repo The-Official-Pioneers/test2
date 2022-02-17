@@ -9,6 +9,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,6 +62,16 @@ public class VisiteCreateUtente extends AppCompatActivity {
         visitaSelezionata = null;
         listaVisite = null;
         setContentView(R.layout.activity_visite_create_utente);
+        gestioneToolBar();
+    }
+
+    private void gestioneToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolBarVisiteCreate);
+        toolbar.setTitle("E-culture Tool");
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+        toolbar.setLogo(R.mipmap.ic_launcher_menu);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
