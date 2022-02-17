@@ -245,7 +245,7 @@ public class LoginFragment extends Fragment {
                         /*******************************************************************************
                          * NON Esiste un account associato all'email e la password inseriti dall'utente
                          *******************************************************************************/
-                        Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.account_inesistente, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -38,7 +38,7 @@ public class ListaNodi extends HorizontalScrollView {
         scrollView = (HorizontalScrollView) this.getChildAt(0);
         linearLayout = (LinearLayout) this.scrollView.getChildAt(0);
         buttonAdd = (Button) this.linearLayout.getChildAt(0);
-        buttonAdd.setText("Mostra tutti");
+        buttonAdd.setText(R.string.mostra_tutti_editor);
         buttonAdd.setWidth(200);
         buttonAdd.setTextSize(8);
         buttonAdd.setBackgroundColor(Color.DKGRAY);
@@ -51,8 +51,8 @@ public class ListaNodi extends HorizontalScrollView {
             hideDuplicate(); //TODO RISOLVERE PROBLEMA
 
             buttonAdd.setOnClickListener(view1 -> {
-                if(buttonAdd.getText().equals("Mostra tutti")){
-                    buttonAdd.setText("Nascondi Duplicati");
+                if(buttonAdd.getText().equals(R.string.mostra_tutti_editor)){
+                    buttonAdd.setText(R.string.nascondi_duplicati_editor);
                     buttonAdd.setBackgroundColor(Color.LTGRAY);
                     buttonAdd.setTextColor(Color.BLACK);
 
@@ -61,7 +61,7 @@ public class ListaNodi extends HorizontalScrollView {
                         listNodeModifica.setVisibility(VISIBLE);
                     }
                 }else{
-                    buttonAdd.setText("Mostra tutti");
+                    buttonAdd.setText(R.string.mostra_tutti_editor);
                     buttonAdd.setBackgroundColor(Color.DKGRAY);
                     buttonAdd.setTextColor(Color.WHITE);
 

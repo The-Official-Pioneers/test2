@@ -65,7 +65,7 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
         super.onResume();
         setDataVisitatore();
     }
-
+    //Metodo necessario per impostare i dati del Visitatore all'interno dell'Area Personale
     private void setDataVisitatore(){
        // setTextEditText();
 

@@ -7,23 +7,26 @@
 
     <LinearLayout
         android:id="@+id/layout_visite_utente"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
         android:orientation="vertical"
-        android:padding="7dp">
+        >
 
         <TextView
             android:id="@+id/le_tue_visite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/le_tue_visite"
+            android:layout_marginLeft="5dp"
             android:textSize="30dp" />
 
         <ListView
             android:id="@+id/lista_visite_utente"
-            android:layout_width="409dp"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="?attr/actionBarSize">
 
         </ListView>
     </LinearLayout>
+
 </FrameLayout>

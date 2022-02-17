@@ -17,36 +17,20 @@ import java.util.ArrayList;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentListaOpere#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentListaOpere extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public static ArrayAdapter<String> lvAdapter;
     public static ArrayList<String> lista;
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
     public FragmentListaOpere() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentListaOpere.
-     */
-    // TODO: Rename and change types and number of parameters
     public static FragmentListaOpere newInstance(String param1, String param2) {
         FragmentListaOpere fragment = new FragmentListaOpere();
         Bundle args = new Bundle();
@@ -75,42 +59,47 @@ public class FragmentListaOpere extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
         View view = inflater.inflate(R.layout.fragment_lista_opere, container, false);
-
-
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(MainActivity.areaSelezionata.getNome());   // sostituzione del titolo della toolbar con il nome dell'area selezionata
         return view;
     }
+
     public void onViewCreated( View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(MainActivity.opereArea.size()!=0){    // se non ci sono opere nell'area selezionata, viene mostrata una textView
+        //Se non ci sono opere nell'area selezionata, viene mostrata una textView
+        if(MainActivity.opereArea.size()!=0){
             TextView txtNoOpere = (TextView) getActivity().findViewById(R.id.txt_no_opere);
             txtNoOpere.setVisibility(View.GONE);
         }
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // abilitazione della navigazione all'indietro
+        //Abilitazione della navigazione all'indietro
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        lista = new ArrayList<String>();         // creazione della lista di nomi di tutte le opere di una determinata area
+        //Creazione della lista di nomi di tutte le opere di una determinata area
+        lista = new ArrayList<String>();
         for(int i = 0; i<MainActivity.opereArea.size(); i++){
             lista.add(MainActivity.opereArea.get(i).getTitolo());
         }
 
         ListView lv = (ListView) view.findViewById(R.id.listView);
-        lvAdapter = new ArrayAdapter<String>(         // creazione dell'adapter per la listView
+        //Creazione dell'adapter per la listView
+        lvAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 lista
         );
         lv.setAdapter(lvAdapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){   // gestione del click su un'elemento della lista
+        //Gestione del click su un'elemento della lista
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 MainActivity.operaSelezionata = MainActivity.opereArea.get(i);
                 MainActivity.currOpera=i;
-                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();     // caricamento del fragment che mostrerà i dettagli dell'opera selezionata
+                //Caricamento del fragment che mostrerà i dettagli dell'opera selezionata
+                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 MainActivity.fragmentSingolaOpera = new FragmentSingolaOpera();
-                fragmentManager.beginTransaction()          // caricamento del fragment che mostrera l'opera selezionata
+                //Caricamento del fragment che mostrera l'opera selezionata
+                fragmentManager.beginTransaction()
                         .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, MainActivity.fragmentSingolaOpera)
                         .addToBackStack(null)
@@ -128,9 +117,11 @@ public class FragmentListaOpere extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        MainActivity.opereArea=null;       // oggetti utili per la gestione delle operazioni disponibili
+        //Oggetti utili per la gestione delle operazioni disponibili
+        MainActivity.opereArea=null;
         MainActivity.operaSelezionata=null;
-        MainActivity.fotoModificata=false;               // modifica della toolbar in base a dove si trova l'utente
+        MainActivity.fotoModificata=false;
+        //Modifica della toolbar in base a dove si trova l'utente
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
     }
 }

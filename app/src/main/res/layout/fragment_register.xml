@@ -20,19 +20,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/presentation"
         android:orientation="vertical">
+
         <TextView
+            android:id="@+id/who"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:animateLayoutChanges="true"
             android:gravity="center"
             android:keepScreenOn="true"
-            android:text="Chi sei?"
+            android:text="@string/chi_sei"
             android:textAlignment="center"
             android:textColor="@color/black_overlay"
             android:textSize="50dp"
-            android:textStyle="bold"
-            android:layout_marginTop="30dp"
-            android:animateLayoutChanges="true"
-            android:id="@+id/who"/>
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/curatore"

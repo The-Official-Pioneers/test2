@@ -65,6 +65,7 @@ public class FragmentAreaPersonaleCuratore extends Fragment {
         setDataCuratore();
     }
 
+    //Metodo necessario per impostare i dati del Curatore Museale all'interno dell'Area Personale
     private void setDataCuratore(){
        // setTextEditText();
 

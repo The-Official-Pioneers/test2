@@ -75,7 +75,7 @@ public class FragmentAreaPersonaleGuida extends Fragment {
         super.onResume();
         setDataGuida();
     }
-
+    //Metodo necessario per impostare i dati della Guida all'interno dell'Area Personale
     private void setDataGuida(){
         //Imposto testo in italiano/inglese in base alla lingua del sistema
        // setTextEditText();
@@ -148,7 +148,7 @@ public class FragmentAreaPersonaleGuida extends Fragment {
                                 specializzazione.setSelection(selectedItemId);
 
                             }else{
-                                System.out.println("Sium sium");
+                                System.out.println(R.string.impossibile_procedere);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -165,7 +165,6 @@ public class FragmentAreaPersonaleGuida extends Fragment {
     private int findActualPosition(String actualSpecializ, List<String> listToCheck){
         for(int i = 0; i < listToCheck.size(); i++){
             if(actualSpecializ.equals( listToCheck.get(i) )){
-                System.out.println("TROVATO SIUM SIUM" + i);
                 return i;
             }
         }

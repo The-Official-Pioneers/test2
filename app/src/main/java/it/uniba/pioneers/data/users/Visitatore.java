@@ -370,7 +370,7 @@ public class Visitatore {
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.aggiornamento_non_riuscito, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -433,7 +433,7 @@ public class Visitatore {
                                 if(status){
                                     Toast.makeText(context, R.string.visitatore_eliminato_successo, Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, R.string.cambio_dati_no_validi, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.eliminazione_non_riuscita, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

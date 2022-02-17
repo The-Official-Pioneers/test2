@@ -1,20 +1,17 @@
 package it.uniba.pioneers.testtool.editor.grafo_visualizza;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.VisualizzaVisite.VisiteCreateUtente;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 import it.uniba.pioneers.testtool.editor.options.OptionsEditor;
 
@@ -32,7 +29,6 @@ public class GrafoVisualizzaFragment extends Fragment {
 
     public Visita visita = null;
     public GrafoVisualizzaFragment(Visita visita) {
-        // Required empty public constructor
         this.visita = visita;
     }
 
@@ -46,7 +42,6 @@ public class GrafoVisualizzaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_grafo_visualizza, container, false);
     }
 
@@ -62,7 +57,7 @@ public class GrafoVisualizzaFragment extends Fragment {
         listaNodi = getView().findViewById(R.id.listaNodi);
         optionsEditor = getView().findViewById(R.id.optionsGrafo);
 
-        Log.v("grafoManipulateLayout", String.valueOf(grafoManipulateLayout));
+
 
         DisplayGrafoVisualizza displayGrafoVisualizza = new DisplayGrafoVisualizza(getContext(), visita);
 
