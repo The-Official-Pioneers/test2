@@ -82,6 +82,8 @@ public class FragmentVisiteCreateUtente extends Fragment {
         ((VisiteCreateUtente)getActivity()).getSupportActionBar().setTitle(toolBarTitle());
     }
 
+    //Metodo necessario per impostare il titolo della tool bar in base al tipo di utente
+    //e al tipo di visite che deve visualizzare
     private String toolBarTitle(){
         if(MainActivity.tipoUtente.equals("visitatore")){
             //2 = ricerca visite in base al luogo, 1 = visite predef, 0 = sue visite

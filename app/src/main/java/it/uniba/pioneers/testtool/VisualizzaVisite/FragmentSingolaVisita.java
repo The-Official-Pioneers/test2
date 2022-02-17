@@ -17,11 +17,6 @@ import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentSingolaVisita#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentSingolaVisita extends Fragment {
 
     Visita v = new Visita();
