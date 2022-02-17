@@ -49,7 +49,6 @@ import java.util.ArrayList;
 
 import it.uniba.pioneers.data.Area;
 import it.uniba.pioneers.data.Opera;
-import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
@@ -67,7 +66,6 @@ import it.uniba.pioneers.testtool.home.FragmentHomeVisitatore;
 import it.uniba.pioneers.testtool.accesso.IntroActivity;
 import it.uniba.pioneers.testtool.network.NetworkChangeListener;
 
-
 public class MainActivity extends AppCompatActivity {
     public static final int PICK_FROM_GALLERY = 1;
     public static final int SCAN_QR = 2;
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     public FragmentManager supportFragmentManager;
     public static ActionBarDrawerToggle toggle;
     public static Opera opera;
-    public static Zona zona;
+
     public static boolean qr;
     public static ArrayList<Area> areeZona;
     public static Area areaSelezionata;
@@ -91,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
     public static FragmentSingolaOpera fragmentSingolaOpera;
     public static int currOpera=-1;
     public static String tipoUtente;
-    public static boolean fotoModificata;
     public static boolean nuovaOpera;
     public static int idUtente;
 
@@ -102,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
     //Flag usato per capire se il visitatore vuole vedere le sue visite o quelle predefinite
     //2 = ricerca visite in base al luogo, 1 = visite predef, 0 = sue visite
     public static int flagVisite;
+
+    //Flag usato per capire se il curatore modifica la foto dell'opera
+    public static boolean fotoModificata;
 
     public static String luogoToSearch;
 
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             tipoUtente = intent.getStringExtra("typeUser");
             idUtente = intent.getIntExtra("idUser", 1);
         }
-
+        // costruzione della toolbar
         gestioneToolBar();
 
         //Caricamento della home corretta in base al tipo di utente
@@ -176,7 +176,34 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    /*
+    * Metodo per la creazione della toolbar
+    * impostandone il drawer e il relativo listener
+     */
+    public void creaToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolBarHome);
+        setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
+        toggle.syncState(); //Ruota il toggle quando viene cliccato
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (areeZona != null || qr) {
+                    onBackPressed();
+                } else {
+                    drawer.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
 
+    /*
+    * Metodo per settare i paramentri della toolbar
+    *  di cui: colore, logo e rirolo
+    */
     private void gestioneToolBar() {
         Toolbar toolbar = findViewById(R.id.toolBarHome);
         toolbar.setTitle("E-culture Tool");
@@ -186,8 +213,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+
     @Override
-    protected void onStart() {
+    protected void onStart() {   // registrazione del receiver per il cambio dello stato di connessione
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangeListener, filter);
         super.onStart();
@@ -224,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
                 curatore.readDataDb(this);
                 break;
         }
-
+    // se l'utente è un visitatore, viene mosrtrata una barra di ricerca per le cercare dei percorsi predefiniti di una data città
        if(tipoUtente.equals("visitatore")){
             EditText searchBar = (EditText) findViewById(R.id.text_cerca);
             searchBar.setOnEditorActionListener((v, actionId, event) -> {
@@ -236,33 +264,12 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             });
         }
-
     }
 
     @Override
-    protected void onStop() {
+    protected void onStop() {    // deregistrazione del receiver per il cambio dello stato di connessione
         unregisterReceiver(networkChangeListener);
         super.onStop();
-    }
-
-    public void creaToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolBarHome);
-        setSupportActionBar(toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle); //aggiungo un listner al toggle
-        toggle.syncState(); //Ruota il toggle quando viene cliccato
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (areeZona != null || qr) {
-                    onBackPressed();
-                } else {
-                    drawer.openDrawer(GravityCompat.START);
-                }
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Override
@@ -302,7 +309,11 @@ public class MainActivity extends AppCompatActivity {
                 .show();
 
     }
-
+    /*
+    * Metodo per gestire la pressione del tasto back
+    * le operazioni che vengono associate a tale tasto variano in base
+    * alla schermata e allo stato del sistema
+    */
     @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START)){    //se clicco il bottone back e sta aperto il drawer
@@ -323,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
                                     MainActivity.super.onBackPressed();
                                     fotoModificata=false;
                                     if(oldFoto!=null) {
-                                        operaSelezionata.setFoto(oldFoto);
+                                        operaSelezionata.setFoto(oldFoto);  // se nessuna foto viene selezionata, reimposto la precedente
                                     }
                                     oldFoto=null;
                                 }
@@ -430,10 +441,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Modifica della visibilità degli action button in base alla posizion dell'utente(curatore)
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        //Modifica della visibilità degli action button in base alla posizion dell'utente(curatore)
         menu.findItem(R.id.action_delete_opera).setVisible(false);
         menu.findItem(R.id.action_save_opera).setVisible(false);
         menu.findItem(R.id.action_delete_area).setVisible(false);
@@ -538,7 +549,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.setType("image/*");
-                    startActivityForResult(intent, 1);
+                    startActivityForResult(intent, PICK_FROM_GALLERY);
                 } else {
                     new AlertDialog.Builder(this)
                             .setTitle(R.string.permesso_negato)
@@ -557,11 +568,11 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode != PICK_FROM_GALLERY && resultCode == RESULT_OK) {   // scansione del qr
-            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);  // risultato della scansione
             if (result != null) {
                 if (result.getContents() != null) {
                     operaSelezionata = new Opera();
-                    operaSelezionata.setId(Integer.parseInt(result.getContents()));
+                    operaSelezionata.setId(Integer.parseInt(result.getContents()));   // richiesta al db della opera scansionata
                     operaSelezionata.readDataDb(MainActivity.this, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -600,7 +611,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-                } else {
+                } else {   // se non si riceve nessun risultato dalla scansione
                     operaSelezionata=null;
                     qr=false;
                     getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -619,7 +630,7 @@ public class MainActivity extends AppCompatActivity {
             Bitmap bitmap;
             ImageView oldPropic = (ImageView) fragmentSingolaOpera.img;
             try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri)); // immagine selezionata
                 oldPropic.setImageBitmap(bitmap);
                 if(operaSelezionata!=null){
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -653,7 +664,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void gestisciMuseo(View view) {
+    public void gestisciMuseo(View view) { // listener del bottone gestisci museo
         if (tipoUtente.equals("ospite")) {   // controllo sul tipo di utente
             new AlertDialog.Builder(this)
                     .setTitle(R.string.accedi)
@@ -672,7 +683,7 @@ public class MainActivity extends AppCompatActivity {
                             JSONArray resultAree = response.getJSONArray("data");
                             for (int i = 0; i < resultAree.length(); i++) {
                                 Area tmp = new Area();
-                                tmp.setDataFromJSON(resultAree.getJSONObject(i));
+                                tmp.setDataFromJSON(resultAree.getJSONObject(i));   // creazione della lista con tutte le aree della zona
                                 areeZona.add(tmp);
                             }
                         }
@@ -692,7 +703,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void aggiungiArea(View view) {
+    public void aggiungiArea(View view) {   // aggiunta di una nuova area
         AlertDialog.Builder dialogInserimento = new AlertDialog.Builder(this);
         dialogInserimento.setTitle(R.string.aggiungi_nuova_arae);
         dialogInserimento.setMessage(R.string.inserisci_nome_area);
@@ -707,12 +718,10 @@ public class MainActivity extends AppCompatActivity {
                     nuovaArea.setNome(nomeArea.getText().toString());
                     nuovaArea.setZona((int) curatore.getZona());
                     nuovaArea.createDataDb(getApplicationContext(), response -> {
-
                     });
-
                     FragmentListaAree.lista.add(nuovaArea.getNome());
                     areeZona.add(nuovaArea);
-                    FragmentListaAree.lvAdapter.notifyDataSetChanged();   // aggiorno la listView
+                    FragmentListaAree.lvAdapter.notifyDataSetChanged();   // aggiorno la listView e l'adapter
                 }
             }
         });
@@ -754,7 +763,7 @@ public class MainActivity extends AppCompatActivity {
                                         .show();
                             }else{
                                 areaSelezionata.setNome(nome);
-                                areaSelezionata.updateDataDb(MainActivity.this);
+                                areaSelezionata.updateDataDb(MainActivity.this);   // confermo delle modifiche nel db
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setMessage(R.string.modifica_effettuata)
                                         .setPositiveButton(android.R.string.yes,null)
@@ -767,7 +776,7 @@ public class MainActivity extends AppCompatActivity {
                     .show();
     }
 
-    public void mostraOpereArea(View view) {    // ottengo tutte le opere di una area
+    public void mostraOpereArea(View view) {    // ottengo tutte le opere di una area selezionata
         Opera.opereArea(this, MainActivity.areaSelezionata.getId() ,new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -777,7 +786,7 @@ public class MainActivity extends AppCompatActivity {
                     if(status) {
                         JSONArray resultOpere = response.getJSONArray("data");
                         for (int i = 0; i < resultOpere.length(); i++) {
-                            Opera tmp = new Opera();
+                            Opera tmp = new Opera();                                            // creazione della lista delle opere dell'area selezionat
                             tmp.setId(resultOpere.getJSONObject(i).getInt("id"));
                             tmp.setTitolo(resultOpere.getJSONObject(i).getString("titolo"));
                             tmp.setDescrizione(resultOpere.getJSONObject(i).getString("descrizione"));
@@ -836,7 +845,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void modificaAggiungiOpera(View view) {   // aggiunta e modifica di un'opera sfruttano lo stesso actionButton(nel caso della modifica l'oggetto operaSelezionata non è nullo)
+    /*
+    * Listener del bottone salva,
+    * quest'ultimo permette sia di salvare le modifiche ad un'opera gia esistente
+    * sia per creare una nuova opera, in questo caso l'oggetto "operaSelezionata" sarà null
+    */
+    public void modificaAggiungiOpera(View view) {
         if(operaSelezionata!=null) {   // modifica opera gia esistente
             new AlertDialog.Builder(this)
                     .setTitle(R.string.confermi)

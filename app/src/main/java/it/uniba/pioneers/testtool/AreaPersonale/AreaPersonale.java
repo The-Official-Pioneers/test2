@@ -4,9 +4,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
@@ -44,6 +46,7 @@ import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.network.NetworkChangeListener;
 
 public class AreaPersonale extends AppCompatActivity {
 
@@ -55,16 +58,18 @@ public class AreaPersonale extends AppCompatActivity {
 
     private String selectedSpecializ = "";
 
+    NetworkChangeListener networkChangeListener= new NetworkChangeListener();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_personale);
         gestioneToolBar();
     }
-    //Metodo necessario per il caricamento della barra nell'activity principale
+    //Metodo necessario per il caricamento della barra nell'area personale
     private void gestioneToolBar() {
         Toolbar toolbar = findViewById(R.id.toolBarAreaPersonale);
-        toolbar.setTitle("Area Personale");
+        toolbar.setTitle(R.string.area_personale);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         toolbar.setLogo(R.mipmap.ic_launcher_menu);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
@@ -74,6 +79,8 @@ public class AreaPersonale extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener, filter);
         super.onStart();
         startFrag();
     }
@@ -646,5 +653,9 @@ public class AreaPersonale extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
+    }
 }

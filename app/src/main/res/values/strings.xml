@@ -235,6 +235,12 @@
         <item>mostra itinerante</item>
     </string-array>
 
+    <!-- ===============TOOL BAR STUFF=============== -->
+    <string name="area_personale" translatable="false">Area Personale</string>
+    <string name="visite_utente" translatable="false">Visite Utente</string>
+    <string name="visita" translatable="false">Visita </string>
+    <!-- ====================================================================================== -->
+
     <!-- ===============CRUD STUFF=============== -->
     <string name="creazione_non_riuscita" translatable="false">Errore: Impossibile creare dati.</string>
     <string name="lettura_dati_non_riuscita" translatable="false">Errore: Impossibile leggere dati.</string>
@@ -406,7 +412,7 @@
     <!-- ===============ACTIVITY & FRAGMENT VISITE CREATE UTENTE=============== -->
     <string name="le_tue_visite" translatable="false">Le Tue Visite</string>
     <string name="visite_predefinite" translatable="false">Visite Predefinite</string>
-    <string name="ricerca_visite_testo" translatable="false">Risultato della ricerca visite</string>
+    <string name="ricerca_visite_testo" translatable="false">Risultato della ricerca</string>
 
     <string name="visite_effettuare" translatable="false">Visite da Effettuare</string>
     <string name="visite_passate" translatable="false">Visite Passate</string>
@@ -420,6 +426,7 @@
     <string name="descrizione" translatable="false">Descrizione:</string>
 
     <string name="grafo_visita" translatable="false">Visualizza Grafo</string>
+    <string name="modifica_grafo_visita" translatable="false">Modifica Grafo</string>
     <string name="elimina_visita" translatable="false">Elimina Visita</string>
 
     <string name="dati_visita" translatable="false">Dati Visita</string>

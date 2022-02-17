@@ -45,10 +45,10 @@
                         android:layout_marginTop="45dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="40dp"
+                        android:background="@drawable/propic_placeholder"
 
                         android:maxWidth="300dp"
-                        android:maxHeight="300dp"
-                        tools:src="@tools:sample/avatars" />
+                        android:maxHeight="300dp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/btn_modifica_img"

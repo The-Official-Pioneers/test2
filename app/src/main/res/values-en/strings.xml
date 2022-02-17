@@ -215,6 +215,12 @@
         <item>2021</item>
     </string-array>
 
+    <!-- ===============TOOL BAR STUFF=============== -->
+    <string name="area_personale" translatable="false">Personal Area</string>
+    <string name="visite_utente" translatable="false">User visits</string>
+    <string name="visita" translatable="false">Visit </string>
+    <!-- ====================================================================================== -->
+
     <!-- ===============CRUD STUFF=============== -->
     <string name="creazione_non_riuscita" translatable="false">Error: could not create data.</string>
     <string name="lettura_dati_non_riuscita" translatable="false">Error: could not read data.</string>
@@ -384,7 +390,7 @@
     <!-- ===============ACTIVITY & FRAGMENT VISITE CREATE UTENTE=============== -->
     <string name="le_tue_visite" translatable="false">Your Visits</string>
     <string name="visite_predefinite" translatable="false">Default Visits</string>
-    <string name="ricerca_visite_testo" translatable="false">Result of the visit research</string>
+    <string name="ricerca_visite_testo" translatable="false">Research\'s results</string>
 
     <string name="visite_effettuare" translatable="false">Visits To Do </string>
     <string name="visite_passate" translatable="false">Past Visits</string>
@@ -398,6 +404,7 @@
     <string name="descrizione" translatable="false">Description:</string>
 
     <string name="grafo_visita" translatable="false">View Graph</string>
+    <string name="modifica_grafo_visita" translatable="false">Edit Graph</string>
     <string name="elimina_visita" translatable="false">Delete Visit</string>
 
     <string name="dati_visita" translatable="false">Visit Data</string>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -80,7 +81,7 @@ public class WidgetRegister extends LinearLayout {
                                 spinner.setAdapter(spinnerAdapter);
 
                             }else{
-                                System.out.println(R.string.impossibile_procedere);
+                                Toast.makeText(context, R.string.impossibile_procedere, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

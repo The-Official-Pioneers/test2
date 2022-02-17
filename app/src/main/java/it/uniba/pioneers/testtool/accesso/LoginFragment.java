@@ -101,7 +101,7 @@ public class LoginFragment extends Fragment {
                      **********************************************************************************/
                     tryLoginCuratore(email, password, context);
                 } catch (Exception e){
-                    System.out.println(e);
+
                 }
             }
         });

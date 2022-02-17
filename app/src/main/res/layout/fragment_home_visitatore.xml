@@ -11,7 +11,9 @@
         android:layout_height="match_parent"
         tools:context=".home.FragmentHomeVisitatore"
         android:background="@color/alto"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusableInTouchMode="true"
+        android:focusable="true">
 
         <EditText
             android:id="@+id/text_cerca"
@@ -23,8 +25,10 @@
             android:gravity="center"
             android:imeOptions="actionSearch"
             android:inputType="text"
+            android:hint="@string/text_cerca"
             android:textColorHint="@color/gray_600"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            />
 
         <LinearLayout
             android:clipToPadding="false"
@@ -228,7 +232,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="I tuoi percorsi"
+                        android:text="Le tue visite"
                         android:textStyle="bold">
 
                     </TextView>
@@ -245,7 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Mostra tutti i tuoi percorsi"
+                        android:text="Mostra le tue visite"
                         android:textColor="@android:color/darker_gray" />
 
                 </LinearLayout>
