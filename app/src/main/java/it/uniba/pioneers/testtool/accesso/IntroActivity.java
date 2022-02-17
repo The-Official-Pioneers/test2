@@ -2,12 +2,10 @@ package it.uniba.pioneers.testtool.accesso;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -165,7 +163,6 @@ public class IntroActivity extends AppCompatActivity {
      * @param view view associata
      *********************************************************************************/
     private void launchIntentForVisitatore(View view) {
-        Toast.makeText(view.getContext(), getResources().getString(R.string.bentornato_login) + " Andrea", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         intent.putExtra("typeUser", "visitatore");
         intent.putExtra("idUser", 2);
@@ -177,7 +174,6 @@ public class IntroActivity extends AppCompatActivity {
      * @param view view associata
      *********************************************************************************/
     private void launchIntentForCuratore(View view) {
-        Toast.makeText(view.getContext(),  getResources().getString(R.string.bentornato_login) + " Luca", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         intent.putExtra("typeUser", "curatore");
         intent.putExtra("idUser", 1);
@@ -190,7 +186,6 @@ public class IntroActivity extends AppCompatActivity {
      * @param view view associata
      *********************************************************************************/
     private void launchIntentForGuida(View view) {
-        Toast.makeText(view.getContext(), getResources().getString(R.string.bentornato_login) + " Antonio", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         intent.putExtra("typeUser", "guida");
         intent.putExtra("idUser", 1004);

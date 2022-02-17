@@ -343,7 +343,7 @@ public class Opera {
             }
 
             Opera self = this;
-            Toast.makeText(context, data.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, data.toString(), Toast.LENGTH_SHORT).show();
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                     new Response.Listener<JSONObject>() {
                         @Override

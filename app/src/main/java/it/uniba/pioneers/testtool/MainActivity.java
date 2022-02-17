@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentHomeCuratore fragC = new FragmentHomeCuratore();
                 supportFragmentManager = getSupportFragmentManager();
                 supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, fragC)
                         .commit();
                 break;
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentHomeVisitatore fragV= new FragmentHomeVisitatore();
                 supportFragmentManager = getSupportFragmentManager();
                 supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, fragV)
                         .commit();
 
@@ -161,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentHomeGuida fragG = new FragmentHomeGuida();
                 supportFragmentManager = getSupportFragmentManager();
                 supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, fragG)
                         .commit();
                 break;
@@ -169,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 androidx.fragment.app.FragmentManager supportFragmentManager;
                 supportFragmentManager = getSupportFragmentManager();
                 supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                         .replace(R.id.fragment_container_list, frag)
                         .commit();
 
@@ -756,7 +760,7 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {    // se utente conferma modifiche
                             String nome = fragmentSingolaArea.editableNome.getText().toString();
-                            if(nome == "" || nome.equals(areaSelezionata.getNome())){
+                            if(nome.equals("") || nome.equals(areaSelezionata.getNome())){
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setMessage(R.string.modifica_campo)
                                         .setPositiveButton(android.R.string.yes,null)
@@ -867,7 +871,7 @@ public class MainActivity extends AppCompatActivity {
                                 byte[] b = baos.toByteArray();
                                 encImage = Base64.encodeToString(b, Base64.DEFAULT);
                             }
-                            if (titolo.equals(operaSelezionata.getTitolo()) && descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) && !fotoModificata) {
+                            if ((titolo.equals(operaSelezionata.getTitolo()) || titolo.equals("")) || (descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) || descrizione.equals("")) || !fotoModificata) {
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setMessage(R.string.modifica_campo)
                                         .setPositiveButton(android.R.string.yes, null)
