@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:textSize="15dp"
-            android:text="Scegli uno degli utenti predefiniti:"/>
+            android:text="@string/scegli_utente_predefinito"/>
 
         <LinearLayout
             android:layout_width="360dp"
@@ -227,7 +227,7 @@
             android:layout_marginLeft="15dp"
             android:minHeight="48dp"
             android:onClick="AttachRegisterFragment"
-            android:text="SIGN UP"
+            android:text="@string/registrati"
             android:textColor="#EF6C00"
             android:textSize="25dp" />
 

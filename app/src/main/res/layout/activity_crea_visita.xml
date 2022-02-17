@@ -43,6 +43,7 @@
                 android:id="@+id/text_scegli_luogo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="15dp"
                 android:text="@string/scegli_luogo_visita"
                 android:textSize="18dp" />
 
@@ -55,6 +56,14 @@
                 android:dropDownWidth="300dp"
                 android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
                 android:popupBackground="@android:color/white" />
+
+            <TextView
+                android:id="@+id/testo_creazione_visita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"
+                android:text="@string/creazione_visita_testo" />
 
             <Button
                 android:id="@+id/btn_conferma_luogo"
