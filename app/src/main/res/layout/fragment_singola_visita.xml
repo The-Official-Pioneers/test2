@@ -29,14 +29,14 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -125,7 +125,7 @@
                         android:layout_height="36dp"
                         android:layout_marginBottom="3dp"
                         android:text="Cose"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/txt_luogo_visita"
@@ -133,7 +133,7 @@
                         android:layout_height="36dp"
                         android:layout_marginBottom="3dp"
                         android:text="Cose"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/txt_data_visita"
@@ -141,14 +141,14 @@
                         android:layout_height="36dp"
                         android:layout_marginBottom="3dp"
                         android:text="Cose"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/txt_guida_visita"
                         android:layout_width="match_parent"
                         android:layout_height="36dp"
                         android:text="Cose"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
 
                 </LinearLayout>
@@ -192,7 +192,7 @@
 
                     <Button
                         android:id="@+id/modifica_visita"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
@@ -201,13 +201,13 @@
                         android:layout_weight="1"
                         android:textColor="@color/white"
                         android:background="@drawable/login_btn"
-                        android:drawableTop="@drawable/ic_baseline_account_tree_24"
+                        android:drawableTop="@drawable/ic_baseline_create_24"
                         android:onClick="avviaGrafoModifica"
                         android:text="@string/modifica_grafo_visita" />
 
                     <Button
                         android:id="@+id/scegli_visita"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
@@ -215,7 +215,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/login_btn"
-                        android:drawableTop="@drawable/ic_baseline_account_tree_24"
+                        android:drawableTop="@drawable/ic_baseline_flag_24"
                         android:onClick="scegliGuida"
                         android:text="@string/scegli_guida"
                         android:textColor="@color/white" />
@@ -230,12 +230,13 @@
 
                     <Button
                         android:id="@+id/btn_visualiz_grafo"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
                         android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
                         android:onClick="avviaGrafoVisualizza"
-                        android:layout_marginBottom="15dp"
                         android:layout_weight="1"
                         android:textColor="@color/white"
                         android:background="@drawable/login_btn"
@@ -244,10 +245,11 @@
 
                     <Button
                         android:id="@+id/btn_elimina_visita"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
-                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/login_btn"
