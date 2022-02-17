@@ -203,9 +203,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         finish();
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
