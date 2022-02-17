@@ -50,7 +50,7 @@
 
                         android:maxWidth="300dp"
                         android:maxHeight="300dp"
-                        tools:src="@tools:sample/avatars" />
+                        android:background="@drawable/propic_placeholder" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/btn_change_propic"

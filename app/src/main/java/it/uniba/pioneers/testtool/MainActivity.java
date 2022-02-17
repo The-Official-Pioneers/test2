@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        if(tipoUtente.equals("visitatore")){
+       if(tipoUtente.equals("visitatore")){
             EditText searchBar = (EditText) findViewById(R.id.text_cerca);
             searchBar.setOnEditorActionListener((v, actionId, event) -> {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
