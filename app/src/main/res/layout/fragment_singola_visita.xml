@@ -204,6 +204,20 @@
                         android:text="@string/grafo_visita" />
 
                     <Button
+                        android:id="@+id/modifica_visita"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/login_btn"
+                        android:drawableTop="@drawable/ic_baseline_account_tree_24"
+                        android:onClick="avviaGrafoModifica"
+                        android:text="@string/modifica_grafo_visita" />
+
+                    <Button
                         android:id="@+id/btn_elimina_visita"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
