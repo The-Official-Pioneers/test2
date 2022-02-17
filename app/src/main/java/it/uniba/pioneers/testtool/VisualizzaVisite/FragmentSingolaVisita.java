@@ -146,7 +146,7 @@ public class FragmentSingolaVisita extends Fragment {
     //visualizzano le loro visite
     private void setVisSelezGuida(){
         if(MainActivity.tipoUtente.equals("guida")){
-            Button btn_sel_guida = (Button) getActivity().findViewById(R.id.btn_scegli_guida);
+            Button btn_sel_guida = (Button) getActivity().findViewById(R.id.scegli_guida);
             btn_sel_guida.setVisibility(View.GONE);
         }
     }
