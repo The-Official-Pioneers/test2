@@ -7,10 +7,8 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -67,8 +65,6 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
     }
     //Metodo necessario per impostare i dati del Visitatore all'interno dell'Area Personale
     private void setDataVisitatore(){
-       // setTextEditText();
-
         ImageView propic = (ImageView) getActivity().findViewById(R.id.img_propic);
         EditText nome = (EditText) getActivity().findViewById(R.id.txt_nome);
         EditText cognome = (EditText) getActivity().findViewById(R.id.txt_cognome);
@@ -87,24 +83,6 @@ public class FragmentAreaPersonaleVisitatore extends Fragment {
         email.setText(MainActivity.visitatore.getEmail());
         datanascita.setText(MainActivity.visitatore.getShorterDataNascita());
     }
-
-    /*private void setTextEditText(){
-        TextView nome = (TextView) getActivity().findViewById(R.id.nome);
-        TextView cognome = (TextView) getActivity().findViewById(R.id.cognome);
-        TextView datanascita = (TextView) getActivity().findViewById(R.id.datan);
-        TextView email = (TextView) getActivity().findViewById(R.id.email);
-
-        Button modificaProfilo = (Button) getActivity().findViewById(R.id.btn_edit_profile);
-        Button newPass = (Button) getActivity().findViewById(R.id.btn_edit_password);
-
-        nome.setText(R.string.nome_areap);
-        cognome.setText(R.string.cognome_areap);
-        datanascita.setText(R.string.datan_areap);
-        email.setText(R.string.email_areap);
-
-        modificaProfilo.setText(R.string.modificap_areap);
-        newPass.setText(R.string.nuovapass_areap);
-    }*/
 
     @Override
     public void onDestroy() {

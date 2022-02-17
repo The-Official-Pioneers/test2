@@ -1,5 +1,7 @@
 package it.uniba.pioneers.testtool.VisualizzaVisite;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.Menu;
@@ -28,11 +30,14 @@ import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizzaFragment;
+import it.uniba.pioneers.testtool.network.NetworkChangeListener;
 
 public class VisiteCreateUtente extends AppCompatActivity {
 
     public static Visita visitaSelezionata;
     public static List<Visita> listaVisite;
+
+    NetworkChangeListener networkChangeListener= new NetworkChangeListener();
 
     //Metodo necessario per inserire le visite corrette all'interno della list view
     //Caso particolare è quello della guida che può vedere le visite da fare o passate
@@ -57,6 +62,13 @@ public class VisiteCreateUtente extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener, filter);
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         visitaSelezionata = null;
@@ -67,12 +79,36 @@ public class VisiteCreateUtente extends AppCompatActivity {
 
     private void gestioneToolBar() {
         Toolbar toolbar = findViewById(R.id.toolBarVisiteCreate);
-        toolbar.setTitle("E-culture Tool");
+        toolbar.setTitle(toolBarTitle());
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         toolbar.setLogo(R.mipmap.ic_launcher_menu);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private String toolBarTitle(){
+        if(MainActivity.tipoUtente.equals("visitatore")){
+            //2 = ricerca visite in base al luogo, 1 = visite predef, 0 = sue visite
+            if(MainActivity.flagVisite == 2){
+                return getString(R.string.ricerca_visite_testo);
+            } else if(MainActivity.flagVisite == 1){
+                return getString(R.string.visite_predefinite);
+            } else {
+                return getString(R.string.le_tue_visite);
+            }
+        } else if(MainActivity.tipoUtente.equals("curatore")){
+            return getString(R.string.le_tue_visite);
+        } else if(MainActivity.tipoUtente.equals("guida")){
+            //1 = visite da fare, 0 = già fatte
+            if(MainActivity.flagVisiteGuida == 1 ){
+                return getString(R.string.visite_effettuare);
+            } else {
+                return getString(R.string.visite_passate);
+            }
+        }
+
+        return "Visite";
     }
 
     @Override
@@ -83,6 +119,7 @@ public class VisiteCreateUtente extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        gestioneToolBar();
         startFrag();
     }
 
@@ -98,7 +135,6 @@ public class VisiteCreateUtente extends AppCompatActivity {
     }
     //Metodo necessario per caricare le visite della guida
     private void startFragGuida(){
-        System.out.println(MainActivity.guida.getId());
         try{
             Guida.getAllVisiteGuida(this, MainActivity.guida,
                     response -> {
@@ -124,7 +160,7 @@ public class VisiteCreateUtente extends AppCompatActivity {
                                 startFragListaVisite();
 
                             }else{
-                                System.out.println(R.string.impossibile_procedere);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -164,7 +200,7 @@ public class VisiteCreateUtente extends AppCompatActivity {
                                 startFragListaVisite();
 
                             }else{
-                                System.out.println(R.string.impossibile_procedere);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -220,7 +256,7 @@ public class VisiteCreateUtente extends AppCompatActivity {
                                 startFragListaVisite();
 
                             }else{
-                                System.out.println(R.string.impossibile_procedere);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -261,7 +297,7 @@ public class VisiteCreateUtente extends AppCompatActivity {
                                 startFragListaVisite();
 
                             }else{
-                                System.out.println(R.string.impossibile_procedere);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -303,7 +339,7 @@ public class VisiteCreateUtente extends AppCompatActivity {
                                 startFragListaVisite();
 
                             }else{
-                                System.out.println(R.string.impossibile_procedere);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -377,5 +413,11 @@ public class VisiteCreateUtente extends AppCompatActivity {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.frameVIsualizzaGrafo, grafoVisualizzaFragment)
                 .commit();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

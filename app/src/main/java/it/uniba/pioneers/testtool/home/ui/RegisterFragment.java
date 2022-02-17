@@ -664,7 +664,6 @@ public class RegisterFragment extends Fragment {
     private void saveDataInDbCuratore(JSONObject data) {
         try {
             Zona zona = new Zona();
-            System.out.println(data.getString("tipoZona"));
 
             zona.setDenominazione(data.getString("nomeZona"));
             zona.setTipo(data.getString("tipoZona"));
@@ -767,7 +766,6 @@ public class RegisterFragment extends Fragment {
      * stata utilizzata da uno dei tre attori
      *************************************************************************/
     public void finalResultControll() throws JSONException {
-        System.out.println("c1: "+c1+ "\nc2: "+c2+"\nc3: "+c3);
         if(!c1 && !c2 && !c3){
             /****************************************************************
              * La mail non è mai stata utilizzata, procedi alla registrazione

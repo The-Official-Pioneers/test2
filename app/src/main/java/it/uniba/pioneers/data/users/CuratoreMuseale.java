@@ -230,7 +230,7 @@ public class CuratoreMuseale {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -333,7 +333,7 @@ public class CuratoreMuseale {
 
         if(isOnline()){
             try{
-                System.out.println("Sono arrivato");
+
                 RequestQueue queue = Volley.newRequestQueue(context);
                 String url = Server.getUrl() + "/curatore-museale/create/";
 
@@ -347,7 +347,6 @@ public class CuratoreMuseale {
                     data.put(DbContract.CuratoreMusealeEntry.COLUMN_PROPIC, getPropic().toString());
                     data.put(DbContract.CuratoreMusealeEntry.COLUMN_ZONA, getZona());
 
-                    System.out.println(data.toString());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -360,7 +359,7 @@ public class CuratoreMuseale {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                        System.out.println(error.toString());
+                        
                     }
                 });
                 queue.add(jsonObjectRequest);
@@ -425,7 +424,7 @@ public class CuratoreMuseale {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -488,7 +487,7 @@ public class CuratoreMuseale {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);
@@ -525,7 +524,7 @@ public class CuratoreMuseale {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                        System.out.println(error.toString());
+                        
                     }
                 });
                 queue.add(jsonObjectRequest);
@@ -554,7 +553,7 @@ public class CuratoreMuseale {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    System.out.println(error.toString());
+                    
                 }
             });
             queue.add(jsonObjectRequest);

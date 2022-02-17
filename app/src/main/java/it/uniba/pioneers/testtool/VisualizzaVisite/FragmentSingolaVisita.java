@@ -63,14 +63,15 @@ public class FragmentSingolaVisita extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((VisiteCreateUtente)getActivity()).getSupportActionBar().setTitle("Visita " + String.valueOf(VisiteCreateUtente.visitaSelezionata.getId()) + " " + VisiteCreateUtente.visitaSelezionata.getLuogo());
+        ((VisiteCreateUtente)getActivity()).getSupportActionBar().setTitle(
+                getString(R.string.visita) + " " + String.valueOf(VisiteCreateUtente.visitaSelezionata.getId()) +
+                        " - " + VisiteCreateUtente.visitaSelezionata.getLuogo());
     }
 
     @Override
     public void onResume() {
         super.onResume();
         setDataVisita();
-
     }
 
     //Metodo necessario per impostare i dati della visita selezionata dalla lista

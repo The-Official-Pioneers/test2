@@ -89,7 +89,7 @@ public class CreaVisita extends AppCompatActivity {
                                 spinner.setAdapter(spinnerAdapter);
 
                             }else{
-                                System.out.println(R.string.impossibile_procedere);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -195,7 +195,7 @@ public class CreaVisita extends AppCompatActivity {
                                 });
 
                             }else{
-                                System.out.println(R.string.impossibile_procedere);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
