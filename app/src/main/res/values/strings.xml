@@ -276,6 +276,8 @@
 
     <string name="accedi" translatable="false">Accedi</string>
     <string name="registrati" translatable="false">Registrati</string>
+    <string name="scegli_utente_predefinito" translatable="false">Scegli uno degli utenti predefiniti:</string>
+
 
     <string name="curatore_default" translatable="false">ACCOUNT CURATORE - PER TEST</string>
     <string name="visitatore_default" translatable="false">ACCOUNT VISITATORE - PER TEST</string>
@@ -432,7 +434,7 @@
     <string name="dati_visita" translatable="false">Dati Visita</string>
     <!-- ====================================================================================== -->
 
-    <!-- ===============EDITOR=============== -->
+    <!-- ===============FILE EDITOR=============== -->
     <string name="elem_presente" translatable="false">Elemento già presente nella visita.</string>
     <string name="zona_aggiunta_visita" translatable="false">Zona aggiunta con successo alla visita #</string>
     <string name="area_aggiunta_visita" translatable="false">Area aggiunta con successo alla zona #</string>
@@ -448,7 +450,9 @@
     <string name="crea_visita" translatable="false">Crea una visita</string>
     <string name="scegli_luogo_visita" translatable="false">Scegli il luogo dove effettuare la visita:</string>
     <string name="conferma_luogo" translatable="false">Conferma Luogo</string>
-
+    <string name="creazione_visita_testo" translatable="false">Una volta selezionato il luogo per la
+        visita, clicca sul bottone seguente per crearla: una volta cliccato il bottone, la visita viene creata
+        all'interno del database senza dover cliccare ulteriori bottoni.</string>
 
 
     <!-- ====================================================================================== -->

@@ -255,6 +255,7 @@
 
     <string name="accedi" translatable="false">Sign in</string>
     <string name="registrati" translatable="false">Register</string>
+    <string name="scegli_utente_predefinito" translatable="false">Choose one of the default users:</string>
 
     <string name="curatore_default" translatable="false">ACCOUNT CURATORE - TEST ONLY</string>
     <string name="visitatore_default" translatable="false">ACCOUNT VISITATORE - TEST ONLY</string>
@@ -410,7 +411,7 @@
     <string name="dati_visita" translatable="false">Visit Data</string>
     <!-- ====================================================================================== -->
 
-    <!-- ===============EDITOR=============== -->
+    <!-- ===============FILE EDITOR=============== -->
     <string name="elem_presente" translatable="false">Item already in the visit.</string>
     <string name="zona_aggiunta_visita" translatable="false">Site added to the visit #</string>
     <string name="area_aggiunta_visita" translatable="false">Area added to the visit #</string>
@@ -426,7 +427,9 @@
     <string name="crea_visita" translatable="false">Create a visit</string>
     <string name="scegli_luogo_visita" translatable="false">Choose the place where to take the visit:</string>
     <string name="conferma_luogo" translatable="false">Confirm Place</string>
-
+    <string name="creazione_visita_testo" translatable="false">Once you have selected the location for the
+    visit, click on the following button to create it: once you click the button, the visit is created
+    within the database without having to click further buttons.</string>
 
 
     <!-- ====================================================================================== -->
