@@ -18,6 +18,7 @@ import it.uniba.pioneers.testtool.home.ui.RegisterFragment;
 import it.uniba.pioneers.testtool.home.ui.login.LoginFragment;
 
 public class HomeActivity extends AppCompatActivity {
+    WelcomeFragment f = new WelcomeFragment();
 
     /*****************************************************************************
      * In onCrate, viene creata l'activity; in tale metodo viene aggiunto in modo
@@ -31,7 +32,6 @@ public class HomeActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getFragmentManager();
         /*** INIZIO TRANSAZIONE ***/
-        WelcomeFragment f = new WelcomeFragment();
         androidx.fragment.app.FragmentManager supportFragmentManager;
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
@@ -199,15 +199,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-   /* @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
-    }
-
+    /*********************************************************************************
+     * Metodo che ci consente di chiudere l'app se ci troviamo in Welcome
+     *********************************************************************************/
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }*/
+        if(getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4).equals(f)){
+            finish();
+            System.exit(0);
+        }else{
+            super.onBackPressed();
+        }
+    }
 }
