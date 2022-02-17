@@ -1,19 +1,26 @@
 package it.uniba.pioneers.testtool.VisualizzaVisite;
 
+import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +45,11 @@ public class VisiteCreateUtente extends AppCompatActivity {
 
     public static Visita visitaSelezionata;
     public static List<Visita> listaVisite;
+    public static List<Guida> listaGuide;
+
+    private void addToListaGuide(Guida g){
+        listaGuide.add(g);
+    }
 
     NetworkChangeListener networkChangeListener= new NetworkChangeListener();
 
@@ -441,4 +453,89 @@ public class VisiteCreateUtente extends AppCompatActivity {
                 .commit();
 
     }
+
+    public void scegliGuida(View view) {
+
+        try {
+            Guida.getAllGuideDB(this,
+                    response -> {
+                        try {
+                            if(response.getBoolean("status")){
+                                Guida guidaSelezionata;
+                                listaGuide = new ArrayList<>();
+                                JSONObject tmpObj = response.getJSONObject("data");
+                                JSONArray arrayData = tmpObj.getJSONArray("arrGuide");
+
+                                for(int i = 0; i < arrayData.length(); ++i){
+                                    JSONObject guida = arrayData.getJSONObject(i);
+                                    guidaSelezionata = new Guida();
+                                    guidaSelezionata.setId(guida.getLong("id"));
+                                    guidaSelezionata.setNome(guida.getString("nome"));
+                                    guidaSelezionata.setCognome(guida.getString("cognome"));
+                                    guidaSelezionata.setSpecializzazione(guida.getString("specializzazione"));
+                                    addToListaGuide(guidaSelezionata);
+                                }
+
+                                View layout_dialog = LayoutInflater.from(this).inflate(R.layout.add_guida_dialog, null);
+                                Spinner spinnerGuide = (Spinner) layout_dialog.findViewById(R.id.spinner_guide);
+                                List<String> listaGuideString = new ArrayList<>();
+
+                                for(int i = 0; i < listaGuide.size(); i++){
+                                    StringBuilder tmpString = new StringBuilder();
+                                    tmpString.append(listaGuide.get(i).getNome());
+                                    tmpString.append(" ");
+                                    tmpString.append(listaGuide.get(i).getCognome());
+                                    tmpString.append(" - ");
+                                    tmpString.append(listaGuide.get(i).getSpecializzazione());
+                                    listaGuideString.add(tmpString.toString());
+                                }
+
+                                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getApplicationContext(),
+                                        android.R.layout.simple_spinner_item, listaGuideString);
+                                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinnerGuide.setAdapter(spinnerAdapter);
+
+                                new AlertDialog.Builder(this)
+                                        .setView(layout_dialog)
+
+                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                try {
+                                                    int positionNewGuide = spinnerGuide.getSelectedItemPosition();
+                                                    long idNewGuida = listaGuide.get(positionNewGuide).getId();
+                                                    int tmpId = Math.toIntExact(idNewGuida);
+                                                    visitaSelezionata.setGuida(tmpId);
+                                                    visitaSelezionata.updateDataDb(VisiteCreateUtente.this);
+                                                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.guida_inserita_successo,
+                                                            Snackbar.LENGTH_LONG).show();
+                                                } catch (Exception exception) {
+                                                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.impossibile_aggiornare_password,
+                                                            Snackbar.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.no,  null)
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+
+                            }else{
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    },
+                    error ->
+                    {
+
+                    });
+        } catch (Exception e){
+
+        }
+
+    }
+
+
 }

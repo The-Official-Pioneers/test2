@@ -596,4 +596,18 @@ public class Guida {
                 new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
         queue.add(jsonObjectRequest);
     }
+
+    public static void getAllGuideDB(Context context,
+                                         Response.Listener<JSONObject> responseListener,
+                                         Response.ErrorListener errorListener){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = Server.getUrl() + "/guida/get-all-guide-db/";
+
+        JSONObject data = new JSONObject();
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, url, data, responseListener, errorListener);
+        queue.add(jsonObjectRequest);
+    }
 }
