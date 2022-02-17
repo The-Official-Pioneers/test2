@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,7 +15,7 @@
     android:paddingTop="@dimen/fragment_vertical_margin"
     android:paddingRight="@dimen/fragment_horizontal_margin"
     android:paddingBottom="@dimen/fragment_vertical_margin"
-    tools:context=".home.ui.RegisterFragment"
+    tools:context=".accesso.RegisterFragment"
     android:background="@color/alto"
     android:orientation="vertical">
 
@@ -86,7 +90,6 @@
             app:layout_constraintVertical_bias="0.359" />
     </LinearLayout>
 
-
     <it.uniba.pioneers.widget.WidgetRegister
         android:id="@+id/formForRegistration"
         android:layout_width="match_parent"
@@ -95,4 +98,6 @@
 
     </it.uniba.pioneers.widget.WidgetRegister>
 
+
 </LinearLayout>
+</ScrollView>

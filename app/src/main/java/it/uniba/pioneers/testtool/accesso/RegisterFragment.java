@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.home.ui;
+package it.uniba.pioneers.testtool.accesso;
 
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.GONE;
@@ -54,7 +54,6 @@ import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.home.HomeActivity;
 import it.uniba.pioneers.widget.WidgetRegister;
 
 public class RegisterFragment extends Fragment {
@@ -402,7 +401,7 @@ public class RegisterFragment extends Fragment {
                 final Uri imageUri = data.getData();
 
                 //Apro un inputStream nel quale risiede l'immagine
-                final InputStream inputStream = ((HomeActivity)getActivity()).getContentResolverAct(imageUri);
+                final InputStream inputStream = ((IntroActivity)getActivity()).getContentResolverAct(imageUri);
 
                 //Decodifico l'immagine presente nello stream in una bitmap
                 final Bitmap selectedImage = BitmapFactory.decodeStream(inputStream);
@@ -594,7 +593,7 @@ public class RegisterFragment extends Fragment {
                              * Registrazione non andata a buon fine
                              ********************************************************************************************************/
                             Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                            Intent intent = new Intent(getView().getContext(), IntroActivity.class);
                             startActivity(intent);
                         }
                     } catch (Exception e) {
@@ -640,7 +639,7 @@ public class RegisterFragment extends Fragment {
                              * Registrazione non andata a buon fine
                              ********************************************************************************************************/
                             Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                            Intent intent = new Intent(getView().getContext(), IntroActivity.class);
                             startActivity(intent);
                         }
                     } catch (Exception e) {
@@ -718,7 +717,7 @@ public class RegisterFragment extends Fragment {
                                              * Registrazione non andata a buon fine
                                              ********************************************************************************************************/
                                             Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                                            Intent intent = new Intent(getView().getContext(), IntroActivity.class);
                                             startActivity(intent);
                                         }
                                     } catch (Exception e) {
@@ -731,7 +730,7 @@ public class RegisterFragment extends Fragment {
                              * Registrazione non andata a buon fine
                              ********************************************************************************************************/
                             Toast.makeText(getView().getContext(), "Non è avenuto nessun cambio dati, verifica che i valori siano validi", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getView().getContext(), HomeActivity.class);
+                            Intent intent = new Intent(getView().getContext(), IntroActivity.class);
                             startActivity(intent);
                         }
                     } catch (Exception e) {

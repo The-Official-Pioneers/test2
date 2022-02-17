@@ -23,6 +23,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light"
         android:usesCleartextTraffic="true">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="it.uniba.pioneers.testtool"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
             android:name=".VisualizzaVisite.VisiteCreateUtente"
             android:exported="true"
@@ -35,7 +46,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".accesso.IntroActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

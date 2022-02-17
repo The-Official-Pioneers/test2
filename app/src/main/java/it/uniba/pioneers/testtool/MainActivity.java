@@ -64,7 +64,7 @@ import it.uniba.pioneers.testtool.gestioneMuseo.FragmentSingolaOpera;
 import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
 import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
 import it.uniba.pioneers.testtool.home.FragmentHomeVisitatore;
-import it.uniba.pioneers.testtool.home.HomeActivity;
+import it.uniba.pioneers.testtool.accesso.IntroActivity;
 import it.uniba.pioneers.testtool.network.NetworkChangeListener;
 
 
@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
                 .setMessage("Vuoi effetturare il logout?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();

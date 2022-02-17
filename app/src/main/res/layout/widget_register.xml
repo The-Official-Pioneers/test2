@@ -1,23 +1,20 @@
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_login_panel"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <LinearLayout
-        android:layout_width="350dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/shape_login_panel">
 
         <ImageView
             android:id="@+id/nullImg"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
             android:onClick="addImage"
-            android:src="@drawable/ic_baseline_add_a_photo_24" />
+            android:src="@drawable/ic_baseline_add_photo_alternate_24" />
+
 
         <ImageView
             android:layout_width="match_parent"
@@ -138,51 +135,48 @@
             android:dropDownWidth="300dp"
             android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
 
-            <Spinner
-                android:id="@+id/day_spinner"
-                style="@style/Widget.AppCompat.Spinner"
-                android:layout_width="89dp"
-                android:layout_height="?attr/dropdownListPreferredItemHeight"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="15dp"
-                android:background="#f5f5f5"
-                android:dropDownWidth="300dp"
-                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-                android:paddingRight="0dp"
-                android:popupBackground="@android:color/white" />
+        <Spinner
+            android:id="@+id/day_spinner"
+            style="@style/Widget.AppCompat.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:layout_weight="1"
+            android:background="#f5f5f5"
+            android:dropDownWidth="300dp"
+            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+            android:popupBackground="@android:color/white" />
 
-            <Spinner
-                android:id="@+id/mounth_spinner"
-                style="@style/Widget.AppCompat.Spinner"
-                android:layout_height="?attr/dropdownListPreferredItemHeight"
-                android:layout_width="89dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="15dp"
-                android:background="#f5f5f5"
-                android:dropDownWidth="300dp"
-                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-                android:paddingRight="14dp"
-                />
+        <Spinner
+            android:id="@+id/mounth_spinner"
+            style="@style/Widget.AppCompat.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/dropdownListPreferredItemHeight"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#f5f5f5"
+            android:dropDownWidth="300dp"
+            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight" />
 
-            <Spinner
-                android:id="@+id/years_spinner"
-                style="@style/Widget.AppCompat.Spinner"
-                android:layout_height="?attr/dropdownListPreferredItemHeight"
-                android:layout_width="89dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="15dp"
-                android:background="#f5f5f5"
-                android:dropDownWidth="300dp"
-                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-                android:paddingRight="14dp"
-                />
+        <Spinner
+            android:id="@+id/years_spinner"
+            style="@style/Widget.AppCompat.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/dropdownListPreferredItemHeight"
+            android:layout_weight="1"
+            android:background="#f5f5f5"
+            android:dropDownWidth="300dp"
+            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+            android:layout_marginRight="25dp"/>
 
-        </LinearLayout>
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -263,12 +257,14 @@
 
         <Button
             android:id="@+id/registerForm"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_gravity="center"
             android:enabled="true"
             android:text="@string/registrati"
+            android:padding="@dimen/fragment_horizontal_margin"
             android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/login_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -277,8 +273,8 @@
             app:layout_constraintTop_toBottomOf="@+id/password"
             app:layout_constraintVertical_bias="0.359"
             android:onClick="registerButton"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            />
 
 
     </LinearLayout>
-</ScrollView>

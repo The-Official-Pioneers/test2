@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.home;
+package it.uniba.pioneers.testtool.accesso;
 
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -14,10 +14,8 @@ import java.io.InputStream;
 
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
-import it.uniba.pioneers.testtool.home.ui.RegisterFragment;
-import it.uniba.pioneers.testtool.home.ui.login.LoginFragment;
 
-public class HomeActivity extends AppCompatActivity {
+public class IntroActivity extends AppCompatActivity {
     WelcomeFragment f = new WelcomeFragment();
 
     /*****************************************************************************

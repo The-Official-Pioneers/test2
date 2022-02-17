@@ -1,4 +1,4 @@
-package it.uniba.pioneers.testtool.home;
+package it.uniba.pioneers.testtool.accesso;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
