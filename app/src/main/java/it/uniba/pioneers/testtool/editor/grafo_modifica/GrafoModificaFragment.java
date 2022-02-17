@@ -31,7 +31,6 @@ public class GrafoModificaFragment extends Fragment {
     public Visita visita = null;
 
     public GrafoModificaFragment(Visita visita) {
-        // Required empty public constructor
         this.visita = visita;
     }
 
@@ -63,8 +62,6 @@ public class GrafoModificaFragment extends Fragment {
 
         Log.v("grafoManipulateLayout", String.valueOf(grafoManipulateLayout));
 
-        Visita tmpVisita = CreaVisita.visita;
-
         DisplayGrafoModifica displayGrafoModifica = new DisplayGrafoModifica(getContext(), visita);
 
         displayGrafoModifica.setId(R.id.displayGrafoModifica);
@@ -75,17 +72,9 @@ public class GrafoModificaFragment extends Fragment {
                 1.0f
         );
         displayGrafoModifica.setLayoutParams(param);
-
-
-        //ListaNodi listaNodi = new ListaNodi(getContext(), NodeType.OPERA);
-        //listaNodi.setId(R.id.listaNodi);
-
         grafoManipulateLayout.addView(displayGrafoModifica);
 
         graph = displayGrafoModifica.graph;
-
-        //listaNodi.setLayoutParams(param);
-        //grafoManipulateLayout.addView(listaNodi);
     }
 
 }

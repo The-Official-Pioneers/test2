@@ -165,16 +165,6 @@ public class NodeModificaDialog {
 
                 String descrizione = nodeObject.data.getString("descrizione");
                 ln.addView(getRow(context, "DESCRIZIONE", descrizione));
-
-                String altezza = nodeObject.data.getString("altezza");
-                ln.addView(getRow(context, "ALTEZZA", altezza));
-
-                String larghezza = nodeObject.data.getString("larghezza");
-                ln.addView(getRow(context, "LARGHEZZA", larghezza));
-
-                String profondita = nodeObject.data.getString("profondita");
-                ln.addView(getRow(context, "PROFONDITA", profondita));
-
             }
             tmpDialog.setView(alertLayout);
             //Toast.makeText(context, nodeObject.data.toString(4), Toast.LENGTH_LONG).show();
