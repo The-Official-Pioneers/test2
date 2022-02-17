@@ -283,11 +283,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void logOutMethod(MenuItem item){
         new AlertDialog.Builder(this)
-                .setTitle(R.string.uscire)
-                .setMessage(R.string.uscire_no_salvare)
+                .setTitle("Logout")
+                .setMessage("Vuoi effetturare il logout?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
                     }
