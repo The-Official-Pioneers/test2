@@ -55,6 +55,14 @@ public class FragmentListaOpere extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    /*
+     * Quando viene richiamato, andiamo ad invalidare la toolbar per gestirne la
+     * corretta visualizzazione degli action button che in questa particolare schermata
+     * devono essere nascosti
+     *
+     * inoltre per non disorientare l'utente, viene impostato il nome dell'area a cui
+     * appartengono le opere
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,7 +80,7 @@ public class FragmentListaOpere extends Fragment {
             TextView txtNoOpere = (TextView) getActivity().findViewById(R.id.txt_no_opere);
             txtNoOpere.setVisibility(View.GONE);
         }
-        //Abilitazione della navigazione all'indietro
+        //Abilitazione della freccia sulla toolbar per la navigazione all'indietro
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Creazione della lista di nomi di tutte le opere di una determinata area
@@ -88,7 +96,7 @@ public class FragmentListaOpere extends Fragment {
                 android.R.layout.simple_list_item_1,
                 lista
         );
-        lv.setAdapter(lvAdapter);
+        lv.setAdapter(lvAdapter); // imposta l'adapter alla list view
         //Gestione del click su un'elemento della lista
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
