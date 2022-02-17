@@ -5,53 +5,52 @@
     android:layout_height="match_parent"
     android:backgroundTint="@color/alto"
     android:layout_gravity="center"
-
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_baseline_wifi_off_24"
-        app:tint="@color/shuttle_gray" />
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_wifi_off_24"
+            app:tint="@color/shuttle_gray" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/oops"
-        android:textColor="@color/shuttle_gray"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/oops"
+            android:textColor="@color/shuttle_gray"
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/no_internet"
-        android:textColor="@color/shuttle_gray"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/no_internet"
+            android:textColor="@color/shuttle_gray"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/controlla_connessione"
-        android:textColor="@color/shuttle_gray"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/controlla_connessione"
+            android:textColor="@color/shuttle_gray"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <view
-        android:id="@+id/btnRetry"
-        class="androidx.appcompat.widget.AppCompatButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="50dp"
-        android:background="@drawable/login_btn"
-        android:textColor="@color/white"
-        android:text="@string/riprova"
-        android:textAllCaps="true">
+        <view
+            android:id="@+id/btnRetry"
+            class="androidx.appcompat.widget.AppCompatButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:background="@drawable/login_btn"
+            android:textColor="@color/white"
+            android:text="@string/riprova"
+            android:textAllCaps="true">
+        </view>
 
-    </view>
 </LinearLayout>

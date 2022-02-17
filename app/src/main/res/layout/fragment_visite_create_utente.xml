@@ -5,21 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".VisualizzaVisite.FragmentVisiteCreateUtente">
 
-    <LinearLayout
-        android:id="@+id/layout_visite_utente"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center"
-        android:orientation="vertical"
-        >
+    <ListView
+        android:id="@+id/lista_visite_utente"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize" >
 
-        <ListView
-            android:id="@+id/lista_visite_utente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="?attr/actionBarSize">
-
-        </ListView>
-    </LinearLayout>
+    </ListView>
 
 </FrameLayout>
