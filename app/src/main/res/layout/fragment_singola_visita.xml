@@ -146,31 +146,51 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linear_btn_visita"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="60dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btn_visualiz_grafo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="15dp"
-                    android:onClick="avviaGrafoVisualizza"
-                    android:layout_marginBottom="15dp"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_baseline_account_tree_24"
-                    android:text="@string/grafo_visita" />
+                <LinearLayout
+                    android:id="@+id/linear_btn_visita"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_visualiz_grafo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_baseline_account_tree_24"
+                        android:onClick="avviaGrafoVisualizza"
+                        android:text="@string/grafo_visita" />
+
+                    <Button
+                        android:id="@+id/modifica_visita"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_baseline_account_tree_24"
+                        android:onClick="avviaGrafoModifica"
+                        android:text="@string/modifica_grafo_visita" />
+
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_elimina_visita"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
@@ -178,7 +198,9 @@
                     android:drawableTop="@drawable/ic_baseline_delete_forever_24"
                     android:onClick="eliminaVisitaSingola"
                     android:text="@string/elimina_visita" />
+
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

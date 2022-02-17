@@ -426,6 +426,7 @@
     <string name="descrizione" translatable="false">Descrizione:</string>
 
     <string name="grafo_visita" translatable="false">Visualizza Grafo</string>
+    <string name="modifica_grafo_visita" translatable="false">Modifica Grafo</string>
     <string name="elimina_visita" translatable="false">Elimina Visita</string>
 
     <string name="dati_visita" translatable="false">Dati Visita</string>

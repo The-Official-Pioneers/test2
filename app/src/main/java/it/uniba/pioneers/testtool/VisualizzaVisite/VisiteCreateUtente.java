@@ -29,6 +29,7 @@ import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
 import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizzaFragment;
 import it.uniba.pioneers.testtool.network.NetworkChangeListener;
 
@@ -419,5 +420,19 @@ public class VisiteCreateUtente extends AppCompatActivity {
     protected void onStop() {
         unregisterReceiver(networkChangeListener);
         super.onStop();
+    }
+
+    public void avviaGrafoModifica(View view) {
+
+        GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(VisiteCreateUtente.visitaSelezionata);
+        androidx.fragment.app.FragmentManager supportFragmentManager;
+
+        findViewById(R.id.scroll_singola_visita).setVisibility(View.GONE);
+
+        supportFragmentManager = getSupportFragmentManager();
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.frameVIsualizzaGrafo, grafoModificaFragment)
+                .commit();
+
     }
 }

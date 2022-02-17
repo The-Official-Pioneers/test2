@@ -25,6 +25,7 @@
             android:gravity="center"
             android:imeOptions="actionSearch"
             android:inputType="text"
+            android:hint="@string/text_cerca"
             android:textColorHint="@color/gray_600"
             tools:ignore="TextContrastCheck"
             />

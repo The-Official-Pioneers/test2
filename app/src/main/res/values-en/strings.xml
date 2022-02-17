@@ -404,6 +404,7 @@
     <string name="descrizione" translatable="false">Description:</string>
 
     <string name="grafo_visita" translatable="false">View Graph</string>
+    <string name="modifica_grafo_visita" translatable="false">Edit Graph</string>
     <string name="elimina_visita" translatable="false">Delete Visit</string>
 
     <string name="dati_visita" translatable="false">Visit Data</string>
