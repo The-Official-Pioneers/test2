@@ -871,7 +871,7 @@ public class MainActivity extends AppCompatActivity {
                                 byte[] b = baos.toByteArray();
                                 encImage = Base64.encodeToString(b, Base64.DEFAULT);
                             }
-                            if ((titolo.equals(operaSelezionata.getTitolo()) || titolo.equals("")) || (descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) || descrizione.equals("")) || !fotoModificata) {
+                            if ((titolo.equals(operaSelezionata.getTitolo()) || titolo.equals("")) && (descrizione.equals(MainActivity.operaSelezionata.getDescrizione()) || descrizione.equals("")) && !fotoModificata) {
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setMessage(R.string.modifica_campo)
                                         .setPositiveButton(android.R.string.yes, null)
