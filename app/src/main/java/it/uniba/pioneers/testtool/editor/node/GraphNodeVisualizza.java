@@ -256,9 +256,9 @@ public class GraphNodeVisualizza extends Node {
     }
 
     public void hide(){
-        resetLines();
-        setCircle(false);
-        clicked = false;
+        resetLines(); //LE LINEE COLLEGATE AL NODO VENGONO RESETTATE
+        setCircle(false); //IL NODO TORNA AD ESSERE UN QUADRATO
+        clicked = false; //CAMBIO DI STATO DEL NODO
         setVisibility(INVISIBLE);
     }
 

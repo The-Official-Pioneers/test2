@@ -11,9 +11,10 @@
         android:id="@+id/dowloadVisita"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_margin="5dp"
+        android:layout_weight="1"
         android:background="@drawable/login_btn"
+        android:visibility="gone"
         app:srcCompat="@drawable/ic_baseline_cloud_download_24" />
 
     <ImageButton
@@ -29,9 +30,10 @@
         android:id="@+id/deleteVisita"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_margin="5dp"
+        android:layout_weight="1"
         android:background="@drawable/login_btn"
+        android:visibility="gone"
         app:srcCompat="@drawable/ic_baseline_delete_forever_24" />
 
 </LinearLayout>
