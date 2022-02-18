@@ -334,7 +334,7 @@
     <!-- GUIDA PROFILE AREA -->
     <string name="specializz_areap" translatable="false">Specialization:</string>
 
-    <string name="modificap_areap" translatable="false">Edit Your Profile</string>
+    <string name="modificap_areap" translatable="false">Edit Profile</string>
     <string name="nuovapass_areap" translatable="false">Change Password</string>
     <!-- ====================================================================================== -->
 

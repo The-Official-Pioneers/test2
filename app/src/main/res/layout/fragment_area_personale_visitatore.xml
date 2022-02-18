@@ -197,23 +197,26 @@
 
                     <Button
                         android:id="@+id/btn_edit_profile"
-                        android:layout_width="300dp"
-                        android:layout_height="70dp"
-                        android:layout_marginStart="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
+                        android:textColor="@color/white"
                         android:background="@drawable/login_btn"
                         android:onClick="editProfile"
-                        android:text="@string/modificap_areap"
-                        android:textColor="@color/white" />
+                        android:text="@string/modificap_areap" />
 
                     <Button
                         android:id="@+id/btn_edit_password"
-                        android:layout_width="300dp"
-                        android:layout_height="70dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/login_btn"
                         android:onClick="editPassword"
@@ -221,6 +224,7 @@
                         android:textColor="@color/white" />
 
                 </LinearLayout>
+
 
             </LinearLayout>
 
