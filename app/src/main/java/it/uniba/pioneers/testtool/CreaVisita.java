@@ -124,6 +124,7 @@ public class CreaVisita extends AppCompatActivity {
 
         Date tmpDate = Date.from(Instant.now());
         Long tmpLong = tmpDate.getTime();
+
         visita.setData(tmpLong);
         visita.setLuogo(selectedItem);
 
