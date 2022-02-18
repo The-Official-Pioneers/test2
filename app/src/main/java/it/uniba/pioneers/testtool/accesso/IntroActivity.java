@@ -2,7 +2,9 @@ package it.uniba.pioneers.testtool.accesso;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,9 +15,12 @@ import java.io.InputStream;
 
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.network.NetworkChangeListener;
 
 public class IntroActivity extends AppCompatActivity {
     WelcomeFragment f = new WelcomeFragment();
+
+    NetworkChangeListener networkChangeListener= new NetworkChangeListener();
 
     /*****************************************************************************
      * In onCrate, viene creata l'activity; in tale metodo viene aggiunto in modo
@@ -37,6 +42,18 @@ public class IntroActivity extends AppCompatActivity {
         /*** FINE TRANSAZIONE ***/
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(networkChangeListener);
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
