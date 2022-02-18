@@ -463,7 +463,7 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.action_delete_area).setVisible(false);
         menu.findItem(R.id.action_save_area).setVisible(false);
 
-        if(fragmentSingolaOpera != null && tipoUtente.equals("curatore")){
+        if(fragmentSingolaOpera != null && tipoUtente.equals("curatore")  ){
             if(!qr){
                 menu.findItem(R.id.action_delete_opera).setVisible(true);
             }
