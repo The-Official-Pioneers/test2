@@ -218,10 +218,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onStart() {   // registrazione del receiver per il cambio dello stato di connessione
+    protected void onStart() {
+        super.onStart();// registrazione del receiver per il cambio dello stato di connessione
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangeListener, filter);
-        super.onStart();
+
 
         // creazione della toolbar
         creaToolbar();
@@ -271,8 +272,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {    // deregistrazione del receiver per il cambio dello stato di connessione
-        unregisterReceiver(networkChangeListener);
         super.onStop();
+        unregisterReceiver(networkChangeListener);
     }
 
     @Override
