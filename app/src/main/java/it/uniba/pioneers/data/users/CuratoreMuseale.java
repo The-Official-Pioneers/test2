@@ -219,8 +219,11 @@ public class CuratoreMuseale {
                                 Boolean status =  response.getBoolean("status");
                                 if(status){
                                     self.setDataFromJSON(response.getJSONObject("data"));
+                                    self.setStatusComputation(true);
+                                    MainActivity.statusConnection = true;
                                 }else{
                                     Toast.makeText(context, R.string.lettura_dati_non_riuscita, Toast.LENGTH_SHORT).show();
+                                    MainActivity.statusConnection = false;
                                 }
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -230,7 +233,7 @@ public class CuratoreMuseale {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    
+                    MainActivity.statusConnection = false;
                 }
             });
             queue.add(jsonObjectRequest);

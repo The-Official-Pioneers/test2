@@ -586,7 +586,7 @@ public class RegisterFragment extends Fragment {
                             Toast.makeText(getView().getContext(), "Registrazione avvenuta con successo! Benvenuto", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), MainActivity.class);
                             intent.putExtra("typeUser", userType);
-                            intent.putExtra("idUser", (int)guida.getId());
+                            intent.putExtra("idUser", (int)response.getJSONObject("data").getInt("id"));
                             startActivity(intent);
                         } else {
                             /*********************************************************************************************************
@@ -632,7 +632,7 @@ public class RegisterFragment extends Fragment {
                             Toast.makeText(getView().getContext(), "Registrazione avvenuta con successo! Benvenuto", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getView().getContext(), MainActivity.class);
                             intent.putExtra("typeUser", userType);
-                            intent.putExtra("idUser", (int)visitatore.getId());
+                            intent.putExtra("idUser", (int)response.getJSONObject("data").getInt("id"));
                             startActivity(intent);
                         } else {
                             /*********************************************************************************************************
@@ -709,7 +709,7 @@ public class RegisterFragment extends Fragment {
                                             Toast.makeText(getView().getContext(), "Registrazione avvenuta con successo! Benvenuto", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getView().getContext(), MainActivity.class);
                                             intent.putExtra("typeUser", userType);
-                                            intent.putExtra("idUser", (int)curatore.getId());
+                                            intent.putExtra("idUser", (int)response.getJSONObject("data").getInt("id"));
                                             startActivity(intent);
                                         } else {
                                             /*********************************************************************************************************

@@ -203,7 +203,7 @@ public class Visitatore {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, R.string.server_no_risponde, Toast.LENGTH_SHORT).show();
-                    
+                    MainActivity.statusConnection = false;
                 }
             });
             queue.add(jsonObjectRequest);

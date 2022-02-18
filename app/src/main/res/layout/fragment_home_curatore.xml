@@ -170,7 +170,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:onClick="goEditorActivity"
                             android:text="@string/btn_crea_visita"
                             android:textStyle="bold">
 

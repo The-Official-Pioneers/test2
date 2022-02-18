@@ -73,6 +73,7 @@ public class CreaVisita extends AppCompatActivity {
             Zona.getAllLuoghi(CreaVisita.this,
                     response -> {
                         try {
+                            MainActivity.statusConnection = response.getBoolean("status");
                             if(response.getBoolean("status")){
 
                                 List<String> listaLuoghi = new ArrayList<>();
@@ -90,8 +91,13 @@ public class CreaVisita extends AppCompatActivity {
                                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 spinner.setAdapter(spinnerAdapter);
 
-                            }else{
+                                if(spinner.getAdapter().getCount() == 0){
+                                    findViewById(R.id.btn_conferma_luogo).setEnabled(false);
+                                }
 
+                            }else{
+                                Toast.makeText(this, getResources().getString(R.string.server_no_risponde), Toast.LENGTH_SHORT).show();
+                                MainActivity.statusConnection = false;
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -117,46 +123,51 @@ public class CreaVisita extends AppCompatActivity {
 
         //Riempi la visita appena creata con i dati necessari
         Spinner spinner = (Spinner) this.findViewById(R.id.spinner_scegli_luogo);
-        selectedItem = spinner.getSelectedItem().toString();
+        if(spinner.getAdapter() != null) {
+            selectedItem = spinner.getSelectedItem().toString();
 
-        visita.setTipo_creatore(1);
-        visita.setCreatore_visitatore(Math.toIntExact(MainActivity.visitatore.getId()));
+            visita.setTipo_creatore(1);
+            visita.setCreatore_visitatore(Math.toIntExact(MainActivity.visitatore.getId()));
 
-        Date tmpDate = Date.from(Instant.now());
-        Long tmpLong = tmpDate.getTime();
+            Date tmpDate = Date.from(Instant.now());
+            Long tmpLong = tmpDate.getTime();
 
-        visita.setData(tmpLong);
-        visita.setLuogo(selectedItem);
+            visita.setData(tmpLong);
+            visita.setLuogo(selectedItem);
 
-        //Una volta inseriti i dati nella visita, la inserisco sul db per poi passare
-        //alla sua composizione nell'editor
-        visita.createDataDb(this, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    Boolean status =  response.getBoolean("status");
-                    if(status){
-                        visita.setDataFromJSON(response.getJSONObject("data"));
+            //Una volta inseriti i dati nella visita, la inserisco sul db per poi passare
+            //alla sua composizione nell'editor
+            visita.createDataDb(this, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        Boolean status = response.getBoolean("status");
+                        if (status) {
+                            visita.setDataFromJSON(response.getJSONObject("data"));
 
-                        GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(visita);
-                        androidx.fragment.app.FragmentManager supportFragmentManager;
+                            GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(visita);
+                            androidx.fragment.app.FragmentManager supportFragmentManager;
 
-                        findViewById(R.id.linear_crea_visita).setVisibility(View.GONE);
+                            findViewById(R.id.linear_crea_visita).setVisibility(View.GONE);
 
-                        supportFragmentManager = getSupportFragmentManager();
-                        supportFragmentManager.beginTransaction()
-                                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                                .replace(R.id.frameCreaVisita, grafoModificaFragment)
-                                .commit();
+                            supportFragmentManager = getSupportFragmentManager();
+                            supportFragmentManager.beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                                    .replace(R.id.frameCreaVisita, grafoModificaFragment)
+                                    .commit();
 
-                    }else{
-                        Toast.makeText(getApplicationContext(), R.string.creazione_non_riuscita, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.creazione_non_riuscita, Toast.LENGTH_SHORT).show();
+                            MainActivity.statusConnection = false;
+                        }
+                    } catch (JSONException | ParseException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException | ParseException e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(this, getResources().getString(R.string.server_no_risponde), Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Se è un curatore a creare la visita allora avvia editor con luogo quello della zona
@@ -197,6 +208,7 @@ public class CreaVisita extends AppCompatActivity {
                                                         .commit();
                                             }else{
                                                 Toast.makeText(getApplicationContext(), R.string.impossibile_ottenere_luogo, Toast.LENGTH_SHORT).show();
+                                                MainActivity.statusConnection = false;
                                             }
                                         } catch (JSONException | ParseException e) {
                                             e.printStackTrace();

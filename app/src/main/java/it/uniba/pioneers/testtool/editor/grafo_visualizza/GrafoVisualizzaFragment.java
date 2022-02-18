@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.testtool.R;
+import it.uniba.pioneers.testtool.VisualizzaVisite.VisiteCreateUtente;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 import it.uniba.pioneers.testtool.editor.options.OptionsEditor;
 
@@ -76,4 +77,9 @@ public class GrafoVisualizzaFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        VisiteCreateUtente.grafoVisualizzaFragment = null;
+    }
 }

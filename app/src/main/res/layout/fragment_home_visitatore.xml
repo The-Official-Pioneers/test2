@@ -66,7 +66,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:onClick="creaVisita"
                         android:text="@string/btn_crea_visita"
                         android:textStyle="bold">
 

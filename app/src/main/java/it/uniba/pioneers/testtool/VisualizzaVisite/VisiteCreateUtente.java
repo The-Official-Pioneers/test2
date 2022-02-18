@@ -45,6 +45,9 @@ public class VisiteCreateUtente extends AppCompatActivity {
 
     public static Visita visitaSelezionata;
     public static List<Visita> listaVisite;
+    public static int DETACH_GRAFO = 1;
+    public static GrafoVisualizzaFragment grafoVisualizzaFragment;
+    public static GrafoModificaFragment grafoModificaFragment;
 
     public static List<Guida> listaGuide;
     private void addToListaGuide(Guida g){
@@ -92,6 +95,7 @@ public class VisiteCreateUtente extends AppCompatActivity {
         listaVisite = null;
         setContentView(R.layout.activity_visite_create_utente);
         gestioneToolBar();
+        startFrag();
     }
 
     //Metodo necessario per gestire la Toolbar all'interno delle varie sezioni per
@@ -135,13 +139,14 @@ public class VisiteCreateUtente extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        startFrag();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         gestioneToolBar();
-        startFrag();
+
     }
 
     //Metodo necessario per caricare il fragment corretto in base all'utente
@@ -402,6 +407,8 @@ public class VisiteCreateUtente extends AppCompatActivity {
     public void onBackPressed() {
         if(visitaSelezionata == null) {
             finish();
+        }else if(getSupportFragmentManager().findFragmentById(R.id.frameVIsualizzaGrafo) == grafoVisualizzaFragment || getSupportFragmentManager().findFragmentById(R.id.frameVIsualizzaGrafo) == grafoModificaFragment){
+            findViewById(R.id.scroll_singola_visita).setVisibility(View.VISIBLE);
         }
         super.onBackPressed();
     }
@@ -416,21 +423,22 @@ public class VisiteCreateUtente extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(visitaSelezionata == null){
             finish();
-        }else{
-            super.onBackPressed();
+        }else if(getSupportFragmentManager().findFragmentById(R.id.frameVIsualizzaGrafo) == grafoVisualizzaFragment || getSupportFragmentManager().findFragmentById(R.id.frameVIsualizzaGrafo) == grafoModificaFragment){
+            findViewById(R.id.scroll_singola_visita).setVisibility(View.VISIBLE);
         }
+        super.onBackPressed();
         return true;
     }
 
     //Metodo necessario per caricare il grafo per visualizzare una visita
     public void avviaGrafoVisualizza(View view) {
-        GrafoVisualizzaFragment grafoVisualizzaFragment = new GrafoVisualizzaFragment(VisiteCreateUtente.visitaSelezionata);
+        grafoVisualizzaFragment = new GrafoVisualizzaFragment(VisiteCreateUtente.visitaSelezionata);
         androidx.fragment.app.FragmentManager supportFragmentManager;
         findViewById(R.id.scroll_singola_visita).setVisibility(View.GONE);
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
                 .replace(R.id.frameVIsualizzaGrafo, grafoVisualizzaFragment)
-               .addToBackStack(null)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -442,12 +450,13 @@ public class VisiteCreateUtente extends AppCompatActivity {
 
     //Metodo necessario per caricare il grafo per modificare una visita
     public void avviaGrafoModifica(View view) {
-        GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(VisiteCreateUtente.visitaSelezionata);
+        grafoModificaFragment = new GrafoModificaFragment(VisiteCreateUtente.visitaSelezionata);
         androidx.fragment.app.FragmentManager supportFragmentManager;
         findViewById(R.id.scroll_singola_visita).setVisibility(View.GONE);
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
                 .replace(R.id.frameVIsualizzaGrafo, grafoModificaFragment)
+                .addToBackStack(null)
                 .commit();
     }
 

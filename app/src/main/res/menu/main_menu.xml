@@ -6,31 +6,43 @@
     <item
         android:id="@+id/action_save_opera"
         android:icon="@drawable/ic_baseline_save_24"
+        android:iconTint="@color/white"
         android:orderInCategory="100"
+        android:iconTintMode="@color/white"
         android:title="Save"
         app:showAsAction="always"
+        app:backgroundTint="@color/white"
         android:visible="false"/>
     <item
         android:id="@+id/action_delete_opera"
         android:icon="@drawable/ic_baseline_delete_forever_24"
+        android:iconTint="@color/white"
+        android:iconTintMode="@color/white"
         android:orderInCategory="100"
         android:title="Delete"
         app:showAsAction="always"
+        app:backgroundTint="@color/white"
         android:visible="false"/>
 
     <item
         android:id="@+id/action_save_area"
         android:icon="@drawable/ic_baseline_save_24"
+        android:iconTint="@color/white"
+        android:iconTintMode="@color/white"
         android:orderInCategory="100"
         android:title="Save"
         app:showAsAction="always"
+        app:backgroundTint="@color/white"
         android:visible="false"/>
     <item
         android:id="@+id/action_delete_area"
         android:icon="@drawable/ic_baseline_delete_forever_24"
+        android:iconTint="@color/white"
+        android:iconTintMode="@color/white"
         android:orderInCategory="100"
         android:title="Delete"
         app:showAsAction="always"
+        app:backgroundTint="@color/white"
         android:visible="false"/>
 
 </menu>

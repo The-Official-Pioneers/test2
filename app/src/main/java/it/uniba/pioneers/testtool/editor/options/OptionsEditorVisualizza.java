@@ -2,6 +2,8 @@ package it.uniba.pioneers.testtool.editor.options;
 
 import static androidx.core.content.FileProvider.getUriForFile;
 
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +19,8 @@ import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizzaFragment;
 
 public class OptionsEditorVisualizza extends OptionsEditor {
+
+
     public OptionsEditorVisualizza(Context context) {
         super(context);
     }
@@ -52,7 +56,6 @@ public class OptionsEditorVisualizza extends OptionsEditor {
 
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_STREAM, contentUri);
-
                 Intent chooserIntent = Intent.createChooser(i, getResources().getString(R.string.condividi_visita));
 
                 if(i.resolveActivity(getContext().getPackageManager()) != null){

@@ -13,8 +13,10 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_margin="5dp"
+        android:text="CONDIVIDI"
         android:background="@drawable/login_btn"
-        app:srcCompat="@drawable/ic_baseline_cloud_download_24" />
+        app:srcCompat="@drawable/ic_baseline_cloud_download_24"
+        android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/shareVisita"
@@ -32,6 +34,7 @@
         android:layout_weight="1"
         android:layout_margin="5dp"
         android:background="@drawable/login_btn"
-        app:srcCompat="@drawable/ic_baseline_delete_forever_24" />
+        app:srcCompat="@drawable/ic_baseline_delete_forever_24"
+        android:visibility="gone"/>
 
 </LinearLayout>

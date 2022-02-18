@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     public static String tipoUtente;
     public static boolean nuovaOpera;
     public static int idUtente;
+    public static boolean statusConnection = false;
 
     public static Visitatore visitatore = new Visitatore();
     public static CuratoreMuseale curatore = new CuratoreMuseale();
@@ -228,35 +229,9 @@ public class MainActivity extends AppCompatActivity {
         creaToolbar();
 
         //Lettura dati dell'utente attuale da db per popolare i dati nell'area personale
-        switch(tipoUtente){
-            case "visitatore":
-                visitatore.setId(idUtente);
-                visitatore.readDataDb(this, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Boolean status =  response.getBoolean("status");
-                            if(status){
-                                MainActivity.visitatore.setDataFromJSON(response.getJSONObject("data"));
-                            }else{
-                                Toast.makeText(MainActivity.this, R.string.impossibile_leggere_dati, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException | ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                break;
-            case "guida":
-                guida.setId(idUtente);
-                guida.readDataDb(this);
-                break;
-            case "curatore":
-                curatore.setId(idUtente);
-                curatore.readDataDb(this);
-                break;
-        }
-    // se l'utente è un visitatore, viene mosrtrata una barra di ricerca per le cercare dei percorsi predefiniti di una data città
+        readDataUser();
+
+        // se l'utente è un visitatore, viene mosrtrata una barra di ricerca per le cercare dei percorsi predefiniti di una data città
        if(tipoUtente.equals("visitatore")){
             EditText searchBar = (EditText) findViewById(R.id.text_cerca);
             searchBar.setOnEditorActionListener((v, actionId, event) -> {
@@ -280,6 +255,41 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         creaToolbar();
+        readDataUser();
+    }
+
+    public void readDataUser(){
+        switch(tipoUtente){
+            case "visitatore":
+                visitatore.setId(idUtente);
+                visitatore.readDataDb(this, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Boolean status =  response.getBoolean("status");
+                            if(status){
+                                MainActivity.visitatore.setDataFromJSON(response.getJSONObject("data"));
+                                MainActivity.visitatore.setStatusComputation(true);
+                                statusConnection = true;
+                            }else{
+                                Toast.makeText(MainActivity.this, R.string.impossibile_leggere_dati, Toast.LENGTH_SHORT).show();
+                                statusConnection = false;
+                            }
+                        } catch (JSONException | ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            break;
+            case "guida":
+                guida.setId(idUtente);
+                guida.readDataDb(this);
+            break;
+            case "curatore":
+                curatore.setId(idUtente);
+                curatore.readDataDb(this);
+            break;
+        }
     }
 
     @Override
@@ -471,10 +481,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void goEditorActivity(View view){
+    /*public void goEditorActivity(View view){
         Intent intent = new Intent(this, EditorActivity.class);
         startActivity(intent);
-    }
+    }*/
 
     public void scannerQr(View view) {  // listener per la funzionalità "interagisci con l'opera"
        scanCode();
@@ -656,16 +666,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public boolean controllStatusConnection(){
+        if(statusConnection) {
+           return true;
+        }else{
+            Toast.makeText(this, getResources().getString(R.string.server_no_risponde), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
     //Metodo necessario per far partire l'activity dell'area personale dal menu laterale
     public void goToPersonalArea(MenuItem item) throws InterruptedException {
-        Intent intent = new Intent(this, AreaPersonale.class);
-        startActivity(intent);
+        if(controllStatusConnection()) {
+            Intent intent = new Intent(this, AreaPersonale.class);
+            startActivity(intent);
+        }
     }
 
     //Metodo necessario per far partire l'activity dell'area personale dalla dashboard nella home
     public void goToPersonalAreaFromDashboard(View view)throws InterruptedException{
-        Intent intent = new Intent(this, AreaPersonale.class);
-        startActivity(intent);
+        if(controllStatusConnection()) {
+            Intent intent = new Intent(this, AreaPersonale.class);
+            startActivity(intent);
+        }
     }
 
     public void gestisciMuseo(View view) { // listener del bottone gestisci museo
@@ -934,8 +957,10 @@ public class MainActivity extends AppCompatActivity {
 
     //Metodo necessario per far partire l'activity per la creazione di una visita
     public void creaVisita(View view) {
-        Intent intent = new Intent(this, CreaVisita.class);
-        startActivity(intent);
+        if(controllStatusConnection()) {
+            Intent intent = new Intent(this, CreaVisita.class);
+            startActivity(intent);
+        }
     }
 
     //Metodo necessario per far partire l'activity necessaria per visualizzare le visite
