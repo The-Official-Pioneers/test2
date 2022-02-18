@@ -10,6 +10,14 @@
         android:gravity="center_horizontal|center_vertical"
         tools:ignore="TextContrastCheck"
         tools:text="kmmj">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/vistaProva"
+        tools:text="kmmj"
+        android:textAlignment="center">
 
     </TextView>
 

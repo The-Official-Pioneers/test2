@@ -7,6 +7,7 @@ import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,31 @@ public class GraphNodeModifica extends Node {
         layoutInflater.inflate(R.layout.sample_node, this);
 
         setOnDragListener(new MyDragListener());
+    }
+
+    protected void setTextLabel() {
+        if(label == null){
+            label = new TextView(getContext());
+            addView(label);
+            try {
+                if(type == NodeType.VISITA){
+                    label.setText(data.getString(DbContract.VisitaEntry.COLUMN_LUOGO));
+                }else if (type == NodeType.ZONA) {
+                    label.setText(data.getString(DbContract.ZonaEntry.COLUMN_DENOMINAZIONE));
+                } else if (type == NodeType.AREA) {
+                    label.setText(data.getString(DbContract.AreaEntry.COLUMN_NOME));
+                } else if (type == NodeType.OPERA) {
+                    label.setText(data.getString(DbContract.OperaEntry.COLUMN_TITOLO));
+                }
+                label.setY(this.getY() + this.size );
+                label.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                label.setTextColor(Color.BLACK);
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
+        }else{
+            label.setVisibility(View.VISIBLE);
+        }
     }
 
     public void deleteNode(){
@@ -438,10 +464,10 @@ public class GraphNodeModifica extends Node {
 
         draw();
         AtomicInteger count = new AtomicInteger(1);
-
+        setTextLabel();
         for(GraphNodeModifica nodeChild : graphParent.graph.successors(this)){
             setNodeSize(numSuccessors, nodeChild);
-
+            nodeChild.setTextLabel();
             float tmpX = getTmpX(numSuccessors, count, nodeChild);
 
             if(type == NodeType.VISITA){
@@ -510,7 +536,7 @@ public class GraphNodeModifica extends Node {
 
     public void draw(){
         checkIfAlreadyInit();
-
+        setTextLabel();
         if(type != NodeType.VISITA && type != NodeType.OPERA){
             setCircle(false);
         }else{
