@@ -74,10 +74,11 @@ public class FragmentVisiteCreateUtente extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(VisiteCreateUtente.listaVisite!=null){
+        if(!VisiteCreateUtente.listaVisite.isEmpty()){
             getActivity().findViewById(R.id.txt_no_visite).setVisibility(View.GONE);
+            setLista();
         }
-        setLista();
+
     }
 
     @Override
