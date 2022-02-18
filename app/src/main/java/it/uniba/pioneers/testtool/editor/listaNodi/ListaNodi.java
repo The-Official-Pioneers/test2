@@ -32,6 +32,7 @@ public class ListaNodi extends HorizontalScrollView {
     Button buttonAdd;
     DisplayGrafoModifica displayGrafoModifica = null;
 
+    boolean state = false;
     public void init(){
         LayoutInflater layoutInflater = LayoutInflater.from(this.getContext());
         layoutInflater.inflate(R.layout.layout_lista_nodi, this);
@@ -53,7 +54,6 @@ public class ListaNodi extends HorizontalScrollView {
             return true;
         });
 
-        hideDuplicate();
         try {
             displayGrafoModifica = getRootView().findViewById(R.id.displayGrafoModifica);
 
@@ -61,8 +61,9 @@ public class ListaNodi extends HorizontalScrollView {
             hideDuplicate();
 
             buttonAdd.setOnClickListener(view1 -> {
-                if(buttonAdd.getText().equals(R.string.mostra_tutti_editor)){
+                if(!state){
                     buttonAdd.setText(R.string.nascondi_duplicati_editor);
+                    state = true;
                     buttonAdd.setBackgroundColor(Color.LTGRAY);
                     buttonAdd.setTextColor(Color.BLACK);
 
@@ -71,6 +72,7 @@ public class ListaNodi extends HorizontalScrollView {
                         listNodeModifica.setVisibility(VISIBLE);
                     }
                 }else{
+                    state = false;
                     buttonAdd.setText(R.string.mostra_tutti_editor);
                     buttonAdd.setBackgroundColor(Color.DKGRAY);
                     buttonAdd.setTextColor(Color.WHITE);
