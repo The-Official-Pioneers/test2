@@ -25,6 +25,7 @@ import it.uniba.pioneers.testtool.R;
 
 public class FragmentVisiteCreateUtente extends Fragment {
 
+    //public static SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     public static SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     public static ArrayAdapter<String> arrayAdapter;
     public static Guida g;
@@ -73,6 +74,9 @@ public class FragmentVisiteCreateUtente extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(VisiteCreateUtente.listaVisite!=null){
+            getActivity().findViewById(R.id.txt_no_visite).setVisibility(View.GONE);
+        }
         setLista();
     }
 

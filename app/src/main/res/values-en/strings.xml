@@ -423,6 +423,7 @@
     <string name="le_tue_visite" translatable="false">Your Visits</string>
     <string name="visite_predefinite" translatable="false">Default Visits</string>
     <string name="ricerca_visite_testo" translatable="false">Research\'s results</string>
+    <string name="no_visite_presenti" translatable="false">No visits present</string>
 
     <string name="visite_effettuare" translatable="false">Visits To Do </string>
     <string name="visite_passate" translatable="false">Past Visits</string>
