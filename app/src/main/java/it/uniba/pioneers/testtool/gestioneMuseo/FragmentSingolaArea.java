@@ -82,6 +82,8 @@ public class FragmentSingolaArea extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        MainActivity.toggle.setDrawerIndicatorEnabled(false);    // abilitazione della navigazione all'indietro dalla toolbar
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if(this.fragmentSingolaArea != null){
             MainActivity.fragmentSingolaArea = this.fragmentSingolaArea;
         }
