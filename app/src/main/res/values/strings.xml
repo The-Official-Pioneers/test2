@@ -355,7 +355,7 @@
     <!-- GUIDA PROFILE AREA -->
     <string name="specializz_areap" translatable="false">Specializzazione:</string>
 
-    <string name="modificap_areap" translatable="false">Modifica Il Tuo Profilo</string>
+    <string name="modificap_areap" translatable="false">Modifica Profilo</string>
     <string name="nuovapass_areap" translatable="false">Modifica Password</string>
     <!-- ====================================================================================== -->
 
@@ -445,6 +445,7 @@
     <string name="le_tue_visite" translatable="false">Le Tue Visite</string>
     <string name="visite_predefinite" translatable="false">Visite Predefinite</string>
     <string name="ricerca_visite_testo" translatable="false">Risultato della ricerca</string>
+    <string name="no_visite_presenti" translatable="false">Nessuna visita presente</string>
 
     <string name="visite_effettuare" translatable="false">Visite da Effettuare</string>
     <string name="visite_passate" translatable="false">Visite Passate</string>

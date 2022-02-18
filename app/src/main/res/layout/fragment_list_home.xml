@@ -34,7 +34,7 @@
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="1.2dp"
         android:layout_marginBottom="10dp"
-        android:onClick="goEditorActivity">
+        android:onClick="creaVisita">
         <ImageView
             android:id="@+id/item_image"
             android:layout_width="match_parent"
