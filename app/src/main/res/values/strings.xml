@@ -433,7 +433,7 @@
     <!-- ====================================================================================== -->
 
     <!-- ===============FRAGMENT LISTA AREE=============== -->
-    <string name="il_tuo_museo" translatable="false">Il Tuo Museo</string>
+    <string name="le_tue_aree" translatable="false">Le tue aree</string>
     <string name="testtool" translatable="false">TestTool</string>
     <!-- ====================================================================================== -->
 
