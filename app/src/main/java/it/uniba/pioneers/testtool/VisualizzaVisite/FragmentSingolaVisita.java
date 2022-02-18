@@ -145,6 +145,11 @@ public class FragmentSingolaVisita extends Fragment {
         if(MainActivity.tipoUtente.equals("guida")){
             Button btn_sel_guida = (Button) getActivity().findViewById(R.id.scegli_guida);
             btn_sel_guida.setVisibility(View.GONE);
+        } else if(MainActivity.flagVisite == 1 || checkCuratoreCreatoreVisita()){
+            Button btn_sel_guida = (Button) getActivity().findViewById(R.id.scegli_guida);
+            btn_sel_guida.setVisibility(View.GONE);
+        } else {
+            return;
         }
     }
 
