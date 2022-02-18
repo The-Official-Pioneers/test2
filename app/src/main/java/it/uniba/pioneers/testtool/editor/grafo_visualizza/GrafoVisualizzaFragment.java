@@ -70,15 +70,10 @@ public class GrafoVisualizzaFragment extends Fragment {
         );
         displayGrafoVisualizza.setLayoutParams(param);
 
-        //ListaNodi listaNodi = new ListaNodi(getContext(), NodeType.OPERA);
-        //listaNodi.setId(R.id.listaNodi);
-
         grafoManipulateLayout.addView(displayGrafoVisualizza);
 
         graph = displayGrafoVisualizza.graph;
 
-        //listaNodi.setLayoutParams(param);
-        //grafoManipulateLayout.addView(listaNodi);
     }
 
 }

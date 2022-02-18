@@ -25,7 +25,6 @@ import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.node.GraphNodeModifica;
-import it.uniba.pioneers.testtool.editor.node.GraphNodeVisualizza;
 import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
 
 public class NodeModificaDialog {
@@ -194,104 +193,14 @@ public class NodeModificaDialog {
 
     public static void setDialogTitle(GraphNodeModifica nodeObject, AlertDialog.Builder builder, int id) {
         if(nodeObject.type == NodeType.VISITA){
-            builder.setTitle(R.string.visita_con_cancelletto+ id);
+            builder.setTitle(nodeObject.getContext().getResources().getString(R.string.visita_con_cancelletto) + id);
         }else if(nodeObject.type == NodeType.ZONA){
-            builder.setTitle(R.string.zona_con_cancelletto+ id);
+            builder.setTitle(nodeObject.getContext().getResources().getString(R.string.zona_con_cancelletto) + id);
         }else if(nodeObject.type == NodeType.AREA){
-            builder.setTitle(R.string.area_con_cancelletto+ id);
+            builder.setTitle( nodeObject.getContext().getResources().getString(R.string.area_con_cancelletto) + id);
         }else if(nodeObject.type == NodeType.OPERA){
-            builder.setTitle(R.string.opera_con_cancelletto+ id);
+            builder.setTitle(nodeObject.getContext().getResources().getString(R.string.opera_con_cancelletto) + id);
         }
-    }
-
-    public static void setDialogTitle(GraphNodeVisualizza nodeObject, AlertDialog.Builder builder, int id) {
-        if(nodeObject.type == NodeType.VISITA){
-            builder.setTitle(R.string.visita_con_cancelletto+ id);
-        }else if(nodeObject.type == NodeType.ZONA){
-            builder.setTitle(R.string.zona_con_cancelletto+ id);
-        }else if(nodeObject.type == NodeType.AREA){
-            builder.setTitle(R.string.area_con_cancelletto+ id);
-        }else if(nodeObject.type == NodeType.OPERA){
-            builder.setTitle(R.string.opera_con_cancelletto+ id);
-        }
-    }
-
-    private static void loadDataLayout(Context context, GraphNodeVisualizza nodeObject, AlertDialog tmpDialog) {
-        ConstraintLayout alertLayout = new ConstraintLayout(context);
-
-        ScrollView scrollView = new ScrollView(context);
-
-        LinearLayout ln = new LinearLayout(context);
-        ln.setOrientation(LinearLayout.VERTICAL);
-        scrollView.addView(ln);
-        alertLayout.addView(scrollView);
-        try {
-            if(nodeObject.type == NodeType.VISITA){
-                String luogo = nodeObject.data.getString("luogo");
-                ln.addView(getRow(context, context.getString(R.string.luogo_nodo), luogo));
-
-                String dateTmp = Date.from(Instant.ofEpochSecond(Long.parseLong(nodeObject.data.getString("data")))).toString();
-                ln.addView(getRow(context, context.getString(R.string.data_creazione), dateTmp));
-
-            }else if(nodeObject.type == NodeType.ZONA){
-                String denominazione = nodeObject.data.getString("denominazione");
-                ln.addView(getRow(context, context.getString(R.string.denominazione), denominazione));
-
-                String descrizione = nodeObject.data.getString("descrizione");
-                ln.addView(getRow(context, context.getString(R.string.descrizione_nodo), descrizione));
-
-                String tipo = nodeObject.data.getString("tipo");
-                ln.addView(getRow(context, context.getString(R.string.tipo), tipo));
-
-                String luogo = nodeObject.data.getString("luogo");
-                ln.addView(getRow(context, context.getString(R.string.luogo), luogo));
-
-            }else if(nodeObject.type == NodeType.AREA){
-                String nome = nodeObject.data.getString("nome");
-                ln.addView(getRow(context, context.getString(R.string.nome_nodo), nome));
-
-            }else if(nodeObject.type == NodeType.OPERA){
-                loadImage(context, nodeObject, ln); //CARICAMENTO DINAMICO IMMAGINE TRAMITE STREAM DEL WEBSERVER
-
-                String titolo = nodeObject.data.getString("titolo");
-                ln.addView(getRow(context, context.getString(R.string.titolo), titolo));
-
-                String descrizione = nodeObject.data.getString("descrizione");
-                ln.addView(getRow(context, context.getString(R.string.descrizione_nodo), descrizione));
-
-                String altezza = nodeObject.data.getString("altezza");
-                ln.addView(getRow(context, context.getString(R.string.altezza), altezza));
-
-                String larghezza = nodeObject.data.getString("larghezza");
-                ln.addView(getRow(context, context.getString(R.string.larghezza), larghezza));
-
-                String profondita = nodeObject.data.getString("profondita");
-                ln.addView(getRow(context, context.getString(R.string.profondita), profondita));
-
-            }
-            tmpDialog.setView(alertLayout);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void loadImage(Context context, GraphNodeVisualizza nodeObject, LinearLayout ln) throws JSONException {
-        LinearLayout layout = new LinearLayout(context);
-        layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 2));
-        layout.setBackgroundColor(Color.WHITE);
-
-        WebView webView = new WebView(layout.getContext());
-        webView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1000));
-        webView.setBackgroundColor(Color.WHITE);
-        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE); //CARICAMENTO DELL'IMMAGINE DALLA CACHE SE POSSIBILE
-        webView.getSettings().setJavaScriptEnabled(false);
-        layout.addView(webView);
-        ln.addView(layout);
-
-        webView.loadUrl(Server.getUrl()+"/opera/image/"+ nodeObject.data.getInt(DbContract.OperaEntry.COLUMN_ID));
     }
 
 }

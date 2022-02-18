@@ -72,13 +72,13 @@ public class NodeVisualizzaDialog{
 
     public static void setDialogTitle(GraphNodeVisualizza nodeObject, AlertDialog.Builder builder, int id) {
         if(nodeObject.type == NodeType.VISITA){
-            builder.setTitle(R.string.visita_con_cancelletto+ id);
+            builder.setTitle(nodeObject.getContext().getResources().getString(R.string.visita_con_cancelletto) + id);
         }else if(nodeObject.type == NodeType.ZONA){
-            builder.setTitle(R.string.zona_con_cancelletto+ id);
+            builder.setTitle(nodeObject.getContext().getResources().getString(R.string.zona_con_cancelletto) + id);
         }else if(nodeObject.type == NodeType.AREA){
-            builder.setTitle(R.string.area_con_cancelletto+ id);
+            builder.setTitle(nodeObject.getContext().getResources().getString(R.string.area_con_cancelletto) + id);
         }else if(nodeObject.type == NodeType.OPERA){
-            builder.setTitle(R.string.opera_con_cancelletto+ id);
+            builder.setTitle(nodeObject.getContext().getResources().getString(R.string.opera_con_cancelletto) + id);
         }
     }
 

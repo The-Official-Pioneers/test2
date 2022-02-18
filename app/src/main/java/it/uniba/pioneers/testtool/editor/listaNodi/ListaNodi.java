@@ -40,9 +40,7 @@ public class ListaNodi extends HorizontalScrollView {
         linearLayout = (LinearLayout) this.scrollView.getChildAt(0);
         buttonAdd = (Button) this.linearLayout.getChildAt(0);
         buttonAdd.setText(R.string.mostra_tutti_editor);
-        //buttonAdd.setWidth(200);
         buttonAdd.setTextSize(11);
-        //buttonAdd.setBackgroundColor(Color.DKGRAY);
 
         setOnDragListener((view, dragEvent) -> {
             ListNodeModifica listNodeModifica = ((ListNodeModifica)dragEvent.getLocalState());
@@ -60,7 +58,7 @@ public class ListaNodi extends HorizontalScrollView {
             displayGrafoModifica = getRootView().findViewById(R.id.displayGrafoModifica);
 
             JSONObject object = new JSONObject();
-            hideDuplicate(); //TODO RISOLVERE PROBLEMA
+            hideDuplicate();
 
             buttonAdd.setOnClickListener(view1 -> {
                 if(buttonAdd.getText().equals(R.string.mostra_tutti_editor)){
