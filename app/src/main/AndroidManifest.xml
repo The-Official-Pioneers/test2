@@ -39,7 +39,8 @@
             android:exported="true"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CreaVisita"
             android:exported="true"
