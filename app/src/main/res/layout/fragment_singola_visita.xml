@@ -201,7 +201,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/login_btn"
-                        android:drawableTop="@drawable/ic_baseline_create_24"
+                        android:drawableTop="@drawable/ic_baseline_create_24_white"
                         android:onClick="avviaGrafoModifica"
                         android:text="@string/modifica_grafo_visita"
                         android:textColor="@color/white" />
@@ -216,7 +216,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/login_btn"
-                        android:drawableTop="@drawable/ic_baseline_flag_24"
+                        android:drawableTop="@drawable/ic_baseline_flag_24_white"
                         android:onClick="scegliGuida"
                         android:text="@string/scegli_guida"
                         android:textColor="@color/white" />

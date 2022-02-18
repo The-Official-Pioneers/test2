@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -27,7 +28,7 @@ import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
 public class OptionsEditor extends LinearLayout {
 
     ImageButton dowloadVisita = null;
-    ImageButton shareVisita = null;
+    Button shareVisita = null;
     ImageButton deleteVisita = null;
 
     public File writeFileOnInternalStorage(String sFileName, String sBody){
