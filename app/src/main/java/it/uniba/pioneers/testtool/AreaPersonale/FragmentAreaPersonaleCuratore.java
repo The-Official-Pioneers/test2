@@ -65,7 +65,6 @@ public class FragmentAreaPersonaleCuratore extends Fragment {
 
     //Metodo necessario per impostare i dati del Curatore Museale all'interno dell'Area Personale
     private void setDataCuratore(){
-
         ImageView propic = (ImageView) getActivity().findViewById(R.id.img_propic);
         EditText nome = (EditText) getActivity().findViewById(R.id.txt_nome);
         EditText cognome = (EditText) getActivity().findViewById(R.id.txt_cognome);

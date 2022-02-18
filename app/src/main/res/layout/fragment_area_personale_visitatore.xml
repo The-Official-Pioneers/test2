@@ -94,7 +94,7 @@
                         android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Nome:" />
+                        android:text="@string/nome_areap" />
 
                     <TextView
                         android:id="@+id/cognome"
@@ -105,7 +105,7 @@
                         android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Cognome:" />
+                        android:text="@string/cognome_areap" />
 
                     <TextView
                         android:id="@+id/datan"
@@ -116,7 +116,7 @@
                         android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Data di Nascita:" />
+                        android:text="@string/datan_areap" />
 
                     <TextView
                         android:id="@+id/email"
@@ -127,7 +127,7 @@
                         android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
-                        android:text="Email:" />
+                        android:text="@string/email_areap" />
 
                 </LinearLayout>
 
@@ -204,7 +204,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/login_btn"
                         android:onClick="editProfile"
-                        android:text="Modifica il tuo profilo"
+                        android:text="@string/modificap_areap"
                         android:textColor="@color/white" />
 
                     <Button
@@ -212,12 +212,12 @@
                         android:layout_width="300dp"
                         android:layout_height="70dp"
                         android:layout_marginStart="5dp"
-                        android:layout_marginEnd="15dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="15dp"
                         android:layout_weight="1"
                         android:background="@drawable/login_btn"
                         android:onClick="editPassword"
-                        android:text="Modifica password"
+                        android:text="@string/modifica_password"
                         android:textColor="@color/white" />
 
                 </LinearLayout>

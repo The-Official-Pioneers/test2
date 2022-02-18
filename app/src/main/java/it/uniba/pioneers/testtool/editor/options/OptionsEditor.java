@@ -22,7 +22,6 @@ import java.time.Instant;
 
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
-import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizzaFragment;
 
 
 public class OptionsEditor extends LinearLayout {
@@ -74,7 +73,7 @@ public class OptionsEditor extends LinearLayout {
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_STREAM, contentUri);
 
-                Intent chooserIntent = Intent.createChooser(i, "CONDIVIDI LA TUA VISITA!");
+                Intent chooserIntent = Intent.createChooser(i, getResources().getString(R.string.condividi_visita));
 
                 if(i.resolveActivity(getContext().getPackageManager()) != null){
                     GrafoModificaFragment.grafoModificaFragment.getActivity().startActivity(chooserIntent);
@@ -91,7 +90,7 @@ public class OptionsEditor extends LinearLayout {
     }
 
     public void generateFilename(int idVisita, StringBuilder filename) {
-        filename.append("visita");
+        filename.append(getResources().getString(R.string.visita));
         filename.append(idVisita);
         filename.append("_");
         filename.append(Time.from(Instant.now()).getTime());

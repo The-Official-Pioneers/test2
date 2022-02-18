@@ -86,10 +86,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:autofillHints="@string/prompt_email"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:textColorHint="#757575"
-                android:selectAllOnFocus="true" />
+                android:selectAllOnFocus="true"
+                android:textColorHint="#757575" />
 
             <EditText
                 android:id="@+id/password"
@@ -97,7 +97,7 @@
                 android:layout_height="60dp"
                 android:layout_marginBottom="30dp"
                 android:autofillHints="@string/prompt_password"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:selectAllOnFocus="true"
@@ -165,7 +165,7 @@
                 android:clickable="true"
                 android:onClick="alphaVersionTest"
                 android:padding="4dp"
-                android:text="CURATORE"
+                android:text="@string/curatore"
                 android:textColor="@color/white"
                 app:layout_constraintVertical_bias="0.2" />
 
@@ -180,7 +180,7 @@
                 android:clickable="true"
                 android:onClick="alphaVersionTest"
                 android:padding="4dp"
-                android:text="VISITATORE"
+                android:text="@string/visitatore"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -198,7 +198,7 @@
                 android:background="@drawable/login_btn"
                 android:clickable="true"
                 android:onClick="alphaVersionTest"
-                android:text="GUIDA"
+                android:text="@string/guida"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -225,7 +225,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Non hai un account?" />
+            android:text="@string/non_hai_account" />
 
         <TextView
             android:id="@+id/register"

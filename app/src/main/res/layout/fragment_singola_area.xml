@@ -30,8 +30,8 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="5dp"
                 android:scrollbars="vertical"
+                android:text="@string/nome_singola_area"
                 android:textColor="@color/shuttle_gray"
-                android:text="Nome Area: "
                 android:textSize="25sp" />
 
             <EditText
@@ -39,11 +39,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:backgroundTint="@color/cranberry"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:backgroundTint="@color/cranberry"
                 android:minHeight="48dp"
-                android:text="NomeArea"
+                android:text="@string/nome_singola_area"
                 android:textSize="18sp" />
 
 
@@ -63,8 +63,8 @@
                 android:background="@drawable/login_btn"
                 android:backgroundTint="@color/cranberry"
                 android:onClick="mostraOpereArea"
-                android:textColor="@color/white"
-                android:text="mostra le opere" />
+                android:text="@string/btn_opere_area"
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </ScrollView>

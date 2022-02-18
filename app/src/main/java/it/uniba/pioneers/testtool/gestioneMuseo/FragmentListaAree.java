@@ -126,6 +126,6 @@ public class FragmentListaAree extends Fragment{
         //sostituisce, nella toolbar, freccetta per tornare indietro con il menu
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         MainActivity.toggle.setDrawerIndicatorEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("E-Culture Tool");
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.e_culture_tool));
     }
 }

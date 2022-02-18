@@ -173,7 +173,7 @@
                     android:id="@+id/txt_descrizione_visita"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor sium incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis sium exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                    android:text="Lorem ipsium dolor sit amet, consectetur adipiscing sium, sed do eiusmod tempor sium incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis sium exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
                     android:textSize="16sp" />
             </LinearLayout>
 

@@ -215,10 +215,19 @@
         <item>2021</item>
     </string-array>
 
+    <!-- ===============COMMON STUFF=============== -->
+    <string name="e_culture_tool" translatable="false">E-Culture Tool</string>
+    <!-- ====================================================================================== -->
+
     <!-- ===============TOOL BAR STUFF=============== -->
     <string name="area_personale" translatable="false">Personal Area</string>
     <string name="visite_utente" translatable="false">User visits</string>
     <string name="visita" translatable="false">Visit </string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============LOGOUT STUFF=============== -->
+    <string name="logout_conferma" translatable="false">Do you want to logout?</string>
+    <string name="logout_testo" translatable="false">Logout</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============CRUD STUFF=============== -->
@@ -270,6 +279,11 @@
     <string name="cognome" translatable="false">Surname</string>
     <string name="email" translatable="false">Email</string>
     <string name="password" translatable="false">Password</string>
+    <string name="non_hai_account" translatable="false">Don\'t have an account?</string>
+
+    <string name="curatore" translatable="false">CURATOR</string>
+    <string name="visitatore" translatable="false">VISITOR</string>
+    <string name="guida" translatable="false">GUIDE</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============HOME MENU STUFF=============== -->
@@ -320,17 +334,34 @@
     <!-- GUIDA PROFILE AREA -->
     <string name="specializz_areap" translatable="false">Specialization:</string>
 
-    <string name="modificap_areap" translatable="false">Save Profile Data</string>
+    <string name="modificap_areap" translatable="false">Edit Your Profile</string>
     <string name="nuovapass_areap" translatable="false">Change Password</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============HOME PAGE=============== -->
     <string name="btn_tue_visite" translatable="false">Your Visits</string>
+    <string name="btn_tue_visite_testo" translatable="false">Show all your visits</string>
+    <string name="btn_tue_visite_testo_guida" translatable="false">Show all your to do visits</string>
+
     <string name="btn_gestisci_museo" translatable="false">Manage Museum</string>
+    <string name="btn_gestisci_museo_testo" translatable="false">Manage your museum</string>
+
     <string name="btn_visite_effettuate" translatable="false">Past Visits</string>
+    <string name="btn_visite_effettuate_testo" translatable="false">History of all your visits</string>
+
     <string name="btn_crea_visita" translatable="false">Create Visit</string>
+    <string name="btn_crea_visita_testo" translatable="false">Create a custom visit</string>
+
     <string name="btn_visite_predefinite" translatable="false">Default Visits</string>
+    <string name="btn_visite_predefinite_testo" translatable="false">Show all visits to that museum</string>
+
     <string name="text_cerca" translatable="false">Search visits by location..</string>
+
+    <string name="scanner_qr" translatable="false">QR Code Scanner</string>
+    <string name="scanner_qr_testo" translatable="false">Scan your favourite work</string>
+
+    <string name="areap_testo" translatable="false">View or edit all your personal information</string>
+
     <string name="text_interagisci" translatable="false">Interact with the work..</string>
     <string name="impossibile_leggere_dati" translatable="false">Could not read data from database.</string>
     <string name="uscire_sicuro_app" translatable="false">Are you sure you want to quit the app?</string>
@@ -376,7 +407,7 @@
 
     <!-- ===============SINGOLA OPERA=============== -->
     <string name="nome_singola_opera" translatable="false">Work\'s Name:</string>
-    <string name="descrizione_singola_opera" translatable="false">Description</string>
+    <string name="descrizione_singola_opera" translatable="false">Description:</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============FRAGMENT LISTA AREE=============== -->
@@ -427,6 +458,28 @@
     <string name="nascondi_duplicati_editor" translatable="false">Hide duplicates</string>
 
     <string name="impossibile_comunicare_server" translatable="false">Could not communicate with server</string>
+
+    <string name="ok" translatable="false">Ok</string>
+    <string name="modifica" translatable="false">Edit</string>
+    <string name="elimina" translatable="false">Delete</string>
+
+    <string name="luogo_nodo" translatable="false">Location</string>
+    <string name="data_creazione" translatable="false">Creation Date</string>
+    <string name="denominazione" translatable="false">Denomination</string>
+    <string name="descrizione_nodo" translatable="false">Description</string>
+    <string name="tipo" translatable="false">Type</string>
+    <string name="titolo" translatable="false">Title</string>
+    <string name="nome_nodo" translatable="false">Name</string>
+    <string name="altezza" translatable="false">Height</string>
+    <string name="larghezza" translatable="false">Width</string>
+    <string name="profondita" translatable="false">Depth</string>
+
+    <string name="visita_con_cancelletto" translatable="false">VISIT #</string>
+    <string name="zona_con_cancelletto" translatable="false">Site #</string>
+    <string name="area_con_cancelletto" translatable="false">AREA #</string>
+    <string name="opera_con_cancelletto" translatable="false">WORK #</string>
+
+    <string name="condividi_visita" translatable="false">Share your visit!</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============EDITOR=============== -->

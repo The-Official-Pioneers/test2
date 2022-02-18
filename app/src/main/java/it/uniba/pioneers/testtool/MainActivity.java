@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
     */
     private void gestioneToolBar() {
         Toolbar toolbar = findViewById(R.id.toolBarHome);
-        toolbar.setTitle("E-culture Tool");
+        toolbar.setTitle(getString(R.string.e_culture_tool));
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         toolbar.setLogo(R.mipmap.ic_launcher_menu);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
@@ -294,8 +294,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void logOutMethod(MenuItem item){
         new AlertDialog.Builder(this)
-                .setTitle("Logout")
-                .setMessage("Vuoi effetturare il logout?")
+                .setTitle(getString(R.string.logout_testo))
+                .setMessage(getString(R.string.logout_conferma))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
