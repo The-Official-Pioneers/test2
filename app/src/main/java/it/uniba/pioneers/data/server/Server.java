@@ -1,11 +1,11 @@
 package it.uniba.pioneers.data.server;
 
 public class Server {
-    static public final String PROTOCOL = "http";
-    static public final String IP = "pioneers.uno";
-    static public final String PORT = "3000";
+    public static  final String PROTOCOL = "http";
+    public static  final String IP = "pioneers.uno";
+    public static  final String PORT = "3000";
 
-    static public String getUrl(){
+    public static  String getUrl(){
         return PROTOCOL+"://"+IP+":"+PORT;
     }
 }
