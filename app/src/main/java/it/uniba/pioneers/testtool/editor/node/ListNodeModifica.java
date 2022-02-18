@@ -28,8 +28,6 @@ public class ListNodeModifica extends Node{
 
     private final class MyTouchListener implements OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
-
-
             switch (motionEvent.getAction()){
                 case MotionEvent.ACTION_UP:
                     view.setVisibility(VISIBLE);
@@ -38,15 +36,16 @@ public class ListNodeModifica extends Node{
                     ClipData data = ClipData.newPlainText("", "");
                     DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
 
-                    GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(self.getRootView().getContext(), R.drawable.shape_circle).mutate();
+                    GradientDrawable drawable = (GradientDrawable)
+                            ContextCompat.getDrawable(self.getRootView().getContext(),
+                                    R.drawable.shape_circle)
+                                    .mutate();
                     self.findViewById(R.id.vistaProva).setBackground(drawable);
                     drawable.setColor(Color.YELLOW);
 
                     view.startDragAndDrop(data, shadowBuilder, view, 0);
-
                     view.setVisibility(INVISIBLE);
                     break;
-
             }
             return true;
         }

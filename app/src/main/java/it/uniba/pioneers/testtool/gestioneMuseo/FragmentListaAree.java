@@ -69,7 +69,7 @@ public class FragmentListaAree extends Fragment{
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         //Abilitazione della freccia sulla toolbar per la navigazione all'indietro
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.le_tue_aree);
 
         //Creazione della lista con i nomi di tutte le aree del museo
         lista = new ArrayList<String>();
