@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
 
+import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.grafo_visualizza.GrafoVisualizzaFragment;
 
 public class OptionsEditorVisualizza extends OptionsEditor {
@@ -52,7 +53,7 @@ public class OptionsEditorVisualizza extends OptionsEditor {
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_STREAM, contentUri);
 
-                Intent chooserIntent = Intent.createChooser(i, "CONDIVIDI LA TUA VISITA!");
+                Intent chooserIntent = Intent.createChooser(i, getResources().getString(R.string.condividi_visita));
 
                 if(i.resolveActivity(getContext().getPackageManager()) != null){
                     GrafoVisualizzaFragment.grafoVisualizzaFragment.getActivity().startActivity(chooserIntent);

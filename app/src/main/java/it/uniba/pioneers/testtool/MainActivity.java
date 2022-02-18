@@ -54,8 +54,8 @@ import it.uniba.pioneers.data.users.Guida;
 import it.uniba.pioneers.data.users.Visitatore;
 import it.uniba.pioneers.testtool.AreaPersonale.AreaPersonale;
 import it.uniba.pioneers.testtool.VisualizzaVisite.VisiteCreateUtente;
+import it.uniba.pioneers.testtool.accesso.IntroActivity;
 import it.uniba.pioneers.testtool.databinding.ActivityMainBinding;
-import it.uniba.pioneers.testtool.editor.EditorActivity;
 import it.uniba.pioneers.testtool.gestioneMuseo.FragmentListaAree;
 import it.uniba.pioneers.testtool.gestioneMuseo.FragmentListaOpere;
 import it.uniba.pioneers.testtool.gestioneMuseo.FragmentSingolaArea;
@@ -63,7 +63,6 @@ import it.uniba.pioneers.testtool.gestioneMuseo.FragmentSingolaOpera;
 import it.uniba.pioneers.testtool.home.FragmentHomeCuratore;
 import it.uniba.pioneers.testtool.home.FragmentHomeGuida;
 import it.uniba.pioneers.testtool.home.FragmentHomeVisitatore;
-import it.uniba.pioneers.testtool.accesso.IntroActivity;
 import it.uniba.pioneers.testtool.network.NetworkChangeListener;
 
 public class MainActivity extends AppCompatActivity {
@@ -210,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
     */
     private void gestioneToolBar() {
         Toolbar toolbar = findViewById(R.id.toolBarHome);
-        toolbar.setTitle("E-culture Tool");
+        toolbar.setTitle(getString(R.string.e_culture_tool));
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         toolbar.setLogo(R.mipmap.ic_launcher_menu);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.shuttle_gray));
@@ -219,10 +218,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onStart() {   // registrazione del receiver per il cambio dello stato di connessione
+    protected void onStart() {
+        super.onStart();// registrazione del receiver per il cambio dello stato di connessione
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangeListener, filter);
-        super.onStart();
+
 
         // creazione della toolbar
         creaToolbar();
@@ -272,8 +272,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {    // deregistrazione del receiver per il cambio dello stato di connessione
-        unregisterReceiver(networkChangeListener);
         super.onStop();
+        unregisterReceiver(networkChangeListener);
     }
 
     @Override
@@ -294,8 +294,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void logOutMethod(MenuItem item){
         new AlertDialog.Builder(this)
-                .setTitle("Logout")
-                .setMessage("Vuoi effetturare il logout?")
+                .setTitle(getString(R.string.logout_testo))
+                .setMessage(getString(R.string.logout_conferma))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
@@ -471,16 +471,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void goEditorActivity(View view){
-        Intent intent = new Intent(this, EditorActivity.class);
-        startActivity(intent);
-    }
-
     public void scannerQr(View view) {  // listener per la funzionalità "interagisci con l'opera"
-       scanCode();
-    }
-
-    private void scanCode(){   // controllo permessi camera
+        // controllo permessi camera
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)) {
                 new AlertDialog.Builder(this)
@@ -505,6 +497,8 @@ public class MainActivity extends AppCompatActivity {
             integrator.initiateScan();
         }
     }
+
+
     public void modificaFoto(View view) {  // controllo permessi accesso alla galleria
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {

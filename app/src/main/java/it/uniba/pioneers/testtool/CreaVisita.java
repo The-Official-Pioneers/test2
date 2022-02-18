@@ -1,7 +1,9 @@
 package it.uniba.pioneers.testtool;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -29,12 +31,13 @@ import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.users.CuratoreMuseale;
 import it.uniba.pioneers.testtool.editor.grafo_modifica.GrafoModificaFragment;
+import it.uniba.pioneers.testtool.network.NetworkChangeListener;
 
 public class CreaVisita extends AppCompatActivity {
 
     private String selectedItem = "";
     public static Visita visita;
-
+    NetworkChangeListener networkChangeListener= new NetworkChangeListener();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,14 @@ public class CreaVisita extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(networkChangeListener);
     }
 
     //Gestione Spinner con Luoghi presenti nel DB
@@ -124,6 +135,7 @@ public class CreaVisita extends AppCompatActivity {
 
         Date tmpDate = Date.from(Instant.now());
         Long tmpLong = tmpDate.getTime();
+
         visita.setData(tmpLong);
         visita.setLuogo(selectedItem);
 

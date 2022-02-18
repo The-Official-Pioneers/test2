@@ -23,9 +23,9 @@ import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.data.Zona;
 import it.uniba.pioneers.data.server.Server;
 import it.uniba.pioneers.sqlite.DbContract;
+import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.node.GraphNodeModifica;
 import it.uniba.pioneers.testtool.editor.node.enums.NodeType;
-import it.uniba.pioneers.testtool.editor.node.GraphNodeVisualizza;
 
 public class NodeModificaDialog {
 
@@ -60,16 +60,16 @@ public class NodeModificaDialog {
             int id = nodeObject.data.getInt("id");
             setDialogTitle(nodeObject, builder, id);
 
-            builder.setPositiveButton("Ok", (dialogInterface, i) -> {
+            builder.setPositiveButton(context.getString(R.string.ok), (dialogInterface, i) -> {
                 dialogInterface.cancel();
             });
 
             if(nodeObject.type != NodeType.VISITA){
-                builder.setNeutralButton("Modifica", (dialogInterface, i) -> {
+                builder.setNeutralButton(context.getString(R.string.modifica), (dialogInterface, i) -> {
 
                 });
 
-                builder.setNegativeButton("Elimina", (dialogInterface, i) -> {
+                builder.setNegativeButton(context.getString(R.string.elimina), (dialogInterface, i) -> {
                     GraphNodeModifica parentNode = ((GraphNodeModifica)nodeObject.graphParent.graph.predecessors(nodeObject).toArray()[0]);
 
                     nodeObject.deleteNode();
@@ -135,36 +135,36 @@ public class NodeModificaDialog {
         try {
             if(nodeObject.type == NodeType.VISITA){
                 String luogo = nodeObject.data.getString("luogo");
-                ln.addView(getRow(context, "LUOGO", luogo));
+                ln.addView(getRow(context, context.getString(R.string.luogo_nodo), luogo));
 
                 String dateTmp = Date.from(Instant.ofEpochSecond(Long.parseLong(nodeObject.data.getString("data")))).toString();
-                ln.addView(getRow(context, "DATA CREAZIONE", dateTmp));
+                ln.addView(getRow(context, context.getString(R.string.data_creazione), dateTmp));
 
             }else if(nodeObject.type == NodeType.ZONA){
                 String denominazione = nodeObject.data.getString("denominazione");
-                ln.addView(getRow(context, "DENOMINAZIONE", denominazione));
+                ln.addView(getRow(context, context.getString(R.string.denominazione), denominazione));
 
                 String descrizione = nodeObject.data.getString("descrizione");
-                ln.addView(getRow(context, "DESCRIZIONE", descrizione));
+                ln.addView(getRow(context, context.getString(R.string.descrizione_nodo), descrizione));
 
                 String tipo = nodeObject.data.getString("tipo");
-                ln.addView(getRow(context, "TIPO", tipo));
+                ln.addView(getRow(context, context.getString(R.string.tipo), tipo));
 
                 String luogo = nodeObject.data.getString("luogo");
-                ln.addView(getRow(context, "LUOGO", luogo));
+                ln.addView(getRow(context, context.getString(R.string.luogo_nodo), luogo));
 
             }else if(nodeObject.type == NodeType.AREA){
                 String nome = nodeObject.data.getString("nome");
-                ln.addView(getRow(context, "NOME", nome));
+                ln.addView(getRow(context, context.getString(R.string.nome_nodo), nome));
 
             }else if(nodeObject.type == NodeType.OPERA){
                 loadImage(context, nodeObject, ln); //CARICAMENTO DINAMICO IMMAGINE TRAMITE STREAM DEL WEBSERVER
 
                 String titolo = nodeObject.data.getString("titolo");
-                ln.addView(getRow(context, "TITOLO", titolo));
+                ln.addView(getRow(context, context.getString(R.string.titolo), titolo));
 
                 String descrizione = nodeObject.data.getString("descrizione");
-                ln.addView(getRow(context, "DESCRIZIONE", descrizione));
+                ln.addView(getRow(context, context.getString(R.string.descrizione), descrizione));
             }
             tmpDialog.setView(alertLayout);
 
@@ -193,104 +193,14 @@ public class NodeModificaDialog {
 
     public static void setDialogTitle(GraphNodeModifica nodeObject, AlertDialog.Builder builder, int id) {
         if(nodeObject.type == NodeType.VISITA){
-            builder.setTitle("VISITA #"+ id);
+            builder.setTitle(nodeObject.getContext().getResources().getString(R.string.visita_con_cancelletto) + id);
         }else if(nodeObject.type == NodeType.ZONA){
-            builder.setTitle("ZONA #"+ id);
+            builder.setTitle(nodeObject.getContext().getResources().getString(R.string.zona_con_cancelletto) + id);
         }else if(nodeObject.type == NodeType.AREA){
-            builder.setTitle("AREA #"+ id);
+            builder.setTitle( nodeObject.getContext().getResources().getString(R.string.area_con_cancelletto) + id);
         }else if(nodeObject.type == NodeType.OPERA){
-            builder.setTitle("OPERA #"+ id);
+            builder.setTitle(nodeObject.getContext().getResources().getString(R.string.opera_con_cancelletto) + id);
         }
-    }
-
-    public static void setDialogTitle(GraphNodeVisualizza nodeObject, AlertDialog.Builder builder, int id) {
-        if(nodeObject.type == NodeType.VISITA){
-            builder.setTitle("VISITA #"+ id);
-        }else if(nodeObject.type == NodeType.ZONA){
-            builder.setTitle("ZONA #"+ id);
-        }else if(nodeObject.type == NodeType.AREA){
-            builder.setTitle("AREA #"+ id);
-        }else if(nodeObject.type == NodeType.OPERA){
-            builder.setTitle("OPERA #"+ id);
-        }
-    }
-
-    private static void loadDataLayout(Context context, GraphNodeVisualizza nodeObject, AlertDialog tmpDialog) {
-        ConstraintLayout alertLayout = new ConstraintLayout(context);
-
-        ScrollView scrollView = new ScrollView(context);
-
-        LinearLayout ln = new LinearLayout(context);
-        ln.setOrientation(LinearLayout.VERTICAL);
-        scrollView.addView(ln);
-        alertLayout.addView(scrollView);
-        try {
-            if(nodeObject.type == NodeType.VISITA){
-                String luogo = nodeObject.data.getString("luogo");
-                ln.addView(getRow(context, "LUOGO", luogo));
-
-                String dateTmp = Date.from(Instant.ofEpochSecond(Long.parseLong(nodeObject.data.getString("data")))).toString();
-                ln.addView(getRow(context, "DATA CREAZIONE", dateTmp));
-
-            }else if(nodeObject.type == NodeType.ZONA){
-                String denominazione = nodeObject.data.getString("denominazione");
-                ln.addView(getRow(context, "DENOMINAZIONE", denominazione));
-
-                String descrizione = nodeObject.data.getString("descrizione");
-                ln.addView(getRow(context, "DESCRIZIONE", descrizione));
-
-                String tipo = nodeObject.data.getString("tipo");
-                ln.addView(getRow(context, "TIPO", tipo));
-
-                String luogo = nodeObject.data.getString("luogo");
-                ln.addView(getRow(context, "LUOGO", luogo));
-
-            }else if(nodeObject.type == NodeType.AREA){
-                String nome = nodeObject.data.getString("nome");
-                ln.addView(getRow(context, "NOME", nome));
-
-            }else if(nodeObject.type == NodeType.OPERA){
-                loadImage(context, nodeObject, ln); //CARICAMENTO DINAMICO IMMAGINE TRAMITE STREAM DEL WEBSERVER
-
-                String titolo = nodeObject.data.getString("titolo");
-                ln.addView(getRow(context, "TITOLO", titolo));
-
-                String descrizione = nodeObject.data.getString("descrizione");
-                ln.addView(getRow(context, "DESCRIZIONE", descrizione));
-
-                String altezza = nodeObject.data.getString("altezza");
-                ln.addView(getRow(context, "ALTEZZA", altezza));
-
-                String larghezza = nodeObject.data.getString("larghezza");
-                ln.addView(getRow(context, "LARGHEZZA", larghezza));
-
-                String profondita = nodeObject.data.getString("profondita");
-                ln.addView(getRow(context, "PROFONDITA", profondita));
-
-            }
-            tmpDialog.setView(alertLayout);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void loadImage(Context context, GraphNodeVisualizza nodeObject, LinearLayout ln) throws JSONException {
-        LinearLayout layout = new LinearLayout(context);
-        layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 2));
-        layout.setBackgroundColor(Color.WHITE);
-
-        WebView webView = new WebView(layout.getContext());
-        webView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1000));
-        webView.setBackgroundColor(Color.WHITE);
-        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE); //CARICAMENTO DELL'IMMAGINE DALLA CACHE SE POSSIBILE
-        webView.getSettings().setJavaScriptEnabled(false);
-        layout.addView(webView);
-        ln.addView(layout);
-
-        webView.loadUrl(Server.getUrl()+"/opera/image/"+ nodeObject.data.getInt(DbContract.OperaEntry.COLUMN_ID));
     }
 
 }

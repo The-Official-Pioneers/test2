@@ -134,7 +134,7 @@ public class FragmentSingolaOpera extends Fragment {
         if(MainActivity.qr){  // modifica della UI se questo fragment viene utilizzato per interagire con un opera attraverso il suo QR-code
             ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             MainActivity.toggle.setDrawerIndicatorEnabled(true);
-            ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
+            ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.le_tue_aree);
             MainActivity.operaSelezionata=null;
             MainActivity.qr=false;
         }

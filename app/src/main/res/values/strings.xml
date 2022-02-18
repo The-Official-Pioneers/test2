@@ -235,10 +235,19 @@
         <item>mostra itinerante</item>
     </string-array>
 
+    <!-- ===============COMMON STUFF=============== -->
+    <string name="e_culture_tool" translatable="false">E-Culture Tool</string>
+    <!-- ====================================================================================== -->
+
     <!-- ===============TOOL BAR STUFF=============== -->
     <string name="area_personale" translatable="false">Area Personale</string>
     <string name="visite_utente" translatable="false">Visite Utente</string>
     <string name="visita" translatable="false">Visita </string>
+    <!-- ====================================================================================== -->
+
+    <!-- ===============LOGOUT STUFF=============== -->
+    <string name="logout_conferma" translatable="false">Vuoi effetturare il logout?</string>
+    <string name="logout_testo" translatable="false">Logout</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============CRUD STUFF=============== -->
@@ -246,7 +255,6 @@
     <string name="lettura_dati_non_riuscita" translatable="false">Errore: Impossibile leggere dati.</string>
     <string name="aggiornamento_non_riuscito" translatable="false">Errore: Impossibile aggiornare dati.</string>
     <string name="eliminazione_non_riuscita" translatable="false">Errore: Impossibile eliminare dati.</string>
-
 
     <string name="cambio_dati_no_validi" translatable="false">Non è avenuto nessun cambio dati,
         verifica che i valori siano validi.</string>
@@ -292,6 +300,11 @@
     <string name="cognome" translatable="false">Cognome</string>
     <string name="email" translatable="false">Email</string>
     <string name="password" translatable="false">Password</string>
+    <string name="non_hai_account" translatable="false">Non hai un account?</string>
+
+    <string name="curatore" translatable="false">CURATORE</string>
+    <string name="visitatore" translatable="false">VISITATORE</string>
+    <string name="guida" translatable="false">GUIDA</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============HOME MENU STUFF=============== -->
@@ -342,17 +355,34 @@
     <!-- GUIDA PROFILE AREA -->
     <string name="specializz_areap" translatable="false">Specializzazione:</string>
 
-    <string name="modificap_areap" translatable="false">Modifica Dati Profilo</string>
+    <string name="modificap_areap" translatable="false">Modifica Profilo</string>
     <string name="nuovapass_areap" translatable="false">Modifica Password</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============HOME PAGE=============== -->
     <string name="btn_tue_visite" translatable="false">Le Tue Visite</string>
+    <string name="btn_tue_visite_testo" translatable="false">Mostra tutte le tue visite</string>
+    <string name="btn_tue_visite_testo_guida" translatable="false">Visualizza tutte le tue visite da effettuare</string>
+
     <string name="btn_gestisci_museo" translatable="false">Gestisci Museo</string>
-    <string name="btn_visite_effettuate" translatable="false">Visite Passate</string>
+    <string name="btn_gestisci_museo_testo" translatable="false">Gestisci il tuo Museo</string>
+
+    <string name="btn_visite_effettuate" translatable="false">Visite Effettuate</string>
+    <string name="btn_visite_effettuate_testo" translatable="false">Cronologia di tutte le tue visite effettuate</string>
+
     <string name="btn_crea_visita" translatable="false">Crea Visita</string>
+    <string name="btn_crea_visita_testo" translatable="false">Crea una visita personalizzata</string>
+
     <string name="btn_visite_predefinite" translatable="false">Visite Predefinite</string>
+    <string name="btn_visite_predefinite_testo" translatable="false">Mostra tutte le visite presenti per quel museo</string>
+
     <string name="text_cerca" translatable="false">Cerca visite per luogo..</string>
+
+    <string name="scanner_qr" translatable="false">Scanner QR</string>
+    <string name="scanner_qr_testo" translatable="false">Scansiona la tua opera preferita</string>
+
+    <string name="areap_testo" translatable="false">Visualizza o modifica tutte le tue informazioni personali</string>
+
     <string name="text_interagisci" translatable="false">Interagisci con l\'opera..</string>
     <string name="impossibile_leggere_dati" translatable="false">Non e\' stato possibile leggere i dati dal db</string>
     <string name="uscire_sicuro_app" translatable="false">Sei sicuro di voler uscire dall\'app?</string>
@@ -399,11 +429,11 @@
 
     <!-- ===============SINGOLA OPERA=============== -->
     <string name="nome_singola_opera" translatable="false">Nome Opera:</string>
-    <string name="descrizione_singola_opera" translatable="false">Descrizione</string>
+    <string name="descrizione_singola_opera" translatable="false">Descrizione:</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============FRAGMENT LISTA AREE=============== -->
-    <string name="il_tuo_museo" translatable="false">Il Tuo Museo</string>
+    <string name="le_tue_aree" translatable="false">Le tue aree</string>
     <string name="testtool" translatable="false">TestTool</string>
     <!-- ====================================================================================== -->
 
@@ -415,6 +445,7 @@
     <string name="le_tue_visite" translatable="false">Le Tue Visite</string>
     <string name="visite_predefinite" translatable="false">Visite Predefinite</string>
     <string name="ricerca_visite_testo" translatable="false">Risultato della ricerca</string>
+    <string name="no_visite_presenti" translatable="false">Nessuna visita presente</string>
 
     <string name="visite_effettuare" translatable="false">Visite da Effettuare</string>
     <string name="visite_passate" translatable="false">Visite Passate</string>
@@ -452,6 +483,28 @@
     <string name="nascondi_duplicati_editor" translatable="false">Nascondi Duplicati</string>
 
     <string name="impossibile_comunicare_server" translatable="false">Non è stato possibile comunicare con il server</string>
+
+    <string name="ok" translatable="false">Ok</string>
+    <string name="modifica" translatable="false">Modifica</string>
+    <string name="elimina" translatable="false">Elimina</string>
+
+    <string name="luogo_nodo" translatable="false">Luogo</string>
+    <string name="data_creazione" translatable="false">Data Creazione</string>
+    <string name="denominazione" translatable="false">Denominazione</string>
+    <string name="descrizione_nodo" translatable="false">Descrizione</string>
+    <string name="tipo" translatable="false">Tipo</string>
+    <string name="titolo" translatable="false">Titolo</string>
+    <string name="nome_nodo" translatable="false">Nome</string>
+    <string name="altezza" translatable="false">Altezza</string>
+    <string name="larghezza" translatable="false">Larghezza</string>
+    <string name="profondita" translatable="false">Profondità</string>
+
+    <string name="visita_con_cancelletto" translatable="false">VISITA #</string>
+    <string name="zona_con_cancelletto" translatable="false">ZONA #</string>
+    <string name="area_con_cancelletto" translatable="false">AREA #</string>
+    <string name="opera_con_cancelletto" translatable="false">OPERA #</string>
+
+    <string name="condividi_visita" translatable="false">Condividi la tua visita!</string>
     <!-- ====================================================================================== -->
 
     <!-- ===============EDITOR=============== -->

@@ -169,7 +169,7 @@ public class Visita {
             this.setGuida(data.getInt(DbContract.VisitaEntry.COLUMN_GUIDA));
         }
 
-        setData(data.getInt(DbContract.VisitaEntry.COLUMN_DATA));
+        setData(data.getLong(DbContract.VisitaEntry.COLUMN_DATA)/1000);
         setTipo_creatore(data.getInt(DbContract.VisitaEntry.COLUMN_TIPO_CREATORE));
         setLuogo(data.getString(DbContract.VisitaEntry.COLUMN_LUOGO));
 

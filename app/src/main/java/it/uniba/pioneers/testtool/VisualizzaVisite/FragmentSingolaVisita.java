@@ -17,11 +17,6 @@ import it.uniba.pioneers.data.Visita;
 import it.uniba.pioneers.testtool.MainActivity;
 import it.uniba.pioneers.testtool.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentSingolaVisita#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentSingolaVisita extends Fragment {
 
     Visita v = new Visita();
@@ -83,6 +78,8 @@ public class FragmentSingolaVisita extends Fragment {
     //Metodo necessario per impostare i dati della visita selezionata dalla lista
     //popolata precedentemente
     private void setDataVisita(){
+
+        Date tmpDate = new Date(VisiteCreateUtente.visitaSelezionata.getData()*1000);
         EditText num_visita = (EditText) getActivity().findViewById(R.id.txt_numero_visita);
         EditText luogo_visita = (EditText) getActivity().findViewById(R.id.txt_luogo_visita);
         EditText data_visita = (EditText) getActivity().findViewById(R.id.txt_data_visita);
@@ -148,6 +145,13 @@ public class FragmentSingolaVisita extends Fragment {
         if(MainActivity.tipoUtente.equals("guida")){
             Button btn_sel_guida = (Button) getActivity().findViewById(R.id.scegli_guida);
             btn_sel_guida.setVisibility(View.GONE);
+        } else if(MainActivity.tipoUtente.equals("visitatore")){
+            if(MainActivity.flagVisite == 1 || checkCuratoreCreatoreVisita()){
+                Button btn_sel_guida = (Button) getActivity().findViewById(R.id.scegli_guida);
+                btn_sel_guida.setVisibility(View.GONE);
+            } else {
+                return;
+            }
         }
     }
 

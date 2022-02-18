@@ -45,8 +45,8 @@ public class VisiteCreateUtente extends AppCompatActivity {
 
     public static Visita visitaSelezionata;
     public static List<Visita> listaVisite;
-    public static List<Guida> listaGuide;
 
+    public static List<Guida> listaGuide;
     private void addToListaGuide(Guida g){
         listaGuide.add(g);
     }
@@ -56,7 +56,6 @@ public class VisiteCreateUtente extends AppCompatActivity {
     //Metodo necessario per inserire le visite corrette all'interno della list view
     //Caso particolare è quello della guida che può vedere le visite da fare o passate
     private void addItemToLista(Visita vis){
-
         if(MainActivity.tipoUtente.equals("guida")){
             Date tempDate = new Date(vis.getData() * 1000);
             //Guida vuole le visite effettuate
@@ -71,7 +70,6 @@ public class VisiteCreateUtente extends AppCompatActivity {
                 return;
             }
         }
-
         listaVisite.add(vis);
     }
 
@@ -96,6 +94,8 @@ public class VisiteCreateUtente extends AppCompatActivity {
         gestioneToolBar();
     }
 
+    //Metodo necessario per gestire la Toolbar all'interno delle varie sezioni per
+    //la visualizzazione delle visite
     private void gestioneToolBar() {
         Toolbar toolbar = findViewById(R.id.toolBarVisiteCreate);
         toolbar.setTitle(toolBarTitle());
@@ -106,6 +106,8 @@ public class VisiteCreateUtente extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    //Metodo necessario per impostare il titolo della tool bar in base al tipo di utente
+    //e al tipo di visite che deve visualizzare
     private String toolBarTitle(){
         if(MainActivity.tipoUtente.equals("visitatore")){
             //2 = ricerca visite in base al luogo, 1 = visite predef, 0 = sue visite
@@ -424,9 +426,7 @@ public class VisiteCreateUtente extends AppCompatActivity {
     public void avviaGrafoVisualizza(View view) {
         GrafoVisualizzaFragment grafoVisualizzaFragment = new GrafoVisualizzaFragment(VisiteCreateUtente.visitaSelezionata);
         androidx.fragment.app.FragmentManager supportFragmentManager;
-
         findViewById(R.id.scroll_singola_visita).setVisibility(View.GONE);
-
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
                 .replace(R.id.frameVIsualizzaGrafo, grafoVisualizzaFragment)
@@ -440,22 +440,20 @@ public class VisiteCreateUtente extends AppCompatActivity {
         super.onStop();
     }
 
+    //Metodo necessario per caricare il grafo per modificare una visita
     public void avviaGrafoModifica(View view) {
-
         GrafoModificaFragment grafoModificaFragment = new GrafoModificaFragment(VisiteCreateUtente.visitaSelezionata);
         androidx.fragment.app.FragmentManager supportFragmentManager;
-
         findViewById(R.id.scroll_singola_visita).setVisibility(View.GONE);
-
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction()
                 .replace(R.id.frameVIsualizzaGrafo, grafoModificaFragment)
                 .commit();
-
     }
 
+    //Metodo necessario per selezionare la guida della visita
+    //Utilizzato solo da visitatore/curatore quando visualizza le proprie visite
     public void scegliGuida(View view) {
-
         try {
             Guida.getAllGuideDB(this,
                     response -> {
@@ -497,7 +495,6 @@ public class VisiteCreateUtente extends AppCompatActivity {
 
                                 new AlertDialog.Builder(this)
                                         .setView(layout_dialog)
-
                                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 try {
@@ -517,7 +514,6 @@ public class VisiteCreateUtente extends AppCompatActivity {
                                         .setNegativeButton(android.R.string.no,  null)
                                         .setIcon(android.R.drawable.ic_dialog_alert)
                                         .show();
-
                             }else{
 
                             }
@@ -534,8 +530,6 @@ public class VisiteCreateUtente extends AppCompatActivity {
         } catch (Exception e){
 
         }
-
     }
-
 
 }

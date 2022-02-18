@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import it.uniba.pioneers.data.Visita;
-import it.uniba.pioneers.testtool.CreaVisita;
 import it.uniba.pioneers.testtool.R;
 import it.uniba.pioneers.testtool.editor.listaNodi.ListaNodi;
 import it.uniba.pioneers.testtool.editor.options.OptionsEditor;
@@ -56,8 +55,6 @@ public class GrafoModificaFragment extends Fragment {
         this.displayGrafoModifica = getView().findViewById(R.id.displayGrafoModifica);
         listaNodi = getView().findViewById(R.id.listaNodi);
         optionsEditor = getView().findViewById(R.id.optionsGrafo);
-
-
 
         DisplayGrafoModifica displayGrafoModifica = new DisplayGrafoModifica(getContext(), visita);
 

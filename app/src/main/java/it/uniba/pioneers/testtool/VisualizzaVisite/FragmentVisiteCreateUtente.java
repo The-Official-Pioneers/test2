@@ -25,6 +25,7 @@ import it.uniba.pioneers.testtool.R;
 
 public class FragmentVisiteCreateUtente extends Fragment {
 
+    //public static SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     public static SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     public static ArrayAdapter<String> arrayAdapter;
     public static Guida g;
@@ -73,7 +74,11 @@ public class FragmentVisiteCreateUtente extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setLista();
+        if(!VisiteCreateUtente.listaVisite.isEmpty()){
+            getActivity().findViewById(R.id.txt_no_visite).setVisibility(View.GONE);
+            setLista();
+        }
+
     }
 
     @Override
@@ -82,6 +87,8 @@ public class FragmentVisiteCreateUtente extends Fragment {
         ((VisiteCreateUtente)getActivity()).getSupportActionBar().setTitle(toolBarTitle());
     }
 
+    //Metodo necessario per impostare il titolo della tool bar in base al tipo di utente
+    //e al tipo di visite che deve visualizzare
     private String toolBarTitle(){
         if(MainActivity.tipoUtente.equals("visitatore")){
             //2 = ricerca visite in base al luogo, 1 = visite predef, 0 = sue visite

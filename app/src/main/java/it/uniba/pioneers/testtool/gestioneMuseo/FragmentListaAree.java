@@ -69,7 +69,7 @@ public class FragmentListaAree extends Fragment{
         MainActivity.toggle.setDrawerIndicatorEnabled(false);
         //Abilitazione della freccia sulla toolbar per la navigazione all'indietro
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.il_tuo_museo);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.le_tue_aree);
 
         //Creazione della lista con i nomi di tutte le aree del museo
         lista = new ArrayList<String>();
@@ -126,6 +126,6 @@ public class FragmentListaAree extends Fragment{
         //sostituisce, nella toolbar, freccetta per tornare indietro con il menu
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         MainActivity.toggle.setDrawerIndicatorEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("E-Culture Tool");
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.e_culture_tool));
     }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/alto">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:id="@+id/txt_input_cerca"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -66,8 +66,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Crea visita"
                         android:onClick="creaVisita"
+                        android:text="@string/btn_crea_visita"
                         android:textStyle="bold">
 
                     </TextView>
@@ -84,7 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Crea una tua visita personalizzato"
+                        android:text="@string/btn_crea_visita_testo"
                         android:textColor="@android:color/darker_gray" />
 
                 </LinearLayout>
@@ -119,7 +119,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Scanner QR"
+                        android:text="@string/scanner_qr"
                         android:textStyle="bold">
 
                     </TextView>
@@ -136,7 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Scansiona la tua opera preferita"
+                        android:text="@string/scanner_qr_testo"
                         android:textColor="@android:color/darker_gray" />
 
                 </LinearLayout>
@@ -179,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Visite Predefinite"
+                        android:text="@string/btn_visite_predefinite"
                         android:textStyle="bold">
 
                     </TextView>
@@ -196,7 +196,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Mostra tutte le visite presenti per quel museo"
+                        android:text="@string/btn_visite_predefinite_testo"
                         android:textColor="@android:color/darker_gray" />
 
                 </LinearLayout>
@@ -232,7 +232,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Le tue visite"
+                        android:text="@string/btn_tue_visite"
                         android:textStyle="bold">
 
                     </TextView>
@@ -249,7 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Mostra le tue visite"
+                        android:text="@string/btn_tue_visite_testo"
                         android:textColor="@android:color/darker_gray" />
 
                 </LinearLayout>
@@ -292,7 +292,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Area personale"
+                        android:text="@string/area_personale"
                         android:textStyle="bold">
 
                     </TextView>
@@ -309,7 +309,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Visualizza o modifica tutte le tue informazioni personali"
+                        android:text="@string/areap_testo"
                         android:textColor="@android:color/darker_gray" />
 
                 </LinearLayout>
